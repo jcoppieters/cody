@@ -1,0 +1,170 @@
+<!doctype html>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<html lang="nl">
+
+<jsp:include page="header.jsp">
+	<jsp:param name="title" value="${page.title}"/>
+</jsp:include>	
+
+<body>
+   <script>
+     function AllOK() {
+  		if (document.onepage.name.value == "") {
+			alert("Please give a descriptive name to this user");
+			return false;
+		}
+		if (document.onepage.username.value == "") {
+			alert("Please give a username (single word) for this user");
+			return false;
+		}
+		if (document.onepage.password.value == "") {
+			alert("Please give a password for this user");
+			return false;
+		}
+		if (document.onepage.domain.value == "") {
+			alert("Please select a group (or type a new one) for this user");
+			return false;
+		}
+		if (document.onepage.email.value == "") {
+			alert("Please give an email address for this user");
+			return false;
+		}
+    	return true;
+     }
+   </script>
+  <div id="wrapper">
+    <c:set var="cat" value="U" />
+    <%@include file="/views/admin/navigation.jsp" %>
+    
+	<div id="wrapper_data">	
+	
+      <c:if test="${request.oper=='get'}">
+		<form action="./users" method="post" id="record" name="onepage">
+   			<input type="hidden" name="oper" value="save" /> 
+   			<input type="hidden" name="id" value="${user.id}" /> 
+
+			<fieldset>
+				<div>
+					<label for="name">Name</label>
+					<input name="name" id="name" type="text" value="${user.name}" />
+				</div>
+				<div>
+					<label for="username">Login</label>
+					<input name="username" id="username" type="text" value="${user.username}" />
+				</div>
+				<div>
+					<label for="password">Password</label>
+					<input name="password" id="password" type="text" value="${user.password}" />
+				</div>
+				<div>
+					<label for="domain">Group</label>
+					<input name="domain" id="domain" type="text" value="${user.domain}" />
+						<c:set var="records" value=" : domains : ((id != 'rWorks') or ('${login.domain}' = 'rWorks')) : name " scope="request"/>
+						<select name="domains" id="domains"  style="margin-left: 100px; margin-top: 3px;"
+						        onchange="document.onepage.domain.value = this.options[this.selectedIndex].value">
+							<option value="">Choose an existing group or type a new one</option>
+						  	<c:forEach var="D" items="${controller.records}">
+						  		<option value="${D.id}">${D.name}</option>
+						  	</c:forEach>
+						</select>
+				</div>
+				<div>
+					<label for="level">Level</label>
+					<select name="level" id ="level">
+					  <c:set var="records" value=": levels : id <= '${login.level}' : name " scope="request"/>
+					  <c:forEach var="L" items="${controller.records}">
+					    <option value="${L.id}" <c:if test="${user.level == L.id}">selected</c:if>>${L.name}</option>
+					  </c:forEach>
+					</select>
+				</div>
+				<div>
+					<label for="active">Active</label>
+					<input name="active" id="active" type="radio" value="Y" <c:if test="${user.active != 'N'}">checked</c:if> />Yes
+					<input name="active" id="active" type="radio" value="N" <c:if test="${user.active == 'N'}">checked</c:if> />No
+				</div>
+				<div>
+					<label for="email">Email</label>
+					<input name="email" id="email" type="text" value="${user.email}" />
+				</div>
+			</fieldset>
+			<div id="action_buttons">
+				<input type="button" value="Save" onClick="document.onepage.oper.value='save'; if (AllOK()) document.onepage.submit();" />
+				<c:if test="${! empty user.id}">
+					<input type="button" value="Delete" onClick="document.onepage.oper.value='delete'; document.onepage.submit();"/>
+				</c:if>
+				<input type="button" value="Cancel" onClick="document.onepage.oper.value='list'; document.onepage.submit();"/>
+		   	</div>
+		</form>
+      </c:if>
+      
+      <c:if test="${request.oper=='list'}">
+      	<form action="./users" method="post" id="record" name="onepage">
+ 	   		<input type="hidden" name="oper" value="list" /> 
+      	
+      		<c:if test="${! empty param.domain}"><c:set var="domain" value="${param.domain}" scope="session" /></c:if>
+      		<c:if test="${empty param.domain && empty domain}"><c:set var="domain" value="" scope="session" /></c:if>
+      		<c:if test="${! empty param.level}"><c:set var="level" value="${param.level}" scope="session" /></c:if>
+      		<c:if test="${empty param.level && empty level}"><c:set var="level" value="20" scope="session" /></c:if>
+      	
+	 		<c:set var="records" value=": domains : (id != 'rWorks' or ${login.level} >= 99) : name" scope="request"/>
+			<c:set var="domains" value="${controller.records}" />
+			
+	      	Domain: <select name="domain" id="domain" onChange="submit()">
+	      	    <option value="null">-</option>
+	     		<c:forEach var="D" items="${domains}">
+					<option value="${D.id}" <c:if test="${domain == D.id}">selected</c:if>>${D.name}</option>
+				</c:forEach>
+			</select> 
+			
+						
+			<c:set var="records" value="*: levels : id <= '${login.level}' : id asc" scope="request"/>
+			<c:set var="levels" value="${controller.records}" />
+			
+	      	Level: <select name="level" id="level" onChange="submit()">
+	       	    <option value="null">-</option>
+	      		<c:forEach var="L" items="${levels}">
+					<option value="${L.id}" <c:if test="${level == L.id}">selected</c:if>>${L.name}</option>
+				</c:forEach>
+			</select>
+			
+			
+			<table id="records"> 
+			   <tr> 
+				 <th>Naam</th><th>Login</th><th>Password</th><th>Domain</th><th>Level</th><th>Login</th><th>Email</th> 
+			   </tr> 
+				
+				<c:set var="records" value=":levels::name" scope="request"/>
+				<c:set var="allLevels" value="${controller.records}" />
+			
+				<c:forEach var="u" items="${users}" varStatus="status">
+					<tr class="${status.index mod 2 != 0 ? 'odd' : ''}">
+						<td><c:if test="${u.level <= login.level}"><a href="users?oper=get&amp;id=${u.id}">${(empty u.name) ? '--' : u.name}</a></c:if>
+							<c:if test="${u.level > login.level}">${u.name}</c:if></td> 
+						<td>${u.username}</td> 
+						<td>${u.password}</td> 
+						<td>${u.domain}</td> 
+						<td>
+						  <c:forEach var="L" items="${allLevels}"><c:if test="${u.level == L.id}">${L.name}</c:if></c:forEach>
+						</td> 
+						<td><c:if test="${u.active == 'Y'}">active</c:if>
+							<c:if test="${u.active != 'Y'}">-</c:if></td> 
+						<td>${u.email}</td> 
+					</tr> 
+				</c:forEach>
+			</table>
+			<div id="action_buttons">
+				<input type="button" value="New" onclick="document.onepage.oper.value = 'new'; document.onepage.submit();"/>
+				<input type="button" value="All" onclick="document.onepage.level.selectedIndex = 0; document.onepage.domain.selectedIndex = 0; document.onepage.submit();"/>
+	   		</div>
+		</form>
+	  </c:if>
+	  
+    </div>
+ 
+    <%@ include file="/views/admin/footer.jsp"%>
+  </div>
+</body>
+</html>

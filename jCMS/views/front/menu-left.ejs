@@ -1,0 +1,8 @@
+<nav>
+	<ul class="subNav">
+		<% for (var i in page.parent.children) { var subpage = page.parent.children[i]; %>
+			   <li <%= (page == subpage) ? 'class="active"' : '' %> ><a
+				   href="<%=context%>/<%=subpage.url%>"><%=subpage.title%></a></li>
+		<% } %>
+	</ul>
+</nav>

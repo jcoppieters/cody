@@ -1,0 +1,76 @@
+<!doctype html>
+
+<html lang="<%=page.language%>">
+
+<% include header.ejs %>
+
+<body>
+
+<script src="<%=static%>/js/lib/jquery-1.9.1<%=min%>.js"></script>
+<script src="<%=static%>/js/lib/jquery-ui-1.10.1<%=min%>.js"></script>
+<script src="<%=static%>/js/lib/jquery.validate<%=min%>.js"></script>
+<script src="<%=static%>/js/lib/localization/messages_<%=page.language%>.js"></script>
+
+<script type="text/javascript" src="<%=static%>/js/lib/jquery.jstree.js"></script>
+<script type="text/javascript" src="<%=static%>/js/tinymce/jquery.tinymce.js"></script>
+
+ 
+<script type="text/javascript" src="<%=static%>/js/sitemap-editor.js"></script>
+<script type="text/javascript" src="<%=static%>/js/sitemap-tree.js"></script>
+
+<script type="text/javascript">
+function Startup(TREE_OBJ) {
+
+}
+
+</script>
+
+
+  <div id="wrapper">
+    <% var cat="S"; %>
+		<% include navigation.ejs %>
+    
+		<div id="wrapper_data">
+		
+			<div id="content_div" style="display: none;">
+				<textarea name="editContent" id="editContent"></textarea>
+				<div id="content_buttons">
+					<input type="button" value="Save" onclick="SaveEditor();" />
+					<input type="button" value="Cancel" onclick="HideEditor();" />
+				</div>
+			</div>
+	
+ 	    <div id="left_nav">
+				<input type="button" value="Add" onclick="doAdd()">
+				<input type="button" value="Rename" onclick="doRename()" >    
+				<input type="button" value="Delete" onclick="doDelete()" >
+				<input type="button" value="Edit" onclick="doEdit()" >
+			
+	      <div id="sitemap">
+	        <ul>
+	          <li id="id_0" class="open" rel="root"><a href="#"><ins>&nbsp;</ins>Website</a>
+	            <%- controller.getTree() %>
+	          </li>
+	          
+	          <li id="id_x" class="closed" rel="root"><a href="#"><ins>&nbsp;</ins>General</a>
+	            <%- controller.getGlobalTree() %>
+	          </li>
+	         
+			  		<% if ((login) && (login.level >= 99)) { %>
+		         <li id="id_1" class="closed" rel="root"><a href="#"><ins>&nbsp;</ins>System</a>
+		            <%- controller.getAdminTree() %>
+		         </li>
+	          <% } %>
+	        </ul>
+	      </div>
+	    </div>
+	    
+	    <div id="right_cont">
+			</div>
+       
+		</div>
+ 
+		<% include footer.ejs %>
+  </div>
+</body>
+</html>

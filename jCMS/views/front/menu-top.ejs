@@ -1,0 +1,23 @@
+<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+
+<header class="content">
+	<a href="<%=context%>/<%=page.language%>/"><img src="<%=static%>/images/logo_de_essen.png"
+		width="242" height="78" alt="Huistartsenpraktijk De Essen" id="logo"></a>
+  
+	<div id="contactData">
+		<div class="contact tel">050 39 50 66</div>
+		<div class="contact address">Lagebekeweg 1, 8200 Sint-Andries</div>
+	</div>
+
+	<nav>
+		<ul id="mainNav">
+      <% for (var i in page.root.children) {  var p = page.root.children[i]; %>
+				<li class="<%= (p == page && p.itemId != 109) ? 'active' : '' %>">
+					<a href="<%=context%>/<%=p.url%>"><%=p.title%></a>
+				</li>
+      <% } %>
+			</c:forEach>
+		</ul>
+	</nav>
+
+</header>

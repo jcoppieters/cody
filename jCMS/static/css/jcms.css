@@ -1,0 +1,321 @@
+/* reset
+------------------------------------------------------------------*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+body { line-height: 1; }
+ol, ul { list-style: none; }
+blockquote, q { quotes: none; }
+blockquote:before,
+blockquote:after,
+q:before, q:after { content: ''; content: none; }
+/* remember to define focus styles! */
+:focus { outline: 0; }
+/* remember to highlight inserts somehow! */
+ins { text-decoration: none; }
+del { text-decoration: line-through; }
+/* tables still need 'cellspacing="0"' in the markup */
+table { border-collapse: collapse; border-spacing: 0; }
+
+/* general
+------------------------------------------------------------------*/
+body { background-color: #fff; font-family:"Trebuchet MS", Arial, Verdana; font-size: 12px; }
+h1 { margin: 0 0 15px; font-size: 14px; font-weight: bold; color: #414141; }
+h2 { margin: 0 0 15px; font-size: 12px; font-weight: bold; color: #414141; }
+h3 {}
+h4 {}
+ul, ol { margin: 0 0 14px 16px; }
+p, form { margin: 0 0 14px 0; }
+p { margin: 0 0 2px; padding: 0; font-size: 13px; color: #666; line-height: 15px; }
+a { color: blue; }
+a:hover { color: #000; }
+input, textarea, select { font-size: 11px; font-family: Arial, sans-serif; color: #4F535C; }
+strong { font-weight: bold; color: #b63d94; }
+em { font-style: italic; }
+sup { font-size: 8px; vertical-align: super; }
+sub { font-size: 8px; vertical-align: sub; }
+
+.img_left { float: left; margin: 0 10px 10px 0; }
+.img_right { float: right; margin: 0 0 10px 10px; }
+
+.clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.clearfix { display: inline-block; }
+/* Hide from IE Mac \*/
+.clearfix { display: block; }
+/* End hide from IE Mac */
+
+.odd { background-color: #f0f0f0;	}
+.hidden { display: none; }
+
+.warning { clear: both; padding: 5px 10px; background: #fef9f9; border: 1px solid #f00; color: #f00; text-align: left; }
+
+/*-----------------------------------*/
+.ui-datepicker-trigger { vertical-align: top; margin-top: 2px; margin-leftL 4px; }
+
+#wrapper { width: 1000px; margin: 0 auto; background: url(../images/admin-bg.gif) repeat-x 0 top; }
+#wrapper_data { clear: both; width: 1000px; overflow: hidden; padding: 0px 0 0; }
+
+#left_nav { width: 245px;  float: left; margin-top: 7px;}
+#right_cont { float: right; width: 550px; margin-top: 7px;}
+#sitemap { margin-top: 10px; width: 230px; }
+
+#content_buttons { margin: 5px; text-align: center; }
+#content_div { border: 1px solid #ccc; background-color: rgb(240, 240, 238);}
+#content_div textarea { width: 798px; }
+
+#content_data { width: 547px; border: 1px solid #ccc; clear:both; }
+#content_data fieldset { float:left; width: 532px; padding: 8px 5px 2px 10px; background: white; }
+#content_data form { padding: 0px; margin: 0px; }
+#editDataLength { padding-left: 10px; margin: 0; line-height: 20px; font-size: 12px; float: left;  }
+.content_text { margin: 0; line-height: 20px; font-size: 13px  }
+
+#action_buttons { padding: 5px 5px 5px 5px;  background-color: rgb(240, 240, 238); clear:both }
+div .language { border-top: 1px solid #ccc; margin: 2px 0 0px 0; padding: 4px 0 10px 0; }
+fieldset div { padding: 0 0 10px 0;  }
+fieldset .page { padding: 0;  }
+fieldset div div { 	clear:both; }
+
+#preview { max-width:200px; max-height: 150px }
+.noline { text-decoration: none }
+
+/*---- tree -------------------------*/
+.tree li.deleted a  { color: #999; }
+
+.open {}
+/*.closed { display: none }
+*/
+
+/*---- tabs -------------------------*/
+ul#content_tabs {
+	padding: 0px 0 0 10px; margin: 0; text-align: center;  
+}
+
+
+ul#content_tabs li {
+	float: left;
+	font-size: 12px;
+	list-style: none;
+	margin: 0px 10px 0 0;
+	padding: 8px 15px;
+	line-height: 12px;
+	position: relative;
+	background-color: #999; 
+	border: 1px solid #fff;
+	z-index: 10;
+}
+
+ul#content_tabs li a {
+	color: #e8e8e4; text-decoration: none; display: block; margin: 0; font-size: 12px; 
+}
+	
+ul#content_tabs li.active {
+	background-color: #000000;
+}
+
+ul#content_tabs li.active a, ul#navigation li a:hover{
+	color: #fff;
+}
+
+
+
+#login #wrapper { height: 600px; background: url(../images/admin-bg_login.png) no-repeat; }
+#login h1 { width: 505px; margin: 0; padding: 170px 295px 10px 0; background: url(../images/admin-bg_border.gif) repeat-x bottom; color: #fff; text-align: right; font-size: 24px; }
+#loginForm { width: 255px; padding: 35px 295px 30px 250px; background: url(../images/admin-bg_border.gif) repeat-x bottom; color: #fff; text-align: right; }
+#loginForm fieldset { float: none;  width: 255px; } // max-width: auto;
+#loginForm fieldset div { padding-bottom: 5px; }
+#loginForm .action_buttons { margin-right: 0; }
+#loginForm .action_buttons input { width: 69px; height: 24px; border: 0; background: url(../images/admin-bt_login.png) no-repeat; color: #fff; font-size: 13px; font-weight: bold; font-family: Verdana, Arial, sans-serif; cursor: pointer; }
+
+ul#navigation { padding: 3px 0 5px 20px; margin: 0; text-align: center; }
+
+ul#navigation li {
+	float: left;
+	font-size: 13px;
+	list-style: none;
+	margin: 35px -1px 0 0;
+	padding: 8px 13px;
+	line-height: 13px;
+	position: relative;
+	background-color: #a39f9f; 
+	border: 1px solid #fff;
+	z-index: 10;
+	}
+
+ul#navigation li.submenu { 
+	background: black;
+	margin-right: 15px;
+}
+
+ul#navigation li a {
+	color: #e8e8e4;
+	text-decoration: none;
+	display: block;
+	margin: 0;
+	font-size: 15px;
+	
+	}
+ul#navigation li.active {
+	background-color: #38bef1;
+}
+
+ul#navigation li.active a, ul#navigation li a:hover{
+	color: #fff;
+}
+	
+
+table#records {
+	clear: both;
+	width: 100%; 
+	margin: 10px 0px 10px 0px; 
+	border: 1px solid #959595;
+	border-collapse: separate;
+	}
+	
+table#records td {
+	padding: 8px 20px; 
+	font-size: 12px;
+	text-align: left; 
+	}
+	
+table#records td.detail { line-height: 16px; padding: 6px 20px; }
+table#orderitems td { line-height: 15px; padding: 1px 10px; }
+
+table#records th {
+	padding: 6px 20px;
+	background-color: #38bef1;
+	font-size: 12px;
+	text-align: left;
+	color: #fff;
+	}
+
+#record { border: 1px solid #959595; }
+#record fieldset input { width: 300px; }
+#record fieldset input[type=radio] { width: 20px; }
+
+
+/*---- OK till here -------------------------*/
+
+ul#personalia{
+	margin: 0 5px 20px 0;
+	overflow: hidden; 
+	clear:both;
+	width: 100%; 
+}
+
+ul#personalia li {
+	float: left;
+	font-size: 13px;
+	list-style: none;
+	line-height: 13px;
+	margin: 0 10px 0 0;
+	background-color: #a39f9f; 
+	padding: 5px 10px;
+}
+	
+	
+ul#personalia li a{
+	color:#e8e8e4; 
+	text-decoration: none; 
+}
+	
+ul#personalia li.active {
+	background-color: #38bef1;
+}
+
+
+ul#personalia li.active a, ul#personalia li a:hover {
+	color:#fff; 
+}
+	
+fieldset h2  { 
+	background-color: #38bef1; 
+	padding: 5px; 
+	color:#fff; 
+}
+	
+	
+
+#radio_top { margin: 0 0 0 20px; }
+
+/*-----------------------------------*/
+
+form { padding: 8px 10px 10px 10px; }
+
+fieldset { 
+	float:left; 
+	width: 700px; 
+	max-width:700px; 
+	}
+
+fieldset div.gegevens div { 
+	padding: 0 0 10px 0;  }
+	
+fieldset div.gegevens div.name input { 
+	width: 400px; }
+	
+fieldset div.gegevens div.room input { 
+	width: 130px; }
+	
+fieldset div.gegevens div.born input { 
+	width: 130px; }
+	
+fieldset div.gegevens div.sex, div.gegevens div.level { 
+	margin-right: 5px; }
+
+fieldset div.gegevens div.dtype option, fieldset div.gegevens div.education option { width: 100px; } 
+fieldset div.note textarea {
+	width: 400px; 
+	height: 120px; 
+	}
+
+label {
+	float: left;
+	width:100px;
+	font-size: 12px; 
+	line-height:20px; 
+	}
+
+.buttons{
+	float: right;
+	}
+
+.right_align{
+	text-align: center;
+	}
+	
+div.checks { clear: none; margin-left: 100px; line-height: 20px;}
+
+
+#welcome_top { color: #fff; float: left; margin-top: -56px; padding-left: 10px; width: 980px;  }
+
+#welcome_top strong { background-color: #A39F9F; border: 1px solid white; padding: 3px 10px 3px 10px; }
+#welcome_top strong a { text-decoration: none; color: #fff }
+#welcome_top strong.active { background-color: #38BEF1; color: #fff; }
+#welcome_top span { margin-left: 150px }
+
+#logout_top { float: right }
+#logout_top a { color: #fff; }
+
+
+	
+/*--- footer ---*/
+#footer { clear: both; width: 1000px; margin: 0 auto; margin-top: 10px; }
+#copyright { float: left; width: 200px; text-align: left; }
+#cieLink { float: right; width: 200px; text-align: right; }
+#cieLink a { color: #666; }
+	
+	

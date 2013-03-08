@@ -1,0 +1,150 @@
+
+.hide { display: none; }
+
+
+p.notification { clear: both; margin: 5px 0 5px 0; padding: 10px 10px 10px 36px; border: 1px solid; background-position: 10px 11px !important; background-repeat: no-repeat !important; }
+p.success { border-color: #9adf8f; background: #d5ffce url(../images/icon_tick_circle.png); color: #556652; }
+p.error { border-color: #df8f8f; background: #ffcece url(../images/icon_cross_circle.png); color: #665252; }
+
+#welcome_top a { color: #ccc; text-decoration: underline }
+#welcome_top span { margin-left: 150px }
+
+
+ 
+/* agenda 
+------------------------------------------------------------------*/
+#agenda { width: 1000px; background: #fff ; font: 12px/16px Arial, sans-serif; color: #202020; }
+#agenda img { float: left; height: 16px; margin: 4px 10px 4px 10px; cursor: pointer }
+#agenda h1 { float: left; font: bold 16px/20px Arial; padding: 7px 0 0 12px; margin: 0; }
+#agenda h2 { color: #6DC067; font: bold italic 32px/36px Georgia, serif;  }
+#agenda h3 { background-color: lightGray; clear: both }
+
+#agenda #bar #q { float: right; margin-bottom: 7px; }
+#agenda #bar form { padding-top: 4px }
+#agenda #bar img { margin-top: 7px }
+#agenda #bar a { font: bold 16px/20px Arial; text-decoration: none; color: green; padding: 7px 0 0 12px; float: left }
+#agenda #past { float: left; width: 370px }
+#agenda #future { float: right; width: 370px }
+#agenda #twoCols a { margin-right: 7px }
+
+#dag { margin: 0; width: 1000px; border-collapse: separate; border-spacing: 2px; }
+
+#dag .drs td { text-align: center; font-size: 12px; cursor: pointer; vertical-align: top;}
+#dag .drs p { font-weight: bold; font-size: 12px; padding: 5px; line-height: 16px; color: black }
+#dag .drs a { padding: 4px  }
+#dag td.active, #dag td.active a {  background: #6DC067; color: #fff; }
+#dag .drs img { float:right }
+#dag fieldset { width: inherit; }
+#dag fieldset div { margin: inherit; padding: inherit; }
+#dag label { width: inherit; float: none; line-height: inherit }
+
+#dag th { color: #404040; background: #FFF; width: 38px; padding: 4px 0 4px 0}
+/* f2f2f2 / 404040 */
+#dag td.drTitle { width: 194px }
+#dag td   { background: #E4E7DA; color: #000000; padding: 4px; width: 155px; vertical-align: top; cursor: pointer}
+#dag td.A { background: #4C7DC2; color: white; }   /* appointment   */
+#dag td.X { background: #CB8144; color: white; }   /* extra web     */
+#dag td.W { background: #CB8144; color: white; }   /* web           */
+#dag td.C { background: #3DA963; color: white; }   /* consultations */
+#dag td.L { background: #FFBB40; color: white; }   /* ? */
+#dag td.H { background: #FEE452; color: #5B5B5B; } /* house call    */
+#dag td.S { background: #A39F9F; color: #000000; } /* sales rep     */
+#dag .ui-icon-circle-arrow-e { display: inline-block }
+
+#dag ul li { text-align: left;   }
+
+#todoForm .buttons, #patForm .buttons  { margin-top: 7px }
+
+#patDialog fieldset { width: 330px }
+#patDialog .buttons { float: none; padding: 10px 0 10px 0 }
+#patDialog input[type=text] { width: 300px; }
+#patDialog label { width: 70px; }
+
+#patForm #name { width: 220px; }
+#patForm #what { width: 323px; }
+#patForm { padding: 5px; }
+#patForm span { display: inline-block }
+
+#todoForm { text-align: left;  padding: 5px; margin-top: 4px; background-color: #E4E7DA; margin: 0}
+#todoForm div.radios label { width: inherit; padding-right: 25px  }
+#todoForm fieldset { float: none }
+#todoForm fieldset div { float: none; padding-bottom: 4px }
+#todoForm input[type=text] { width: 265px; }
+#todoForm input[type=radio] { padding-right: 10px; }
+#todoForm #toDr { margin-right: 10px }
+
+#agenda label { display: block; font-weight: bold; width: 60px  }
+#agenda .radios { margin-bottom: 3px; }
+#agenda .radios label, 
+#agenda .radios input { display: inline-block; padding-right: 15px; font-weight: normal; float: none }
+
+
+#freeTodos .buttons, #freeHuisbezoeken .buttons { float: left }
+#freeTodos, #freeHuisbezoeken { padding-left: 14px }
+#freeTodos li, #freeHuisbezoeken li  { background-color: #E4E7DA; cursor: pointer; }
+.todoTable li { border-bottom: 2px solid white; display: block; margin-left: -16px; cursor: pointer;}
+#dag .drs div img { margin: -6px 1px 1px 5px }
+
+/*
+ week schema
+------------------------------------------------------------------*/
+#week { width: 100% }
+#week td { background: #fff; color: #444; padding: 2px; vertical-align: middle;  }
+#week th { width: 170px; text-align: left; padding: 2px; vertical-align: middle;}
+#week .odd td, #week .odd th { background: #E4E7DA }
+
+/*
+ patienten
+------------------------------------------------------------------*/
+/* blauw = 38BEF1, grijs = A39F9F */
+
+#patients #searchForm { margin: 0; padding: 8px 5px 5px 5px  }
+#patients #searchForm label { width: 45px }
+
+#patients #patientForm { margin: 2px 2px 2px 2px; padding: 0  }
+#patients h2 { background: #38BEF1; padding: 5px; margin: 4px 0 4px 0; color: #fff; clear: both; }
+#patients #patientForm > div > div { clear: both }
+#patients .break { margin-top: 6px; padding-top: 6px; border-top: 1px solid #BBB }
+
+#patients #personalia { float: left; width: 388px; padding: 0 8px 0 0 }
+#patients #adding { float: left; width: 388px; padding: 0 0 0 8px }
+#patients #packets { float: left; width: 388px; padding: 0 0 0 8px }
+#patients #briefForm { width: 788px; display: none; }
+
+#patients .buttons { float: none; padding: 3px 0 3px 100px; margin: 4px 0 10px 0 }
+#patients #patientForm div div { margin-bottom: 1px }
+#patients #patientList td { padding-bottom: 10px }
+
+#patients #briefForm textarea { width: 780px; height: 400px; }
+
+#patients #patientForm #personalia span { display: inline-block; width: 60px }
+#patients #patientForm #personalia span.age { width: 70px }
+#patients #patientForm input[type=text] { width: 280px }
+#patients #patientForm #atdd,
+#patients #patientForm #borndd,
+#patients #patientForm #atmm,
+#patients #patientForm #bornmm { width: 16px }
+#patients #patientForm #atyyyy,
+#patients #patientForm #bornyyyy { width: 35px }
+#patients #patientForm #packs { width: 35px }
+#patients #patientForm #bottles { width: 120px }
+#patients #patientForm #zip { width: 35px }
+#patients #patientForm #city { width: 235px }
+#patients #patientForm #phone1,
+#patients #patientForm #phone2 { width: 110px }
+#patients #patientForm #remarks,
+#patients #patientForm #izremarks { width: 280px; height: 38px }
+#patients #patientForm #note { width: 280px; height: 76px }
+
+#patients small { font-size: smaller; }
+#patients span.age { padding-left: 40px }
+#patients b a { text-decoration: none }
+
+#patients #elements { width: 99% }
+#patients #elements td { padding: 3px 0 3px 0; line-height: 16px; border-bottom: 1px solid #BBB }
+
+/* Doctors
+------------------------------------------------------------------*/
+
+#drs #tel, #drs #fax, #drs #gsm { width: 100px }
+#drs label.error { display: inline-block; width: inherit; float: none; color: red; margin-left: 5px; }

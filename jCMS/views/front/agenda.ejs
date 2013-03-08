@@ -1,0 +1,198 @@
+<!doctype html>
+
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="<%=page.language%>"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="<%=page.language%>"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="<%=page.language%>"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="<%=page.language%>">
+<!--<![endif]-->
+
+<% include header.ejs %>
+
+<body id="agendabody">
+
+	<script>
+		$(document).ready(function() {
+			$(".afspraakForm form").validate();
+		});
+	</script>
+
+	<div id="wrapper">
+
+    <% include menu-top %>
+
+		<div class="content" role="main">
+
+			<section>
+
+				<div class="main">
+
+					<h1><%=page.title%></h1>
+
+
+					<% if (step == 99) { %>
+	  					<p class="notification <%=status%>">Onze excuses,
+                  iemand heeft ondertussen dit tijdstip bij deze arts al ingenomen,
+                  probeert U nog eens.</p>
+						<br><br>
+						<p><a class="maakAfspraak button icons" href="afspraak">Klik hier voor een afspraak</a></p>
+					<% } %>
+					
+          
+					<% if (step == 0) { %>
+						<% if (page.content[0] != "") { %>
+							<p><%- page.content[0] %></p>
+						<% } %>
+
+						<div class="afspraak">
+							<header>
+								<h2>Kies een datum</h2>
+								<div class="weekNav clearfix">
+								   <fmt:formatDate var="prev" value='<%=prevDate%>' pattern='dd-MM-yyyy' />
+								   <fmt:formatDate var="next" value='<%=nextDate%>' pattern='dd-MM-yyyy' />
+									<a class="prev" rel="nofollow" href="?date=<%=ddmmyyyy(prevDate)%>">Vorige week</a>
+									<a class="next" rel="nofollow" href="?date=<%=ddmmyyyy(nextDate)%>">Volgende week</a>
+								</div>
+							</header>
+							<div class="steps">
+								<span class="active">1 - Kies een datum</span> <span>2 -
+									Vul uw gegevens in</span> <span class="last">3 - Bevestig</span>
+							</div>
+							<div class="afspraaktableWrap">
+								<table class="afspraakTable">
+									<tbody>
+										<tr>
+											<% for (var i=0; i <= 4; i++) { %>
+                        <th class="<%= (dayList[i].length == 0) ? 'gesloten' : '' %>"><%=dayNames[i]%></th>
+											<% } %>
+										</tr>
+
+										<% for (var index=0; index <= maxRows; index++) { %>
+											<tr>
+												<% for (var timeList in dayList) { time = dayList[timeList][index]; %>
+
+													<td><% if (time) { %>
+															<a href="<%=context%>/nl/afspraak?request=form&amp;slot=<%=time.slot%>&amp;dr=<%=time.dr%>&amp;daynr=<%=time.daynr%>&amp;date=<%=ddmmyyyy(time.xdate)%>&amp;hour=<%=time.hour%>"
+														       rel="nofollow"><span class="time"><%= time.hour %></span><br />
+															<span class="dr"><%= time.drname %></span></a>
+														<% } %></td>
+
+												<% } %>
+											</tr>
+										<% } %>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					<% } %>
+
+
+					<% if (step == 1) { %>
+						<% if (page.content[0] != '') { %>
+							<p><%- page.content[0]%></p>
+						<% } %>
+
+						<div class="afspraak">
+							<header>
+								<h2>Vul uw gegevens in</h2>
+							</header>
+							<div class="steps">
+								<span>1 - Kies een datum</span>
+                <span class="active">2 - Vul uw gegevens in</span>
+                <span class="last">3 - Bevestig</span>
+							</div>
+
+							<div class="selectedDate clearfix">
+								<p>
+									Afspraak met <strong><%=dr.name%></strong><br> op <strong><%=dayname%>
+										<%=datename%> </strong><br> om <strong><%=params.hour%></strong>
+								</p>
+								<p class="otherTime">
+									<a rel="nofollow" href="afspraak">Kies een ander bezoekmoment</a>
+								</p>
+							</div>
+
+							<div class="afspraakForm">
+								<form method="post" action="<%=context%>/<%=page.language%>/afspraak?goal=afspraak"
+									id="calendar" class="clearfix">
+									<input type="text" class="hidden" value="<%=ddmmyyyy(date)%>" id="currDate" name="date" />
+									<input type="hidden" value="<%=dr.name%>" id="drname" name="drname" />
+									<input type="hidden" value="<%=dayname%>" id="dayname" name="dayname" />
+									<input type="hidden" value="<%=params.hour%>" id="hour" name="hour" />
+									<input type="hidden" value="<%=params.slot%>" id="slot" name="slot" />
+
+									<h2>Vul uw gegevens in om de afspraak te maken</h2>
+									<fieldset>
+										<div>
+											<label for="name">Naam *</label> <input type="text" size="50" name="name" id="name" class="required">
+										</div>
+										
+										<!-- add this, when by clicking on "Nieuwe Patient"
+										     we present them with all the needed data for the patient files
+										     the default in the controller is "bestaand", so no need for a hidden input type
+										     
+										<div id="status" class="radios">
+											<input type="radio" name="status" id="statusN" class="required" value="Nieuw">
+											<label for="statusN">Nieuwe patient</label>
+											<input type="radio" name="status" id="statusB" class="required" value="Bestaand">
+											<label for="statusB">Bestaande patient</label>
+										</div>
+										 -->
+										 
+										<div>
+											<label for="what">Betreft</label>
+											<input type="text" size="50" name="what" id="what">
+										</div>
+										<div>
+											<label for="phone">Uw telefoonnr *</label>
+											<input type="text" size="20" name="phone" id="phone" class="required">
+										</div>
+										<div>
+											<label for="email">Uw e-mail *</label>
+											<input type="email" size="50" name="email" id="email" class="required email">
+										</div>
+									</fieldset>
+
+									<p>Zonder geldig telefoonnummer en e-mailadres kunnen wij
+										uw afspraak niet aanvaarden.</p>
+									<input type="submit" name="request" value="Bevestig" class="confirm button">
+									<p class="required">* Verplichte velden</p>
+								</form>
+							</div>
+						</div>
+					<% } %>
+
+
+					<% if (step == 2) { %>
+						<div class="afspraak">
+							<header>
+								<h2>Vul uw gegevens in</h2>
+							</header>
+							<div class="steps">
+								<span>1 - Kies een datum</span>
+                <span>2 - Vul uw gegevens in</span>
+                <span class="active last">3 - Bevestig</span>
+							</div>
+							<div class="afspraakBevestiging">
+								<p>U heeft een afspraak met</p>
+								<p>
+									<strong><%=params.drname %></strong><br>
+                  op <strong><%=datename %></strong> om <strong><%=params.hour %></strong>
+								</p>
+								<p>
+									U hebt een mail gekregen met de bevestiging van uw afspraak.<br />
+									Indien u deze niet krijgt, kijk ook eens in uw spam/junkmail.
+								</p>
+								<p>Tot dan!</p>
+							</div>
+						</div>
+					<% } %>
+
+				</div>
+			</section>
+		</div>
+	</div>
+
+</body>
+</html>

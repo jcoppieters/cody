@@ -1,0 +1,71 @@
+<% for (var x in editElements) { element = editElements[x]; %>
+
+  <%-- --------- Content and Form template ---------------- --%>
+	<% if ((page.item.templateName == 'Content') || (page.item.templateName == 'Form')) { %>
+  <%-- ---------------------------------------------------- --%>
+		<% if (element.name == 'InDeKijker') { %>
+			<div>
+				<label for="S<%= element.id %>">In de kijker</label>
+				<input name="K<%= element.id %>" id="K<%= element.id %>" type="hidden" value="<%= element.kind %>" />
+				<input name="N<%= element.id %>" id="N<%= element.id %>" type="hidden" value="<%= element.name %>" />
+				<input name="S<%= element.id %>" id="S<%= element.id %>" type="checkbox" value="Y" <%= (element.string=='Y') ? 'checked' : '' %> />
+			</div>
+		<% } else if (element.name == 'zzzzzz') { %>
+			<div>
+				<label for="S<%= element.id %>">ZZZZZZZ</label>
+				<input name="K<%= element.id %>" id="K<%= element.id %>" type="hidden" value="<%= element.kind %>" />
+				<input name="N<%= element.id %>" id="N<%= element.id %>" type="hidden" value="<%= element.name %>" />
+				<input name="S<%= element.id %>" id="S<%= element.id %>" type="text" value="<%= element.string %>" size="10"/>
+			</div>
+	  <% } %>
+	
+  <%-- ---------------------------------------------------- --%>
+	<% } else { %>
+  <%-- ---------------------------------------------------- --%>
+	  <% if (element.kind == 'A') { %>
+			<div class="Area">
+				<label for="<%= element.name %>"><%= element.name %></label>
+				<input name="K<%= element.id %>" id="K<%= element.id %>" type="hidden" value="<%= element.kind %>" />
+				<input name="N<%= element.id %>" id="N<%= element.id %>" type="hidden" value="<%= element.name %>" />
+				<textarea name="S<%= element.id %>" id="S<%= element.id %>" cols="60" rows="4"><%= element.string %></textarea>
+			</div>
+	  <% } %>
+	  	
+	  <% if (element.kind == 'S') { %>
+			<div class="String">
+				<label for="S<%= element.id %>"><%= element.name %></label>
+				<input name="K<%= element.id %>" id="K<%= element.id %>" type="hidden" value="<%= element.kind %>" />
+				<input name="N<%= element.id %>" id="N<%= element.id %>" type="hidden" value="<%= element.name %>" />
+				<input name="S<%= element.id %>" id="S<%= element.id %>" type="text" value="<%= element.string %>" size="62"/>
+			</div>
+	  <% } %>
+	  	
+	  <% if (element.kind == 'D') { %>
+			<div class="String">
+				<label for="S<%= element.id %>"><%= element.name %></label>
+				<input name="K<%= element.id %>" id="K<%= element.id %>" type="hidden" value="<%= element.kind %>" />
+				<input name="N<%= element.id %>" id="N<%= element.id %>" type="hidden" value="<%= element.name %>" />
+				<input name="S<%= element.id %>" id="S<%= element.id %>" type="text" value="<%= element.string %>" size="10" class="date"/>
+			</div>
+	  <% } %>
+	  	
+	  <% if (element.kind == 'N') { %>
+			<div class="String">
+				<label for="S<%= element.id %>"><%= element.name %></label>
+				<input name="K<%= element.id %>" id="K<%= element.id %>" type="hidden" value="<%= element.kind %>" />
+				<input name="N<%= element.id %>" id="N<%= element.id %>" type="hidden" value="<%= element.name %>" />
+				<input name="S<%= element.id %>" id="S<%= element.id %>" type="text" value="<%= element.string %>" size="10" class="number"/>
+			</div>
+	  <% } %>
+	  	
+	  <% if (element.kind == 'I') { %>
+	  		<div class="Image">
+				<label for="S<%= element.id %>">Image</label>
+				<input name="K<%= element.id %>" id="K<%= element.id %>" type="hidden" value="<%= element.kind %>" />
+				<input name="N<%= element.id %>" id="N<%= element.id %>" type="text" value="<%= element.name %>" />
+				<input name="S<%= element.id %>" id="S<%= element.id %>" type="text" value="<%= element.string %>" />
+				<img src="<%= element.link %>" alt="<%= element.name %>">
+			</div>
+	  <% } %>
+	<% } %>
+<% } %>

@@ -1,0 +1,42 @@
+<!doctype html>
+
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="<%=page.language%>"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="<%=page.language%>"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="<%=page.language%>"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="<%=page.language%>">
+<!--<![endif]-->
+
+<% include header.ejs %>
+
+<body>
+	<div id="wrapper">
+
+    <% include menu-top %>
+
+		<div class="content contactPage" role="main">
+
+			<div class="main">
+				<section>
+					<h1><%=page.title%></h1>
+					<div class="contact tel icons">
+						<strong>050 39 50 66</strong><br>Fax: 050 39 16 95
+					</div>
+					<div class="contact address icons">
+						<strong>Ons adres:</strong><br>Lagebekeweg 1<br>8200 -
+						Sint-Andries<br>ON: 0811.314.136
+					</div>
+					<a href="mailto:secretariaat@de-essen.be" class="mail button">Mail
+						ons</a><br> <a href="<%=context%>/<%=page.language%>/afspraak"
+						class="maakAfspraak button icons">Maak een afspraak</a>
+				</section>
+			</div>
+
+			<div class="contactPics">
+				<%- page.content[0] %>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
