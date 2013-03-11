@@ -138,15 +138,18 @@ Page.prototype.getDisplay = function() {
 
 
 Page.prototype.shortString = function() {
-  return this.title + ", order = " + this.item.orderby + ", content = " +
+  return  this.title + " ("+ this.item.id + "/" + this.item.parentId + "), order = " + this.item.orderby + ", content = " +
                   ((this.content != undefined) ? (this.content[0].length + " bytes") : "none");
+};
+Page.prototype.contentLength = function() {
+	return (this.content != undefined) ? this.content[0].length : 0;
 };
 
 //
 // Tree interface requirements
 //
 Page.prototype.getAllowedGroups = function() {
-	return this.item.allowedgroups;
+	return this.item.getAllowedgroups();
 };
 Page.prototype.hasChildren = function() {
 	return (this.children.length > 1);

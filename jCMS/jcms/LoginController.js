@@ -53,7 +53,7 @@ LoginController.prototype.doRequest = function( finish ) {
   } else if (self.request == "logout") {
     var aSession = this.context.session;
     if (aSession) delete aSession.login;
-    var anApp = self.context.app;
+    var anApp = self.app;
     var aContext = anApp.buildContext( self.loggedOutUrl, self.context.req, self.context.res );
     anApp.handToController(aContext);
     
@@ -92,6 +92,8 @@ LoginController.prototype.doRequest = function( finish ) {
     
     
   }*/
+  else
+ 	 finish();
   
   return null;
 };
@@ -115,7 +117,7 @@ LoginController.prototype.tryLogin = function( finish ) {
     self.getUser, [aUserName, this.getParam("password")],
     function (err, results) {
       var userRecord = results[0];
-      var anApp = self.context.app;
+      var anApp = self.app;
    
       self.markLogin(aUserName, userRecord);
       

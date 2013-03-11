@@ -19,7 +19,8 @@ function Controller(context) {
   this.context = context;
   context.controller = this;
 
-  this.connection = context.app.getConnection();
+  this.app = context.app;
+  this.connection = this.app.getConnection();
   
   // console.log(this.context);
 }
@@ -70,4 +71,16 @@ Controller.prototype.closeConnection = function() {
     this.connection = null;
   }
 };
+
+
+// output utilities
+
+Controller.prototype.gen = function( theObject ) {
+    this.context.res.writeHead(200, { "Content-Type": "application/json" });
+    if (typeof theObject != "String")
+    	this.context.res.write(JSON.stringify(theObject));
+    else
+		this.context.res.write(theObject);
+	this.context.res.end()
+}
 

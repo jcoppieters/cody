@@ -107,13 +107,6 @@ TreeController.prototype.doRequest = function( finish ) {
 	}
 };
 
-TreeController.prototype.gen = function( theString ) {
-    res.writeHead(404, { "Content-Type": "application/json" });
-	this.context.res.writeHead();
-	this.context.res.write(theString);
-	this.context.res.end()
-}
-
 // display the complete tree to be used in a select/menu.
 TreeController.prototype.renderList = function( theNode ) {
 	var self = this;

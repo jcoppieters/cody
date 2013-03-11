@@ -29,13 +29,25 @@ Item.prototype.pickParent = function(itemList) {
 }
 
 // values for orderby
-Item.kManual =       'M';
-Item.kAlphabetical = 'A';
-Item.kDate =         'D';
+Item.kManual		= 'M';
+Item.kAlphabetical	= 'A';
+Item.kDate			= 'D';
 
 // values for showcontent
-Item.kContent =      'Y';
-Item.kNothing =      'N';
-Item.kSubItem =      'S';
-Item.kNoSubitems =   'D';
-Item.kLightBox   =   'L';
+Item.kContent		= 'Y';
+Item.kNothing		= 'N';
+Item.kSubItem 		= 'S';
+Item.kNoSubitems	= 'D';
+Item.kLightBox		= 'L';
+
+Item.kDefaultName	= 'New Item';
+
+
+Item.prototype.getAllowedGroups = function() {
+	return this.allowedgroups;
+};
+
+Item.prototype.update = function(controller, finish) {
+  console.log("Item - update: ", this.id + " / " + this.name);
+  finish();
+}

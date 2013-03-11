@@ -14,9 +14,11 @@ var gPleaseOpen = "";
 $(document).ready(function () { 
 
 	$("#sitemap")
+	
 	.bind("loaded.jstree", function(e, data) {
 		Startup(data.inst);
 	 })
+	 
     .bind("before.jstree", function(e, data) {
     	if (data.func == "delete_node") { 
  		      var NODE = data.args[0];
@@ -65,6 +67,7 @@ $(document).ready(function () {
 	 		//return true;
 	 	}
 	 })
+	 
     .bind("rename.jstree", function (e, data) {
     	var NODE = data.rslt.obj, TEXT = data.rslt.new_name, TREE_OBJ = data.inst;
     	var NODE_ID = NODE.attr("id");
@@ -89,64 +92,66 @@ $(document).ready(function () {
        	   }
        	 });
 	 })
+	 
     .bind("move_node.jstree", function (e, data) {
-    	var NODE = data.args[0], REF_NODE = data.args[1], TYPE = data.args[2], 
-    	    TREE_OBJ = data.inst, RB = data.rlbk, 
-    	    NODE_ID = NODE.attr("id"), REF_NODE_ID = REF_NODE.attr("id");
-        // type = "before", "after" or "inside"
-		console.log("Tree - Move: " + NODE.text() + " " + TYPE + " " + REF_NODE.text());
+    	var NODE = data.rslt.o, REF_NODE = data.rslt.r, TYPE = data.rslt.p, TREE_OBJ = data.rslt.rt;
+    	var NODE_ID = NODE.attr("id"), REF_NODE_ID = REF_NODE.attr("id");
+		// console.log("Tree - Move: " + NODE.text() + " " + TYPE + " " + REF_NODE.text());
+		
 		// Allow only one dummy node "website" as toplevel
 		if ((REF_NODE_ID == "id_0") && ((TYPE == "before") || (TYPE == "after"))) {
  	   	    WarnUser("Can't move this element.");
 			// alert("Move refused");
-			$.jstree.rollback(RB);
+			$.jstree.rollback(data.rlbk);
+			
 		} else {
            // type = "before", "after" or "inside"
-           $.ajax({
-        	   type: "GET", url: "./sitemap",
-        	   data: "oper=move&refnode=" + REF_NODE_ID + "&type=" + TYPE + "&node=" + NODE.id,
-        	   success: function(msg) {
-            	   if (msg.substring(0,3) == "NAL") {
+           $.getJSON("./sitemap", {request: 'move', refnode: REF_NODE_ID, type: TYPE, node: NODE_ID},
+        	   function(msg) {
+        	   	   // console.log(msg);
+            	   if (msg.status == "NAL") {
  		     	   	  WarnUser("You are not allowed to move this item, sorry.");
- 		     	   	  $.jstree.rollback(RB);
+ 		     	   	  $.jstree.rollback(data.rlbk);
  		     	   	  
- 		           } else if (msg.substring(0,2) != "OK") {
+ 		           } else if (msg.status != "OK") {
      	   	   		  // alert("Got error from server: " + msg);
 		     	   	  WarnUser("The move of this item failed.<br><small>" + msg + "</small>");
-		       		  $.jstree.rollback(RB);
+		       		  $.jstree.rollback(data.rlbk);
           	       }
-             }
-       	  });
+          	});
 		}	
 	 })
-    .bind("select_node.jstree", function (e, data) {
-    	console.log("Tree - select");
+	 
+    .bind("xselect_node.jstree", function (e, data) {
+    	// console.log("Tree - select");
     	var NODE = $(data.args[0]).parent();
 		gCurrentNode = NODE; // .attr("id");		    
 	 })
-    .bind("deselect_node.jstree", function (e, data) {
-    	console.log("Tree - deselect");
+	 
+    .bind("xdeselect_node.jstree", function (e, data) {
+    	// console.log("Tree - deselect");
      	gCurrentNode = "";
 	 })
+	 
     .bind("ondblclk.jstree", function (e, data) {
     	var NODE_ID = data.args[0].attr("id");
     	console.log("Tree - dblClick -> " + NODE_ID);
         GetPage(NODE_ID);
 	 })
+	 
     .bind("create_node.jstree", function(e, data) {
     	var NODE = data.args[0], REF_NODE = data.args[1], TYPE = data.args[2], 
     	    TREE_OBJ = data.inst, RB = data.rlbk, 
     	    NODE_ID = NODE.attr("id"), REF_NODE_ID = REF_NODE.attr("id");
+    	console.log(data);
         // type = "before", "after" or "inside"
-        $.ajax({
-       	   type: "GET", url: "./sitemap",
-       	   data: "oper=insert&refnode=" + REF_NODE_ID + "&type=" + TYPE + "&title=" + TREE_OBJ.get_text(NODE),
-       	   success: function(msg){
-        	 if (msg.substring(0,3) == "NAL") {
+        $.ajax("./sitemap", { request: insert, refnode: REF_NODE_ID, type: TYPE, title: NODE.text()} ,
+       	   function(msg){
+        	 if (msg.status == "NAL") {
      	   	    WarnUser("You are not allowed to create and item here, sorry");
      	   	    $.jstree.rollback(RB);
      	   	    
-             } else if (msg.substring(0,3) == "NOK") {
+             } else if (msg.status == "NOK") {
      	   	    // alert("Got error from server: " + msg);
      	   	    WarnUser("Creation of a new item failed.<br><small>" + msg + "</small>");
 		       	$.jstree.rollback(RB);
@@ -156,24 +161,27 @@ $(document).ready(function () {
       	   		gPleaseOpen = msg.substring(0,3) + parseInt(msg.substring(3));
 	       	    NODE.id = gPleaseOpen;
         	 }
-           }
        });
      })
+     
+     .bind("loaded.jstree", function (event, data) {
+        console.log("TREE IS LOADED");
+     })
+     
 	 .jstree({
-	      plugins : [ "themes", "html_data", "ui", "crrm" ],
-		  ui: {
-			animation: 250,
-			theme_name: "apple",   // alternatives: "apple", "default" or false (= no theme)
-			select_limit: 1,
-			initially_select: []
-		  },
-		  strings: {
-			new_node: "New page"  // Item.kDefaultName !!
-		  },
-		  rules: {
-	        use_max_children: false,
-	        use_max_depth: false
+	      plugins : [ "themes", "html_data", "ui", "crrm", "dnd", "types" ],
+	      core : {
+	      	initially_open : ['id_0'],
+		  	strings: {
+				new_node: "New page"  // Item.kDefaultName !!
+		  	}
 	      },
+	      themes : {
+	      	theme: "default"   // alternatives: "apple", "default" or false (= no theme)
+	      },
+		  ui: {
+			select_limit: 1
+		  },
 	      types: {
 	    	  // "default" : {},
 	    	  "root" : {

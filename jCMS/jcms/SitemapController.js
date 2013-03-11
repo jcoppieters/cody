@@ -15,6 +15,7 @@ function SitemapController(context) {
   
   // init inherited controller
   jcms.TreeController.call(this, context);
+  this.super = jcms.TreeController.prototype;
 }
 
 SitemapController.prototype = new jcms.TreeController();
@@ -61,7 +62,7 @@ function Root(aList, id, name) {
  }
  
 SitemapController.prototype.getRoot = function() {
-	return new Root(this.context.app.roots, 0, "Website"); 
+	return new Root(this.app.roots, 0, "Website"); 
 };
 
 SitemapController.prototype.getType = function(theNode) { 
@@ -77,10 +78,86 @@ SitemapController.prototype.getFilePath = function() {
 
 SitemapController.prototype.AddObject = function( title, refNode, type, kind ) {
 };
+
 SitemapController.prototype.MoveObject = function( nodeId, refNode, type ) {
+	// type = "before", "after" or "inside"
+	console.log("Received SitemapController - move, refnode = " +refNode+ 
+						  ", node = " + nodeId + ", type = " + type);
+	
+	var orderNr;
+	var aParent;		
+	
+	// fetch the parent and insertion point
+	if (type == "inside") {
+		aParent = this.app.getItem(this.toId(refNode));
+		orderNr = 9999;
+	} else {	
+		var anItem = this.app.getItem(this.toId(refNode));
+		aParent = this.app.getItem(anItem.parentId);
+		orderNr = anItem.sortorder + ((type == "before") ? -5 : +5);
+	}
+	
+	// fetch the node to be moved
+	var anItem = this.app.getItem(this.toId(nodeId));
+	var curParent = this.app.getItem(anItem.parentId);
+	
+	// check the new target parent
+	if (! this.isAllowed(aParent)) return { status: "NAL" };
+	
+	// check the current parent
+	if (! this.isAllowed(curParent)) return { status: "NAL" };
+	
+		
+	// position in the tree
+	anItem.parentId = aParent.id;
+	console.log("SiteMapController.MovePage: old order = " + anItem.sortorder + ", new order = " + orderNr);
+	anItem.sortorder = orderNr;
+	
+	try {
+		// anItem.doUpdate(this); -> done in respace too
+		this.app.attachChildrenToPages();
+        this.app.genRoots();
+		
+		this.respace(aParent);
+		return { status: "OK" };
+	} catch (e) {
+		console.log("SiteMapController.MovePage: Failed to update the Item object.");
+		console.log(e);
+		return { status: "NOK", error: e };
+	}
+	
+
 };
 SitemapController.prototype.RenameObject = function( title, nodeId ) {
+	var self = this;
+	console.log("Received SitemapController - rename, node = " + nodeId + ", title = " + title);
+			
+	var language = self.context.page.language;	
+	var aPage = self.app.getPage(language, self.toId(nodeId));
+	if (aPage != null) {
+			
+		if (! self.isAllowed(aPage.item)) return {status: "NAL"};
+
+		aPage.title = title;
+	
+		try {
+			aPage.doUpdate(self);
+			
+			if ((this.app.isDefaultLanguage(aPage.language)) || (aPage.item.name == Item.kDefaultName)) {
+				aPage.item.name = title;
+				aPage.item.doUpdate(this.fRequest);
+			}
+			return {status: "OK"};
+			
+		} catch (e) {
+			console.log("SiteMapController.RenameObject: Failed to update the Page or Item object.");			
+			return {status: "NOK", error: e };
+		}
+		
+	} else
+		return {status: "NOK"};
 };
+
 SitemapController.prototype.DeleteObject = function( nodeId ) {
 };
 SitemapController.prototype.MakeSelect = function( type ) {
@@ -89,21 +166,18 @@ SitemapController.prototype.UploadFile = function( filePath, nodeId ) {
 };
 SitemapController.prototype.FetchNode = function( theNode ) {
 	var self = this;
-	// just switch the page from our context ??
 	
-	var language = this.context.page.language;
-	var editPath = language + "/" + self.toId(theNode);
+	var language = self.context.page.language;	
+	var aPage = self.app.getPage(language, self.toId(theNode));
+	if (! self.isAllowed(aPage.item)) return {status: "NAL"};
 	
-	var aPage = self.context.app.urls[editPath];
-	if (! self.isAllowed(aPage)) return "NAL";
-	
-	// replace our page...
+	// just switch the page in our current context and we're done ??
 	self.context.page = aPage;
 	
 	//TODO: get all elements connected to this page
 	self.context.editElements = [];
 	
-	console.log("SitemapController.FetchNode: node = " + theNode + ", language = " + language + " => " + self.context.page.item.id);
+	console.log("SitemapController.FetchNode: node = " + theNode + " + language = " + language + " => " + self.context.page.item.id);
 
 };
 
@@ -118,11 +192,11 @@ SitemapController.prototype.toId = function( nodeId ) {
 /* Controller specific, called from template */
 
 SitemapController.prototype.getAdminTree = function() {
-	return this.renderTree( new Root(this.context.app.admins, 1, "Admin"), false, 99 );
+	return this.renderTree( new Root(this.app.admins, 1, "Admin"), false, 99 );
 }
 
 SitemapController.prototype.getGlobalTree = function() {
-	return this.renderTree( new Root(this.context.app.globals, 1, "Globals"), false, 99 );
+	return this.renderTree( new Root(this.app.globals, 1, "Globals"), false, 99 );
 }
 
 
@@ -132,9 +206,25 @@ SitemapController.prototype.realDelete = function( theNode ) {
 SitemapController.prototype.AdjustElements = function( theNode ) {
 };
 
+/* SitemapController utilities */
+SitemapController.prototype.respace = function( parent ) {
+	// Find all children, any page of the item will do, they all have the same children in any language
+	var aPage = this.app.getPage(this.context.page.language, parent.id);
+
+	var nr = 0;
+	for (var x in aPage.children) { var cp = aPage.children[x];
+		nr += 10;
+		console.log("SiteMapController.Respace: checking '" + cp.item.name + "' now = "+cp.item.sortorder + " to " + nr);
+		if (cp.item.sortorder != nr) {
+			cp.item.sortorder = nr;
+			cp.item.update(this, function() {});
+		}
+	}
+} 
+
+
 
 SitemapController.prototype.isAllowed = function( theNode ) {
-		
 	var aUserDomain = "";
 	var aRecord = this.getLogin();
 	if (aRecord != null) {
@@ -236,7 +326,7 @@ SitemapController.prototype.isAllowed = function( theNode ) {
 			int theId = Integer.parseInt(thePageId.substring(3));
 			TPage aPage = this.fApplication.GetPage(this.fRequest.getLanguage(), theId);
 			
-			if (! this.isAllowed(aPage)) return "NAL";
+			if (! this.isAllowed(aPage.item)) return "NAL";
 			
 			// update the large chunk of data from this page (TContent.fData -> db:content)
 			TContent.doSaveData(this.fRequest, theId, theData);
@@ -288,7 +378,7 @@ SitemapController.prototype.isAllowed = function( theNode ) {
 			console.log("TSitemapController.FetchNode: node = " + theNode + ", language = " + aLan);
 			TPage aPage = this.fApplication.GetPage(aLan, Integer.parseInt(theNode.substring(3)));
 			
-			if (! this.isAllowed(aPage)) return "NAL";
+			if (! this.isAllowed(aPage.item)) return "NAL";
 			
 			TContent aContent = new TContent(this.fRequest, aPage);
 			aContent.Init();
@@ -323,7 +413,7 @@ SitemapController.prototype.isAllowed = function( theNode ) {
 			int anItemId = Integer.parseInt(theNode.substring(3));
 			TPage aPage = this.fApplication.GetPage(this.fRequest.getLanguage(), anItemId);
 			
-			if (! this.isAllowed(aPage)) return "NAL";
+			if (! this.isAllowed(aPage.item)) return "NAL";
 
 			aPage.doDelete(this.fRequest);
 			return "OK";
@@ -343,8 +433,9 @@ SitemapController.prototype.isAllowed = function( theNode ) {
 			// just save the current page should something fail, this keeps the tree navigation open at the correct place
 			TPage aCurrent = this.fApplication.GetPage(this.fRequest.getLanguage(), anItemId);
 			this.fRequest.setVar(TApplication.kRequest, "savedPage", aCurrent);
+			TItem anItem = aCurrent.item;
 			
-			if (! this.isAllowed(aCurrent)) return "NAL";
+			if (! this.isAllowed(aCurrent.item)) return "NAL";
 
 			// delete all language versions of this page
 			for (TLanguage aLan: this.fApplication.GetLanguages()) {
@@ -357,11 +448,10 @@ SitemapController.prototype.isAllowed = function( theNode ) {
 				}
 			}
 			// delete the item
-			TItem anItem = this.fApplication.GetItem(anItemId);
 			anItem.doRealDelete(this.fRequest);
 			
 			// if everything went well, select the parent.
-			this.fRequest.setVar(TApplication.kRequest, "savedPage", aCurrent.fParent);
+			this.fRequest.setVar(TApplication.kRequest, "savedPage", anItem.parent);
 
 			return "OK";
 			

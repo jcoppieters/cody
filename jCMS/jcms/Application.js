@@ -20,7 +20,7 @@ function Application(name, version) {
   this.urls = null;         // hashmap with (urls - page)
   this.languages = null;    // array with all languages
   this.domains = null;      // array with all (user) domains
-  this.forms = {};    		//TODO: hasmap with (id - form)
+  this.forms = {};    		//TODO: hashmap with (id - form)
   this.controllers = {};    // hashmap with (name - constructor)
     
   this.testing = false;
@@ -91,15 +91,16 @@ Application.prototype.log = function(p1, p2) {
 //////////////////
 Application.prototype.servePage = function(req, res) {
   var self = this;
+   
+  // can't show all content, because during init, it is fetched async
+  if (! this.dumped) this.dump();
   
-  // can't do this in the init phase
-  // if (! this.dumped) this.dump();
- 
   // get url path, strip leading '/'
   var path = req._parsedUrl.pathname.substring(1);
   self.log("------------------------------------------------------------------- " + new Date() + "--");
   self.log("servePage - path -> " + path);
   
+   
   var aContext = this.buildContext( path, req, res );
   self.handToController(aContext);
 };
@@ -209,10 +210,13 @@ Application.prototype.fetchStructures = function(connection) {
   });
 };
 
+Application.prototype.isDefaultLanguage = function(language) {
+	return language == this.defaultLanguage;
+}
 Application.prototype.findLanguage = function(url) {
   var i = url.indexOf("/");
   return (i > 0) ? url.substring(0, i) : this.defaultLanguage;
-};
+}
 
 ///////////////
 // Templates //
@@ -301,10 +305,15 @@ Application.prototype.getSubDomain = function(path) {
 	return path.substring(pos+1); 
 };
 
-Application.prototype.findPage = function(path, language) {
-  // only keep language/domain
-  //TODO: split off!!
+Application.prototype.getPage = function(languageOrLink, itemId) {
+	if (typeof itemId == "undefined")
+		return this.urls[languageOrLink];
+	else 
+		return this.urls[languageOrLink+"/"+itemId];
+}
 
+Application.prototype.findPage = function(path, language) {
+  // Use only language/domain
   var pageLink = this.getPageLink(path);
   var aPage = this.urls[pageLink];
   
@@ -325,7 +334,11 @@ Application.prototype.findPage = function(path, language) {
   return aPage;
 };
 
-Application.prototype.genSpecials = function() {
+Application.prototype.genRoots = function() {
+  this.roots = [];
+  this.globals = [];
+  this.admins = [];
+  
   // loop through all pages
   //   - put in 'roots' (parent = 0) or 'admin' (parent = -1) or 'global' (parent = -2)
   //   - lookup for each page its 'toplevel' (root)
@@ -333,15 +346,15 @@ Application.prototype.genSpecials = function() {
     var p = this.pages[i];
     if (p.item.parentId ==  0) this.roots.push(p);
 	//TODO: remove compatibility mode with rWorks -> delete the < 50 !
-    if ((p.item.parentId == -1) && (p.item.id <= 50)) this.admins.push(p);  
+    if ((p.item.parentId == -1) && (p.item.id <= 50) && (p.item.id != 0)) this.admins.push(p);  
     if ((p.item.parentId == -2) || ((p.item.parentId == -1) && (p.item.id > 50))) this.globals.push(p);
     
     // let the page find its toplevel
     p.addRoot();
-  }
+  }  
 };
 
-Application.prototype.attachPageChildren = function() {
+Application.prototype.attachChildrenToPages = function() {
   // loop through all pages and attach their children
   for (var i in this.pages) {
     // let the page itself pick from the list
@@ -361,11 +374,11 @@ Application.prototype.fetchPages = function(connection) {
       O.addTo(self);
       O.getContent(connection);
     }
-    self.attachPageChildren();
-    self.genSpecials();
+    self.attachChildrenToPages();
+    self.genRoots();
     
     self.log("Application.fetchPages", "fetched " + result.length + " pages");
-        
+    
     // next step
     self.fetchForms(connection);
   });
@@ -380,18 +393,21 @@ Application.prototype.dump = function() {
 
     for(var p in r) {
       console.log(tab + r[p].shortString());
-      cnt += r[p].content[0].length;
+      cnt += r[p].contentLength();
       printLevel(r[p].children, nr+2);
     }
   }
   
   this.dumped = true;
-  // console.log("Roots:");
-  // printLevel(this.roots, 0);
+  console.log("Roots:");
+  printLevel(this.roots, 0);
+  
   console.log("--- Admin ---");
   printLevel(this.admins, 1);
+  
   console.log("--- Global ---");
   printLevel(this.globals, 1);
+  
   console.log("----------------");
   console.log("Total content: " + cnt + " bytes");
   console.log("----------------");

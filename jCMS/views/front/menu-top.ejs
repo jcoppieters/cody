@@ -11,7 +11,7 @@
 
 	<nav>
 		<ul id="mainNav">
-      <% for (var i in page.root.children) {  var p = page.root.children[i]; %>
+      <% for (var i in app.roots) {  var p = app.roots[i]; %>
 				<li class="<%= (p == page && p.itemId != 109) ? 'active' : '' %>">
 					<a href="<%=context%>/<%=p.url%>"><%=p.title%></a>
 				</li>

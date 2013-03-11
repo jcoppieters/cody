@@ -14,7 +14,6 @@ function Context(path, page, app, req, res) {
   this.req = req;
   this.res = res;
   this.path = path;
-  this.message = "";
   
   this.pagelink = app.getPageLink(path);
   this.subdomain = app.getSubDomain(path);
@@ -28,6 +27,7 @@ function Context(path, page, app, req, res) {
   this.request = this.params.request || this.subdomain || "";
   
   this.status = "success";
+  this.message = "";
 		  
   this.min = ""; // ".min"
   this.context = "";
@@ -36,7 +36,7 @@ function Context(path, page, app, req, res) {
   this.fn = page.getView();
   
   this.session = req.session;
-  this.login = this.session["login"]
+  this.login = this.session["login"];
 }
 
 Context.prototype.getMini = function() {
