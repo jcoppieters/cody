@@ -25,7 +25,7 @@ $(document).ready(function () {
       var aNode = data.args[0];
       var nodeId = aNode.attr("id");
       // we don't actually do deletes, just mark the node as inactive in the database and rename it in the tree
-      console.log("Tree - Delete: " + aNode.text());
+      // console.log("Tree - Delete: " + aNode.text());
       
       $.getJSON("./sitemap", {request: 'delete', node: nodeId},
         function(msg){
@@ -55,28 +55,28 @@ $(document).ready(function () {
 
     } else if (data.func == "close_node") {
     	var nodeId = data.args[0].attr("id");
-      console.log("Tree - close: " + nodeId);
+      // console.log("Tree - close: " + nodeId);
       // don't allow closing the root node
       if (nodeId == "id_0") {
-        console.log("Tree - prevent closing");
+        // console.log("Tree - prevent closing");
         e.stopImmediatePropagation();
         return false;
       }
 
     } else if (data.func == "rename_node") {
-        console.log("Tree - Before: rename_node, please-open = " + gPleaseOpen);
+        // console.log("Tree - Before: rename_node, please-open = " + gPleaseOpen);
         if (gPleaseOpen) {
           // we're here after a create_node, set the name and open the item for editing
           $.getJSON("./sitemap", {request: 'rename', title: data.args[1], node: gPleaseOpen},
               function(msg){
                 if (msg.status == "OK") {
-                  doEdit();
+                 doEdit(data.args[0]);
+                 gPleaseOpen = null;
                }
           });
         }
-        gPleaseOpen = null;
       
-    } else {
+      //} else {
       // console.log("Tree - Before: " + data.func); console.log(data);
     }
   })
@@ -84,7 +84,7 @@ $(document).ready(function () {
   .bind("rename.jstree", function (e, data) {
     var aNode = data.rslt.obj, text = data.rslt.new_name;
     var nodeId = aNode.attr("id");
-    console.log("Tree - Rename: " + nodeId + " -> " + text);
+    // console.log("Tree - Rename: " + nodeId + " -> " + text);
     
     $.getJSON("./sitemap", {request: 'rename', title: text, node: nodeId},
         function(msg){
@@ -143,7 +143,6 @@ $(document).ready(function () {
   })
 
   .bind("create_node.jstree", function(e, data) {
-    console.log(data);
     var title = data.args[2].data[0], aNode = data.rslt.obj;
     var type = data.args[1] || "inside";  // insert type = before, after, inside, first, last
     var refNode = (type == "inside") ? data.args[0] : data.args[1];
@@ -156,13 +155,13 @@ $(document).ready(function () {
             $.jstree.rollback(data.rlbk);
     
           } else if (msg.status == "NOK") {
-            console.log(msg)
+            console.log(msg);
             warnUser("Creation of a new item failed.<br>server status: " + msg.status);
             $.jstree.rollback(data.rlbk);
     
           } else {
             // remember this node, it will go into "rename" mode now, so after rename -> open it up for editing
-            console.log("setting node id to " + msg.node);
+            // console.log("create - setting node id to " + msg.node);
             gPleaseOpen = msg.node;
             aNode.attr("id", msg.node);
             
@@ -220,8 +219,11 @@ function doDelete() {
     warnUser("Please select an item to delete first");
   }
 }
-function doEdit() {
-  var t = $("#sitemap").jstree("get_selected"); 
+function doEdit(aNode) {
+  if (aNode) $("#sitemap").jstree("select_node", aNode, true);
+  
+  var t = aNode || $("#sitemap").jstree("get_selected"); 
+  
   if (t != '') {
     getPage(t.attr("id"));
   } else {

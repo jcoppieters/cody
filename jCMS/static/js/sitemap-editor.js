@@ -65,7 +65,6 @@ function getPage(id) {
             buttonImage: gImages + "/icon_calendar.png",
             buttonImageOnly: true,
             dateFormat: "dd-mm-yy"});
-          console.log($.datepicker);
         
           $(".dater").datepicker();
           
