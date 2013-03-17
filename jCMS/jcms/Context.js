@@ -3,6 +3,7 @@
 //
 //
 console.log("loading " + module.id);
+var jcms = require("./index.js");
 
 module.exports = Context;
 
@@ -28,7 +29,9 @@ function Context(path, page, app, req, res) {
   
   this.status = "success";
   this.message = "";
-		  
+  
+  this.dateFormat = "dd-mm-yyyy";
+      
   this.min = ""; // ".min"
   this.context = "";
   this.static = "/static";
@@ -36,14 +39,26 @@ function Context(path, page, app, req, res) {
   this.fn = page.getView();
   
   this.session = req.session;
-  this.login = this.session["login"];
+  this.setLogin(this.session.login);
 }
+
+Context.prototype.setLogin = function(login) {
+	this.session.login = login;
+	this.login = new jcms.User(login);
+};
+Context.prototype.isLoggedIn = function() {
+  return (this.login) && (this.login.active == "Y");
+};
+Context.prototype.getLogin = function() {
+	return this.login || new jcms.User({});
+};
+
 
 Context.prototype.getMini = function() {
   var mini = {};
   
   mini.params = {};
-  for(var x in this.params) mini.params[x] = this.params[x];
+  for(var x in this.params) { mini.params[x] = this.params[x]; }
   mini.params = this.params;
   
   mini.path = this.path;
@@ -58,7 +73,7 @@ Context.prototype.getMini = function() {
 
 Context.prototype.copyFromMini = function(mini) {
   this.params = {};
-  for(var x in mini.params) this.params[x] = mini.params[x];
+  for(var x in mini.params) { this.params[x] = mini.params[x]; }
   
   this.path = mini.path;
   this.request = mini.request;
@@ -68,41 +83,53 @@ Context.prototype.copyFromMini = function(mini) {
   this.fn = mini.fn;
   
   this.page = this.app.findPage(this.path, this.page.language);
-
 };
 
 
-Context.prototype.ddmmyyyy = function(aDate) {
+Context.prototype.formatDate = function(aDate) {
   function two(n) {
     return (n < 10) ? ("0" + n) : n;
   }
-  return two(aDate.getDate()) + "-" + two(aDate.getMonth()+1) + "-" + aDate.getFullYear();
+  if (this.dateFormat == "dd-mm-yyyy") {
+  	return two(aDate.getDate()) + "-" + two(aDate.getMonth()+1) + "-" + aDate.getFullYear();
+  	
+  } else if (this.dateFormat == "mm-dd-yyyy") {
+  	return two(aDate.getMonth()+1) + "-" + two(aDate.getDate()) + "-" + aDate.getFullYear();
+  	
+  } else { // "yyyy-mm-dd"
+  	return aDate.getFullYear() + "-" + two(aDate.getMonth()+1) + "-" + two(aDate.getDate());
+  }
 };
 
 Context.prototype.getDate = function(paramName, defaultValue) {
   // should look at the current locale of the user page
-  //  for now it is dd-mm-yyyy or dd/mm/yyyy
+  //  for now we depend on the dateFormat field of this context
   
   var x = this.req.param(paramName);
-  if (x == undefined) return defaultValue;
+  if (typeof x == "undefined") { return defaultValue; }
   
-  if (x.indexOf("-") > 0)
-    parts = x.split("-");
-  else
-    parts = x.split("/");
-  
-  if (parts.length < 3)
-    return defaultValue;
-  else
-    return new Date(parts[2], parts[1]-1, parts[0]);
-}
+  var parts = (x.indexOf("-") > 0) ? x.split("-") : x.split("/");
+
+  if (this.dateFormat == "dd-mm-yyyy") {
+    return (parts.length < 3) ? 
+      defaultValue : new Date(parts[2], parts[1]-1, parts[0]);
+    
+  } else if (this.dateFormat == "mm-dd-yyyy") {
+    return (parts.length < 3) ? 
+      defaultValue : new Date(parts[2], parts[0]-1, parts[1]);
+    
+  } else { // "yyyy-mm-dd"
+   return (parts.length < 3) ? 
+      defaultValue : new Date(parts[0], parts[1]-1, parts[0]);
+  }
+};
 
 Context.prototype.getParam = function(paramName, defaultValue) {
   var x = this.params[paramName];
-  return (x == undefined) ? defaultValue : x;
-}
+  return (typeof x == "undefined") ? defaultValue : x;
+};
 
 Context.prototype.setParam = function(paramName, value) {
   this.params[paramName] = value;
-}
+};
 

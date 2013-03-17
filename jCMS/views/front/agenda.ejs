@@ -48,10 +48,8 @@
 							<header>
 								<h2>Kies een datum</h2>
 								<div class="weekNav clearfix">
-								   <fmt:formatDate var="prev" value='<%=prevDate%>' pattern='dd-MM-yyyy' />
-								   <fmt:formatDate var="next" value='<%=nextDate%>' pattern='dd-MM-yyyy' />
-									<a class="prev" rel="nofollow" href="?date=<%=ddmmyyyy(prevDate)%>">Vorige week</a>
-									<a class="next" rel="nofollow" href="?date=<%=ddmmyyyy(nextDate)%>">Volgende week</a>
+									<a class="prev" rel="nofollow" href="?date=<%= formatDate(prevDate) %>">Vorige week</a>
+									<a class="next" rel="nofollow" href="?date=<%= formatDate(nextDate) %>">Volgende week</a>
 								</div>
 							</header>
 							<div class="steps">
@@ -72,7 +70,7 @@
 												<% for (var timeList in dayList) { time = dayList[timeList][index]; %>
 
 													<td><% if (time) { %>
-															<a href="<%=context%>/nl/afspraak?request=form&amp;slot=<%=time.slot%>&amp;dr=<%=time.dr%>&amp;daynr=<%=time.daynr%>&amp;date=<%=ddmmyyyy(time.xdate)%>&amp;hour=<%=time.hour%>"
+															<a href="<%=context%>/nl/afspraak?request=form&amp;slot=<%=time.slot%>&amp;dr=<%=time.dr%>&amp;daynr=<%=time.daynr%>&amp;date=<%= formatDate(time.xdate) %>&amp;hour=<%=time.hour%>"
 														       rel="nofollow"><span class="time"><%= time.hour %></span><br />
 															<span class="dr"><%= time.drname %></span></a>
 														<% } %></td>
@@ -116,7 +114,7 @@
 							<div class="afspraakForm">
 								<form method="post" action="<%=context%>/<%=page.language%>/afspraak?goal=afspraak"
 									id="calendar" class="clearfix">
-									<input type="text" class="hidden" value="<%=ddmmyyyy(date)%>" id="currDate" name="date" />
+									<input type="text" class="hidden" value="<%= formatDate(date) %>" id="currDate" name="date" />
 									<input type="hidden" value="<%=dr.name%>" id="drname" name="drname" />
 									<input type="hidden" value="<%=dayname%>" id="dayname" name="dayname" />
 									<input type="hidden" value="<%=params.hour%>" id="hour" name="hour" />

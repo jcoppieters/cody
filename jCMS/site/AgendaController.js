@@ -19,10 +19,6 @@ function AgendaController(context) {
 AgendaController.prototype = new jcms.Controller();
 
 
-AgendaController.prototype.needsLogin = function() {
-  return true;
-}
-
 AgendaController.prototype.doRequest = function( finish ) {
   finish();
 }

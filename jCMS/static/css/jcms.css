@@ -64,24 +64,19 @@ sub { font-size: 8px; vertical-align: sub; }
 .warning { clear: both; padding: 5px 10px; background: #fef9f9; border: 1px solid #f00; color: #f00; text-align: left; }
 
 /*-----------------------------------*/
-.ui-datepicker-trigger { vertical-align: top; margin-top: 2px; margin-leftL 4px; }
+.ui-datepicker-trigger { vertical-align: top; margin-top: 2px; margin-left: 4px; }
 
 #wrapper { width: 1000px; margin: 0 auto; background: url(../images/admin-bg.gif) repeat-x 0 top; }
 #wrapper_data { clear: both; width: 1000px; overflow: hidden; padding: 0px 0 0; }
 
 #left_nav { width: 245px;  float: left; margin-top: 7px;}
 #right_cont { float: right; width: 550px; margin-top: 7px;}
-#sitemap { margin-top: 10px; width: 230px; }
+#sitemap { margin-top: 10px; width: 230px; background: none; }
 
 #content_buttons { margin: 5px; text-align: center; }
 #content_div { border: 1px solid #ccc; background-color: rgb(240, 240, 238);}
 #content_div textarea { width: 798px; }
 
-#content_data { width: 547px; border: 1px solid #ccc; clear:both; }
-#content_data fieldset { float:left; width: 532px; padding: 8px 5px 2px 10px; background: white; }
-#content_data form { padding: 0px; margin: 0px; }
-#editDataLength { padding-left: 10px; margin: 0; line-height: 20px; font-size: 12px; float: left;  }
-.content_text { margin: 0; line-height: 20px; font-size: 13px  }
 
 #action_buttons { padding: 5px 5px 5px 5px;  background-color: rgb(240, 240, 238); clear:both }
 div .language { border-top: 1px solid #ccc; margin: 2px 0 0px 0; padding: 4px 0 10px 0; }
@@ -93,11 +88,32 @@ fieldset div div { 	clear:both; }
 .noline { text-decoration: none }
 
 /*---- tree -------------------------*/
-.tree li.deleted a  { color: #999; }
-
+.jstree li.deleted a  { color: #BBB; }
+.jstree li.invisible a  { color: #999; }
 .open {}
-/*.closed { display: none }
-*/
+
+/*---- item/page editor -------------*/
+
+#onepage label { display: inline-block; float: none; margin-left: 25px; width: inherit;
+                 text-align: right; vertical-align: top; margin-right: 5px }
+#onepage label:first-child { width: 100px; }
+
+#onepage label.error { font-size: 9px; color: red; margin-left: 5px }
+
+#onepage input.dater { width: 80px }
+#onepage input.long, #onepage textarea.long { width: 350px }
+#onepage input[type=text], #onepage textarea { margin-left: 2px }
+#onepage #editDataLength { padding-left: 10px; margin: 0; line-height: 20px; font-size: 12px;  }
+#onepage #domains { width: 100px }
+#onepage input#allowedgroups { width: 246px }
+#FileEditor { display: none; background-color:#F0F0EE; padding: 5px; border: 1px solid #CCC; margin-bottom: 6px; }
+#FileEditor buttons { padding: 3px; }
+
+#content_data { width: 547px; border: 1px solid #ccc; clear:both; }
+#content_data fieldset { float:left; width: 532px; padding: 8px 5px 2px 10px; background: white; }
+#content_data form { padding: 0px; margin: 0px; }
+
+
 
 /*---- tabs -------------------------*/
 ul#content_tabs {

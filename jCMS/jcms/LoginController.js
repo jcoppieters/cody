@@ -10,8 +10,8 @@ var jcms = require("./index.js");
 module.exports = LoginController;
 
 function LoginController(context) {
-	console.log("LoginController.constructor -> page: ("
-                + context.page.itemId + ") " + context.page.title);
+	console.log("LoginController.constructor -> page: (" +
+              context.page.itemId + ") " + context.page.title);
   
   
 	// view to be used for getting the username/password
@@ -23,15 +23,10 @@ function LoginController(context) {
 	this.loggedOutUrl = "/nl";
 		
 	// use this view for the admin operations
-	this.adminView = "admin/users.jsp";
-	
-	// this.getUser = "select * from users where username = ? and password = password(?)";
-	this.getUser = "select * from users where username = ? and password = ?";
-	this.getUserList = "select * from users order by name";
-	
-  
+	this.adminView = "admin/users.ejs";
+	  
 	// init inherited controller
-	this.super = jcms.Controller.call(this, context);
+	jcms.Controller.call(this, context);
 }
 
 LoginController.prototype = new jcms.Controller();
@@ -43,27 +38,26 @@ LoginController.prototype.doRequest = function( finish ) {
   self.context.fn = this.adminView;
 		
   // request for displaying the login screen
-  if (self.request == "") {
+  if (self.request === "") {
     finish( self.loginView );
 		
   // request for trying to log in with the given parameters
-  } else if (self.request == "login") {
+  } else if (self.request === "login") {
     self.tryLogin( finish );    
     
-  } else if (self.request == "logout") {
-    var aSession = this.context.session;
-    if (aSession) delete aSession.login;
+  } else if (self.request === "logout") {
+    self.context.setLogin({});
     var anApp = self.app;
     var aContext = anApp.buildContext( self.loggedOutUrl, self.context.req, self.context.res );
     anApp.handToController(aContext);
     
   }
-  /* else if (self.request == "save") {
+  /* else if (self.request === "save") {
       self.doSave();
       self.updateLogin();
       self.setRequest("list");
       
-  } else if (self.request == "delete")) {
+  } else if (self.request === "delete")) {
     new TSQL(self, "delete from users where id = ?")
       .setValue(this.getId())
       .execute();
@@ -71,7 +65,7 @@ LoginController.prototype.doRequest = function( finish ) {
   }
 
   
-  if (this.request == "edit")) {
+  if (this.request === "edit")) {
     this.setVar("domains", new TSQL(this, "select distinct domain from users order by domain").getList());
     this.setVar("levels", new TSQL(this, "select id, name from levels order by id").getList());
     this.setVar("user", new TSQL(this, "select * from users where id = ?")
@@ -79,13 +73,13 @@ LoginController.prototype.doRequest = function( finish ) {
       .getRecord() );
     return null;
     
-  } else if (this.request == "new") {
+  } else if (this.request === "new") {
     this.setVar("domains", new TSQL(this, "select distinct domain from users order by domain").getList());
     this.setVar("levels", new TSQL(this, "select id, name from levels order by id").getList());
     this.setRequest("edit");
     return null;
           
-  } else if (this.request == "list") {
+  } else if (this.request === "list") {
     this.setVar("levels", new TSQL(this, "select id, name from levels order by id").getList());
     this.setVar("users", new TSQL(this, this.getUserList()).getList() );
     return null;
@@ -100,35 +94,31 @@ LoginController.prototype.doRequest = function( finish ) {
 
 
 LoginController.prototype.markLogin = function( theUserName, theLogin) {
-		// override this one if you want to log the login (= null is means -> failed)
-    console.log("LoginController.markLogin"
-      + ((theLogin == null) ? "Login failed for: " : "Login succesful for: ")
-      + theUserName);
+		// override this one if you want to log the login (= ! isActive() -> failed)
+    console.log("LoginController.markLogin -> " +
+       ((theLogin.isActive()) ? "Login succesful for: " : "Login failed for: ") + theUserName);
 };
 	
 LoginController.prototype.tryLogin = function( finish ) {
-  var self = this;
-  var aSession = self.context.session;
+  var self = this;  
+  var aUserName = self.getParam("username");
   
-  var aUserName = this.getParam("username");
-  if (aSession) aSession.login = null;
+  // remove login from context and session -> there is no way back...
+  self.context.setLogin({});
   
-  self.query(
-    self.getUser, [aUserName, this.getParam("password")],
-    function (err, results) {
-      var userRecord = results[0];
+  jcms.User.getUser(self.connection, aUserName, this.getParam("password"), function (aUser) {
       var anApp = self.app;
    
-      self.markLogin(aUserName, userRecord);
+      self.markLogin(aUserName, aUser);
       
-      if (userRecord) {
+      if (aUser.isActive()) {
         self.feedBack(false, "login-successful");
         
-        // remember the user in the session
-        if (aSession) aSession.login = userRecord;
-        self.context.login = userRecord;
+        // remember the user in the context and session
+        self.context.setLogin(aUser);
         
         // check for pending request from before the login request
+        var aSession = self.context.session;
         if (aSession && aSession.pendingContext) {
           console.log("LoginController.tryLogin -> found pending session after login");
           

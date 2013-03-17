@@ -2,6 +2,15 @@
 // Johan Coppieters - jan 2013 - jWorks
 //
 //
+
+//TODO: drop active from items
+//TODO: drop datatable from templates
+//TODO: rename defaultoper from templates to defaultrequest
+//TODO: rename nr from users to sortorder
+//TODO: rename class in templates to controller
+//TODO: use allowdelete, allowinsert of item
+//TODO: set defaultrequest of item somewhere...
+
 var mysql = require('mysql');
 var jcms = require('./index.js');
 
@@ -10,27 +19,29 @@ console.log("loading " + module.id);
 module.exports = Application;
 
 function Application(name, version) {
-  this.roots = [];          // array with all pages having parent = 0
+  this.roots = {};          // hashmap with all pages having item.id = 0, for all languages
   this.admins = [];         // array with all pages having parent = -1
   this.globals = [];        // array with all pages having parent = -2
   
-  this.templates = null;    // hasmap with (id - template)
-  this.items = null;        // hasmap with (id - item)
+  this.templates = null;    // hashmap with (id - template)
+  this.items = null;        // hashmap with (id - item)
   this.pages = null;        // array with all pages
   this.urls = null;         // hashmap with (urls - page)
-  this.languages = null;    // array with all languages
+  this.languages = [];      // array with all languages
   this.domains = null;      // array with all (user) domains
-  this.forms = {};    		//TODO: hashmap with (id - form)
+  this.forms = {};          //TODO: hashmap with (id - form)
   this.controllers = {};    // hashmap with (name - constructor)
     
   this.testing = false;
   this.logging = true;
   this.name = name;
   this.version = version;
-  this.defaultLanguage = "nl";
   
   this.dumped = false;
 }
+
+Application.kDefaultLanguage = "nl";
+
 
 Application.prototype.init = function() {
   var connection = this.getConnection();
@@ -85,6 +96,13 @@ Application.prototype.log = function(p1, p2) {
 };
 
 
+///////////////
+// Utilities //
+///////////////
+Application.endOfTime = function() {
+	return new Date(2100,12,31,23,59,59);
+};
+
 
 //////////////////
 // Page serving //
@@ -106,24 +124,24 @@ Application.prototype.servePage = function(req, res) {
 };
 
 Application.prototype.buildContext = function (path, req, res) {
-	var self = this;
+  var self = this;
   
-	// get the page
-  	var language = self.findLanguage(path);
-  	var page = self.findPage(path, language);
+  // get the page
+  var language = self.findLanguage(path);
+  var page = self.findPage(path, language);
   
-  	if (page == null) {
-  		self.err("servePage", "No page found for path = " + path + " & language = " + language, res);
-  		return null;
-  	}
-  	
-	self.log("servePage -> page", page.language + "/" + page.itemId + " - " + page.title);
-	
-	// build a context
-	var context = new jcms.Context(path, page, self, req, res);
-	console.log("servePage - params -> ");  console.log(context.params);
-	console.log("servePage - session -> "); console.log(context.session);
-	return context;
+  if (page == null) {
+      self.err("servePage", "No page found for path = " + path + " & language = " + language, res);
+      return null;
+  }
+
+  self.log("servePage -> page", page.language + "/" + page.itemId + " - " + page.title);
+  
+  // build a context
+  var context = new jcms.Context(path, page, self, req, res);
+  console.log("servePage - params -> ");  console.log(context.params);
+  console.log("servePage - session -> "); console.log(context.session);
+  return context;
 };
 
 Application.prototype.handToController = function(context) {
@@ -134,14 +152,14 @@ Application.prototype.handToController = function(context) {
   var controller = context.page.getController(context);
   
   if (controller == null) {
-    self.err("handToController", "No controller found for " + context.page.item.template.class, res);
+    self.err("handToController", "No controller found for " + context.page.item.template.class);
     return;
   }
   
   // check if authentication is required for this action
   //  and if so and not yet done: store this action and perform login first
   if (controller.needsLogin()) {
-    if (context.session.login) {
+    if (controller.isLoggedIn()) {
       self.log("http get - check login", "already logged in");
     } else {
       self.log("http get - check login", "needs login, redirect/remember");
@@ -160,7 +178,7 @@ Application.prototype.handToController = function(context) {
 
     if (typeof fn != "undefined") context.fn = fn;
     
-    self.log("finish - template file", context.fn);
+    self.log("Application.handToController -> finish - template file = ", (context.fn=="") ? "-- none --" : context.fn);
     if (context.fn != "") {
       context.res.render(context.fn, context);
     }
@@ -187,7 +205,8 @@ Application.prototype.logInFirst = function(context) {
 Application.prototype.getConnection = function() {
   this.log("Application", "getConnection");
  
- //TODO: read from config file
+  //TODO: read from config file
+  // https://github.com/felixge/node-mysql
   return mysql.createConnection({
       host: 'localhost',
       user: 'root', password: 'Jd2qqNAt',
@@ -201,7 +220,7 @@ Application.prototype.getConnection = function() {
 Application.prototype.fetchStructures = function(connection) {
   var self = this;
   
-  connection.query('select * from languages order by sortorder', [], function(err, result) {
+  jcms.Page.loadLanguages(connection, function(result) {
     self.languages = result;
     self.log("Application.fetchLanguages", "fetched " + result.length + " languages");
     
@@ -210,13 +229,16 @@ Application.prototype.fetchStructures = function(connection) {
   });
 };
 
+Application.prototype.getLanguages = function() {
+	return this.languages;
+};
 Application.prototype.isDefaultLanguage = function(language) {
-	return language == this.defaultLanguage;
-}
+  return language == Application.kDefaultLanguage;
+};
 Application.prototype.findLanguage = function(url) {
   var i = url.indexOf("/");
-  return (i > 0) ? url.substring(0, i) : this.defaultLanguage;
-}
+  return (i > 0) ? url.substring(0, i) : Application.kDefaultLanguage;
+};
 
 ///////////////
 // Templates //
@@ -227,7 +249,7 @@ Application.prototype.getTemplate = function(templateId) {
 Application.prototype.fetchTemplates = function(connection) {
   var self = this;
   
-  connection.query('select * from templates', [], function(err, result) {
+  jcms.Template.loadTemplates(connection, function(result) {
     self.templates = {};
     for (var i = 0; i < result.length; i++) {
       // make an Template object of our data
@@ -258,10 +280,18 @@ Application.prototype.attachItemChildren = function() {
   }
 };
 
+Application.prototype.addItem = function(anItem) {
+  var self = this;
+  
+	self.items[anItem.id] = anItem;
+	anItem.pickParent(this.items);
+  self.log("Application.addItem", "added " + anItem.id + " / " + anItem.name);
+};
+
 Application.prototype.fetchItems = function(connection) {
   var self = this;
   
-  connection.query('select * from items', [], function(err, result) {
+  jcms.Item.loadItems(connection, function(result) {
     // make hashtable on item id
     self.items = {};
     
@@ -287,30 +317,30 @@ Application.prototype.fetchItems = function(connection) {
 // Pages //
 ///////////
 Application.prototype.getPageLink = function(path) {
-	var pos = path.indexOf("/");
-	if (pos < 0) return path;
-	
-	var pos = path.indexOf("/", pos+1);
-	if (pos < 0) return path;
-	
-	return path.substring(0, pos); 
+  var pos = path.indexOf("/");
+  if (pos < 0) return path;
+  
+  pos = path.indexOf("/", pos+1);
+  if (pos < 0) return path;
+  
+  return path.substring(0, pos); 
 };
 Application.prototype.getSubDomain = function(path) {
-	var pos = path.indexOf("/");
-	if (pos < 0) return "";
-	
-	var pos = path.indexOf("/", pos+1);
-	if (pos < 0) return "";
-	
-	return path.substring(pos+1); 
+  var pos = path.indexOf("/");
+  if (pos < 0) return "";
+  
+  pos = path.indexOf("/", pos+1);
+  if (pos < 0) return "";
+  
+  return path.substring(pos+1); 
 };
 
 Application.prototype.getPage = function(languageOrLink, itemId) {
-	if (typeof itemId == "undefined")
-		return this.urls[languageOrLink];
-	else 
-		return this.urls[languageOrLink+"/"+itemId];
-}
+  if (typeof itemId == "undefined")
+    return this.urls[languageOrLink];
+  else 
+    return this.urls[languageOrLink+"/"+itemId];
+};
 
 Application.prototype.findPage = function(path, language) {
   // Use only language/domain
@@ -335,7 +365,7 @@ Application.prototype.findPage = function(path, language) {
 };
 
 Application.prototype.genRoots = function() {
-  this.roots = [];
+  this.roots = {};
   this.globals = [];
   this.admins = [];
   
@@ -344,8 +374,10 @@ Application.prototype.genRoots = function() {
   //   - lookup for each page its 'toplevel' (root)
   for (var i in this.pages) {
     var p = this.pages[i];
-    if (p.item.parentId ==  0) this.roots.push(p);
-	//TODO: remove compatibility mode with rWorks -> delete the < 50 !
+    if (p.item.id ==  0) this.roots[p.language] = p;
+    
+    //TODO: remove compatibility mode with rWorks -> delete the < 50 !
+    //TODO: we should store items (I think)
     if ((p.item.parentId == -1) && (p.item.id <= 50) && (p.item.id != 0)) this.admins.push(p);  
     if ((p.item.parentId == -2) || ((p.item.parentId == -1) && (p.item.id > 50))) this.globals.push(p);
     
@@ -362,10 +394,20 @@ Application.prototype.attachChildrenToPages = function() {
   }
 };
 
+Application.prototype.buildSitemap = function() {
+  this.attachChildrenToPages();
+  this.genRoots();
+};
+
+Application.prototype.addPage = function(page) {
+	page.addTo(this);
+	this.buildSitemap();
+};
+
 Application.prototype.fetchPages = function(connection) {
   var self = this;
   
-  connection.query('select * from pages', [], function(err, result) {
+  jcms.Page.loadPages(connection, function(result) {
     self.pages = [];
     self.urls = {};
     for (var i = 0; i < result.length; i++) {
@@ -374,14 +416,42 @@ Application.prototype.fetchPages = function(connection) {
       O.addTo(self);
       O.getContent(connection);
     }
-    self.attachChildrenToPages();
-    self.genRoots();
+    self.buildSitemap();
     
     self.log("Application.fetchPages", "fetched " + result.length + " pages");
     
     // next step
     self.fetchForms(connection);
   });
+};
+
+Application.prototype.deletePagesForItem = function( itemId, finish ) {
+  var self = this;
+  
+  // delete the pages in every language from the url hashmap
+  for (var i in self.languages) {
+    var lan = self.languages[i].id;
+    var P = self.getPage(lan, itemId);
+    delete self.urls[lan+"/"+itemId];
+    if (P.link != "") {
+      delete self.urls[lan+"/"+P.link];
+    }
+  }
+  
+  // delete the page from the pages array
+  // by rebuilding the array while omitting the pages
+  var newList = [];
+  for (var p in this.pages) {
+    if (self.pages[p].itemId != itemId) {
+      newList.push(self.pages[p]);
+    }
+  }
+  self.pages = newList;
+  
+  // rebuild the tree structure
+  self.buildSitemap();
+  
+  finish();
 };
 
 Application.prototype.dump = function() {
@@ -417,33 +487,38 @@ Application.prototype.dump = function() {
 ///////////
 // forms //
 ///////////
+Application.prototype.getForm = function(formId) {
+  return {};
+  //TODO: read forms from the database...
+  // return this.forms[formId];
+};
 Application.prototype.fetchForms = function(connection) {
-	var self = this;
+   var self = this;
   
-	// fetch all forms
+   // fetch all forms
   
-    // next step
-    self.fetchDomains(connection);
+   // next step
+   self.fetchDomains(connection);
 };
 
 
-///////////
-// forms //
-///////////
+/////////////////////
+// Users - Domains //
+/////////////////////
 Application.prototype.fetchDomains = function(connection) {
-	var self = this;
+  var self = this;
   
-	// fetch all user domains and close connection when finished
-    connection.query('select distinct domain from users order by 1', [], function(err, result) {
-	    self.domains = [];
-	    for (var i = 0; i < result.length; i++) {
-	      self.domains.push(result[i].domain);
-	    }
-	    self.log("Application.fetchDomains", "fetched " + result.length + " domains");
-	  
-		// no next step
-		connection.end();
-	});
+  // fetch all user domains and close connection when finished
+  jcms.User.loadDomains(connection, function(result) {
+      self.domains = [];
+      for (var i = 0; i < result.length; i++) {
+        self.domains.push(result[i].domain);
+      }
+      self.log("Application.fetchDomains", "fetched " + result.length + " domains");
+    
+      // no next step
+      connection.end();
+  });
 };
 
 

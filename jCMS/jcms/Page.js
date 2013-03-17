@@ -11,16 +11,48 @@ module.exports = Page;
 function Page(basis, app) {
   // copy from basis
   for (var a in basis) {
-    if (basis.hasOwnProperty(a))
+    if (basis.hasOwnProperty(a)) {
       this[a] = basis[a];
+    }
   }
-  
-  // replace 'item' by the real object and add 'itemId'
+
+  // replace 'item' (an id) by the real object and add 'itemId'
   this.itemId = this.item;
   this.item = app.getItem(this.itemId);
-  if (this.item == undefined)
+  if (typeof this.item == "undefined") {
     app.err("Application.fetchPages", "did not find item for page " + this.itemId + " / " + this.title);
+  }
 }
+
+Page.addDefaults = function(basis, item) {
+  if (typeof item == "undefined") { item = {}; }
+  
+  basis.item = basis.item || item.id;
+  basis.language = basis.language || jcms.Application.kDefaultLanguage;
+  
+  basis.title = basis.title || item.name || jcms.Item.kDefaultName;
+  basis.created = basis.created || new Date();
+  basis.updated = basis.updated || new Date();
+  basis.link = basis.link || "";
+  basis.keywords = basis.keywords || "";
+  basis.description = basis.description || "";
+  basis.active = basis.active || "Y";
+  basis.content =  basis.content || { 0: "" };
+  
+  return basis;
+};
+
+Page.loadPages = function(connection, store) {
+  connection.query('select * from pages', [], function(err, result) {
+    store(result);
+  });
+};
+Page.loadLanguages = function(connection, store) {
+  connection.query('select * from languages order by sortorder', [], function(err, result) {
+    store(result);
+  });
+};
+
 
 Page.prototype.addTo = function(app) {
   // add to the list of all pages
@@ -30,17 +62,36 @@ Page.prototype.addTo = function(app) {
   this.url = this.language + "/" + this.itemId;
   app.urls[this.url] = this;
   
-  // if we have a user defined link, store it as well
-  if (this.link != '') {
-    // replace the page its url by something better
-    this.url = this.language + "/" + this.link;
-    
-    // check if this link is not already used
-    if (app.urls[this.url] != undefined)
-      throw new Error("Application.fetchPages - double link: " + this.url);
-    else
-      app.urls[this.url] = this;
+  if (! this.setLink(this.link, app, true) ) {
+    throw new Error("Application.fetchPages - double link: " + this.url);
+  }
+};
+
+Page.prototype.setLink = function(link, app, isNew) {
+  // if we have a user defined link, store it in the url field as well in the app's url hashmap
+  
+  // delete the current link from the app's hashmap
+  if (isNew != true) {
+    if ((typeof this.link != "undefined") && (this.link != "")) {
+      delete app.urls[this.language + "/" + this.link];
     }
+  }
+  
+  if (link != '') {
+    // check if this link is not already used
+   if (isNew == true) {
+      if (app.urls[this.language + "/" + link]) {
+        return false;
+      }
+    }
+    // replace the page its url by something better (than "language/id")
+    var url = this.language + "/" + link;
+    
+    app.urls[url] = this;
+    this.url = url;
+  }
+  this.link = link;
+  return true;
 };
 
 Page.prototype.addRoot = function() {
@@ -68,13 +119,13 @@ Page.prototype.addChildren = function(list) {
   }
   if (this.children.length > 1) {
     this.sortChildren(this.item.orderby);
-    // console.log("sorted children of " + this.title + " -> " + this.item.orderby);
-    // for(var i in this.children) console.log(" " + this.children[i].title);
+    console.log("Page.addChildren -> sorted children of " + this.title + " -> " + this.item.orderby);
+    for(var i in this.children) console.log(" " + this.children[i].item.sortorder + ". " + this.children[i].title);
   }
 };
 
 Page.prototype.sortChildren = function(order) {
-  var kEqual = 0, kBefore = -1; kAfter = 1;
+  var kEqual = 0, kBefore = -1, kAfter = 1;
   
   this.children.sort( function(a, b) {
     if (a == b)
@@ -142,37 +193,130 @@ Page.prototype.shortString = function() {
                   ((this.content != undefined) ? (this.content[0].length + " bytes") : "none");
 };
 Page.prototype.contentLength = function() {
-	return (this.content != undefined) ? this.content[0].length : 0;
+  return (this.content != undefined) ? this.content[0].length : 0;
 };
+
+Page.prototype.needsLogin = function() {
+  return (this.item) && (this.item.needslogin === "Y");
+};
+
 
 //
 // Tree interface requirements
 //
 Page.prototype.getAllowedGroups = function() {
-	return this.item.getAllowedgroups();
+  return this.item.getAllowedgroups();
 };
 Page.prototype.hasChildren = function() {
-	return (this.children.length > 1);
+  return (this.children.length > 1);
 };
 Page.prototype.isActive = function() { 
-	return (this.active == 'Y'); 
-}
+  return (this.active == 'Y'); 
+};
+Page.prototype.isVisible = function() { 
+  var now = new Date();
+  // console.log(this.title + " - visible = " + (this.active == 'Y') + "/" + (this.item.validfrom <= now) + "/" + (this.item.validto >= now));
+  return (this.active == 'Y') && (this.item.validfrom <= now) && (this.item.validto >= now); 
+};
 
 Page.prototype.getChildren = function() {
-	return this.children;
+  return this.children;
 };
 Page.prototype.getSortOrder = function() {
-	return this.item.sortorder;
+  return this.item.sortorder;
 };
 Page.prototype.setSortOrder = function(nr) {
-	this.item.sortorder = nr;
+  this.item.sortorder = nr;
 };
-Page.prototype.update = function() {
-	console.log("update page " + this.item.id + " - " + this.title);
-};
+
 Page.prototype.getName = function() {
-	return this.title;
+  return this.title;
+};
+Page.prototype.setName = function(name) {
+  this.title = name;
 };
 Page.prototype.getId = function() {
-	return this.item.id;
+  return this.item.id;
 };
+
+
+Page.prototype.scrapeFrom = function(controller) {
+  // get all page info from the controller
+  this.active = controller.getParam("active"); 
+  this.keywords = controller.getParam("keywords");
+  this.description = controller.getParam("description");
+  this.setLink(controller.getParam("link"), controller.app, false);
+  
+  // missing: title (only through "rename"), updated (automatically on doUpdate), created (invariable), language (invariable)
+};
+
+Page.prototype.doUpdate = function(controller, next, isNew) {
+  var self = this;
+  var values = [self.title, self.link, self.active, self.keywords, self.description, self.itemId, self.language];
+  
+  // new or existing record?
+  if (isNew) {
+    console.log("Page.doUpdate -> insert page " + self.title);
+    controller.query("insert into pages (title, link, active, keywords, description , updated, created, item, language) " +
+                     "values (?, ?, ?, ?, ?, now(), now(), ?, ?)", values,
+      function(err, result) {
+        if (err) { 
+          console.log("Page.doUpdate -> error inserting page: " + self.language + "/" + self.itemId);
+          console.log(err); 
+        } else {
+          console.log("Page.doUpdate -> inserted page: " + self.language + "/" + self.itemId);
+          self.created = self.updated = new Date();
+          if (typeof next == "function") { next.call(self, controller); }
+        }
+    });
+    
+  } else {
+    console.log("Page.doUpdate -> update page " + self.itemId + " - " + self.title);
+    controller.query("update pages set title = ?, link = ?, active = ?, keywords = ?, description = ?, updated = now() " +
+                     " where item = ? and language = ?", values,
+        function(err) {
+          if (err) { 
+            console.log("Page.doUpdate -> error updating page: " + self.language + "/" + self.itemId);
+            console.log(err); 
+          } else {
+            console.log("Page.doUpdate -> updated page: " + self.language + "/" + self.itemId);
+            self.updated = new Date();
+           if (typeof next == "function") { next.call(self, controller); }
+          }
+    });
+  }
+};
+
+Page.prototype.doDelete = function(controller, next) {
+	var self = this;
+
+  // should NOT be used !!
+  console.log("ERROR: should not be used -- delete page " + self.language + "/" + this.item.id + " - " + this.title);
+  controller.query("delete from pages where item = ? and language = ?",
+      [self.itemId, self.language],
+      function(err) {
+        if (err) { 
+          console.log(err); 
+        } else {
+          console.log("Page.doDelete -> deleted page: " + self.language + "/" + self.itemId);
+          if (typeof next == "function") { next.call(self, controller); }
+        }
+  });
+};
+
+Page.prototype.doDeactivate = function(controller, next) {
+  var self = this;
+  console.log("Page.doDeactivate -> deactive page " + self.language + "/" + self.itemId + " - " + self.title);
+  this.active = 'N';
+  controller.query("update pages set active = 'N' where item = ? and language = ?",
+      [self.itemId, self.language],
+      function(err) {
+        if (err) { 
+          console.log(err); 
+        } else {
+          console.log("Page.doDeactivate -> deactived page: " + self.language + "/" + self.itemId);
+            if (typeof next == "function") { next.call(self, controller); }
+        }
+  });
+};
+

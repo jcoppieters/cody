@@ -46,14 +46,14 @@ Static.prototype.addCache = function (filename, file) {
       if (nr == 0) {
         delete cache[c];
         nrCache--;
-        console.log("static -> deleted from cache: " + c);
+        // console.log("static -> deleted from cache: " + c);
         break;
       }
     }
   }
   cache[filename] = file;
   nrCache++;
-  console.log("Static -> added to cache: " + filename);
+  // console.log("Static -> added to cache: " + filename);
 }
 
 Static.prototype.tryCache = function (filename) {
@@ -61,7 +61,7 @@ Static.prototype.tryCache = function (filename) {
   if (file) {
     // add 1 to nr of uses
     var type = mime.lookup(filename);
-    console.log("Static -> cache hit: " + filename + " - " + file.length + " bytes as " + type);
+    // console.log("Static -> cache hit: " + filename + " - " + file.length + " bytes as " + type);
     this.response.writeHead(200, { "Content-Type": type });
     this.response.write(file, "binary");
     this.response.end();
@@ -111,7 +111,7 @@ Static.prototype.serve = function () {
         }
 
         var type = mime.lookup(filename);
-        console.log("Static.serve -> reading: " + filename + " - " + file.length + " bytes as " + type);
+        // console.log("Static.serve -> reading: " + filename + " - " + file.length + " bytes as " + type);
         self.response.writeHead(200, { "Content-Type": type });
         self.response.write(file, "binary");
         self.response.end();

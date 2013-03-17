@@ -5,15 +5,16 @@
 console.log("loading " + module.id);
 
 var mysql = require("mysql");
+var jcms = require("./index.js");
 
 module.exports = Controller;
 
 function Controller(context) {
   // only called for using my methods
-  if (context == undefined) return;
+  if (typeof context == "undefined") { return; }
   
-  console.log("Controller.constructor -> page: ("
-              + context.page.itemId + ") " + context.page.title);
+  console.log("Controller.constructor -> page: (" +
+              context.page.itemId + ") " + context.page.title);
 
   this.request = context.request;
   this.context = context;
@@ -26,11 +27,18 @@ function Controller(context) {
 }
 
 Controller.prototype.needsLogin = function() {
-  return false;
+	return (this.context) && (this.context.page) && (this.context.page.needsLogin());
+};
+Controller.prototype.isLoggedIn = function() {
+	return (this.context) && (this.context.isLoggedIn());
 };
 Controller.prototype.getLogin = function() {
-	var session = this.context.session;
-  	return (session) ? session.login : {};
+  return (this.context) ? (this.context.getLogin()) : new jcms.User({});
+};
+
+Controller.prototype.getLoginId = function() {
+  var login = this.getLogin();
+  return (login) ? login.id : null;
 };
 
 Controller.prototype.close = function() {
@@ -72,15 +80,18 @@ Controller.prototype.closeConnection = function() {
   }
 };
 
+// General utilities
+
 
 // output utilities
 
 Controller.prototype.gen = function( theObject ) {
     this.context.res.writeHead(200, { "Content-Type": "application/json" });
-    if (typeof theObject != "String")
-    	this.context.res.write(JSON.stringify(theObject));
-    else
-		this.context.res.write(theObject);
-	this.context.res.end()
-}
+    if (typeof theObject != "String") {
+      this.context.res.write(JSON.stringify(theObject));
+    } else {
+      this.context.res.write(theObject);
+    }
+  this.context.res.end();
+};
 

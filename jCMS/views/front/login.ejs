@@ -23,12 +23,11 @@
     </header>
   
     <div id="login">
-      <% if (session.login) { %>
+      <% if (isLoggedIn()) { %>
          <h2><%=session.login.name%></h2>
          <a href="login?request=logout">Logout</a>
-      <% } %>
-      
-      <% if (! session.login) { %>
+         
+      <% } else { %>
         <h2 id="loginfirst">Alvorens naar de gevraagde pagina te gaan, moet U zich eerst aanmelden.</h2>
         <form action="<%=context%>/<%=page.language%>/login" name="logon" id="logon" method="post" class="clearfix">
           <input type="hidden" name="request" value="login" /> 

@@ -16,7 +16,9 @@ function Template(basis, controllers) {
   }
   // stay compatible with current rWorks databases
   this.fn += ".ejs";
-  if (this.fn.indexOf("/") < 0) this.fn = "front/" + this.fn;
+  if (this.fn.indexOf("/") < 0) {
+    this.fn = "front/" + this.fn;
+  }
   
   // find controller based on the class name
   var className = this['class'];
@@ -27,6 +29,13 @@ function Template(basis, controllers) {
     this.controller = controllers['Controller'];
   }
 }
+
+Template.loadTemplates = function(connection, store) {
+  connection.query('select * from templates', [], function(err, result) {
+    store(result);
+  });
+};
+
 
 Template.prototype.getController = function(context) {
   return new this.controller(context);
