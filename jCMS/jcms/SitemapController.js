@@ -111,22 +111,31 @@ SitemapController.prototype.addObject = function( title, refNode, type, kind, fi
           
         // make the page in all languages
         var langs = self.app.getLanguages();
-        for (var a in langs) {
-          basis = jcms.Page.addDefaults({language: langs[a].id}, anItem);
+ 
+        jcms.Application.each( langs, function(done) {
+          // iterator over all languages
+          basis = jcms.Page.addDefaults({language: this.id}, anItem);
           var aPage = new jcms.Page(basis, self.app);
             
-          //TODO: daisy chain the addPage calls, with a continuation
           aPage.doUpdate(self, function() {
               self.app.addPage(aPage);
+              done();
           }, true);
+          
+        }, function(err) {
+          // terminator
+          
+          if (err) {
+            finish( { status: "NOK", error: err } );
             
-          //TODO: add default elements from template and insert in the database
-          //aContent.FetchElements(aPage.fLanguage, - aDefaultTemplateId);
-          //aContent.doInsertElements();
+          } else {
+            //TODO: add default elements from template and insert in the database
+            //aContent.FetchElements(aPage.fLanguage, - aDefaultTemplateId);
+            //aContent.doInsertElements();
           
-          
-          finish( { status: "OK", node: "id_" + anItem.id } );
-        }
+            finish( { status: "OK", node: "id_" + anItem.id } );
+          }
+        });
       });
         
     } catch (e) {
@@ -371,17 +380,25 @@ SitemapController.prototype.respace = function( parent, finish ) {
   var aPage = this.getObject(parent.id);
 
   var nr = 0;
-  for (var x in aPage.children) { var cp = aPage.children[x];
+  jcms.Application.each(aPage.children, function(done) {
+    var aChildPage = this;
     nr += 10;
-    console.log("SiteMapController.Respace: checking '" + cp.item.name + "' now = " + cp.item.sortorder + " to " + nr);
-    if (cp.item.sortorder != nr) {
-      cp.item.sortorder = nr;
-      cp.item.doUpdate(self, function() {});
-      // either trust in the Force or daisy chain them
-      //TODO: daisy chain the addPage calls, with a continuation
+    console.log("SiteMapController.Respace: checking '" + aChildPage.item.name + "' now = " + aChildPage.item.sortorder + " to " + nr);
+    if (aChildPage.item.sortorder != nr) {
+      aChildPage.item.sortorder = nr;
+      aChildPage.item.doUpdate(self, function() {
+        done();
+      });
+    } else {
+      done();
     }
-  }
-  if (typeof finish == "function") { finish.call(self); }
+    
+  }, function(err) {
+    if (err) { console.log("SitemapController - respace: error = " + err); }
+    if (typeof finish == "function") { finish.call(self); }
+    
+  });
+
 };
 
 

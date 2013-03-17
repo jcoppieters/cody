@@ -3,13 +3,15 @@
 //
 //
 
-//TODO: drop active from items
-//TODO: drop datatable from templates
-//TODO: rename defaultoper from templates to defaultrequest
-//TODO: rename nr from users to sortorder
-//TODO: rename class in templates to controller
-//TODO: use allowdelete, allowinsert of item
-//TODO: set defaultrequest of item somewhere...
+// Next are also in the issues on BitBucket
+//TODO: #1 - drop active from items
+//TODO: #1 - drop datatable from templates
+//TODO: #1 - rename defaultoper from templates to defaultrequest
+//TODO: #1 - rename nr from users to sortorder
+//TODO: #1 - rename class in templates to controller
+
+//TODO: #2 - use allowdelete, allowinsert of item
+//TODO: #3 - set defaultrequest of item somewhere...
 
 var mysql = require('mysql');
 var jcms = require('./index.js');
@@ -38,6 +40,7 @@ function Application(name, version) {
   this.version = version;
   
   this.dumped = false;
+  
 }
 
 Application.kDefaultLanguage = "nl";
@@ -101,6 +104,44 @@ Application.prototype.log = function(p1, p2) {
 ///////////////
 Application.endOfTime = function() {
 	return new Date(2100,12,31,23,59,59);
+};
+
+// Daisy chain operators
+// - list should be an array
+// - iterator is a function that should the passed function when done
+//   if it passes an error to the function the loop end here
+// - finished is a function that is called when everything is done with no parameter
+//   or that is called when the first error occurs
+//
+// Example:
+//   var list = [1, 2, 3, 4, 5];
+//   var sum = 0;
+//   Application.each(list, function(done) { 
+//    sum += this; 
+//    done();  // pass an error is something went wrong
+//
+//   }, function(err) { 
+//     // do somthing with the err if any...
+//     console.log("sum = " + sum);
+//
+//   });
+
+Application.each = function(list, iterator, finished) {
+  var nr = list.length;
+  function one(current) {
+   if (current >= nr) {
+     finished();
+     
+   } else {
+     iterator.call(list[current], function(err) {
+       if (err) {
+         finished(err);
+       }
+       one(current+1);
+     });
+   }
+  }
+  one(0, finished);
 };
 
 
