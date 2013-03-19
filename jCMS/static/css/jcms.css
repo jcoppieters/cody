@@ -106,6 +106,9 @@ fieldset div div { 	clear:both; }
 #onepage #editDataLength { padding-left: 10px; margin: 0; line-height: 20px; font-size: 12px;  }
 #onepage #domains { width: 100px }
 #onepage input#allowedgroups { width: 246px }
+
+#content_div .defaultSkin .mceIframeContainer { padding: 3px; }
+
 #FileEditor { display: none; background-color:#F0F0EE; padding: 5px; border: 1px solid #CCC; margin-bottom: 6px; }
 #FileEditor buttons { padding: 3px; }
 

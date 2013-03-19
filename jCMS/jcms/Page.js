@@ -6,7 +6,6 @@ console.log("loading " + module.id);
 
 var jcms = require("./index.js");
 
-module.exports = Page;
 
 function Page(basis, app) {
   // copy from basis
@@ -23,6 +22,8 @@ function Page(basis, app) {
     app.err("Application.fetchPages", "did not find item for page " + this.itemId + " / " + this.title);
   }
 }
+module.exports = Page;
+
 
 Page.addDefaults = function(basis, item) {
   if (typeof item == "undefined") { item = {}; }
@@ -119,8 +120,8 @@ Page.prototype.addChildren = function(list) {
   }
   if (this.children.length > 1) {
     this.sortChildren(this.item.orderby);
-    console.log("Page.addChildren -> sorted children of " + this.title + " -> " + this.item.orderby);
-    for(var i in this.children) console.log(" " + this.children[i].item.sortorder + ". " + this.children[i].title);
+    // console.log("Page.addChildren -> sorted children of " + this.title + " -> " + this.item.orderby);
+    // for(var i in this.children) console.log(" " + this.children[i].item.sortorder + ". " + this.children[i].title);
   }
 };
 
@@ -320,3 +321,11 @@ Page.prototype.doDeactivate = function(controller, next) {
   });
 };
 
+Page.prototype.updateContent = function(controller, id, content, next) {
+  var self = this;
+  
+  //TODO: pass id to query once the content table is extended
+  console.log("Page.updateContent -> " + self.language + "/" + self.itemId + " - id = " + id);
+  controller.query("update content set data = ? where item = ? and language = ?",
+      [content, self.itemId, self.language], next);
+}

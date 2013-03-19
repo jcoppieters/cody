@@ -67,36 +67,24 @@ TreeController.prototype.doRequest = function( finish ) {
   if (self.context.request == "insert") {
     // a new node was inserted in the tree
   	self.addObject( self.getParam("title"), 
-                              self.getParam("refnode"), 
-                              self.getParam("type"), 
-                              self.getParam("kind"), function( result ) {
-  		self.gen(result);
-      finish("");
-    });
+                    self.getParam("refnode"), 
+                    self.getParam("type"), 
+                    self.getParam("kind"), finish );
     
   } else if (self.context.request == "move") {
     // a  node was being moved around in the tree
     this.moveObject( self.getParam("node"), 
-                               self.getParam("refnode"),
-                               self.getParam("type"), function( result ) {
-  		self.gen(result);
-      finish("");
-    });
+                     self.getParam("refnode"),
+                     self.getParam("type"), finish);
     
   } else if (self.context.request == "rename") {
     // a node has been renamed in the tree
     this.renameObject( self.getParam("title"),  
-                                 self.getParam("node"), function( result ) {
-  		self.gen(result);
-      finish("");
-    });
+                       self.getParam("node"), finish);
           
   } else if (self.context.request == "delete") {
     // request to delete a node from the tree
-    this.deleteObject( self.getParam("node"), function( result ) {
-  		self.gen(result);
-      finish("");
-    });
+    this.deleteObject( self.getParam("node"), finish);
     
   } else if (self.context.request == "select") {
     // generate a input/type=select

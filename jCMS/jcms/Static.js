@@ -111,7 +111,7 @@ Static.prototype.serve = function () {
         }
 
         var type = mime.lookup(filename);
-        // console.log("Static.serve -> reading: " + filename + " - " + file.length + " bytes as " + type);
+        console.log("Static.serve -> sending: " + filename + " - " + file.length + " bytes as " + type);
         self.response.writeHead(200, { "Content-Type": type });
         self.response.write(file, "binary");
         self.response.end();

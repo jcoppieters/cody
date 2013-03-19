@@ -121,7 +121,7 @@ Application.endOfTime = function() {
 //    done();  // pass an error is something went wrong
 //
 //   }, function(err) { 
-//     // do somthing with the err if any...
+//     // do something with the err if any...
 //     console.log("sum = " + sum);
 //
 //   });
@@ -141,7 +141,7 @@ Application.each = function(list, iterator, finished) {
      });
    }
   }
-  one(0, finished);
+  one(0);
 };
 
 
@@ -210,18 +210,23 @@ Application.prototype.handToController = function(context) {
     }
   }
   
-  controller.doRequest( function(fn) {
+  controller.doRequest( function(fn, contentType) {
     // should always be called by doRequest
     //  render with given or the template in the context (controller may have changed it)
     //  if no render template present ( == "") either
     //    -- assume the controller performed res.writeHead() / .write() / .end() -- ajax req?
     //    -- another controller has taken over
 
-    if (typeof fn != "undefined") context.fn = fn;
-    
-    self.log("Application.handToController -> finish - template file = ", (context.fn=="") ? "-- none --" : context.fn);
-    if (context.fn != "") {
-      context.res.render(context.fn, context);
+    if (typeof fn == "object") {
+      controller.gen(fn, contentType);
+      
+    } else {
+      if (typeof fn != "undefined") { context.fn = fn; }
+      
+      self.log("Application.handToController -> finish - template file = ", (context.fn=="") ? "** none **" : context.fn);
+      if (context.fn != "") {
+        context.res.render(context.fn, context);
+      }
     }
       
     controller.close();
@@ -280,6 +285,7 @@ Application.prototype.findLanguage = function(url) {
   var i = url.indexOf("/");
   return (i > 0) ? url.substring(0, i) : Application.kDefaultLanguage;
 };
+
 
 ///////////////
 // Templates //
@@ -359,28 +365,30 @@ Application.prototype.fetchItems = function(connection) {
 ///////////
 Application.prototype.getPageLink = function(path) {
   var pos = path.indexOf("/");
-  if (pos < 0) return path;
+  if (pos < 0) { return path; }
   
   pos = path.indexOf("/", pos+1);
-  if (pos < 0) return path;
+  if (pos < 0) { return path; }
   
   return path.substring(0, pos); 
 };
+
 Application.prototype.getSubDomain = function(path) {
   var pos = path.indexOf("/");
-  if (pos < 0) return "";
+  if (pos < 0) { return ""; }
   
   pos = path.indexOf("/", pos+1);
-  if (pos < 0) return "";
+  if (pos < 0) { return ""; }
   
   return path.substring(pos+1); 
 };
 
 Application.prototype.getPage = function(languageOrLink, itemId) {
-  if (typeof itemId == "undefined")
+  if (typeof itemId == "undefined") {
     return this.urls[languageOrLink];
-  else 
+  } else { 
     return this.urls[languageOrLink+"/"+itemId];
+  }
 };
 
 Application.prototype.findPage = function(path, language) {
@@ -399,8 +407,9 @@ Application.prototype.findPage = function(path, language) {
     console.log("Application.findPage - " + language + "/welcome");
   }
   
-  if (aPage != null)
+  if (aPage != null) {
     aPage = aPage.getDisplay();
+  }
   
   return aPage;
 };
@@ -500,7 +509,7 @@ Application.prototype.dump = function() {
   
   function printLevel(r, nr) {
     var tab = "";
-    for (var i=0; i<nr; i++) tab = tab + " ";
+    for (var i=0; i<nr; i++) { tab = tab + " "; }
 
     for(var p in r) {
       console.log(tab + r[p].shortString());

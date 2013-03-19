@@ -85,13 +85,18 @@ Controller.prototype.closeConnection = function() {
 
 // output utilities
 
-Controller.prototype.gen = function( theObject ) {
+Controller.prototype.gen = function( theContent, theHeader ) {
+  if (typeof theHeader == "undefined") {
     this.context.res.writeHead(200, { "Content-Type": "application/json" });
-    if (typeof theObject != "String") {
-      this.context.res.write(JSON.stringify(theObject));
-    } else {
-      this.context.res.write(theObject);
-    }
+  } else {
+    this.context.res.writeHead(200, theHeader);
+  }
+  
+  if (typeof theContent != "string") {
+    this.context.res.write(JSON.stringify(theContent));
+  } else {
+    this.context.res.write(theContent);
+  }
   this.context.res.end();
 };
 

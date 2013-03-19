@@ -7,7 +7,6 @@ var jcms = require('./index.js');
 
 console.log("loading " + module.id);
 
-module.exports = SitemapController;
 
 function SitemapController(context) {
   console.log("SitemapController.constructor -> page: (" + context.page.itemId + ") " + context.page.title);
@@ -15,6 +14,8 @@ function SitemapController(context) {
   // init inherited controller
   jcms.TreeController.call(this, context);
 }
+module.exports = SitemapController;
+
 
 SitemapController.prototype = new jcms.TreeController();
 
@@ -32,6 +33,15 @@ SitemapController.prototype.doRequest = function( finish ) {
       finish();
     });
     
+  } else if (self.context.request == "imagelist") {
+    self.getImageList( function() {
+      finish("");
+    });
+
+  } else if (self.context.request == "savedata") {
+    //TODO: get id from page editor
+    self.saveData( this.getParam("node"), this.getParam("data"), 0, finish);
+
   } else if (self.context.request == "adjust") {
     self.adjustElements( self.getParam("node"), function(result) {
       // get all info and data on this node
@@ -70,12 +80,50 @@ SitemapController.prototype.getObject = function(id) {
   return this.app.getPage(language, id);
 };
 
+/* SitemapController - Specific actions */
+
+SitemapController.prototype.getImageList = function( done ) {
+  console.log("Received SitemapController - getImageList");
+  this.gen('var tinyMCEImageList = [["name1", "url1"], ["name2", "url2"], ["name3", "url3"]];', 
+      {"Content-type": "application/javascript"}); // ,  "pragma": "no-cache", "expires": "0"
+  done();
+};
+
+SitemapController.prototype.saveData = function(thePage, theData, theId, finish) {    
+  var self = this;
+  console.log("Received SitemapController - saveData, pageId = " + thePage);
+  
+  var aPage = self.getObject( self.toId(thePage) );
+  try {
+    
+    if (! self.isAllowed(aPage.item)) {
+      finish( { status: "NAL" } );
+      return;
+    }
+    
+    aPage.content[theId] = theData;
+    aPage.updateContent(this, theId, theData, function(err) {
+      if (err) {
+        finish( { status: "NOK", error: err } );
+      } else {
+        finish( { status: "OK" } );
+      }
+    });
+    
+    
+  } catch (e) {
+    console.log(e);
+    console.log("SitemapController.SaveData: failed to save the content of page " + thePage);
+
+    finish( { status: "NOK", error: e } );
+  }
+};
 
 /* Overridden - Action functions */
 
 SitemapController.prototype.addObject = function( title, refNode, type, kind, finish ) {
     var self = this;
-    console.log("Received SitemapController - insert, refnode = " + refNode + ", type = " + type);
+    console.log("Received SitemapController - addObject, refnode = " + refNode + ", type = " + type);
     
     var refNodeId = self.toId(refNode);
     var orderNr, aParent;
@@ -112,7 +160,7 @@ SitemapController.prototype.addObject = function( title, refNode, type, kind, fi
         // make the page in all languages
         var langs = self.app.getLanguages();
  
-        jcms.Application.each( langs, function(done) {
+        jcms.Application.each( langs, function makePageForLanguage(done) {
           // iterator over all languages
           basis = jcms.Page.addDefaults({language: this.id}, anItem);
           var aPage = new jcms.Page(basis, self.app);
@@ -122,7 +170,7 @@ SitemapController.prototype.addObject = function( title, refNode, type, kind, fi
               done();
           }, true);
           
-        }, function(err) {
+        }, function whenDone(err) {
           // terminator
           
           if (err) {
@@ -148,7 +196,7 @@ SitemapController.prototype.addObject = function( title, refNode, type, kind, fi
 
 SitemapController.prototype.moveObject = function( nodeId, refNode, type, finish ) {
   // type = "before", "after" or "inside"
-  console.log("Received SitemapController - move, refnode = " + refNode + 
+  console.log("Received SitemapController - moveObject, refnode = " + refNode + 
               ", node = " + nodeId + ", type = " + type);
   
   var orderNr;
@@ -190,7 +238,7 @@ SitemapController.prototype.moveObject = function( nodeId, refNode, type, finish
     // anItem.doUpdate(this); -> done in respace too, so no need to call it here
     this.app.buildSitemap();
     
-    this.respace(aParent, function() {
+    this.respace(aParent, function whenDone() {
       finish( { status: "OK" } );
     });
     
@@ -204,7 +252,7 @@ SitemapController.prototype.moveObject = function( nodeId, refNode, type, finish
 
 SitemapController.prototype.renameObject = function( title, nodeId, finish ) {
   var self = this;
-  console.log("Received SitemapController - rename, node = " + nodeId + ", title = " + title);
+  console.log("Received SitemapController - renameObject, node = " + nodeId + ", title = " + title);
       
   var aPage = self.getObject( self.toId(nodeId) );
   if (aPage) {
@@ -280,7 +328,7 @@ SitemapController.prototype.deleteObject = function( nodeId, finish ) {
   var self = this;
   
   // for pages, this function only de-activates the item
-  console.log("Received SitemapController - delete, node = " + nodeId);
+  console.log("Received SitemapController - deleteObject, node = " + nodeId);
   
   try {
     var aPage = self.getObject( self.toId(nodeId) );
@@ -380,7 +428,7 @@ SitemapController.prototype.respace = function( parent, finish ) {
   var aPage = this.getObject(parent.id);
 
   var nr = 0;
-  jcms.Application.each(aPage.children, function(done) {
+  jcms.Application.each(aPage.children, function respaceOnePage(done) {
     var aChildPage = this;
     nr += 10;
     console.log("SiteMapController.Respace: checking '" + aChildPage.item.name + "' now = " + aChildPage.item.sortorder + " to " + nr);
@@ -393,7 +441,7 @@ SitemapController.prototype.respace = function( parent, finish ) {
       done();
     }
     
-  }, function(err) {
+  }, function whenDone(err) {
     if (err) { console.log("SitemapController - respace: error = " + err); }
     if (typeof finish == "function") { finish.call(self); }
     

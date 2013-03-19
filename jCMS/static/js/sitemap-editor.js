@@ -10,7 +10,8 @@
 
 $(document).ready(function() {
    $('#editContent').tinymce({
-    external_image_list_url: gContext + "/" + gLanguage + "/sitemap/imagelist",
+     external_image_list_url: gContext + "/" + gLanguage + "/sitemap?request=imagelist",
+     //external_image_list_url: gStatic + "/js/img.js",
     script_url : gStatic + '/js/tinymce/tiny_mce.js',
     
     mode: "none",         // manually attach with mceAddControl/mceRemoveControl
@@ -33,11 +34,12 @@ $(document).ready(function() {
 });
 
 function getPage(id) {
-   HideEditor();
+   hideEditor();
    gCurrentNode = id;
    
    $.ajax({
-     type: "GET", url: gContext + "/" + gLanguage + "/sitemap",
+     type: "GET", 
+     url: gContext + "/" + gLanguage + "/sitemap",
      data: "request=getnode&node=" + id,
      success: function(msg){
        if (msg.substring(0,3) == "NOK") {
@@ -87,6 +89,10 @@ function getPage(id) {
             $("#request").val("adjust");
             $("form#onepage").submit();
           });
+          
+          $("#doEdit").click( function() {
+            showEditor( $("#editData").val() );
+          });
        }
      }
    });
@@ -99,38 +105,47 @@ function saveOrder() {
 };
 
 
-function SaveEditor() {
-  HideEditor();
+function hideEditor() {
+  // rich text editor
+  $("#editContent").tinymce().hide();
+  
+  // pane with save - cancel buttons.
+  $("#content_div").hide();
+}
+function showEditor( content ) {
+  // pane with save - cancel buttons.
+  $("#content_div").show();
+  
+  // rich text editor
+  $("#editContent").tinymce().show();
+  $("#editContent").html(content);
+}
+function saveEditor() {
+  hideEditor();
+  var content = $("#editContent").html();
   $.ajax({
          type: "POST", url: "./sitemap",
-         data: "oper=savedata&node="+gCurrentNode+"&data=" + escape(document.getElementById("editContent").value),
+         data: "request=savedata&node="+gCurrentNode+"&data=" + escape( content ),
          success: function(msg){
-            if (msg.substring(0,2) != "OK") {
-                alert("Data not saved!\nGot error from server: " + msg);
-                // rollback data from our form
-                document.getElementById("editContent").value = document.getElementById("editData").value;
-             } else
-                // replace data in our form
-              var editData = document.getElementById("editData");
-             editData.value = document.getElementById("editContent").value;    
-           document.getElementById("editDataLength").innerHTML = editData.value.length + " bytes";
-         }
-       })
+            if (msg.status != "OK") {
+              alert("Data not saved!\nGot error from server: " + msg.status + ", see console.");
+              console.log(msg);
+              // don't rollback the data (user otherwise looses it's input), just show the editor again
+              showEditor( content );
+             } else {
+               // replace data in our form
+               $("#editData").val( content );    
+               $("#editDataLength").html( content.length + " bytes");
+             }
+           }
+       });
 }
 
 
-function HideEditor(theDiv) {
-   $('#editContent').tinymce().hide();
-}
-function ShowEditor(theDiv) {
-  $("#editContent").html( $("#editData").html() );
-  $("#editContent").tinymce().show();
-}
-
-function HideFileEditor() {
+function hideFileEditor() {
   $("#FileEditor").hide();
 }
-function ShowFileEditor(nr) {
+function showFileEditor(nr) {
   // try to move the editor just in front of the element
   // didn't succeed, so there's some error in the code below.
   //parent = $('#N'+nr).parent();
@@ -143,7 +158,7 @@ function ShowFileEditor(nr) {
   $('#filename').val( $('#N'+nr).val() );
   $('#fileurl').text( $('#S'+nr).val() );
 }
-function SaveFileEditor() {
+function saveFileEditor() {
   var nr = $('#currentElement').val();
   var fn = $('#filename').val();
   var url = $('#fileurl').text();
@@ -162,23 +177,25 @@ function SaveFileEditor() {
   // console.log(('#N'+nr) + " <= " + fn + " - " + url + " - " + parts[1]);
 }
 
-function AddFileDiv(filenr, elementid, filename, img, url) {
+function addFileDiv(filenr, elementid, filename, img, url) {
   if ($('#files').size() == 0) {
     $('#page').append('<div><label>Files</label><ul id="files"></ul></div>');
   }
-  $('#files').append('<li id="' + elementid + '">\
-    <div class="File"><label><img class="handle" src="<%=images}/move.png" /> File '+filenr+'</label> \
-    <span id="F' + elementid + '">'+filename+'</span>\
-    <input name="K' + elementid + '" id="K' + elementid + '" type="hidden" value="F" /> \
-    <input name="N' + elementid + '" id="N' + elementid + '" type="hidden" value="" /> \
-    <input name="S' + elementid + '" id="S' + elementid + '" type="hidden" value="'+filename+'" /> \
-    <a href="'+url+'" target=_blank id="A' + elementid + '"><img id="I' + elementid + '" src="'+img+'" border=0 /></a> \
-    <a href="#" onclick="ShowFileEditor('+elementid+');">Edit</a> | \
-    <a href="#" onclick="DeleteFile('+elementid+');">Delete</a> <br />\
-   </div></li>');
+  $('#files').append(
+  '<li id="' + elementid + '">' +
+   '<div class="File"><label><img class="handle" src="<%=images}/move.png" /> File '+filenr+'</label>' +
+    '<span id="F' + elementid + '">'+filename+'</span>' +
+    '<input name="K' + elementid + '" id="K' + elementid + '" type="hidden" value="F" />' +
+    '<input name="N' + elementid + '" id="N' + elementid + '" type="hidden" value="" />' +
+    '<input name="S' + elementid + '" id="S' + elementid + '" type="hidden" value="'+filename+'" />' +
+    '<a href="'+url+'" target=_blank id="A' + elementid + '"><img id="I' + elementid + '" src="'+img+'" border=0 /></a>' +
+    '<a href="#" onclick="showFileEditor('+elementid+');">Edit</a> |' +
+    '<a href="#" onclick="deleteFile('+elementid+');">Delete</a> <br />' +
+   '</div>' +
+  '</li>');
 }
 
-function AddFile(nr) {
+function addFile(nr) {
   var nr = $('#nrElements').val() * 1 + 1;
   $('#nrElements').val(nr);
   
@@ -186,12 +203,12 @@ function AddFile(nr) {
   var currValues = $('#elements').val();
   $('#elements').val( (currValues != "") ? currValues+","+xnr : xnr );
 
-  AddFileDiv(nr, xnr, '&lt;no file&gt;', gImages + '/extentions/xxx.gif', '#');
+  addFileDiv(nr, xnr, '&lt;no file&gt;', gImages + '/extentions/xxx.gif', '#');
   
-  ShowFileEditor(xnr);
+  showFileEditor(xnr);
 }
 
-function DeleteFile(nr) {
+function deleteFile(nr) {
   $('#F'+nr).parent().hide();
   $('#K'+nr).val('X');
 }
