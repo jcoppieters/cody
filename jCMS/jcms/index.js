@@ -1,5 +1,6 @@
 module.exports.Application = require("./Application.js");
 
+module.exports.Atom = require("./Atom.js");
 module.exports.Item = require("./Item.js");
 module.exports.Page = require("./Page.js");
 module.exports.Template = require("./Template.js");
@@ -11,6 +12,7 @@ module.exports.LoginController = require("./LoginController.js");
 
 module.exports.TreeController = require("./TreeController.js");
 module.exports.SitemapController = require("./SitemapController.js");
+module.exports.ImageController = require("./ImageController.js");
 
 module.exports.Static = require("./Static");
 module.exports.Dynamic = require("./Dynamic");

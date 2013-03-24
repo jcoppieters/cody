@@ -26,9 +26,9 @@ SitemapController.prototype.doRequest = function( finish ) {
   self.context.fn = "admin/sitemap.ejs";
   
   if (self.context.request == "realdelete") {
-    self.realDelete( this.getParam("node"), function(result) {
+    self.realDelete( self.getParam("node"), function(result) {
       if (result.status != "OK") { 
-        this.feedback(false, "Something went wrong during delete."); 
+        self.feedback(false, "Something went wrong during delete."); 
       }
       finish();
     });
@@ -40,18 +40,18 @@ SitemapController.prototype.doRequest = function( finish ) {
 
   } else if (self.context.request == "savedata") {
     //TODO: get id from page editor
-    self.saveData( this.getParam("node"), this.getParam("data"), 0, finish);
+    self.saveData( self.getParam("node"), self.getParam("data"), 0, finish);
 
   } else if (self.context.request == "adjust") {
     self.adjustElements( self.getParam("node"), function(result) {
       // get all info and data on this node
       self.context.request = "getnode";
-      jcms.TreeController.prototype.doRequest.call(this, finish);
+      jcms.TreeController.prototype.doRequest.call(self, finish);
     });
 
   } else {
     // this.super.doRequest( finish );  of  this.super.doRequest.call(this, finish);
-    jcms.TreeController.prototype.doRequest.call(this, finish);
+    jcms.TreeController.prototype.doRequest.call(self, finish);
     
   }
 };
@@ -84,6 +84,7 @@ SitemapController.prototype.getObject = function(id) {
 
 SitemapController.prototype.getImageList = function( done ) {
   console.log("Received SitemapController - getImageList");
+  //this.gen(TreeController.renderList( this.app.atoms, ImageController.getRoot()), 
   this.gen('var tinyMCEImageList = [["name1", "url1"], ["name2", "url2"], ["name3", "url3"]];', 
       {"Content-type": "application/javascript"}); // ,  "pragma": "no-cache", "expires": "0"
   done();

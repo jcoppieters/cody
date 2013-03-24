@@ -175,7 +175,7 @@ Item.prototype.doUpdate = function(controller, finish) {
 
 Item.prototype.doDelete = function(controller, finish) {
   var self = this;
-  console.log("Item.doUpdate -> delete item " + self.id + " - " + self.name);
+  console.log("Item.doDelete -> delete item " + self.id + " - " + self.name);
   controller.query("delete from items where id = ?", [ self.id ], function() {
     delete controller.app.items[self.id];
     console.log("Item.doUpdate -> deleted item: " + self.id);

@@ -1,0 +1,58 @@
+<!doctype html>
+
+<html lang="<%=page.language%>">
+
+<% include header.ejs %>
+
+<body>
+
+<script src="<%=static%>/js/lib/jquery-1.9.1<%=min%>.js"></script>
+<script src="<%=static%>/js/lib/jquery-ui-1.10.1<%=min%>.js"></script>
+<script src="<%=static%>/js/lib/jquery.validate<%=min%>.js"></script>
+<script src="<%=static%>/js/lib/localization/messages_<%=page.language%>.js"></script>
+
+<script type="text/javascript" src="<%=static%>/js/lib/jquery.jstree.js"></script>
+<script type="text/javascript" src="<%=static%>/js/tinymce/jquery.tinymce.js"></script>
+
+<script> var gService = "images"; var gRoot = 1; </script>
+<script type="text/javascript" src="<%=static%>/js/atom-tree.js"></script>
+
+
+  <div id="wrapper">
+    <% var cat="S"; %>
+		<% include navigation.ejs %>
+    
+		<div id="wrapper_data">
+		
+			<div id="content_div" style="display: none;">
+				<textarea name="editContent" id="editContent"></textarea>
+				<div id="content_buttons">
+					<input type="button" value="Save" onclick="saveEditor();" />
+					<input type="button" value="Cancel" onclick="hideEditor();" />
+				</div>
+			</div>
+	
+ 	    <div id="left_nav">
+	      <input type="button" value="Add Folder" onclick="doAddFolder()">
+	      <input type="button" value="Add Image" onclick="doAddImage()"><br />
+	      <input type="button" value="Rename" onclick="doRename()" >    
+	      <input type="button" value="Delete" onclick="doDelete()" >
+	      <input type="button" value="Edit" onclick="doEdit()" >
+
+        <div id="tree">
+          <ul><li id="id_<%= controller.getRoot().id %>" class="open" rel="root"><a href="#"><ins>&nbsp;</ins>Images</a>
+              <%- controller.getTree() %>
+          </li></ul>
+        </div>
+			
+	    </div>
+	    
+	    <div id="right_cont">
+			</div>
+       
+		</div>
+ 
+		<% include footer.ejs %>
+  </div>
+</body>
+</html>

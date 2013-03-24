@@ -25,7 +25,7 @@ TreeController.prototype = new jcms.Controller();
 
 // Next 3 should be overridden
 TreeController.prototype.getRoot = function() { 
-  return 0; 
+  return null; 
 };
 
 TreeController.prototype.getType = function(theNode) { 
@@ -148,7 +148,8 @@ TreeController.prototype.renderTree = function( theNode, open, descend ) {
   var self = this;
   
   var aTree = "";
-  var aList = theNode.getChildren();
+  var aList = theNode.getChildren(); 
+  console.log("getChildren of " + theNode.name + "/" + theNode.id + " : " + aList.length); console.log(aList);
   for (var x in aList) { var p = aList[x];
      var name = (p.isActive()) ? p.getName() : "("+p.getName()+")";
      var classes = (open ? "open " : "") +

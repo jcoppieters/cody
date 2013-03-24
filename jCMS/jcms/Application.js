@@ -18,7 +18,6 @@ var jcms = require('./index.js');
 
 console.log("loading " + module.id);
 
-module.exports = Application;
 
 function Application(name, version) {
   this.roots = {};          // hashmap with all pages having item.id = 0, for all languages
@@ -29,6 +28,7 @@ function Application(name, version) {
   this.items = null;        // hashmap with (id - item)
   this.pages = null;        // array with all pages
   this.urls = null;         // hashmap with (urls - page)
+  this.atoms = null;        // hashmap with (id - atom)
   this.languages = [];      // array with all languages
   this.domains = null;      // array with all (user) domains
   this.forms = {};          //TODO: hashmap with (id - form)
@@ -39,9 +39,9 @@ function Application(name, version) {
   this.name = name;
   this.version = version;
   
-  this.dumped = false;
-  
+  this.dumped = false;  
 }
+module.exports = Application;
 
 Application.kDefaultLanguage = "nl";
 
@@ -65,11 +65,13 @@ Application.prototype.addControllers = function() {
   this.addController('Controller', jcms.Controller);
   this.addController('LoginController', jcms.LoginController);
   this.addController('SitemapController', jcms.SitemapController);
+  this.addController('ImageController', jcms.ImageController);
   
   // add compatibility with rWorks (todo: sitemap, imagetree, filetree, formtree, system)
   this.addController('rWorks.TContentController', jcms.Controller);
   this.addController('rWorks.TLoginController', jcms.LoginController);
   this.addController('rWorks.TSitemapController', jcms.SitemapController);
+  this.addController('rWorks.TImageTreeController', jcms.ImageController);
 };
 
 
@@ -77,7 +79,7 @@ Application.prototype.err = function(p1, p2, res) {
   console.log("*** error ***");
   this.log(p1, p2);
   
-  if (res != undefined) {
+  if (res !== undefined) {
     res.writeHead(404, { "Content-Type": "text/plain" });
     res.response.write("404 Not Found\n");
     res.response.end();
@@ -85,11 +87,11 @@ Application.prototype.err = function(p1, p2, res) {
 };
 Application.prototype.log = function(p1, p2) {
   if (this.logging) {
-    if (p1 == undefined && p2 == undefined) {
+    if (p1 === undefined && p2 === undefined) {
       console.log("Application -> ");
       console.log(this);
       
-    } else if (p2 == undefined) {
+    } else if (p2 === undefined) {
       console.log(" - " + p1);
       
     } else {
@@ -171,7 +173,7 @@ Application.prototype.buildContext = function (path, req, res) {
   var language = self.findLanguage(path);
   var page = self.findPage(path, language);
   
-  if (page == null) {
+  if (page === null) {
       self.err("servePage", "No page found for path = " + path + " & language = " + language, res);
       return null;
   }
@@ -221,7 +223,9 @@ Application.prototype.handToController = function(context) {
       controller.gen(fn, contentType);
       
     } else {
-      if (typeof fn != "undefined") { context.fn = fn; }
+      if (typeof fn != "undefined") { 
+        context.fn = fn; 
+      }
       
       self.log("Application.handToController -> finish - template file = ", (context.fn=="") ? "** none **" : context.fn);
       if (context.fn != "") {
@@ -553,21 +557,70 @@ Application.prototype.fetchForms = function(connection) {
 
 
 /////////////////////
-// Users - Domains //
+//Users - Domains //
 /////////////////////
 Application.prototype.fetchDomains = function(connection) {
   var self = this;
   
-  // fetch all user domains and close connection when finished
+  // fetch all user domains
   jcms.User.loadDomains(connection, function(result) {
-      self.domains = [];
-      for (var i = 0; i < result.length; i++) {
-        self.domains.push(result[i].domain);
-      }
-      self.log("Application.fetchDomains", "fetched " + result.length + " domains");
+    self.domains = [];
+    for (var i = 0; i < result.length; i++) {
+    self.domains.push(result[i].domain);
+    }
+    self.log("Application.fetchDomains", "fetched " + result.length + " domains");
     
-      // no next step
-      connection.end();
+    // next step
+    self.fetchAtoms(connection);
+  });
+};
+
+
+///////////
+// Atoms //
+///////////
+Application.prototype.getAtom = function(id) {
+  return this.atoms[id];
+};
+
+Application.prototype.addAtom = function(atom) {
+  this.atoms[atom.id] = atom;
+  atom.app = this;
+};
+
+Application.prototype.hasAtomChildren = function(parent) {
+  for (var i = 0; i < this.atoms.length; i++) {
+    if (this.atoms[i] == parent.id) {
+      return true;
+    }
+  }
+  return false;
+};
+Application.prototype.getAtomChildren = function(parent) {
+  var list = [];
+  for (var i in this.atoms) {
+    var anAtom = this.atoms[i];
+    if (parent.isChild(anAtom)) {
+      list.push(anAtom);
+    }
+  }
+  list.sort( function(a, b) { return a.sortorder - b.sortorder; });
+  return list;
+};
+
+Application.prototype.fetchAtoms = function(connection) {
+  var self = this;
+  
+  // fetch all atoms and close connection when finished
+  jcms.Atom.loadAtoms(connection, function(result) {
+    self.atoms = {};
+    for (var i = 0; i < result.length; i++) {
+      self.addAtom(new jcms.Atom(result[i]));
+    }
+    self.log("Application.fetchAtoms", "fetched " + result.length + " atoms");
+    
+    // no next step
+    connection.end();
   });
 };
 
