@@ -12,10 +12,8 @@ module.exports = Controller;
 function Controller(context) {
   // only called for using my methods
   if (typeof context == "undefined") { return; }
+  console.log("Controller.constructor -> page(" + context.page.itemId + ") = " + context.page.title + ", request = " + context.request);
   
-  console.log("Controller.constructor -> page: (" +
-              context.page.itemId + ") " + context.page.title);
-
   this.request = context.request;
   this.context = context;
   context.controller = this;

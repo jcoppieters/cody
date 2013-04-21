@@ -27,6 +27,7 @@ Atom.addDefaults = function(basis, parent) {
   basis.name = basis.name || Atom.kDefaultName;
   basis.parent = basis.parent || parent.id;
   basis.user = basis.user || parent.user;
+  basis.note = basis.note || parent.note;
   basis.extention = basis.extention || "";
   basis.sortorder = basis.sortorder || 9999;
   basis.created = basis.created || new Date();
@@ -40,7 +41,7 @@ Atom.prototype.pickParent = function(atomList) {
 
 Atom.loadAtoms = function(connection, store) {
   //TODO: change to "atoms"
-  connection.query('select * from objects', [], function(err, result) {
+  connection.query('select * from atoms', [], function(err, result) {
     store(result);
   });
 };
@@ -62,18 +63,28 @@ Atom.prototype.isVisible = function() {
 Atom.prototype.getChildren = function() { 
   return this.app.getAtomChildren(this); 
 };
+
 Atom.prototype.getSortOrder = function() { 
   return this.sortorder; 
 };
 Atom.prototype.setSortOrder = function(nr) {
   this.sortorder = nr;
 };
+
+Atom.prototype.getNote = function() { 
+  return this.note; 
+};
+Atom.prototype.setNote = function(note) { 
+  this.note = note; 
+};
+
 Atom.prototype.setName = function(name) { 
   this.name = name; 
 };
 Atom.prototype.getName = function() { 
   return this.name; 
 };
+
 Atom.prototype.getId = function() { 
   return this.id; 
 };
@@ -89,21 +100,21 @@ Atom.prototype.scrapeFrom = function(controller) {
   // update all item info from the controller
   this.name = controller.getParam("name");
   this.extention = controller.getParam("extention");
-  this.caption = controller.getParam("name");
+  this.note = controller.getParam("note");
 };
 
 
 Atom.prototype.doUpdate = function(controller, finish) {
   var self = this;
   
-  var values = [self.name, self.parentId, self.sortorder, self.caption, self.extention];
+  var values = [self.name, self.parentId, self.sortorder, self.note, self.extention];
   
   // new or existing record?
   if ((typeof self.id == "undefined") || (self.id === 0)) {
     
     console.log("Atom.doUpdate -> insert atom " + self.name);
     values.push(controller.getLoginId());
-    controller.query("insert into items (name, parent, sortorder, caption, extention, updated, created, user) " +
+    controller.query("insert into atoms (name, parent, sortorder, note, extention, updated, created, user) " +
                      "values (?, ?, ?, ?, ?, now(), now(), ?)", values,
       function(err, result) {
         if (err) { 
@@ -119,7 +130,7 @@ Atom.prototype.doUpdate = function(controller, finish) {
   } else {
     console.log("Atom.doUpdate -> update atom " + self.id + " - " + self.name);
     values.push(self.id);
-    controller.query("update atoms set name = ?, parent = ?, sortorder = ?, caption = ?, extention = ?, updated = now() " +
+    controller.query("update atoms set name = ?, parent = ?, sortorder = ?, note = ?, extention = ?, updated = now() " +
                      "where id = ?", values,
       function(err) {
         if (err) { 

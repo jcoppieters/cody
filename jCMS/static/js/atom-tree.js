@@ -25,14 +25,23 @@ function getNode(id) {
       getPage(id);
       
   } else if (id != gRootId) {
-    gCurrentNode = id;
-    $.getJSON("./"+gService, {request: 'getnode', node: id},
-        function(msg){
-           if (msg.substring(0,3) == "NOK") {
-             warnUser("Got error from server: " + msg);
-           } else {
-             $("#right_cont").html(msg);
-         }
+    gCurrentNode = id; 
+    
+    $.ajax({
+      type: "GET", 
+      url: gContext + "/" + gLanguage + "/"+gService,
+      data: "request=getnode&node=" + id,
+      success: function(msg){
+        if (msg.substring(0,3) == "NOK") {
+          WarnUser("Got error from server: " + msg);
+               
+        } else if (msg.substring(0,3) == "NAL") {
+           WarnUser("You are not allowed to edit this node, sorry.");
+              
+        } else {
+            $("#right_cont").html(msg).show();
+        }
+      }
     });
   }
 }
@@ -43,14 +52,13 @@ $(document).ready(function () {
   $("#tree")
 
   .bind("before.jstree", function(e, data) {
-    var aNode = data.args[0];
-    var nodeId = (typeof aNode == "array") ? aNode.attr("id") : "id_xx";
-    
+    var aNode = data.args[0]; 
+    var nodeId = (typeof aNode == "object") ? $(aNode).attr("id") : "id_xx";
+
     if ((data.func == "delete_node") && (gService != "sitemap")) { 
-      // we don't actually do deletes, just mark the node as inactive in the database and rename it in the tree
-      // console.log("Tree - Delete: " + aNode.text());
+      // we don't actually do deletes for webpages, just mark the node as inactive in the database and rename it in the tree
       
-      $.getJSON("./sitemap", {request: 'delete', node: nodeId},
+      $.getJSON("./"+gService, {request: 'delete', node: nodeId},
         function(msg){
           if (msg.status == "OK") {
             aNode.addClass("deleted");
@@ -131,7 +139,7 @@ $(document).ready(function () {
     var nodeId = aNode.attr("id");
     console.log("Tree - Rename: " + nodeId + " -> " + text);
     
-    $.getJSON("./"+gService, {request: 'rename', name: text, node: nodeId},
+    $.getJSON("./"+gService, {request: 'rename', title: text, node: nodeId},
         function(msg){
           if (msg.status == "NAL") {
             warnUser("You are not allowed to rename this item, sorry.");

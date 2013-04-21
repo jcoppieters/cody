@@ -19,19 +19,11 @@
 
 
   <div id="wrapper">
-    <% var cat="S"; %>
+    <% var cat="I"; %>
 		<% include navigation.ejs %>
     
 		<div id="wrapper_data">
 		
-			<div id="content_div" style="display: none;">
-				<textarea name="editContent" id="editContent"></textarea>
-				<div id="content_buttons">
-					<input type="button" value="Save" onclick="saveEditor();" />
-					<input type="button" value="Cancel" onclick="hideEditor();" />
-				</div>
-			</div>
-	
  	    <div id="left_nav">
 	      <input type="button" value="Add Folder" onclick="doAddFolder()">
 	      <input type="button" value="Add Image" onclick="doAddImage()"><br />

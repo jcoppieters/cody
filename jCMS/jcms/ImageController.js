@@ -9,7 +9,9 @@ console.log("loading " + module.id);
 
 
 function ImageController(context) {
-  console.log("ImageController.constructor -> page: (" + context.page.itemId + ") " + context.page.title);
+  // only called for using my methods
+  if (context === undefined) { return; }
+  console.log("ImageController.constructor -> page(" + context.page.itemId + ") = " + context.page.title + ", request = " + context.request);
   
   // init inherited controller
   jcms.TreeController.call(this, context);
@@ -36,7 +38,7 @@ ImageController.prototype.getType = function(theNode) {
 };
 
 ImageController.prototype.getFilePath = function() { 
-  return "/images"; 
+  return this.context.dynamic + "/images"; 
 };
 ImageController.prototype.getObject = function(id) {
   return this.app.getAtom(id);

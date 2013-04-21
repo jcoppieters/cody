@@ -21,7 +21,7 @@ $(document).ready(function () {
 
   .bind("before.jstree", function(e, data) {
     var aNode = data.args[0];
-    var nodeId = data.args[0].attr("id");
+    var nodeId = (typeof aNode == "object") ? $(aNode).attr("id") : "id_xx";
     
     if (data.func == "delete_node") { 
       // we don't actually do deletes, just mark the node as inactive in the database and rename it in the tree

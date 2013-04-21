@@ -10,8 +10,9 @@ var jcms = require("./index.js");
 module.exports = LoginController;
 
 function LoginController(context) {
-	console.log("LoginController.constructor -> page: (" +
-              context.page.itemId + ") " + context.page.title);
+  // only called for using my methods
+  if (typeof context == "undefined") { return; }
+  console.log("LoginController.constructor -> page(" + context.page.itemId + ") = " + context.page.title + ", request = " + context.request);
   
   
 	// view to be used for getting the username/password
@@ -29,8 +30,8 @@ function LoginController(context) {
 	jcms.Controller.call(this, context);
 }
 
-LoginController.prototype = new jcms.Controller();
-
+// LoginController.prototype = new jcms.Controller(); -- of:
+LoginController.prototype = Object.create( jcms.Controller.prototype );
 
 LoginController.prototype.doRequest = function( finish ) {
   var self = this;

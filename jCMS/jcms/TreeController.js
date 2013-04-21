@@ -8,22 +8,22 @@ console.log("loading " + module.id);
 var mysql = require("mysql");
 var jcms = require('./index.js');
 
-module.exports = TreeController;
 
 function TreeController(context) {
   // only called for using my methods
-  if (context == undefined) return;
+  if (context === undefined) { return; }
 
-  console.log("TreeController.constructor -> page: ("
-              + context.page.itemId + ") " + context.page.title);
+  console.log("TreeController.constructor -> page(" + context.page.itemId + ") = " + context.page.title + ", request = " + context.request);
 
   // init inherited controller
   jcms.Controller.call(this, context);
 }
+module.exports = TreeController;
+
 TreeController.prototype = new jcms.Controller();
 
 
-// Next 3 should be overridden
+// Next 4 should be overridden
 TreeController.prototype.getRoot = function() { 
   return null; 
 };
@@ -149,7 +149,7 @@ TreeController.prototype.renderTree = function( theNode, open, descend ) {
   
   var aTree = "";
   var aList = theNode.getChildren(); 
-  console.log("getChildren of " + theNode.name + "/" + theNode.id + " : " + aList.length); console.log(aList);
+  console.log("getChildren of " + theNode.name + "/" + theNode.id + " : " + aList.length); // console.log(aList);
   for (var x in aList) { var p = aList[x];
      var name = (p.isActive()) ? p.getName() : "("+p.getName()+")";
      var classes = (open ? "open " : "") +
@@ -172,16 +172,27 @@ TreeController.prototype.getTree = function() {
   return this.renderTree( this.getRoot(), false, 99 );
 };
 
-TreeController.prototype.saveInfo = function( nodeId ) {
+
+TreeController.prototype.saveInfo = function( nodeId, finish ) {
+  var anObject = this.getObject(this.toId(nodeId));
+  if (anObject) {
+      anObject.scrape(this);
+      anObject.doUpdate(this);
+      finish( { status: "OK" });
+  } else {
+    finish({status: "NOK"});
+  }
 };
 
 
 TreeController.prototype.addObject = function( title, refNode, type, kind, finish ) {
   finish( { status: "NOK" } );
 };
+
 TreeController.prototype.moveObject = function( nodeId, refNode, type, finish ) {
   finish( { status: "NOK" } );
 };
+
 TreeController.prototype.renameObject = function( title, nodeId, finish ) {
   console.log("Received TreeController - rename, node = " + nodeId + ", title = " + title);
   
@@ -203,8 +214,14 @@ TreeController.prototype.renameObject = function( title, nodeId, finish ) {
 };
 TreeController.prototype.deleteObject = function( nodeId, finish ) {
   var anObject = this.getObject(this.toId(nodeId));
-  anObject.doDelete(this);
-  finish( { status: "OK"} );
+  if (this.app.hasAtomChildren(anObject)) {
+    finish( { status: "Not empty" } );
+    
+  } else {
+    anObject.doDelete(this);
+    //TODO: delete file !!!
+    finish( { status: "OK"} );    
+  }
 };
 
 
@@ -212,7 +229,10 @@ TreeController.prototype.makeSelect = function( type ) {
 };
 TreeController.prototype.uploadFile = function( filePath, nodeId ) {
 };
+
 TreeController.prototype.fetchNode = function( nodeId ) {
+  console.log("TreeController.FetchNode: nodeId = " + nodeId);
+  this.context.atom = this.getObject(this.toId(nodeId));
 };
 
 TreeController.prototype.respace = function(theParent) {
@@ -230,34 +250,8 @@ TreeController.prototype.respace = function(theParent) {
 };
 
   
-  /*
-  void saveInfo( String theNode ) {
-    try {
-      TObject anObject = this.fApplication.GetObject(Integer.parseInt(theNode));
-      anObject.fExtention = this.UploadFile( this.getFilePath(), theNode );
-      if (anObject.fExtention.length() == 0)
-        anObject.fExtention =  self.getParam("extention");
-
-      // update all other object info (TPage -> db:pages)
-      anObject.fName = self.getParam("name");
-      anObject.fCaption = self.getParam("caption");
-      anObject.doUpdate(this.fRequest);
-      
-      // save the page for next http transaction
-      this.context.savedObject", anObject);
-
-    } catch (Exception e) {
-      e.printStackTrace();
-      TApplication.printLog("TTreeController.saveInfo: failed to save (" + theNode + ")");
-    }
-  }
-
-  void FetchNode(String theNode) {
-    TObject anObject = this.fApplication.GetObject(toId(theNode));
-    this.context.object = anObject;
-  }
   
-  
+/*  
   String DeleteObject( String theNode ) {
     TApplication.printLog("Received TTreeController - delete, node = " + theNode);
     

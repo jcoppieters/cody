@@ -85,19 +85,28 @@ Context.prototype.copyFromMini = function(mini) {
   this.page = this.app.findPage(this.path, this.page.language);
 };
 
+Context.prototype.getUnique = function() {
+  return new Date().getTime();
+};
+Context.prototype.formatTime = function(aDate) {
+  return aDate.getHours() + ":" + aDate.getMinutes() + ":" + aDate.getSeconds();
+};
+Context.prototype.formatShortTime = function(aDate) {
+  return aDate.getHours() + ":" + aDate.getMinutes();
+};
 
 Context.prototype.formatDate = function(aDate) {
   function two(n) {
     return (n < 10) ? ("0" + n) : n;
   }
   if (this.dateFormat == "dd-mm-yyyy") {
-  	return two(aDate.getDate()) + "-" + two(aDate.getMonth()+1) + "-" + aDate.getFullYear();
-  	
+    return two(aDate.getDate()) + "-" + two(aDate.getMonth()+1) + "-" + aDate.getFullYear();
+
   } else if (this.dateFormat == "mm-dd-yyyy") {
-  	return two(aDate.getMonth()+1) + "-" + two(aDate.getDate()) + "-" + aDate.getFullYear();
-  	
+    return two(aDate.getMonth()+1) + "-" + two(aDate.getDate()) + "-" + aDate.getFullYear();
+
   } else { // "yyyy-mm-dd"
-  	return aDate.getFullYear() + "-" + two(aDate.getMonth()+1) + "-" + two(aDate.getDate());
+    return aDate.getFullYear() + "-" + two(aDate.getMonth()+1) + "-" + two(aDate.getDate());
   }
 };
 

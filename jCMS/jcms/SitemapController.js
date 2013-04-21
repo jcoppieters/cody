@@ -9,7 +9,9 @@ console.log("loading " + module.id);
 
 
 function SitemapController(context) {
-  console.log("SitemapController.constructor -> page: (" + context.page.itemId + ") " + context.page.title);
+  // only called for using my methods
+  if (context === undefined) { return; }
+  console.log("SitemapController.constructor -> page(" + context.page.itemId + ") = " + context.page.title + ", request = " + context.request);
   
   // init inherited controller
   jcms.TreeController.call(this, context);

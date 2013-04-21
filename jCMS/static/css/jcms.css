@@ -103,6 +103,7 @@ fieldset div div { 	clear:both; }
 #onepage input.dater { width: 80px }
 #onepage input.long, #onepage textarea.long { width: 350px }
 #onepage input[type=text], #onepage textarea { margin-left: 2px }
+#onepage p.content_text { display: inline-block; margin-top: 2px }
 #onepage #editDataLength { padding-left: 10px; margin: 0; line-height: 20px; font-size: 12px;  }
 #onepage #domains { width: 100px }
 #onepage input#allowedgroups { width: 246px }
