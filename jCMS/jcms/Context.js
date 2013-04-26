@@ -34,8 +34,8 @@ function Context(path, page, app, req, res) {
       
   this.min = ""; // ".min"
   this.context = "";
-  this.static = "/static";
-  this.dynamic = "/data";
+  this.static = this.context + "/static";
+  this.dynamic = this.context + "/data";
   this.fn = page.getView();
   
   this.session = req.session;

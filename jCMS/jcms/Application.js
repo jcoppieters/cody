@@ -19,7 +19,7 @@ var jcms = require('./index.js');
 console.log("loading " + module.id);
 
 
-function Application(name, version) {
+function Application(name, version, datapath) {
   this.roots = {};          // hashmap with all pages having item.id = 0, for all languages
   this.admins = [];         // array with all pages having parent = -1
   this.globals = [];        // array with all pages having parent = -2
@@ -38,22 +38,28 @@ function Application(name, version) {
   this.logging = true;
   this.name = name;
   this.version = version;
+  this.datapath = datapath;
   
   this.dumped = false;  
 }
 module.exports = Application;
 
+// Constants
 Application.kDefaultLanguage = "nl";
+
+// Atom roots
+Application.kImageRoot = 1;
+
 
 
 Application.prototype.init = function() {
-  var connection = this.getConnection();
+  this.getConnection();
   
   this.addControllers();
   
   // daisy chained loading of all CMS elements:
   //   languages, templates, items, pages, forms, ...
-  this.fetchStructures(connection);
+  this.fetchStructures();
 };
 
 Application.prototype.addController = function(name, controller) {
@@ -100,6 +106,9 @@ Application.prototype.log = function(p1, p2) {
   }
 };
 
+Application.prototype.getDataPath = function() {
+  return this.datapath;
+};
 
 ///////////////
 // Utilities //
@@ -184,6 +193,7 @@ Application.prototype.buildContext = function (path, req, res) {
   var context = new jcms.Context(path, page, self, req, res);
   console.log("servePage - params -> ");  console.log(context.params);
   console.log("servePage - session -> "); console.log(context.session);
+  console.log("servePage - files -> "); console.log(req.files);
   return context;
 };
 
@@ -253,29 +263,39 @@ Application.prototype.logInFirst = function(context) {
 // SQL support //
 /////////////////
 Application.prototype.getConnection = function() {
-  this.log("Application", "getConnection");
- 
-  //TODO: read from config file
-  // https://github.com/felixge/node-mysql
-  return mysql.createConnection({
-      host: 'localhost',
-      user: 'root', password: 'Jd2qqNAt',
-      database: this.name
-  });
+  
+  if (typeof this.connection === "undefined") {
+    this.log("Application", "Make new Connection");
+    
+    //TODO: read from config file
+    // https://github.com/felixge/node-mysql
+    this.connection = mysql.createConnection({
+        host: 'localhost',
+        user: 'root', password: 'Jd2qqNAt',
+        database: this.name
+    });
+  }
+  
+  return this.connection;
+};
+
+Application.prototype.returnConnection = function( connection ) {
+  // Do nothing: we only have 1 connection and we don't close it in between requests...
+  
 };
 
 ///////////////
 // Languages //
 ///////////////
-Application.prototype.fetchStructures = function(connection) {
+Application.prototype.fetchStructures = function() {
   var self = this;
   
-  jcms.Page.loadLanguages(connection, function(result) {
+  jcms.Page.loadLanguages(this.connection, function(result) {
     self.languages = result;
     self.log("Application.fetchLanguages", "fetched " + result.length + " languages");
     
     // next step
-    self.fetchTemplates(connection);
+    self.fetchTemplates();
   });
 };
 
@@ -297,10 +317,10 @@ Application.prototype.findLanguage = function(url) {
 Application.prototype.getTemplate = function(templateId) {
   return this.templates[templateId];
 };
-Application.prototype.fetchTemplates = function(connection) {
+Application.prototype.fetchTemplates = function() {
   var self = this;
   
-  jcms.Template.loadTemplates(connection, function(result) {
+  jcms.Template.loadTemplates(this.connection, function(result) {
     self.templates = {};
     for (var i = 0; i < result.length; i++) {
       // make an Template object of our data
@@ -312,7 +332,7 @@ Application.prototype.fetchTemplates = function(connection) {
     self.log("Application.fetchTemplates", "fetched " + result.length + " templates");
     
     // next step
-    self.fetchItems(connection);
+    self.fetchItems();
   });
 };
 
@@ -339,10 +359,10 @@ Application.prototype.addItem = function(anItem) {
   self.log("Application.addItem", "added " + anItem.id + " / " + anItem.name);
 };
 
-Application.prototype.fetchItems = function(connection) {
+Application.prototype.fetchItems = function() {
   var self = this;
   
-  jcms.Item.loadItems(connection, function(result) {
+  jcms.Item.loadItems(this.connection, function(result) {
     // make hashtable on item id
     self.items = {};
     
@@ -359,7 +379,7 @@ Application.prototype.fetchItems = function(connection) {
     // console.log(self.items);
     
     // next step
-    self.fetchPages(connection);
+    self.fetchPages();
   });
 };
 
@@ -458,24 +478,24 @@ Application.prototype.addPage = function(page) {
 	this.buildSitemap();
 };
 
-Application.prototype.fetchPages = function(connection) {
+Application.prototype.fetchPages = function() {
   var self = this;
   
-  jcms.Page.loadPages(connection, function(result) {
+  jcms.Page.loadPages(self.connection, function(result) {
     self.pages = [];
     self.urls = {};
     for (var i = 0; i < result.length; i++) {
       var O = new jcms.Page(result[i], self);
               
       O.addTo(self);
-      O.getContent(connection);
+      O.getContent(self.connection);
     }
     self.buildSitemap();
     
     self.log("Application.fetchPages", "fetched " + result.length + " pages");
     
     // next step
-    self.fetchForms(connection);
+    self.fetchForms();
   });
 };
 
@@ -546,24 +566,24 @@ Application.prototype.getForm = function(formId) {
   //TODO: read forms from the database...
   // return this.forms[formId];
 };
-Application.prototype.fetchForms = function(connection) {
+Application.prototype.fetchForms = function() {
    var self = this;
   
    // fetch all forms
   
    // next step
-   self.fetchDomains(connection);
+   self.fetchDomains();
 };
 
 
 /////////////////////
 //Users - Domains //
 /////////////////////
-Application.prototype.fetchDomains = function(connection) {
+Application.prototype.fetchDomains = function() {
   var self = this;
   
   // fetch all user domains
-  jcms.User.loadDomains(connection, function(result) {
+  jcms.User.loadDomains(self.connection, function(result) {
     self.domains = [];
     for (var i = 0; i < result.length; i++) {
     self.domains.push(result[i].domain);
@@ -571,7 +591,7 @@ Application.prototype.fetchDomains = function(connection) {
     self.log("Application.fetchDomains", "fetched " + result.length + " domains");
     
     // next step
-    self.fetchAtoms(connection);
+    self.fetchAtoms();
   });
 };
 
@@ -608,19 +628,19 @@ Application.prototype.getAtomChildren = function(parent) {
   return list;
 };
 
-Application.prototype.fetchAtoms = function(connection) {
+Application.prototype.fetchAtoms = function() {
   var self = this;
   
-  // fetch all atoms and close connection when finished
-  jcms.Atom.loadAtoms(connection, function(result) {
+  // fetch all atoms
+  jcms.Atom.loadAtoms(self.connection, function(result) {
     self.atoms = {};
     for (var i = 0; i < result.length; i++) {
       self.addAtom(new jcms.Atom(result[i]));
     }
     self.log("Application.fetchAtoms", "fetched " + result.length + " atoms");
     
-    // no next step
-    connection.end();
+    // no next step -- we used to close our connection here
+    // but now we keep it open to serve requests
   });
 };
 

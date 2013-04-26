@@ -73,7 +73,7 @@ Controller.prototype.query = function(sql, params, callback) {
 
 Controller.prototype.closeConnection = function() {
   if (this.connection) {
-    this.connection.end();
+    this.app.returnConnection(this.connection);
     this.connection = null;
   }
 };

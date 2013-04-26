@@ -16,10 +16,11 @@ function SitemapController(context) {
   // init inherited controller
   jcms.TreeController.call(this, context);
 }
+SitemapController.prototype = new jcms.TreeController();
+
+
 module.exports = SitemapController;
 
-
-SitemapController.prototype = new jcms.TreeController();
 
 
 SitemapController.prototype.doRequest = function( finish ) {
@@ -28,24 +29,19 @@ SitemapController.prototype.doRequest = function( finish ) {
   self.context.fn = "admin/sitemap.ejs";
   
   if (self.context.request == "realdelete") {
-    self.realDelete( self.getParam("node"), function(result) {
+    self.realDelete( self.getParam("node"), function whenDone(result) {
       if (result.status != "OK") { 
         self.feedback(false, "Something went wrong during delete."); 
       }
       finish();
     });
     
-  } else if (self.context.request == "imagelist") {
-    self.getImageList( function() {
-      finish("");
-    });
-
   } else if (self.context.request == "savedata") {
     //TODO: get id from page editor
     self.saveData( self.getParam("node"), self.getParam("data"), 0, finish);
 
   } else if (self.context.request == "adjust") {
-    self.adjustElements( self.getParam("node"), function(result) {
+    self.adjustElements( self.getParam("node"), function whenDone(result) {
       // get all info and data on this node
       self.context.request = "getnode";
       jcms.TreeController.prototype.doRequest.call(self, finish);
@@ -83,14 +79,6 @@ SitemapController.prototype.getObject = function(id) {
 };
 
 /* SitemapController - Specific actions */
-
-SitemapController.prototype.getImageList = function( done ) {
-  console.log("Received SitemapController - getImageList");
-  //this.gen(TreeController.renderList( this.app.atoms, ImageController.getRoot()), 
-  this.gen('var tinyMCEImageList = [["name1", "url1"], ["name2", "url2"], ["name3", "url3"]];', 
-      {"Content-type": "application/javascript"}); // ,  "pragma": "no-cache", "expires": "0"
-  done();
-};
 
 SitemapController.prototype.saveData = function(thePage, theData, theId, finish) {    
   var self = this;
@@ -353,9 +341,6 @@ SitemapController.prototype.deleteObject = function( nodeId, finish ) {
 };
 
 
-SitemapController.prototype.makeSelect = function( type ) {
-};
-
 
 SitemapController.prototype.uploadFile = function( filePath, nodeId ) {
 };
@@ -379,6 +364,27 @@ SitemapController.prototype.fetchNode = function( theNode ) {
 
 SitemapController.prototype.updateElements = function( nodeId, finish ) {
 	finish();
+	/*
+	 String aCList = this.getParam("elements");
+    String aList[] = aCList.split(",");
+    int nr = 1;
+    for (String anId: aList) {
+      try {
+        int anItemNr = Integer.parseInt(anId);
+        String aType = this.getParam("K"+anId);
+        
+        if (aType.equals("X")) 
+          TElement.doDelete(this.fRequest, anItemNr);
+        else if (anItemNr > 900)
+          TElement.doInsert(this.fRequest, thePage.fItemId, this.getParam("N"+anId), 
+                    aType, this.getParam("S"+anId), nr*10);
+        else
+          TElement.doUpdateLoad(this.fRequest, anItemNr, this.getParam("N"+anId), 
+                      aType, this.getParam("S"+anId), nr*10);
+      } catch (Exception e) {}
+      nr++;
+    }
+	 */
 };
 
 SitemapController.prototype.saveInfo = function( nodeId, finish ) {
@@ -411,15 +417,31 @@ SitemapController.prototype.toId = function( nodeId ) {
 /* Controller specific, called from template */
 
 SitemapController.prototype.getAdminTree = function() {
-  return this.renderTree( new Root(this.app.admins, 1, "Admin"), false, 99 );
+  return this.getTree( new Root(this.app.admins, 1, "Admin") );
 };
 
 SitemapController.prototype.getGlobalTree = function() {
-  return this.renderTree( new Root(this.app.globals, 1, "Globals"), false, 99 );
+  return this.getTree( new Root(this.app.globals, 1, "Globals") );
 };
 
 
-SitemapController.prototype.adjustElements = function( theNode ) {
+SitemapController.prototype.adjustElements = function( theNode, finish ) {
+  var self = this;
+  console.log("SiteMapController.adjustElements: add correct Elements for (" + theNode + ")");
+  
+  var aPage = self.getObject( self.toId(theNode) );
+
+  this.saveInfo(aPage, function whenDone() {
+    aPage.deleteElements( function (){
+      aPage.copyElements( aPage.fLanguage, - aPage.item.templateId, function() {
+        self.context.savedPage = aPage;
+        self.context.fetchnode = "id_" + theNode;
+      });
+    });
+  
+    finish();
+  });
+
 };
 
 
@@ -459,96 +481,18 @@ SitemapController.prototype.isAllowed = function( theNode ) {
   
   console.log("TSiteMapController.isAllowed: user = '" + aUserDomain + "', item = '" + anItemDomain + "'");
 
-  if (aUserDomain.length == 0) { return false; }
+  if (aUserDomain.length === 0) { return false; }
   if ((aUserDomain=="*") || (aUserDomain=="rWorks")) { return true; }
     
-  if ((anItemDomain.equals=="*") || (anItemDomain.length == 0)) { return true; }
+  if ((anItemDomain.equals=="*") || (anItemDomain.length === 0)) { return true; }
   
   var aList = anItemDomain.split(",");
   for (var x in aList) {
-    if (aList[x]==aUserDomain) { return true; }
+    if (aList[x]==aUserDomain) { 
+      return true; 
+    }
   }
   
   return false;
 };
 
-
-/*
-  void updateElements(TPage thePage) {
-    // update all elements attached to this page (TElements -> db:elements)
-    // no need to update the ArrayList of elements attached to the TContent, as it gets destroyed any second now...
-    String aCList = this.getParam("elements");
-    String aList[] = aCList.split(",");
-    int nr = 1;
-    for (String anId: aList) {
-      try {
-        int anItemNr = Integer.parseInt(anId);
-        String aType = this.getParam("K"+anId);
-        
-        if (aType.equals("X")) 
-          TElement.doDelete(this.fRequest, anItemNr);
-        else if (anItemNr > 900)
-          TElement.doInsert(this.fRequest, thePage.fItemId, this.getParam("N"+anId), 
-                    aType, this.getParam("S"+anId), nr*10);
-        else
-          TElement.doUpdateLoad(this.fRequest, anItemNr, this.getParam("N"+anId), 
-                      aType, this.getParam("S"+anId), nr*10);
-      } catch (Exception e) {}
-      nr++;
-    }
-  }
-  
-   
-   
-  String SaveData(String thePageId, String theData) {    
-    try {
-      int theId = Integer.parseInt(thePageId.substring(3));
-      TPage aPage = this.fApplication.GetPage(this.fRequest.getLanguage(), theId);
-      
-      if (! this.isAllowed(aPage.item)) return "NAL";
-      
-      // update the large chunk of data from this page (TContent.fData -> db:content)
-      TContent.doSaveData(this.fRequest, theId, theData);
-      return "OK";
-    } catch (Exception e) {
-      console.log("TSiteMapController.SaveData: failed to save (" + thePageId + ")");
-      e.printStackTrace();
-
-      return "NOK";
-    }
-  }
-
-  
-  void AdjustElements(String theNode) {
-    try {
-      String aLan = this.fRequest.getLanguage();
-      TPage aPage = this.fApplication.GetPage(aLan, Integer.parseInt(theNode));
-      this.UpdatePage(aPage);
-
-      this.UpdateItem(aPage);
-
-      TContent aContent = new TContent(this.fRequest, aPage);
-      
-      
-      // delete old elements from database, we didn't "init" the TContent so nothing is attached
-      TElement.doDelete(this.fRequest, aPage.fLanguage, aPage.fItemId, false);
-      
-      // copy from template
-      aContent.FetchElements(aPage.fLanguage, - aPage.fItem.fTemplateId);
-      
-      // insert into the database
-      aContent.doInsertElements();
-      
-      this.fRequest.setVar(TApplication.kRequest, "savedPage", aPage);
-      this.fRequest.setStr(TApplication.kRequest, "fetchnode", "id_" + theNode);
-
-      console.log("TSiteMapController.AdjustElements: add correct Elements for (" + theNode + ")");
-    
-    } catch (Exception e) {
-      console.log("TSiteMapController.AdjustElements: failed add correct Elements for (" + theNode + ")");
-      e.printStackTrace();
-    }
-  }
-   
-
-*/

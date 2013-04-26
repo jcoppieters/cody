@@ -3,28 +3,29 @@
 //
 //
 console.log("loading " + module.id);
-module.exports = Dynamic;
 
 var libpath = require("path"),
     http = require("http"),
     fs = require("fs"),
     url = require("url"),
     mime = require("mime");
+    jcms = require("./index.js");
  
-var path = ".";
 
-
-function Dynamic(req, res) {
+function Dynamic(req, res, path) {
   this.request = req;
   this.response = res;
+  this.path = path;
 }
+
+module.exports = Dynamic;
 
 
 Dynamic.prototype.serve = function () {
   var self = this;
 
   var uri = url.parse(self.request.url).pathname;
-  var filename = libpath.join(path, uri);
+  var filename = libpath.join(self.path, uri);
   
 
   // check if this file exists

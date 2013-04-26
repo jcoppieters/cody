@@ -19,6 +19,41 @@
  * Date: 2012-07-03
  * Rev:  1.3.2
  */
+  $.uaMatch = function( ua ) {
+    ua = ua.toLowerCase();
+
+    var match = /(chrome)[ \/]([\w.]+)/.exec( ua ) ||
+      /(webkit)[ \/]([\w.]+)/.exec( ua ) ||
+      /(opera)(?:.*version|)[ \/]([\w.]+)/.exec( ua ) ||
+      /(msie) ([\w.]+)/.exec( ua ) ||
+      ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec( ua ) ||
+      [];
+
+    return {
+      browser: match[ 1 ] || "",
+      version: match[ 2 ] || "0"
+    };
+  };
+
+  matched = $.uaMatch( navigator.userAgent );
+  browser = {};
+
+  if ( matched.browser ) {
+    browser[ matched.browser ] = true;
+    browser.version = matched.version;
+  }
+
+  // Chrome is Webkit, but Webkit is also Safari.
+  if ( browser.chrome ) {
+    browser.webkit = true;
+  } else if ( browser.webkit ) {
+    browser.safari = true;
+  }
+
+  $.browser = browser;
+
+  
+  
 	$.fn.mcDropdown = function(list, options) {
 		// track the dropdown object
 		var dd;
@@ -74,7 +109,7 @@
 	};
 
 	// check to see if the browser is IE6	
-	var isIE6 = ($.browser.version && $.browser.version <= 6);
+	var isIE6 = ($.browser && $.browser.version && $.browser.version <= 6);
 
 	$.mcDropDownMenu = function(el, list, options){
 		var $self, thismenu = this, $list, $divInput, settings, typedText = "", matchesCache, oldCache, $keylist, $keylistiframe, bInput, bDisabled = false;

@@ -33,6 +33,14 @@
 				<a target=_blank href="http://www.jcms.be/cms_manual.pdf">Manual</a>
 			</div>
     </div>
+    
+    <% if ( message != "" ) { %>
+      <p class="notification <%=status%>"><%= message %></p>
+      <script>
+       $(document).ready( function () { $(".notification.warning").delay(6000).fadeOut(1000); } );
+      </script>
+    <% } %> 
+    
 <% } else { %>
 	<h1>Login first</h1>
 <% } %>	

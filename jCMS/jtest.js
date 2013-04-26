@@ -38,7 +38,8 @@ server.use(express.cookieParser("a secret"));
 server.use(express.cookieSession());
 
 
-var app = new jcms.Application("essen", "v0.1a1");
+var app = new jcms.Application("essen", "v0.1a1", "/Users/johan/git/jCMS/jCMS");
+ // path should be  /usr/local/data  on production
  app.init();
  app.addController("TAgendaController", essen.AgendaController);
  app.addController("TBookingController", essen.BookingController);
@@ -57,7 +58,7 @@ server.get('/static/*', function(req, res){
 });
 
 server.get('/data/*', function(req, res){
-  var fileserver = new jcms.Dynamic(req, res);
+  var fileserver = new jcms.Dynamic(req, res, app.getDataPath());
   fileserver.serve();
 });
 

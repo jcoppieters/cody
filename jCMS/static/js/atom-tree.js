@@ -14,6 +14,7 @@
 var gCurrentNode = "";
 var gPleaseOpen = "";
 var gRootId = "id_"+gRoot;
+var gNextType = "";
 
 function warnUser(message) {
   $('#right_cont').html("<p class='warning'>" + message + "</p>");
@@ -199,13 +200,13 @@ $(document).ready(function () {
   })
 
   
-  .bind("create_node.jstree", function(e, data) {
+  .bind("create_node.jstree", function(e, data) { console.log(data);
     var title = data.args[2].data[0], aNode = data.rslt.obj;
     var type = data.args[1] || "inside";  // insert type = before, after, inside, first, last
     var refNode = (type == "inside") ? data.args[0] : data.args[1];
     var refNodeId = refNode.attr("id");
     
-    $.getJSON("./"+gService, {request: 'insert', refnode: refNodeId, type: type, name: title},
+    $.getJSON("./"+gService, {request: 'insert', refnode: refNodeId, type: type, name: title, kind: gNextType, extention: 'xxx'},
         function(msg){
           if (msg.status == "NAL") {
             warnUser("You are not allowed to create and item here, sorry");
@@ -218,11 +219,11 @@ $(document).ready(function () {
     
           } else {
             // remember this node, it will go into "rename" mode now, so after rename -> open it up for editing
-            // console.log("create - setting node id to " + msg.node);
+            console.log("create - setting node id to " + msg.node);
             gPleaseOpen = msg.node;
             aNode.attr("id", msg.node);
             
-            warnUser("Please choose a name for your page and press the 'enter'-key.");
+            warnUser("Please choose a name for your item and press the 'enter'-key.");
           }
     });
   })
@@ -232,7 +233,7 @@ $(document).ready(function () {
     plugins : [ "themes", "html_data", "ui", "crrm", "dnd", "types" ],
     core : {
       initially_open : [gRootId],
-      strings: { new_node: "New page" }
+      strings: { new_node: "New item" }
     },
     themes : {
       theme: "default"   // alternatives: "apple", "default" or false (= no theme)
@@ -250,19 +251,18 @@ $(document).ready(function () {
       "image" : {
         valid_children : "none",
         creatable: false,
-        icon : {
-          image : gImages + "/extentions/jpg.gif" }
+        icon : { image : gImages + "/extentions/jpg.gif" }
       },
       "file" : {
         valid_children : "none",
         creatable: false,
-        icon : {
-          image : gImages + "/extentions/xxx.gif" }
+        icon : { image : gImages + "/extentions/xxx.gif" }
       },
       "folder" : {
-        valid_children : [ "file", "image", "folder" ]
-        }   
+        valid_children : [ "file", "image", "folder" ],
+        icon : { image : gImages + "/extentions/xxx.gif" }
       }
+    }
   });
 
 
@@ -270,7 +270,7 @@ $(document).ready(function () {
 
 function doAddFolder() {
   var t = $("#tree").jstree("get_selected"); 
-  gNextType = "F";
+  gNextType = "folder";
   if (t) {
     $("#tree").jstree("create", t, "inside", ({ attr: { rel : "folder" } })); 
   } else { 
@@ -279,7 +279,7 @@ function doAddFolder() {
 }
 function doAddImage() {
   var t = $("#tree").jstree("get_selected"); 
-  gNextType = "I";
+  gNextType = "image";
   if (t) {
     $("#tree").jstree("create", t, "inside", ({ attr: { rel : "image" } })); 
   } else { 

@@ -9,9 +9,8 @@
 ///////////////////////
 
 $(document).ready(function() {
-   $('#editContent').tinymce({
-     external_image_list_url: gContext + "/" + gLanguage + "/sitemap?request=imagelist",
-     //external_image_list_url: gStatic + "/js/img.js",
+  $('#editContent').tinymce({
+    external_image_list_url: gContext + "/" + gLanguage + "/images?request=imagelist",
     script_url : gStatic + '/js/tinymce/tiny_mce.js',
     
     mode: "none",         // manually attach with mceAddControl/mceRemoveControl
@@ -93,6 +92,9 @@ function getPage(id) {
           $("#doEdit").click( function() {
             showEditor( $("#editData").val() );
           });
+          
+          // avoid "leave page" dialog from browser
+          window.onbeforeunload = function() { };
        }
      }
    });

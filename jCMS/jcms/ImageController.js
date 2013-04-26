@@ -15,26 +15,36 @@ function ImageController(context) {
   
   // init inherited controller
   jcms.TreeController.call(this, context);
+  
 }
+ImageController.prototype = new jcms.TreeController();
+
+
 module.exports = ImageController;
 
-ImageController.prototype = new jcms.TreeController();
 
 
 ImageController.prototype.doRequest = function( finish ) {
   var self = this;
   
   self.context.fn = "admin/images.ejs";
-  jcms.TreeController.prototype.doRequest.call(self, finish);
- 
+  
+  if (self.context.request == "imagelist") {
+    self.getImageList();
+    finish("");
+
+  } else {
+    jcms.TreeController.prototype.doRequest.call(self, finish);
+    
+  }
 };
 
 ImageController.prototype.getRoot = function() {
-  return this.app.getAtom(1);
+  return this.app.getAtom( jcms.Application.kImageRoot );
 };
 
 ImageController.prototype.getType = function(theNode) { 
-  return "image"; 
+  return ((theNode.extention === "xxx") || (theNode.extention === "")) ? "folder" : "image"; 
 };
 
 ImageController.prototype.getFilePath = function() { 
@@ -46,3 +56,15 @@ ImageController.prototype.getObject = function(id) {
 
 
 /* Overridden - Action functions */
+
+
+/* specific functions */
+ImageController.prototype.getImageList = function() {
+  console.log("Received ImageController - getImageList");
+
+  this.gen("var tinyMCEImageList = " + this.getArray( this.app.getAtom(1) ) + ";", 
+           {"Content-type": "application/javascript"}); 
+  //TODO: add headers:  "pragma": "no-cache", "expires": "0" ?
+};
+
+

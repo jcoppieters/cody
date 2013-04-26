@@ -3,6 +3,7 @@
 //
 //
 console.log("loading " + module.id);
+var fs = require("fs");
 var jcms = require('./index.js');
 
 
@@ -26,12 +27,13 @@ Atom.addDefaults = function(basis, parent) {
   
   basis.name = basis.name || Atom.kDefaultName;
   basis.parent = basis.parent || parent.id;
-  basis.user = basis.user || parent.user;
   basis.note = basis.note || parent.note;
   basis.extention = basis.extention || "";
   basis.sortorder = basis.sortorder || 9999;
   basis.created = basis.created || new Date();
   basis.updated = basis.updated || new Date();
+  
+  return basis;
 };
 
 
@@ -85,6 +87,20 @@ Atom.prototype.getName = function() {
   return this.name; 
 };
 
+Atom.prototype.setExtention = function(extention) { 
+  this.extention = extention; 
+};
+Atom.prototype.getExtention = function() { 
+  return this.extention; 
+};
+
+Atom.prototype.getFileName = function() { 
+  return this.id + "." + this.extention; 
+};
+Atom.prototype.getPathName = function(controller) {
+  return controller.app.getDataPath() + "/data/images/" + this.id + "." + this.extention;
+};
+
 Atom.prototype.getId = function() { 
   return this.id; 
 };
@@ -114,8 +130,8 @@ Atom.prototype.doUpdate = function(controller, finish) {
     
     console.log("Atom.doUpdate -> insert atom " + self.name);
     values.push(controller.getLoginId());
-    controller.query("insert into atoms (name, parent, sortorder, note, extention, updated, created, user) " +
-                     "values (?, ?, ?, ?, ?, now(), now(), ?)", values,
+    controller.query("insert into atoms (name, parent, sortorder, note, extention, updated, created) " +
+                     "values (?, ?, ?, ?, ?, now(), now())", values,
       function(err, result) {
         if (err) { 
           console.log("Atom.doUpdate -> erroring inserting atom: " + self.name);
@@ -123,7 +139,7 @@ Atom.prototype.doUpdate = function(controller, finish) {
         } else {
           self.id = result.insertId;
           console.log("Atom.doUpdate -> inserted atom: " + self.id);
-          if (typeof finish == "function") { finish.call(self, controller); }
+          if (typeof finish == "function") { finish.call(self); }
         }
     });
     
@@ -138,7 +154,7 @@ Atom.prototype.doUpdate = function(controller, finish) {
           console.log(err); 
         } else {
           console.log("Atom.doUpdate -> updated atom: " + self.id);
-          if (typeof finish == "function") { finish.call(self, controller); }
+          if (typeof finish == "function") { finish.call(self); }
         }
     });
   }
@@ -150,6 +166,9 @@ Atom.prototype.doDelete = function(controller, finish) {
   controller.query("delete from atoms where id = ?", [ self.id ], function() {
     delete controller.app.atoms[self.id];
     console.log("Item.doUpdate -> deleted atom: " + self.id);
-  });
+    fs.unlink(self.getPathName(controller), function(err) {
+      if (typeof finish == "function") { finish.call(self, err); }
+    });
+ });
 };
 
