@@ -140,7 +140,7 @@ $(document).ready(function () {
     var nodeId = aNode.attr("id");
     console.log("Tree - Rename: " + nodeId + " -> " + text);
     
-    $.getJSON("./"+gService, {request: 'rename', title: text, node: nodeId},
+    $.getJSON("./"+gService, {request: 'rename', name: text, node: nodeId},
         function(msg){
           if (msg.status == "NAL") {
             warnUser("You are not allowed to rename this item, sorry.");

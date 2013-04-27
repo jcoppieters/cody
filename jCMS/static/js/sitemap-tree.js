@@ -67,7 +67,7 @@ $(document).ready(function () {
         // console.log("Tree - Before: rename_node, please-open = " + gPleaseOpen);
         if (gPleaseOpen) {
           // we're here after a create_node, set the name and open the item for editing
-          $.getJSON("./sitemap", {request: 'rename', title: data.args[1], node: gPleaseOpen},
+          $.getJSON("./sitemap", {request: 'rename', name: data.args[1], node: gPleaseOpen},
               function(msg){
                 if (msg.status == "OK") {
                  doEdit(aNode);
@@ -84,7 +84,7 @@ $(document).ready(function () {
     var nodeId = aNode.attr("id");
     // console.log("Tree - Rename: " + nodeId + " -> " + text);
     
-    $.getJSON("./sitemap", {request: 'rename', title: text, node: nodeId},
+    $.getJSON("./sitemap", {request: 'rename', name: text, node: nodeId},
         function(msg){
           if (msg.status == "NAL") {
             warnUser("You are not allowed to rename this item, sorry.");
@@ -150,7 +150,7 @@ $(document).ready(function () {
     var refNode = (type == "inside") ? data.args[0] : data.args[1];
     var refNodeId = refNode.attr("id");
     
-    $.getJSON("./sitemap", {request: 'insert', refnode: refNodeId, type: type, title: title},
+    $.getJSON("./sitemap", {request: 'insert', refnode: refNodeId, type: type, name: title},
         function(msg){
           if (msg.status == "NAL") {
             warnUser("You are not allowed to create and item here, sorry");

@@ -76,39 +76,42 @@ TreeController.prototype.doRequest = function( finish ) {
                     self.getParam("type"),
                     self.getParam("kind"), finish );
     
+    
   } else if (self.context.request == "move") {
     // a  node was being moved around in the tree
     this.moveObject( self.getParam("node"), 
                      self.getParam("refnode"),
                      self.getParam("type"), finish);
     
+    
   } else if (self.context.request == "rename") {
     // a node has been renamed in the tree
     this.renameObject( self.getParam("name"),  
                        self.getParam("node"), finish);
-          
+        
+    
   } else if (self.context.request == "delete") {
     // request to delete a node from the tree
     this.deleteObject( self.getParam("node"), finish);
+    
     
   } else if (self.context.request == "select") {
     // generate a input/type=select
     this.gen( this.getList() );
     finish("");
+       
     
-  } else if (self.context.request == "fileupload") {
-    this.gen( this.uploadFile( this.getFilePath(), self.getParam("node") ));
-    finish("");
-          
   } else if (self.context.request == "getnode") {
     // get all info and data on this node
     this.fetchNode( self.getParam("node") );
     finish( self.context.fn.replace(".ejs", "-ajax.ejs") );
-              
+        
+    
   } else if (self.context.request == "save") {
     // save all info on this node (done by a submit, so we need to redraw the screen, too bad)
     this.saveInfo( self.getParam("node"), finish );
         
+    
   } else {
     // no specific request, just draw the tree...
     finish();
@@ -213,17 +216,25 @@ TreeController.prototype.saveInfo = function( nodeId, finish ) {
       
       if ((typeof F != "undefined") && (typeof F.fileToUpload != "undefined")) {
         F = F.fileToUpload;
-        var dot = F.name.lastIndexOf(".");
-        anObject.setExtention(F.name.substring(dot+1));
-        anObject.setNote(F.name.substring(0, dot-1));
-        var newPath = anObject.getPathName(self);
-        console.log("TreeController.saveInfo: moving file from " + F.path + " to " + newPath);
        
-        fs.rename(F.path, newPath, function() {
-           fs.unlink(F.path, function() {
-             anObject.doUpdate(self, finish);
-           });
-        });
+        if (F.size !== 0) {
+          // find the name of the file 
+          var dot = F.name.lastIndexOf(".");
+          anObject.setExtention(F.name.substring(dot+1));
+          anObject.setNote(F.name.substring(0, dot-1));
+          var newPath = anObject.getPathName(self);
+          
+          // move the tmp file to our own datastore 
+          console.log("TreeController.saveInfo: moving file from " + F.path + " to " + newPath);
+          fs.rename(F.path, newPath, function() {
+            anObject.doUpdate(self, finish);
+          });
+        } else {
+          // just delete the tmp file if it's empty
+          fs.unlink(F.path, function() {
+            anObject.doUpdate(self, finish);
+          });
+        }
         
       } else {
         console.log("TreeController.saveInfo: no file attached.");
@@ -292,6 +303,7 @@ TreeController.prototype.renameObject = function( title, nodeId, finish ) {
     finish( { status: "NOK"} );
   }
 };
+
 TreeController.prototype.deleteObject = function( nodeId, finish ) {
   var self = this;
   var anObject = self.getObject(this.toId(nodeId));
@@ -313,8 +325,7 @@ TreeController.prototype.deleteObject = function( nodeId, finish ) {
 
 TreeController.prototype.makeSelect = function( type ) {
 };
-TreeController.prototype.uploadFile = function( filePath, nodeId ) {
-};
+
 
 TreeController.prototype.fetchNode = function( nodeId ) {
   console.log("TreeController.FetchNode: nodeId = " + nodeId);
