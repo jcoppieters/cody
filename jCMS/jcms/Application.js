@@ -3,7 +3,7 @@
 //
 //
 
-// Next are also in the issues on BitBucket
+// Next items are also in the issues on BitBucket
 //TODO: #1 - drop active from items
 //TODO: #1 - drop datatable from templates
 //TODO: #1 - rename defaultoper from templates to defaultrequest
@@ -31,7 +31,7 @@ function Application(name, version, datapath) {
   this.atoms = null;        // hashmap with (id - atom)
   this.languages = [];      // array with all languages
   this.domains = null;      // array with all (user) domains
-  this.forms = {};          //TODO: hashmap with (id - form)
+  this.forms = {};          //TODO: hashmap with (id - form) -- or use some stuff from Yanic
   this.controllers = {};    // hashmap with (name - constructor)
     
   this.testing = false;
@@ -222,7 +222,7 @@ Application.prototype.handToController = function(context) {
     }
   }
   
-  controller.doRequest( function(fn, contentType) {
+  controller.doRequest( function(fn, header) {
     // should always be called by doRequest
     //  render with given or the template in the context (controller may have changed it)
     //  if no render template present ( == "") either
@@ -230,7 +230,7 @@ Application.prototype.handToController = function(context) {
     //    -- another controller has taken over
 
     if (typeof fn == "object") {
-      controller.gen(fn, contentType);
+      controller.gen(fn, header);
       
     } else {
       if (typeof fn != "undefined") { 
