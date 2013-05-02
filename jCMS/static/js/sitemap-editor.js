@@ -9,6 +9,7 @@
 ///////////////////////
 
 $(document).ready(function() {
+  
   $('#editContent').tinymce({
     external_image_list_url: gContext + "/" + gLanguage + "/images?request=imagelist",
     script_url : gStatic + '/js/tinymce/tiny_mce.js',

@@ -15,9 +15,11 @@ function TreeController(context) {
   if (context === undefined) { return; }
 
   console.log("TreeController.constructor -> page(" + context.page.itemId + ") = " + context.page.title + ", request = " + context.request);
-
+  
   // init inherited controller
   jcms.Controller.call(this, context);
+
+  context.shownode = this.getRoot().id;
 }
 module.exports = TreeController;
 
@@ -26,18 +28,18 @@ TreeController.prototype = new jcms.Controller();
 
 // Next 4 should be overridden
 TreeController.prototype.getRoot = function() { 
-  return null; 
+  throw new Error("TreeController.getRoot should be overridden - return a Atom or a descender");
 };
 
 TreeController.prototype.getType = function(theNode) { 
-  return ""; 
+  throw new Error("TreeController.getType should be overridden - return a string (image, folder, ...)");
 };
 
 TreeController.prototype.getFilePath = function() { 
-  return ""; 
+  throw new Error("TreeController.getFilePath should be overridden - return a full path string (/data/images/...)");
 };
 TreeController.prototype.getObject = function(id) {
-  return null;
+  throw new Error("TreeController.getObject should be overridden - return an Atom with the specified id");
 };
 
 
@@ -90,10 +92,15 @@ TreeController.prototype.doRequest = function( finish ) {
                        self.getParam("node"), finish);
         
     
-  } else if (self.context.request == "delete") {
-    // request to delete a node from the tree
-    this.deleteObject( self.getParam("node"), finish);
+  } else if (self.context.request == "realdelete") {
+    // request to really delete a node from the tree
+    this.realDeleteObject( self.getParam("node"), finish);
+
     
+  } else if (self.context.request == "delete") {
+    // request to mark a node as "deleted" / "inactive" in the tree
+    this.deleteObject( self.getParam("node"), finish);
+
     
   } else if (self.context.request == "select") {
     // generate a input/type=select
@@ -110,7 +117,7 @@ TreeController.prototype.doRequest = function( finish ) {
   } else if (self.context.request == "save") {
     // save all info on this node (done by a submit, so we need to redraw the screen, too bad)
     this.saveInfo( self.getParam("node"), finish );
-        
+
     
   } else {
     // no specific request, just draw the tree...
@@ -211,7 +218,8 @@ TreeController.prototype.saveInfo = function( nodeId, finish ) {
   
   var anObject = this.getObject(this.toId(nodeId));
   if (anObject) {
-      anObject.scrapeFrom(this);
+     self.context.shownode = anObject.parentId;
+     anObject.scrapeFrom(this);
       var F = self.context.req.files;
       
       if ((typeof F != "undefined") && (typeof F.fileToUpload != "undefined")) {
@@ -221,7 +229,8 @@ TreeController.prototype.saveInfo = function( nodeId, finish ) {
           // find the name of the file 
           var dot = F.name.lastIndexOf(".");
           anObject.setExtention(F.name.substring(dot+1));
-          anObject.setNote(F.name.substring(0, dot-1));
+          var oldNote = anObject.getNote() || "";
+          if (oldNote === "") { anObject.setNote(F.name.substring(0, dot)); }
           var newPath = anObject.getPathName(self);
           
           // move the tmp file to our own datastore 
@@ -297,7 +306,7 @@ TreeController.prototype.renameObject = function( title, nodeId, finish ) {
       
     } catch (e) {
       console.log("TreeController.RenameObject: Failed to update the object - " + e);      
-      finish( { status: "NOK", error: e } );
+      finish( { status: "NOK", error: e.toString() } );
     }
   } else {
     finish( { status: "NOK"} );
@@ -308,18 +317,36 @@ TreeController.prototype.deleteObject = function( nodeId, finish ) {
   var self = this;
   var anObject = self.getObject(this.toId(nodeId));
   if (self.app.hasAtomChildren(anObject)) {
-    finish( { status: "Not empty" } );
+    finish({ status: "NOE", error: "not empty"});
     
   } else {
+    self.context.shownode = anObject.parentId;
     anObject.doDelete(self, function(err) {
-       if (err) {
-         finish( { status: "NOK" } );    
+      if (err) {
+        finish({status: "NOK", error: err.toString()});    
       } else {
-         finish( { status: "OK" } );    
-       }
+        finish({status: "OK"});    
+      }
     });
-    //TODO: delete file !!!
   }
+};
+TreeController.prototype.realDeleteObject = function( nodeId, finish ) {
+  var self = this;
+  this.deleteObject( nodeId, function(msg) {
+    if (msg.status === "NOE") {
+      self.feedBack(false, "There are still elements below this item");
+      finish();
+      
+    } else if (msg.status === "NOK") {
+      self.feedBack(false, "Error deleting this item: " + msg.error);
+      finish();   
+      
+    } else {
+      self.feedBack(true, "Item successfully deleted");
+      finish();    
+      
+    }
+  });
 };
 
 
@@ -346,74 +373,4 @@ TreeController.prototype.respace = function(theParent) {
   }
 };
 
-  
-  
-/*  
-  String DeleteObject( String theNode ) {
-    TApplication.printLog("Received TTreeController - delete, node = " + theNode);
-    
-    try {
-      int anItemId = toId(theNode);
-      if (this.fApplication.hasParentObject(anItemId))
-        return "NOK: this object still contains content";
-      else {
-        TObject anObject = this.fApplication.GetObject(anItemId);
-        anObject.doDelete(this.fRequest);
-        try {
-              String fn = TDataServer.MakeOSPath(this.fRequest.getHost() + this.getFilePath(), anItemId + "." + anObject.fExtention);
-          TApplication.printLog("TTreeController.DeleteObject: Deleting file = " + fn);  
-          File f = new File(fn);
-          if (! f.delete())
-            throw new IllegalArgumentException("File deletion failed");
-          return "OK";
-        } catch (Exception e) {
-          TApplication.printLog("TTreeController.DeleteObject: Failed to delete the file.");
-          return "NOK: could not delete the file";
-        }
-      }
-      
-    } catch (Exception e) {
-      TApplication.printLog("TTreeController.DeleteObject: Failed to delete the object.");  
-      return "NOK";
-    }
-  }
-  
-  
-  
-  
-  String AddObject( String theTitle, String theRefNode, String theType, String theKind ) {
-    TApplication.printLog("Received TTreeController - insert, refnode = " +theRefNode+ 
-                ", title = " + theTitle + ", type = " + theType + ", kind = " + theKind);
-    int orderNr;
-    TObject aParent;
 
-    // fetch the parent
-    if (theType.equalsIgnoreCase("inside")) {
-      // is only possible if parent is empty
-      orderNr = 10;
-      aParent = this.fApplication.GetObject(toId(theRefNode));
-    } else { 
-      // after -> is always at the end
-      TObject anObject = this.fApplication.GetObject(toId(theRefNode));
-      orderNr = anObject.fSortOrder + 10;
-      aParent = this.fApplication.GetObject(anObject.fParentId);
-    }
-        
-    // make the item
-    TObject anObject = new TObject(theTitle, aParent.fId, orderNr, 
-                    ((theKind.charAt(0) == 'I') ? "xxx" : ""), 
-                    this.fRequest.fApplication);
-    
-    try {
-      anObject.doInsert(this.fRequest);
-      this.fApplication.AddObject(anObject);
-    
-    } catch (Exception e) {
-      TApplication.printLog("TTreeController.AddObject: Failed to create a new object.");
-      e.printStackTrace();
-    }
-    return "id_" + anObject.fId;
-  }
-  
-}
-  */

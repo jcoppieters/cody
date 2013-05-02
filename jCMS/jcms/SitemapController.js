@@ -36,10 +36,12 @@ SitemapController.prototype.doRequest = function( finish ) {
       finish();
     });
     
+    
   } else if (self.context.request == "savedata") {
     //TODO: get id from page editor
     self.saveData( self.getParam("node"), self.getParam("data"), 0, finish);
 
+    
   } else if (self.context.request == "adjust") {
     self.adjustElements( self.getParam("node"), function whenDone(result) {
       // get all info and data on this node
@@ -47,6 +49,7 @@ SitemapController.prototype.doRequest = function( finish ) {
       jcms.TreeController.prototype.doRequest.call(self, finish);
     });
 
+    
   } else {
     // this.super.doRequest( finish );  of  this.super.doRequest.call(this, finish);
     jcms.TreeController.prototype.doRequest.call(self, finish);
@@ -402,6 +405,7 @@ SitemapController.prototype.saveInfo = function( nodeId, finish ) {
       self.updateElements(aPage, function() {
 
         self.app.buildSitemap();
+        self.context.shownode = anItem.id;
         finish();
       });
     });

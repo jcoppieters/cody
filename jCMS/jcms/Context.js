@@ -88,17 +88,20 @@ Context.prototype.copyFromMini = function(mini) {
 Context.prototype.getUnique = function() {
   return new Date().getTime();
 };
+
+
+function two(n) {
+  return (n < 10) ? ("0" + n) : n;
+}
+
 Context.prototype.formatTime = function(aDate) {
-  return aDate.getHours() + ":" + aDate.getMinutes() + ":" + aDate.getSeconds();
+  return two(aDate.getHours()) + ":" + two(aDate.getMinutes()) + ":" + two(aDate.getSeconds());
 };
 Context.prototype.formatShortTime = function(aDate) {
-  return aDate.getHours() + ":" + aDate.getMinutes();
+  return two(aDate.getHours()) + ":" + two(aDate.getMinutes());
 };
 
 Context.prototype.formatDate = function(aDate) {
-  function two(n) {
-    return (n < 10) ? ("0" + n) : n;
-  }
   if (this.dateFormat == "dd-mm-yyyy") {
     return two(aDate.getDate()) + "-" + two(aDate.getMonth()+1) + "-" + aDate.getFullYear();
 

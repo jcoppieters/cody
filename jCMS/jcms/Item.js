@@ -7,6 +7,10 @@ var jcms = require('./index.js');
 
 module.exports = Item;
 
+//!! basis objects (passed to Item constructor or created with addDefaults have a parent that is an integer)
+//Objects created with the contructor Item have a parent and parentId that are integers
+//only after "pickParent" become the parent instance variable a real (Item) object
+
 function Item(basis, app) {
   // copy from basis
   for (var a in basis) {

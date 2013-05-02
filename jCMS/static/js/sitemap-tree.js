@@ -8,6 +8,9 @@
 //tree functions    //
 ///////////////////////
 
+//TODO: replace with atom-tree.js !!
+
+
 function warnUser(message) {
   $('#right_cont').html("<p class='warning'>" + message + "</p>");
 }
@@ -176,14 +179,15 @@ $(document).ready(function () {
   .jstree({
     plugins : [ "themes", "html_data", "ui", "crrm", "dnd", "types" ],
     core : {
-      initially_open : ['id_0'],
+      initially_open : ['id_' + gShowNode],
       strings: { new_node: "New page" }
     },
     themes : {
       theme: "default"   // alternatives: "apple", "default" or false (= no theme)
     },
     ui: {
-      select_limit: 1
+      select_limit: 1,
+      "initially_select" : ['id_' + gShowNode] 
     },
     types: {
       "root" : {

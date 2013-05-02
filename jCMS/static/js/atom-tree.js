@@ -21,6 +21,8 @@ function warnUser(message) {
 }
 
 function getNode(id) {
+//TODO: call generic function after loading, to allow merging with code of sitemap-tree / getPage.
+  
   if (typeof getPage == "function") {
       // call the getPage function if defined by the webpage
       getPage(id);
@@ -41,6 +43,11 @@ function getNode(id) {
               
         } else {
             $("#right_cont").html(msg).show();
+            $("#doDelete").click( function() {
+              $("#request").val("realdelete");
+              $("form#onepage").submit();
+            });
+            
         }
       }
     });
@@ -56,34 +63,55 @@ $(document).ready(function () {
     var aNode = data.args[0]; 
     var nodeId = (typeof aNode == "object") ? $(aNode).attr("id") : "id_xx";
 
-    if ((data.func == "delete_node") && (gService != "sitemap")) { 
-      // we don't actually do deletes for webpages, just mark the node as inactive in the database and rename it in the tree
-      
-      $.getJSON("./"+gService, {request: 'delete', node: nodeId},
-        function(msg){
-          if (msg.status == "OK") {
-            aNode.addClass("deleted");
-            aNode = aNode.find("a:first");
-            var icn = aNode.children("ins").clone();
-            
-            // rename generates a callback and we don't want an update in the database
-            // data.inst.set_text ( aNode , text ) jsTree.rename(aNode, "(" + aNode.text() + ")");
-            var aName = data.inst.get_text(aNode);
-            if (aName.charAt(0) != '(') {
-              aNode.text("(" + aName + ")").prepend(icn);
+    if (data.func == "delete_node") {
+      if (gService == "sitemap") { 
+        // we don't actually do deletes for webpages, just mark the node as inactive in the database and rename it in the tree
+        
+        $.getJSON("./"+gService, {request: 'delete', node: nodeId},
+          function(msg){
+            if (msg.status == "OK") {
+              aNode.addClass("deleted");
+              aNode = aNode.find("a:first");
+              var icn = aNode.children("ins").clone();
+              
+              // rename generates a callback and we don't want an update in the database
+              // data.inst.set_text ( aNode , text ) jsTree.rename(aNode, "(" + aNode.text() + ")");
+              var aName = data.inst.get_text(aNode);
+              if (aName.charAt(0) != '(') {
+                aNode.text("(" + aName + ")").prepend(icn);
+              }
+              getNode(nodeId);
             }
-            getNode(nodeId);
-          }
-          if (msg.status == "NOK") {
-            console.log(msg);
-            warnUser("The deletion of this item failed.<br>server status: " + msg.status);
-          }
-          if (msg.status == "NAL") {
-            warnUser("You are not allowed to delete this item, sorry.");
-          }
-      });
-      e.stopImmediatePropagation();
-      return false; 
+            if (msg.status == "NOK") {
+              console.log(msg);
+              warnUser("The deletion of this item failed.<br>server status: " + msg.status);
+            }
+            if (msg.status == "NAL") {
+              warnUser("You are not allowed to delete this item, sorry.");
+            }
+        });
+        e.stopImmediatePropagation();
+        return false;
+        
+      } else {
+        $.getJSON("./"+gService, {request: 'delete', node: nodeId},
+            function(msg){
+              if (msg.status == "NAL") {
+                warnUser("You are not allowed to delete this item, sorry.");
+                $.jstree.rollback(data.rlbk);
+        
+              } else if (msg.status == "OK") {
+                warnUser("The item has been deleted.");
+                
+              } else {
+                console.log(msg);
+                warnUser("The deletion of this item failed.<br>server status: " + msg.status);
+                $.jstree.rollback(data.rlbk);
+              }
+        });
+        
+      }
+        
 
       
     } else if (data.func == "close_node") {
@@ -117,21 +145,6 @@ $(document).ready(function () {
     var nodeId = aNode.attr("id");
     console.log("Tree - Delete: " + nodeId);
     
-    $.getJSON("./"+gService, {request: 'delete', node: nodeId},
-        function(msg){
-          if (msg.status == "NAL") {
-            warnUser("You are not allowed to delete this item, sorry.");
-            $.jstree.rollback(data.rlbk);
-    
-          } else if (msg.status == "OK") {
-            warnUser("The item has been deleted.");
-            
-          } else {
-            console.log(msg);
-            warnUser("The deletion of this item failed.<br>server status: " + msg.status);
-            $.jstree.rollback(data.rlbk);
-          }
-    });
   })
 
   
@@ -232,14 +245,15 @@ $(document).ready(function () {
   .jstree({
     plugins : [ "themes", "html_data", "ui", "crrm", "dnd", "types" ],
     core : {
-      initially_open : [gRootId],
+      initially_open : ['id_' + gShowNode],
       strings: { new_node: "New item" }
     },
     themes : {
       theme: "default"   // alternatives: "apple", "default" or false (= no theme)
     },
     ui: {
-      select_limit: 1
+      select_limit: 1,
+      "initially_select" : ['id_' + gShowNode] 
     },
     types: {
       "root" : {

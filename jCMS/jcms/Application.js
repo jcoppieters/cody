@@ -610,7 +610,7 @@ Application.prototype.addAtom = function(atom) {
 
 Application.prototype.hasAtomChildren = function(parent) {
   for (var i = 0; i < this.atoms.length; i++) {
-    if (this.atoms[i] == parent.id) {
+    if (this.atoms[i].id == parent.id) {
       return true;
     }
   }

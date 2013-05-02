@@ -7,6 +7,10 @@ var fs = require("fs");
 var jcms = require('./index.js');
 
 
+//!! basis objects (passed to Atom constructor or created with addDefaults have a parent that is an integer)
+//Objects created with the contructor Atom have a parent and parentId that are integers
+//only after "pickParent" become the parent instance variable a real (Atom) object
+
 function Atom(basis) {
   // copy from basis
   for (var a in basis) {
@@ -139,7 +143,7 @@ Atom.prototype.doUpdate = function(controller, finish) {
         } else {
           self.id = result.insertId;
           console.log("Atom.doUpdate -> inserted atom: " + self.id);
-          if (typeof finish == "function") { finish.call(self); }
+          if (typeof finish == "function") { finish(); }
         }
     });
     
@@ -154,7 +158,7 @@ Atom.prototype.doUpdate = function(controller, finish) {
           console.log(err); 
         } else {
           console.log("Atom.doUpdate -> updated atom: " + self.id);
-          if (typeof finish == "function") { finish.call(self); }
+          if (typeof finish == "function") { finish(); }
         }
     });
   }
@@ -165,10 +169,18 @@ Atom.prototype.doDelete = function(controller, finish) {
   console.log("Atom.doDelete -> delete atom " + self.id + " - " + self.name);
   controller.query("delete from atoms where id = ?", [ self.id ], function() {
     delete controller.app.atoms[self.id];
-    console.log("Item.doUpdate -> deleted atom: " + self.id);
-    fs.unlink(self.getPathName(controller), function(err) {
-      if (typeof finish == "function") { finish.call(self, err); }
-    });
+    console.log("Atom.doUpdate -> deleted atom: " + self.id);
+    
+    if ((self.extention === "---") || (self.extention === "xxx") || (self.extention === "")) {       
+      console.log("Atom.doDelete -> no file attached");
+      if (typeof finish == "function") { finish(); }
+      
+    } else {
+      fs.unlink(self.getPathName(controller), function(err) {
+        console.log("Atom.doDelete -> file deleted (" + err + ")");
+        if (typeof finish == "function") { finish(err); }
+      });
+    }
  });
 };
 
