@@ -144,6 +144,11 @@ function saveEditor() {
        });
 }
 
+////////
+//TODO: redo this part
+//  - files, forms, content and images are all content blocks attached to a page
+//
+////////
 
 function hideFileEditor() {
   $("#FileEditor").hide();

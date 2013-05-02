@@ -16,8 +16,8 @@
 
  
 <script type="text/javascript" src="<%=static%>/js/sitemap-editor.js"></script>
-<script> var gShowNode = <%=shownode%>; </script>
-<script type="text/javascript" src="<%=static%>/js/sitemap-tree.js"></script>
+<script>var gService = "sitemap", gRoot = 0, gShowNode = <%=shownode%>; </script>
+<script type="text/javascript" src="<%=static%>/js/atom-tree.js"></script>
 
 
   <div id="wrapper">
@@ -40,7 +40,7 @@
 				<input type="button" value="Delete" onclick="doDelete()" >
 				<input type="button" value="Edit" onclick="doEdit()" >
 			
-	      <div id="sitemap">
+	      <div id="tree">
 	        <ul>
 	          <li id="id_0" class="open" rel="root"><a href="#"><ins>&nbsp;</ins>Website</a>
 	            <%- controller.getTree() %>

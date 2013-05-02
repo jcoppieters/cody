@@ -57,7 +57,7 @@ SitemapController.prototype.doRequest = function( finish ) {
   }
 };
 
-/* Overridden - Config functions */
+/* One off object for making roots for Globals and General */
 function Root(aList, id, name) {
   this.getId = function() { return id; };
   this.getName = function() { return name; };
@@ -65,8 +65,10 @@ function Root(aList, id, name) {
   this.getChildren = function() { return aList; };
  }
  
+/* Overridden - Config functions */
 SitemapController.prototype.getRoot = function() {
-  return this.app.roots[this.context.page.language];
+  return 0;
+  // return this.app.roots[this.context.page.language];
 };
 
 SitemapController.prototype.getType = function(theNode) { 

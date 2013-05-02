@@ -19,7 +19,7 @@ function TreeController(context) {
   // init inherited controller
   jcms.Controller.call(this, context);
 
-  context.shownode = this.getRoot().id;
+  context.shownode = this.getRoot();
 }
 module.exports = TreeController;
 
@@ -28,7 +28,7 @@ TreeController.prototype = new jcms.Controller();
 
 // Next 4 should be overridden
 TreeController.prototype.getRoot = function() { 
-  throw new Error("TreeController.getRoot should be overridden - return a Atom or a descender");
+  throw new Error("TreeController.getRoot should be overridden - return an id");
 };
 
 TreeController.prototype.getType = function(theNode) { 
@@ -130,7 +130,7 @@ TreeController.prototype.doRequest = function( finish ) {
 TreeController.prototype.getArray = function( theRoot ) {
   var self = this;
   var imagePath = self.getFilePath();
-  var aRoot = (typeof theRoot == "undefined") ? this.getRoot() : theRoot;
+  var aRoot = self.getObject((typeof theRoot == "undefined") ? this.getRoot() : theRoot);
 
   function dashes(cnt) { 
     var s = ""; 
@@ -158,7 +158,8 @@ TreeController.prototype.getArray = function( theRoot ) {
     
 //display the complete tree to be used in a select/menu.
 TreeController.prototype.getList = function( theRoot ) {
-  var aRoot = (typeof theRoot == "undefined") ? this.getRoot() : theRoot;
+  var self = this;
+  var aRoot = (typeof theRoot === "object") ? theRoot : self.getObject((typeof theRoot == "undefined") ? self.getRoot() : theRoot);
   
   function renderTree( theNode ) {
     var aTree = "";
@@ -182,7 +183,7 @@ TreeController.prototype.getList = function( theRoot ) {
 // The complete tree for the admin part of the site
 TreeController.prototype.getTree = function( theRoot ) {
   var self = this;
-  var aRoot = (typeof theRoot == "undefined") ? this.getRoot() : theRoot;
+  var aRoot = (typeof theRoot === "object") ? theRoot : self.getObject((typeof theRoot == "undefined") ? self.getRoot() : theRoot);
   
   function renderTree( theNode, open, descend ) {
     var aTree = "";

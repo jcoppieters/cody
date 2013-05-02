@@ -40,7 +40,7 @@ ImageController.prototype.doRequest = function( finish ) {
 };
 
 ImageController.prototype.getRoot = function() {
-  return this.app.getAtom( jcms.Application.kImageRoot );
+  return jcms.Application.kImageRoot;
 };
 
 ImageController.prototype.getType = function(theNode) { 
@@ -62,7 +62,7 @@ ImageController.prototype.getObject = function(id) {
 ImageController.prototype.getImageList = function() {
   console.log("Received ImageController - getImageList");
 
-  this.gen("var tinyMCEImageList = " + this.getArray( this.app.getAtom(1) ) + ";", 
+  this.gen("var tinyMCEImageList = " + this.getArray( this.getRoot() ) + ";", 
            {"Content-type": "application/javascript"}); 
   //TODO: add headers:  "pragma": "no-cache", "expires": "0" ?
 };

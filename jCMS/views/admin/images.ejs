@@ -14,7 +14,7 @@
 <script type="text/javascript" src="<%=static%>/js/lib/jquery.jstree.js"></script>
 <script type="text/javascript" src="<%=static%>/js/tinymce/jquery.tinymce.js"></script>
 
-<script> var gService = "images"; var gRoot = 1; var gShowNode = <%=shownode%>; </script>
+<script> var gService = "images", gRoot = 1, gShowNode = <%=shownode%>; </script>
 <script type="text/javascript" src="<%=static%>/js/atom-tree.js"></script>
 
 
@@ -32,7 +32,7 @@
 	      <input type="button" value="Edit" onclick="doEdit()" >
 
         <div id="tree">
-          <ul><li id="id_<%= controller.getRoot().id %>" class="open" rel="root"><a href="#"><ins>&nbsp;</ins>Images</a>
+          <ul><li id="id_<%= controller.getRoot() %>" class="open" rel="root"><a href="#"><ins>&nbsp;</ins>Images</a>
               <%- controller.getTree() %>
           </li></ul>
         </div>

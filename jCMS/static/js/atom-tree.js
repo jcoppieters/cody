@@ -115,17 +115,18 @@ $(document).ready(function () {
 
       
     } else if (data.func == "close_node") {
-      console.log("Tree - close: " + nodeId);
-      console.log(aNode);
+      //console.log("Tree - close: " + nodeId);
+      //console.log(aNode);
       // don't allow closing the root node
       if (nodeId == gRootId) {
+        console.log("Tree - close: not allowed to close root node = " + nodeId);
         e.stopImmediatePropagation();
         return false;
       }
 
       
     } else if (data.func == "rename_node") {
-        console.log("Tree - Before: rename_node, please-open = " + gPleaseOpen);
+        //console.log("Tree - Before: rename_node, please-open = " + gPleaseOpen);
         if (gPleaseOpen) {
           // we're here after a create_node, set the name and open the item for editing
           $.getJSON("./"+gService, {request: 'rename', name: data.args[1], node: gPleaseOpen},
@@ -151,7 +152,7 @@ $(document).ready(function () {
   .bind("rename.jstree", function (e, data) {
     var aNode = data.rslt.obj, text = data.rslt.new_name;
     var nodeId = aNode.attr("id");
-    console.log("Tree - Rename: " + nodeId + " -> " + text);
+    //console.log("Tree - Rename: " + nodeId + " -> " + text);
     
     $.getJSON("./"+gService, {request: 'rename', name: text, node: nodeId},
         function(msg){
@@ -171,7 +172,7 @@ $(document).ready(function () {
   .bind("move_node.jstree", function (e, data) {
     var aNode = data.rslt.o, refNode = data.rslt.r, type = data.rslt.p;
     var nodeId = aNode.attr("id"), refNodeId = refNode.attr("id");
-    console.log("Tree - Move: " + aNode.text() + " " + type + " " + refNode.text());
+    //console.log("Tree - Move: " + aNode.text() + " " + type + " " + refNode.text());
 
     // Allow only one dummy node "website" as toplevel
     if ((refNodeId == "id_0") && ((type == "before") || (type == "after"))) {
@@ -232,7 +233,7 @@ $(document).ready(function () {
     
           } else {
             // remember this node, it will go into "rename" mode now, so after rename -> open it up for editing
-            console.log("create - setting node id to " + msg.node);
+            //console.log("create - setting node id to " + msg.node);
             gPleaseOpen = msg.node;
             aNode.attr("id", msg.node);
             
@@ -282,6 +283,14 @@ $(document).ready(function () {
 
 });
 
+function doAdd() {
+  var t = $("#sitemap").jstree("get_selected"); 
+  if (t) {
+    $("#sitemap").jstree("create", t, "inside");
+  } else {
+    warnUser("Please select an item first");
+  }
+}
 function doAddFolder() {
   var t = $("#tree").jstree("get_selected"); 
   gNextType = "folder";
