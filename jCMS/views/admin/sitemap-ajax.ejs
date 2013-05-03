@@ -2,100 +2,114 @@
  	<form action="./sitemap" method="post" class="clearfix" name="onepage" id="onepage">
     <input type="hidden" name="request" id="request" value="save" /> 
     <input type="hidden" name="node" value="<%=page.item.id%>" /> 
-    <input type="hidden" name="editData" id="editData" value="<%= page.content[0] %>" /> 
+    <input type="hidden" name="editData" id="editData" value="<%= page.content[0] %>" />
+     
+    <% if (page.link == 'global') { %>
+        <input name="dated" id="dated" type="hidden" value="<%= page.item.dated %>" />
+        <input name="validfrom" id="validfrom" type="hidden" value="<%= page.item.validFrom %>" />
+        <input name="validto" id="validto" type="hidden" value="<%= page.item.validTo %>" />
+        <input name="template" id="template" type="hidden" value="<%= page.item.templateId %>" />
+        <input name="showcontent" id="showcontent" type="hidden" value="<%= page.item.showContent %>" />
+        <input name="orderby" id="orderby" type="hidden" value="<%= page.item.orderBy %>" />
+        <input name="link" id="link" type="hidden" value="<%= page.link %>" />
+        <input name="active" id="active" type="hidden" value="<%= page.active %>" />
+        <input name="keywords" id="keywords" type="hidden" value="<%= page.keywords %>" />
+        <input name="description" id="description" type="hidden" value="<%= page.description %>" />
+    <% } %>
 
-	<fieldset>
-		<% if (page.link == 'global') { %>
-				<input name="dated" id="dated" type="hidden" value="<%= page.item.dated %>" />
-				<input name="validfrom" id="validfrom" type="hidden" value="<%= page.item.validFrom %>" />
-				<input name="validto" id="validto" type="hidden" value="<%= page.item.validTo %>" />
-				<input name="template" id="template" type="hidden" value="<%= page.item.templateId %>" />
-				<input name="showcontent" id="showcontent" type="hidden" value="<%= page.item.showContent %>" />
-				<input name="orderby" id="orderby" type="hidden" value="<%= page.item.orderBy %>" />
-				<input name="link" id="link" type="hidden" value="<%= page.link %>" />
-				<input name="active" id="active" type="hidden" value="<%= page.active %>" />
-				<input name="keywords" id="keywords" type="hidden" value="<%= page.keywords %>" />
-				<input name="description" id="description" type="hidden" value="<%= page.description %>" />
-				
-    <% } else { %>
-
-      <div>
-        <label for="">Content</label>
-        <input type="button" id="doEdit" value="Edit <%=page.language.toUpperCase()%> Content" />
-        <span id="editDataLength"></span>
-      </div>
-      
-      <% if (page.link != 'global') { %>
-        <div>
-          <label for="link">Short Link</label>
-          /<%=page.language%>/<input name="link" id="link" type="text" value="<%= page.link %>" size="25" />
-          (/<%= page.language %>/<%= page.item.id %>)
-        </div>
-        <div>
-          <label for="keywords">Keywords</label>
-          <textarea name="keywords" id="keywords" class="long" rows="2"><%= page.keywords %></textarea>
-        </div>
-        <div>
-          <label for="description">Description</label>
-          <textarea name="description" id="description" class="long" rows="4"><%= page.description %></textarea>
-        </div>
-      <% } %>
-      
-        <div>
-          <label for="active">Active</label>
-          <input name="active" id="active" type="checkbox" value="Y" <%= (page.isActive()) ? 'checked' : '' %> />
-          <% if (login.level >= 50) { %>
-            <label for="needslogin">Needs login</label>
-            <input name="needslogin" id="needslogin" type="checkbox" value="Y" "<%= (page.item.needsLogin()) ? 'checked' : '' %>" />         
-          <% } %>
-        </div>
-				<div>
-					<label for="dated">Date</label>
-					<input name="dated" id="dated" type="text" value="<%= formatDate(page.item.dated) %>" class="dater"/>
-				</div>
-				
-				<div>
-					<label for="validfrom">Valid from - to</label>
-					<input name="validfrom" id="validfrom" type="text" value="<%= formatDate(page.item.validfrom) %>"  class="dater"/>
-					<input name="validto" id="validto" type="text" value="<%= formatDate(page.item.validto) %>"  class="dater"/>
-				</div>
-
-				<% if (login && (login.level >= 99)) { %>
+    <div>
+      <label for="Item" class="title bold">PAGE TITLE</label>
+      <input name="name" id="name" type="text" value="<%= page.title %>" size="62" />
+    </div> 
+    
+    <div>
+      <label for="link">Link</label>
+      /<%=page.language%>/<input name="link" id="link" type="text" value="<%= page.link %>" size="25" />
+      (/<%= page.language %>/<%= page.item.id %>)
+    </div>
+    
+    <div id="tabs">
+		  <ul>
+		    <li><a href="#content">Content</a></li>
+		    <li><a href="#seo">SEO</a></li>
+		    <li><a href="#options">Options</a></li>
+		  </ul>
+	
+		  <div id="content">
+	      <div>
+	        <label for="">Text</label>
+	        <button id="doEditor">Edit <%=page.language.toUpperCase()%> Content</button>
+	        <span id="editDataLength"></span>
+	      </div>
+	    </div>  
+	    
+	    <div id="seo" class="horizontal">
+	        <div>
+	          <label for="keywords">Keywords</label>
+	          <textarea name="keywords" id="keywords" class="long" rows="2"><%= page.keywords %></textarea>
+	        </div>
+	        <div>
+	          <label for="description">Description</label>
+	          <textarea name="description" id="description" class="long" rows="4"><%= page.description %></textarea>
+	        </div>
+	     </div>
+	     
+	     <div id="options" class="horizontal"> 
+	        <div>
+	          <label for="active">Active</label>
+	          <input name="active" id="active" type="checkbox" value="Y" <%= (page.isActive()) ? 'checked' : '' %> />
+	          <% if (login.level >= 50) { %>
+	            <label for="needslogin">Needs login</label>
+	            <input name="needslogin" id="needslogin" type="checkbox" value="Y" "<%= (page.item.needsLogin()) ? 'checked' : '' %>" />         
+	          <% } %>
+	        </div>
 					<div>
-						<label for="template">Template</label>
-						<select name="template" id="template">
-							<% for (var x in app.templates) { var t = app.templates[x]; %>
-								<option value="<%= t.id %>" <%= (t.id==page.item.templateId) ? 'selected' : '' %>><%= t.name %></option>
-							<% } %>
-						</select>
-
-						<label for="form">Form</label>
-						<select name="form" id="form"><option value="0">-</option>
-							<% for (var x in app.forms) { var f = app.forms[x]; %>
-								<option value="<%= f.id %>" <%= (f.id==page.item.formId) ? 'selected' : '' %>><%= f.name %></option>
-							<% } %>
-							</select>
+						<label for="dated">Date</label>
+						<input name="dated" id="dated" type="text" value="<%= formatDate(page.item.dated) %>" class="dater"/>
 					</div>
-				<% } %>
-
-				<div>
-					<label for="orderby">Order sublevels</label>
-					<select name="orderby" id="orderby">
-						<option value="M" <%= (page.item.orderby == 'M') ? 'selected' : '' %>>Manual</option>
-						<option value="A" <%= (page.item.orderby == 'A') ? 'selected' : '' %>>Alphabetical</option>
-						<option value="D" <%= (page.item.orderby == 'D') ? 'selected' : '' %>>Chronological</option>
-					</select>
 					
-          <label for="showcontent">Show</label>
-          <select name="showcontent" id="showcontent">
-            <option value="Y" <%= (page.item.showcontent == 'Y') ? 'selected' : '' %>>Content</option>
-            <option value="S" <%= (page.item.showcontent == 'S') ? 'selected' : '' %>>First subitem</option>
-            <option value="N" <%= (page.item.showcontent == 'N') ? 'selected' : '' %>>All subitems</option>
-            <option value="D" <%= (page.item.showcontent == 'D') ? 'selected' : '' %>>Don't show subitems</option>
-            <option value="L" <%= (page.item.showcontent == 'L') ? 'selected' : '' %>>Lightbox</option>
-          </select>
-				</div>
-				
+					<div>
+						<label for="validfrom">Valid from - to</label>
+						<input name="validfrom" id="validfrom" type="text" value="<%= formatDate(page.item.validfrom) %>"  class="dater"/>
+						<input name="validto" id="validto" type="text" value="<%= formatDate(page.item.validto) %>"  class="dater"/>
+					</div>
+	
+					<% if (login && (login.level >= 99)) { %>
+						<div>
+							<label for="template">Template</label>
+							<select name="template" id="template">
+								<% for (var x in app.templates) { var t = app.templates[x]; %>
+									<option value="<%= t.id %>" <%= (t.id==page.item.templateId) ? 'selected' : '' %>><%= t.name %></option>
+								<% } %>
+							</select>
+	
+							<label for="form">Form</label>
+							<select name="form" id="form"><option value="0">-</option>
+								<% for (var x in app.forms) { var f = app.forms[x]; %>
+									<option value="<%= f.id %>" <%= (f.id==page.item.formId) ? 'selected' : '' %>><%= f.name %></option>
+								<% } %>
+								</select>
+						</div>
+	
+					<div>
+						<label for="orderby">Order sublevels</label>
+						<select name="orderby" id="orderby">
+							<option value="M" <%= (page.item.orderby == 'M') ? 'selected' : '' %>>Manual</option>
+							<option value="A" <%= (page.item.orderby == 'A') ? 'selected' : '' %>>Alphabetical</option>
+							<option value="D" <%= (page.item.orderby == 'D') ? 'selected' : '' %>>Chronological</option>
+						</select>
+						
+	          <label for="showcontent">Show</label>
+	          <select name="showcontent" id="showcontent">
+	            <option value="Y" <%= (page.item.showcontent == 'Y') ? 'selected' : '' %>>Content</option>
+	            <option value="S" <%= (page.item.showcontent == 'S') ? 'selected' : '' %>>First subitem</option>
+	            <option value="N" <%= (page.item.showcontent == 'N') ? 'selected' : '' %>>All subitems</option>
+	            <option value="D" <%= (page.item.showcontent == 'D') ? 'selected' : '' %>>Don't show subitems</option>
+	            <option value="L" <%= (page.item.showcontent == 'L') ? 'selected' : '' %>>Lightbox</option>
+	          </select>
+					</div>
+	      <% } %>
+					
 				<% if (login.level < 50) { %>
 					<input name="needslogin" id="needslogin" type="hidden" value="<%=page.item.needsLogin%>" />
 					<input name="allowedgroups" id="allowedgroups" type="hidden" value="<%=page.item.allowedGroups%>" />
@@ -111,92 +125,24 @@
 	           </select> 
 				 </div>
 				<% } %>
-
-			<% } %>
-
-
-			<div id="FileEditor">
-			    <label for="description" style="margin-top: 3px;">File:</label>
-				<p><span id="fileurl"></span>
-				   <a tabindex="0" href="#ipodmenu" 
-			         class="fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all" 
-			         id="fileSelector"><span class="ui-icon ui-icon-triangle-1-s"></span>Change to</a>
-			         </p> <br clear="all"/>
-			         
-				<label for="description">Title:</label>
-			    <p><input type="text" name="filename" id="filename" value="" size="50" />
-			       <input type="hidden" name="currentElement" id="currentElement" value="" /> </p> 
-			         
-				<div style="buttons">
-					<input type="button" value="Save" onclick="SaveFileEditor();" />
-					<input type="button" value="Cancel" onclick="HideFileEditor();" />
-				</div>
-			</div>
-			
-			<%// include admin-template.ejs %>
-
-			<% var hasFiles="F"; 
-			   for (var x in editElements)  
-			   	 if (editElements[x].kind == 'F') hasFiles="T";
-			 %>
-			 
-			 
-			<% if (hasFiles == 'T') { %>
-				<label>Files</label>
-				<ul id="files">
-				<% var filenr = 0;
-				  for (var x in editElements) { var element = editElements[x]; 
-					  if (element.kind == 'F') { 
-					  	filenr++; %>
-							<li id="<%= element.id %>">
-							  <div class="File"><label><img class="handle" src="<%= images %>/move.png" /> File <%= filenr %> </label>
-								<a href="<%= element.link %>" target=_blank id="A<%= element.id %>"><img id="I<%= element.id %>" src="<%= element.icon %>" border=0 /></a>
-								<span id="F<%= element.id %>"><%= element.name %></span>
-								
-								<input name="K<%= element.id %>" id="K<%= element.id %>" type="hidden" value="F" />
-								<input name="N<%= element.id %>" id="N<%= element.id %>" type="hidden" value="<%= element.name %>" />
-								<input name="S<%= element.id %>" id="S<%= element.id %>" type="hidden" value="<%= element.string %>" />
-								
-								&nbsp;
-								<a href="#" onclick="ShowFileEditor('<%= element.id %>');">Edit</a> |
-								<a href="#" onclick="DeleteFile('<%= element.id %>');">Delete</a>
-								<br />
-							</div></li>
-					  <% } %> 
-					<% } %>
-				</ul>
-			<% } %>
-
-			<input name="nrElements" type="hidden" id="nrElements" value="<%=editElements.length%>" />
-			<% var oE = [], E = []; 
-			   for(var x in editElements) { 
-			     if (editElements[x].kind != "F") 
-			     		oE.push(editElements[x].id); 
-			     E.push(editElements[x].id); 
-			   }
-			   var ES = E.join(",");
-			   var oES = oE.join(",");
-			 %>
-			<input name="otherElements" type="hidden" id="otherElements" value="<%= oES %>" />
-			<input name="elements" type="hidden" id="elements" value="<%= ES %>" />	
-			 
-	</fieldset>
+	    </div>
+		</div>	
 	
-	
-	<div id="action_buttons">
-		<input type="submit" value="Save" />
-		<input type="button" value="Add File" onClick="AddFile()" />
-		
-		<% if (! page.isActive()) { %>
-			<input type="button" value="Delete" id="doDelete" />
-		<% } %>
+		<div id="action_buttons">
+			<button id="doSave">Save</button>
+			<button id="doAddFile">Add File</button>
 			
-		<% if ((login.level >= 99) && (page.link != 'global')) { %>
-			<input type="button" value="Adjust" id="doAdjust" />
-		<% } %>
-		
-		Last Modified: <%= formatDate(page.updated) %>
-  </div>
+			<% if (! page.isActive()) { %>
+				<button id="doDelete">Delete</button>
+			<% } %>
+				
+			<% if ((login.level >= 99) && (page.link != 'global')) { %>
+				<button id="doAdjust">Adjust</button>
+			<% } %>
+			
+			Last Modified: <%= formatDate(page.updated) %>
+	  </div>
+	  
   </form>
 </div>	
 

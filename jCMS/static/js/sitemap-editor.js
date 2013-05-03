@@ -10,6 +10,10 @@
 
 $(document).ready(function() {
   
+  $("#doSaveEditor").button({ icons: { primary: "ui-icon-check"}, text: true}).click(doSaveEditor);
+  $("#doCancelEditor").button({ icons: { primary: "ui-icon-close"}, text: true}).click(doCancelEditor);
+
+
   $('#editContent').tinymce({
     external_image_list_url: gContext + "/" + gLanguage + "/images?request=imagelist",
     script_url : gStatic + '/js/tinymce/tiny_mce.js',
@@ -50,13 +54,21 @@ function getPage(id) {
              
        } else {
            $("#right_cont").html(msg).show();
+           $( "#tabs" ).tabs();
+           
+           $("#right_cont #doSave").button({ icons: { primary: "ui-icon-check"}, text: true}).click(doSave);
+           $("#right_cont #doDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click(doRealDelete);
+           
+           $("#right_cont #doAdjust").button({ icons: { primary: "ui-icon-close"}, text: true}).click(doAdjust);
+           $("#right_cont #doAddFile").button({ icons: { primary: "ui-icon-plus"}, text: true}).click(doAddFile);
+           
+           $("#right_cont #doEditor").button({ icons: { primary: "ui-icon-pencil"}, text: true}).click(doEditor);
+           
            
            // decode of data element
            $("editData").val( unescape($("#editData").val()) );
            $("#editDataLength").text(editData.value.length + " bytes");
 
-           // add file selector
-           // setup_fg();
 
           // make list sortable
           $("#files").sortable().disableSelection();
@@ -80,26 +92,25 @@ function getPage(id) {
               }
           });
           
-          $("#doDelete").click( function() {
-            $("#request").val("realdelete");
-            $("form#onepage").submit();
-          });
-          
-          $("#doAdjust").click( function() {
-            $("#request").val("adjust");
-            $("form#onepage").submit();
-          });
-          
-          $("#doEdit").click( function() {
-            showEditor( $("#editData").val() );
-          });
-          
           // avoid "leave page" dialog from browser
           window.onbeforeunload = function() { };
        }
      }
    });
 }
+
+function doEditor() {
+  showEditor($("#editData").val());
+  return false;
+}
+function doSaveEditor() {
+  saveEditor();
+}
+function doCancelEditor() {
+  hideEditor();
+}
+
+
 
 function saveOrder() {
   var serialStr = $("#otherElements").val();

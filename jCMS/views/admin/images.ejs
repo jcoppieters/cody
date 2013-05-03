@@ -25,11 +25,11 @@
 		<div id="wrapper_data">
 		
  	    <div id="left_nav">
-	      <input type="button" value="Add Folder" onclick="doAddFolder()">
-	      <input type="button" value="Add Image" onclick="doAddImage()"><br />
-	      <input type="button" value="Rename" onclick="doRename()" >    
-	      <input type="button" value="Delete" onclick="doDelete()" >
-	      <input type="button" value="Edit" onclick="doEdit()" >
+	      <button id="doAddFolder">Add Folder</button>
+	      <button id="doAddImage">Add Image</button><br>
+	      <button id="doRename" >Rename</button>
+	      <button id="doDelete" >Delete</button>
+	      <button id="doEdit" >Edit</button>
 
         <div id="tree">
           <ul><li id="id_<%= controller.getRoot() %>" class="open" rel="root"><a href="#"><ins>&nbsp;</ins>Images</a>

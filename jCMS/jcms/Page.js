@@ -24,8 +24,12 @@ function Page(basis, app) {
 }
 module.exports = Page;
 
+Page.trim = function (url) {
+  return url.replace("/","").replace(" ", "");
+};
 
 Page.addDefaults = function(basis, item) {
+  
   if (typeof item == "undefined") { item = {}; }
   
   basis.item = basis.item || item.id;
@@ -34,7 +38,7 @@ Page.addDefaults = function(basis, item) {
   basis.title = basis.title || item.name || jcms.Item.kDefaultName;
   basis.created = basis.created || new Date();
   basis.updated = basis.updated || new Date();
-  basis.link = basis.link || "";
+  basis.link = basis.link || Page.trim(basis.title);
   basis.keywords = basis.keywords || "";
   basis.description = basis.description || "";
   basis.active = basis.active || "Y";
@@ -242,17 +246,20 @@ Page.prototype.getId = function() {
 
 
 Page.prototype.scrapeFrom = function(controller) {
+  var self = this;
   // get all page info from the controller
-  this.active = controller.getParam("active"); 
-  this.keywords = controller.getParam("keywords");
-  this.description = controller.getParam("description");
-  this.setLink(controller.getParam("link"), controller.app, false);
+  self.title = controller.getParam("title", self.title); 
+  self.active = controller.getParam("active"); 
+  self.keywords = controller.getParam("keywords");
+  self.description = controller.getParam("description");
+  self.setLink(controller.getParam("link"), controller.app, false);
   
-  // missing: title (only through "rename"), updated (automatically on doUpdate), created (invariable), language (invariable)
+  // missing: updated (automatically on doUpdate), created (invariable), language (invariable)
 };
 
 Page.prototype.doUpdate = function(controller, next, isNew) {
   var self = this;
+  if (self.link === "") { self.link = Page.trim(self.title); }
   var values = [self.title, self.link, self.active, self.keywords, self.description, self.itemId, self.language];
   
   // new or existing record?
@@ -329,3 +336,15 @@ Page.prototype.updateContent = function(controller, id, content, next) {
   controller.query("update content set data = ? where item = ? and language = ?",
       [content, self.itemId, self.language], next);
 }
+
+
+Page.prototype.deleteElements = function( whenDone ) {
+  // delete all elements with this.language = elements.language and this.id = elements.page
+  whenDone();
+}
+
+Page.prototype.copyElements = function( language, id, whenDone ) {
+  // copy all elements with language = elements.language and this.id = elements.page
+  whenDone();
+}
+

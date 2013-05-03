@@ -42,12 +42,10 @@ function getNode(id) {
            WarnUser("You are not allowed to edit this node, sorry.");
               
         } else {
-            $("#right_cont").html(msg).show();
-            $("#doDelete").click( function() {
-              $("#request").val("realdelete");
-              $("form#onepage").submit();
-            });
+            $("#right_cont").html(msg).show();  
             
+            $("#doRealDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( doRealDelete );
+            $("#doSave").button({ icons: { primary: "ui-icon-check"}, text: true}).click( doSave );
         }
       }
     });
@@ -57,6 +55,15 @@ function getNode(id) {
 
 $(document).ready(function () { 
 
+  // not all buttons exist for every atom tree user
+  $("#doAdd").button({ icons: { primary: "ui-icon-plus"}, text: true}).click(doAdd);
+  $("#doAddFolder").button({ icons: { primary: "ui-icon-plus"}, text: true}).click(doAddFolder);
+  $("#doAddImage").button({ icons: { primary: "ui-icon-plus"}, text: true}).click(doAddImage);
+  $("#doRename").button({ icons: { primary: "ui-icon-pencil"}, text: true}).click(doRename);
+  $("#doDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click(doDelete);
+  $("#doEdit").button({ icons: { primary: "ui-icon-wrench"}, text: true}).click(doEdit);
+
+  
   $("#tree")
 
   .bind("before.jstree", function(e, data) {
@@ -283,8 +290,24 @@ $(document).ready(function () {
 
 });
 
+function doSave() {
+  $("form#onepage #request").val("save");
+  $("form#onepage").submit();
+}
+
+function doRealDelete() {
+  $("form#onepage #request").val("realdelete");
+  $("form#onepage").submit();
+}
+
+function doAdjust() {
+  $("form#onepage #request").val("adjust");
+  $("form#onepage").submit();
+}
+
+
 function doAdd() {
-  var t = $("#sitemap").jstree("get_selected"); 
+  var t = $("#tree").jstree("get_selected"); 
   if (t) {
     $("#sitemap").jstree("create", t, "inside");
   } else {
@@ -325,12 +348,10 @@ function doDelete() {
     warnUser("Please select an item to delete first");
   }
 }
-function doEdit(aNode) {
-  if (aNode) $("#tree").jstree("select_node", aNode, true);
-  
-  var t = aNode || $("#tree").jstree("get_selected"); 
-  
-  if (t != '') {
+function doEdit(aNode) {  
+  var t = $("#tree").jstree("get_selected"); 
+
+  if (t) {
     getNode(t.attr("id"));
   } else {
     warnUser("Please select an item to edit first");

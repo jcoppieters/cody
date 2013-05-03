@@ -437,9 +437,9 @@ SitemapController.prototype.adjustElements = function( theNode, finish ) {
   
   var aPage = self.getObject( self.toId(theNode) );
 
-  this.saveInfo(aPage, function whenDone() {
+  self.saveInfo(theNode, function whenDone() {
     aPage.deleteElements( function (){
-      aPage.copyElements( aPage.fLanguage, - aPage.item.templateId, function() {
+      aPage.copyElements( aPage.language, - aPage.item.templateId, function() {
         self.context.savedPage = aPage;
         self.context.fetchnode = "id_" + theNode;
       });

@@ -87,8 +87,9 @@ LoginController.prototype.doRequest = function( finish ) {
     
     
   }*/
-  else
- 	 finish();
+  else {
+   finish();
+  }
   
   return null;
 };
@@ -113,7 +114,7 @@ LoginController.prototype.tryLogin = function( finish ) {
       self.markLogin(aUserName, aUser);
       
       if (aUser.isActive()) {
-        self.feedBack(false, "login-successful");
+        self.feedBack(true, "login-successful");
         
         // remember the user in the context and session
         self.context.setLogin(aUser);

@@ -29,16 +29,16 @@
 			<div id="content_div" style="display: none;">
 				<textarea name="editContent" id="editContent"></textarea>
 				<div id="content_buttons">
-					<input type="button" value="Save" onclick="saveEditor();" />
-					<input type="button" value="Cancel" onclick="hideEditor();" />
+					<button id="doSaveEditor">Save</button>
+					<button id="doCancelEditor">Cancel</button>
 				</div>
 			</div>
 	
  	    <div id="left_nav">
-				<input type="button" value="Add" onclick="doAdd()">
-				<input type="button" value="Rename" onclick="doRename()" >    
-				<input type="button" value="Delete" onclick="doDelete()" >
-				<input type="button" value="Edit" onclick="doEdit()" >
+				<button id="doAdd">Add</button>
+				<button id="doRename">Rename</button>  
+				<button id="doDelete">Delete</button>
+				<button id="doEdit">Edit</button>
 			
 	      <div id="tree">
 	        <ul>
