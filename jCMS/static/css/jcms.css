@@ -94,7 +94,7 @@ div .language { border-top: 1px solid #ccc; margin: 2px 0 0px 0; padding: 4px 0 
 #tree.jstree li.invisible a  { color: #999; }
 #tree.jstree a { height: 17px; width: 90% }
 .open {}
-#tree.jstree li[rel=root] > a { font-size: 13px; color: #1c94c4; font-weight: bold; padding: 2px 0 0 0; }
+#tree.jstree li[rel=root] > a { font-size: 13px; color: #1c94c4; font-weight: bold }
 
 /*---- item/page editor -------------*/
 

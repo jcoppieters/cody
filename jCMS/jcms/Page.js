@@ -162,6 +162,8 @@ Page.prototype.getView = function() {
 Page.prototype.getContent = function(connection) {
   var self = this;
   
+  //todo: replace content by elements...
+  //TODO: alter table elements string -> data = text, object -> atom
   connection.query(
      "select data from content where item = ? and language = ?",
      [this.itemId, this.language],

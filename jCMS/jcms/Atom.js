@@ -130,7 +130,7 @@ Atom.prototype.doUpdate = function(controller, finish) {
   var values = [self.name, self.parentId, self.sortorder, self.note, self.extention];
   
   // new or existing record?
-  if ((typeof self.id == "undefined") || (self.id === 0)) {
+  if ((typeof self.id === "undefined") || (self.id === 0)) {
     
     console.log("Atom.doUpdate -> insert atom " + self.name);
     values.push(controller.getLoginId());
@@ -143,7 +143,7 @@ Atom.prototype.doUpdate = function(controller, finish) {
         } else {
           self.id = result.insertId;
           console.log("Atom.doUpdate -> inserted atom: " + self.id);
-          if (typeof finish == "function") { finish(); }
+          if (typeof finish === "function") { finish(); }
         }
     });
     
@@ -158,7 +158,7 @@ Atom.prototype.doUpdate = function(controller, finish) {
           console.log(err); 
         } else {
           console.log("Atom.doUpdate -> updated atom: " + self.id);
-          if (typeof finish == "function") { finish(); }
+          if (typeof finish === "function") { finish(); }
         }
     });
   }

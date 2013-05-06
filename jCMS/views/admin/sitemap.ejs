@@ -16,9 +16,14 @@
 
  
 <script type="text/javascript" src="<%=static%>/js/sitemap-editor.js"></script>
-<script>var gService = "sitemap", gRoot = 0, gShowNode = <%=shownode%>; </script>
 <script type="text/javascript" src="<%=static%>/js/atom-tree.js"></script>
-
+<script type="text/javascript">
+$(document).ready( function() {
+  var gTree = new jAtomTree(0, <%=shownode%>, gContext, gLanguage, "sitemap", gImages);
+  gTree.getNode = getPage;
+  gTree.init();
+});
+</script>
 
   <div id="wrapper">
     <% var cat="S"; %>

@@ -8,60 +8,139 @@
 ///////////////////////
 //tree functions    //
 ///////////////////////
-
-/* gService is prefilled by the calling template (images, files, forms, ...) */
-/* gRoot is prefilled by the calling template (0, 1, ...) */
-var gCurrentNode = "";
-var gPleaseOpen = "";
-var gRootId = "id_"+gRoot;
-var gNextType = "";
-
-function warnUser(message) {
-  $('#right_cont').html("<p class='warning'>" + message + "</p>");
-}
-
-function getNode(id) {
-//TODO: call generic function after loading, to allow merging with code of sitemap-tree / getPage.
-  
-  if (typeof getPage == "function") {
-      // call the getPage function if defined by the webpage
-      getPage(id);
-      
-  } else if (id != gRootId) {
-    gCurrentNode = id; 
+function jAtomTree(theRoot, theInitialNode, theContext, theLanguage, theService, theImages) {
     
+// theRoot: is prefilled by the calling template (0, 1, ...)
+// theInitialNode: select this node and open the tree up to there
+// theLanguage: current language  of the cms
+// theContext: prefix for http calls to the cms
+// theService: is prefilled by the calling template (images, files, forms, ...) */
+// theImages: location of the static images of the cms
+  
+  
+this.currentNode = "";
+this.pleaseOpen = null;
+this.rootId = "id_"+theRoot;
+this.nextType = "";
+
+this.warnUser = function(message) {
+  $('#right_cont').html("<p class='warning'>" + message + "</p>");
+};
+
+this.getNode = function(id) {
+  var self = this;
+  
+  if (id != self.rootId) {
     $.ajax({
       type: "GET", 
-      url: gContext + "/" + gLanguage + "/"+gService,
+      url: theContext + "/" + theLanguage + "/"+theService,
       data: "request=getnode&node=" + id,
       success: function(msg){
         if (msg.substring(0,3) == "NOK") {
-          WarnUser("Got error from server: " + msg);
+          self.warnUser("Got error from server: " + msg);
                
         } else if (msg.substring(0,3) == "NAL") {
-           WarnUser("You are not allowed to edit this node, sorry.");
+          self.warnUser("You are not allowed to edit this node, sorry.");
               
         } else {
-            $("#right_cont").html(msg).show();  
+          self.currentNode = id; 
+          $("#right_cont").html(msg).show();  
             
-            $("#doRealDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( doRealDelete );
-            $("#doSave").button({ icons: { primary: "ui-icon-check"}, text: true}).click( doSave );
+          $("#doRealDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( function() { self.doRealDelete(); } );
+          $("#doSave").button({ icons: { primary: "ui-icon-check"}, text: true}).click( function() { self.doSave(); } );
         }
       }
     });
   }
-}
+};
+
+this.doSave = function() {
+  $("form#onepage #request").val("save");
+  $("form#onepage").submit();
+};
+
+this.doRealDelete = function() {
+  $("form#onepage #request").val("realdelete");
+  $("form#onepage").submit();
+};
+
+this.doAdjust = function() {
+  $("form#onepage #request").val("adjust");
+  $("form#onepage").submit();
+};
 
 
-$(document).ready(function () { 
+this.doAdd = function() {
+  var self = this;
+  var t = $("#tree").jstree("get_selected"); 
+  if (t) {
+    $("#sitemap").jstree("create", t, "inside");
+  } else {
+    self.warnUser("Please select an item first");
+  }
+};
+this.doAddFolder = function() {
+  var self = this;
+  var t = $("#tree").jstree("get_selected"); 
+  self.nextType = "folder";
+  if (t) {
+    $("#tree").jstree("create", t, "inside", ({ attr: { rel : "folder" } })); 
+  } else { 
+    self.warnUser("Please select an item first");
+  }
+};
+this.doAddImage = function () {
+  var self = this;
+  var t = $("#tree").jstree("get_selected"); 
+  self.nextType = "image";
+  if (t) {
+    $("#tree").jstree("create", t, "inside", ({ attr: { rel : "image" } })); 
+  } else { 
+    self.WarnUser("Please select an item first");
+  }
+};
+this.doRename = function() {
+  var self = this;
+  var t = $("#tree").jstree("get_selected"); 
+  if (t) {
+    $("#tree").jstree("rename", null); // renames current selection
+  } else {
+    self.warnUser("Please select an item to rename first");
+  }
+};
+this.doDelete = function() {
+  var self = this;
+  var t = $("#tree").jstree("get_selected"); 
+  if (t) {
+    $("#tree").jstree("remove", t);
+  } else {
+    self.warnUser("Please select an item to delete first");
+  }
+};
+this.doEdit = function(aNode) { 
+  var self = this; 
+  var t = $("#tree").jstree("get_selected"); 
+
+  if (aNode != null) {
+    self.getNode(aNode);
+  } else if (t) {
+    self.getNode(t.attr("id"));
+  } else {
+    self.warnUser("Please select an item to edit first");
+  }
+};
+
+
+this.init = function () { 
+  var self = this;
 
   // not all buttons exist for every atom tree user
-  $("#doAdd").button({ icons: { primary: "ui-icon-plus"}, text: true}).click(doAdd);
-  $("#doAddFolder").button({ icons: { primary: "ui-icon-plus"}, text: true}).click(doAddFolder);
-  $("#doAddImage").button({ icons: { primary: "ui-icon-plus"}, text: true}).click(doAddImage);
-  $("#doRename").button({ icons: { primary: "ui-icon-pencil"}, text: true}).click(doRename);
-  $("#doDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click(doDelete);
-  $("#doEdit").button({ icons: { primary: "ui-icon-wrench"}, text: true}).click(doEdit);
+  $("#doAdd").button({ icons: { primary: "ui-icon-plus"}, text: true}).click(function() { self.doAdd(); });
+  $("#doAddFolder").button({ icons: { primary: "ui-icon-plus"}, text: true}).click(function() { self.doAddFolder(); });
+  $("#doAddImage").button({ icons: { primary: "ui-icon-plus"}, text: true}).click(function() { self.doAddImage(); });
+  $("#doRename").button({ icons: { primary: "ui-icon-pencil"}, text: true}).click(function() { self.doRename(); });
+  $("#doDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click(function() { self.doDelete(); });
+  $("#doEdit").button({ icons: { primary: "ui-icon-wrench"}, text: true}).click(function() { self.doEdit(); });
 
   
   $("#tree")
@@ -70,13 +149,13 @@ $(document).ready(function () {
     var aNode = data.args[0]; 
     var nodeId = (typeof aNode == "object") ? $(aNode).attr("id") : "id_xx";
 
-    if (data.func == "delete_node") {
-      if (gService == "sitemap") { 
+    if (data.func === "delete_node") {
+      if (theService === "sitemap") { 
         // we don't actually do deletes for webpages, just mark the node as inactive in the database and rename it in the tree
         
-        $.getJSON("./"+gService, {request: 'delete', node: nodeId},
+        $.getJSON("./"+theService, {request: 'delete', node: nodeId},
           function(msg){
-            if (msg.status == "OK") {
+            if (msg.status === "OK") {
               aNode.addClass("deleted");
               aNode = aNode.find("a:first");
               var icn = aNode.children("ins").clone();
@@ -87,32 +166,32 @@ $(document).ready(function () {
               if (aName.charAt(0) != '(') {
                 aNode.text("(" + aName + ")").prepend(icn);
               }
-              getNode(nodeId);
+              self.getNode(nodeId);
             }
-            if (msg.status == "NOK") {
+            if (msg.status === "NOK") {
               console.log(msg);
-              warnUser("The deletion of this item failed.<br>server status: " + msg.status);
+              self.warnUser("The deletion of this item failed.<br>server status: " + msg.status);
             }
-            if (msg.status == "NAL") {
-              warnUser("You are not allowed to delete this item, sorry.");
+            if (msg.status === "NAL") {
+              self.warnUser("You are not allowed to delete this item, sorry.");
             }
         });
         e.stopImmediatePropagation();
         return false;
         
       } else {
-        $.getJSON("./"+gService, {request: 'delete', node: nodeId},
+        $.getJSON("./"+theService, {request: 'delete', node: nodeId},
             function(msg){
-              if (msg.status == "NAL") {
-                warnUser("You are not allowed to delete this item, sorry.");
+              if (msg.status === "NAL") {
+                self.warnUser("You are not allowed to delete this item, sorry.");
                 $.jstree.rollback(data.rlbk);
         
-              } else if (msg.status == "OK") {
-                warnUser("The item has been deleted.");
+              } else if (msg.status === "OK") {
+                self.warnUser("The item has been deleted.");
                 
               } else {
                 console.log(msg);
-                warnUser("The deletion of this item failed.<br>server status: " + msg.status);
+                self.warnUser("The deletion of this item failed.<br>server status: " + msg.status);
                 $.jstree.rollback(data.rlbk);
               }
         });
@@ -121,11 +200,11 @@ $(document).ready(function () {
         
 
       
-    } else if (data.func == "close_node") {
+    } else if (data.func === "close_node") {
       //console.log("Tree - close: " + nodeId);
       //console.log(aNode);
       // don't allow closing the root node
-      if (nodeId == gRootId) {
+      if (nodeId === self.rootId) {
         console.log("Tree - close: not allowed to close root node = " + nodeId);
         e.stopImmediatePropagation();
         return false;
@@ -133,14 +212,14 @@ $(document).ready(function () {
 
       
     } else if (data.func == "rename_node") {
-        //console.log("Tree - Before: rename_node, please-open = " + gPleaseOpen);
-        if (gPleaseOpen) {
-          // we're here after a create_node, set the name and open the item for editing
-          $.getJSON("./"+gService, {request: 'rename', name: data.args[1], node: gPleaseOpen},
+        //console.log("Tree - Before: rename_node, please-open = " + self.pleaseOpen);
+        if (self.pleaseOpen != null) {
+          // we're only here after a create_node, set the name and open the item for editing
+          $.getJSON("./"+theService, {request: 'rename', name: data.args[1], node: self.pleaseOpen},
               function(msg){
                 if (msg.status == "OK") {
-                 doEdit(aNode);
-                 gPleaseOpen = null;
+                 self.doEdit(self.pleaseOpen);
+                 self.pleaseOpen = null;
                }
           });
         }
@@ -161,15 +240,15 @@ $(document).ready(function () {
     var nodeId = aNode.attr("id");
     //console.log("Tree - Rename: " + nodeId + " -> " + text);
     
-    $.getJSON("./"+gService, {request: 'rename', name: text, node: nodeId},
+    $.getJSON("./"+theService, {request: 'rename', name: text, node: nodeId},
         function(msg){
           if (msg.status == "NAL") {
-            warnUser("You are not allowed to rename this item, sorry.");
+            self.warnUser("You are not allowed to rename this item, sorry.");
             $.jstree.rollback(data.rlbk);
     
           } else if (msg.status != "OK") {
             console.log(msg);
-            warnUser("The rename of this item failed.<br>server status: " + msg.status);
+            self.warnUser("The rename of this item failed.<br>server status: " + msg.status);
             $.jstree.rollback(data.rlbk);
           }
     });
@@ -183,20 +262,20 @@ $(document).ready(function () {
 
     // Allow only one dummy node "website" as toplevel
     if ((refNodeId == "id_0") && ((type == "before") || (type == "after"))) {
-      warnUser("Can't move this element.");
+      self.warnUser("Can't move this element.");
       $.jstree.rollback(data.rlbk);
 
     } else {
       // type = "before", "after" or "inside"
-      $.getJSON("./"+gService, {request: 'move', refnode: refNodeId, type: type, node: nodeId},
+      $.getJSON("./"+theService, {request: 'move', refnode: refNodeId, type: type, node: nodeId},
           function(msg) {
             if (msg.status == "NAL") {
-              warnUser("You are not allowed to move this item, sorry.");
+              self.warnUser("You are not allowed to move this item, sorry.");
               $.jstree.rollback(data.rlbk);
     
             } else if (msg.status != "OK") {
               console.log(msg);
-              warnUser("The move of this item failed.<br>server status: " + msg.status);
+              self.warnUser("The move of this item failed.<br>server status: " + msg.status);
               $.jstree.rollback(data.rlbk);
             }
       });
@@ -207,17 +286,17 @@ $(document).ready(function () {
   .bind("select_node.jstree", function (e, data) {
     // console.log("Tree - select");
     var nodeId = $(data.args[0]).parent().attr("id");
-    if (gCurrentNode == nodeId) {
-      doEdit();
+    if (self.currentNode == nodeId) {
+      self.doEdit();
     } else {
-      gCurrentNode = nodeId;
+      self.currentNode = nodeId;
     }
   })
 
   
   .bind("deselect_node.jstree", function (e, data) {
     // console.log("Tree - deselect");
-    gCurrentNode = "";
+    self.currentNode = "";
   })
 
   
@@ -227,24 +306,24 @@ $(document).ready(function () {
     var refNode = (type == "inside") ? data.args[0] : data.args[1];
     var refNodeId = refNode.attr("id");
     
-    $.getJSON("./"+gService, {request: 'insert', refnode: refNodeId, type: type, name: title, kind: gNextType, extention: 'xxx'},
+    $.getJSON("./"+theService, {request: 'insert', refnode: refNodeId, type: type, name: title, kind: self.nextType, extention: 'xxx'},
         function(msg){
           if (msg.status == "NAL") {
-            warnUser("You are not allowed to create and item here, sorry");
+            self.warnUser("You are not allowed to create and item here, sorry");
             $.jstree.rollback(data.rlbk);
     
           } else if (msg.status == "NOK") {
             console.log(msg);
-            warnUser("Creation of a new item failed.<br>server status: " + msg.status);
+            self.warnUser("Creation of a new item failed.<br>server status: " + msg.status);
             $.jstree.rollback(data.rlbk);
     
           } else {
             // remember this node, it will go into "rename" mode now, so after rename -> open it up for editing
             //console.log("create - setting node id to " + msg.node);
-            gPleaseOpen = msg.node;
+            self.pleaseOpen = msg.node;
             aNode.attr("id", msg.node);
             
-            warnUser("Please choose a name for your item and press the 'enter'-key.");
+            self.warnUser("Please choose a name for your item and press the 'enter'-key.");
           }
     });
   })
@@ -253,7 +332,7 @@ $(document).ready(function () {
   .jstree({
     plugins : [ "themes", "html_data", "ui", "crrm", "dnd", "types" ],
     core : {
-      initially_open : ['id_' + gShowNode],
+      initially_open : ['id_' + theInitialNode],
       strings: { new_node: "New item" }
     },
     themes : {
@@ -261,7 +340,7 @@ $(document).ready(function () {
     },
     ui: {
       select_limit: 1,
-      "initially_select" : ['id_' + gShowNode] 
+      "initially_select" : ['id_' + theInitialNode] 
     },
     types: {
       "root" : {
@@ -273,87 +352,21 @@ $(document).ready(function () {
       "image" : {
         valid_children : "none",
         creatable: false,
-        icon : { image : gImages + "/extentions/jpg.gif" }
+        icon : { image : theImages + "/extentions/jpg.gif" }
       },
       "file" : {
         valid_children : "none",
         creatable: false,
-        icon : { image : gImages + "/extentions/xxx.gif" }
+        icon : { image : theImages + "/extentions/xxx.gif" }
       },
       "folder" : {
         valid_children : [ "file", "image", "folder" ],
-        icon : { image : gImages + "/extentions/xxx.gif" }
+        icon : { image : theImages + "/extentions/xxx.gif" }
       }
     }
   });
 
-
-});
-
-function doSave() {
-  $("form#onepage #request").val("save");
-  $("form#onepage").submit();
-}
-
-function doRealDelete() {
-  $("form#onepage #request").val("realdelete");
-  $("form#onepage").submit();
-}
-
-function doAdjust() {
-  $("form#onepage #request").val("adjust");
-  $("form#onepage").submit();
-}
+};
 
 
-function doAdd() {
-  var t = $("#tree").jstree("get_selected"); 
-  if (t) {
-    $("#sitemap").jstree("create", t, "inside");
-  } else {
-    warnUser("Please select an item first");
-  }
-}
-function doAddFolder() {
-  var t = $("#tree").jstree("get_selected"); 
-  gNextType = "folder";
-  if (t) {
-    $("#tree").jstree("create", t, "inside", ({ attr: { rel : "folder" } })); 
-  } else { 
-    WarnUser("Please select an item first");
-  }
-}
-function doAddImage() {
-  var t = $("#tree").jstree("get_selected"); 
-  gNextType = "image";
-  if (t) {
-    $("#tree").jstree("create", t, "inside", ({ attr: { rel : "image" } })); 
-  } else { 
-    WarnUser("Please select an item first");
-  }
-}
-function doRename() {
-  var t = $("#tree").jstree("get_selected"); 
-  if (t) {
-    $("#tree").jstree("rename", null); // renames current selection
-  } else {
-    warnUser("Please select an item to rename first");
-  }
-}
-function doDelete() {
-  var t = $("#tree").jstree("get_selected"); 
-  if (t) {
-    $("#tree").jstree("remove", t);
-  } else {
-    warnUser("Please select an item to delete first");
-  }
-}
-function doEdit(aNode) {  
-  var t = $("#tree").jstree("get_selected"); 
-
-  if (t) {
-    getNode(t.attr("id"));
-  } else {
-    warnUser("Please select an item to edit first");
-  }
 }

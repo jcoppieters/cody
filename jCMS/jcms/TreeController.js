@@ -295,15 +295,17 @@ TreeController.prototype.moveObject = function( nodeId, refNode, type, finish ) 
 };
 
 TreeController.prototype.renameObject = function( title, nodeId, finish ) {
+  var self = this;
   console.log("Received TreeController - rename, node = " + nodeId + ", title = " + title);
   
   var anObject = this.getObject(this.toId(nodeId));
-  if (anObject) {
+  if (typeof anObject != "undefined") {
     try {
       anObject.setName(title);
-      anObject.doUpdate(this);
-      // pass next line into doUpdate to wait for the result or just trust in the Force
-      finish( { status: "OK" } );
+      anObject.doUpdate(self, function() {
+        self.context.shownode = anObject.id;
+        finish( { status: "OK" } );
+      });
       
     } catch (e) {
       console.log("TreeController.RenameObject: Failed to update the object - " + e);      

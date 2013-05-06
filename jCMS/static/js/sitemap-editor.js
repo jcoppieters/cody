@@ -38,10 +38,11 @@ $(document).ready(function() {
 });
 
 function getPage(id) {
-   hideEditor();
-   gCurrentNode = id;
+  var self = this;
+  
+  hideEditor();
    
-   $.ajax({
+  $.ajax({
      type: "GET", 
      url: gContext + "/" + gLanguage + "/sitemap",
      data: "request=getnode&node=" + id,
@@ -53,50 +54,52 @@ function getPage(id) {
       	 	WarnUser("You are not allowed to edit this page, sorry.");
              
        } else {
-           $("#right_cont").html(msg).show();
-           $( "#tabs" ).tabs();
-           
-           $("#right_cont #doSave").button({ icons: { primary: "ui-icon-check"}, text: true}).click(doSave);
-           $("#right_cont #doDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click(doRealDelete);
-           
-           $("#right_cont #doAdjust").button({ icons: { primary: "ui-icon-close"}, text: true}).click(doAdjust);
-           $("#right_cont #doAddFile").button({ icons: { primary: "ui-icon-plus"}, text: true}).click(doAddFile);
-           
-           $("#right_cont #doEditor").button({ icons: { primary: "ui-icon-pencil"}, text: true}).click(doEditor);
-           
-           
-           // decode of data element
-           $("editData").val( unescape($("#editData").val()) );
-           $("#editDataLength").text(editData.value.length + " bytes");
+         self.currentNode = id;  
+         
+         $("#right_cont").html(msg).show();
+         $( "#tabs" ).tabs();
+         
+         $("#right_cont #doSave").button({ icons: { primary: "ui-icon-check"}, text: true}).click( function() { self.doSave(); });
+         $("#right_cont #doDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( function() { self.doRealDelete(); });
+         
+         $("#right_cont #doAdjust").button({ icons: { primary: "ui-icon-close"}, text: true}).click( doAdjust );
+         $("#right_cont #doAddFile").button({ icons: { primary: "ui-icon-plus"}, text: true}).click( doAddFile );
+         
+         $("#right_cont #doEditor").button({ icons: { primary: "ui-icon-pencil"}, text: true}).click( doEditor );
+         
+         
+         // decode of data element
+         $("editData").val( unescape($("#editData").val()) );
+         $("#editDataLength").text(editData.value.length + " bytes");
 
 
-          // make list sortable
-          $("#files").sortable().disableSelection();
-
-          // add date pickers
-          $.datepicker.setDefaults({
+         // make list sortable
+         $("#files").sortable().disableSelection();
+  
+         // add date pickers
+         $.datepicker.setDefaults({
             showOn: "both",
             buttonImage: gImages + "/icon_calendar.png",
             buttonImageOnly: true,
             dateFormat: "dd-mm-yy"});
         
-          $(".dater").datepicker();
+         $(".dater").datepicker();
           
-          // validate numbers
-          $("#onepage").validate();
+         // validate numbers
+         $("#onepage").validate();
           
-          $("#domains").change( function() {
-              var g = $('#allowedgroups').val();
-              if (g != "") {
-              	$('#allowedgroups').val( g + ((g.length > 0) ? ',':'') + $('#domains').val() );
-              }
-          });
+         $("#domains").change( function() {
+            var g = $('#allowedgroups').val();
+            if (g != "") {
+            	$('#allowedgroups').val( g + ((g.length > 0) ? ',':'') + $('#domains').val() );
+            }
+         });
           
-          // avoid "leave page" dialog from browser
-          window.onbeforeunload = function() { };
-       }
-     }
-   });
+         // avoid "leave page" dialog from browser
+         window.onbeforeunload = function() { };
+      }
+   }
+ });
 }
 
 function doEditor() {
@@ -233,11 +236,3 @@ function deleteFile(nr) {
 }
 
 
-function setup_fg(){
-
-  $.get(gContext + gLanguage + '/files', 'request=select&type=I', 
-      function(data) { 
-        $('#fileSelector').menu({ content: data, backLink: false, showSpeed: 300, height: 180, crumbDefaultText: 'Change:' }); 
-      }
-  );
-}
