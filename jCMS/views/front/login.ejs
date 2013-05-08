@@ -44,6 +44,8 @@
             
           <% if (message == "login-failed") { %>
             <p class="warning">Verkeerde gebruikersnaam of wachtwoord, gelieve nogmaals te proberen.</p>
+          <% } else if (message == "login-locked") { %>
+            <p class="warning">Uw gebruikersnaam is geblokkeerd, gelieve contact op te nemen met de site bouwer.</p>
           <% } %>
                     
           <div class="action_buttons">

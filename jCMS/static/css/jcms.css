@@ -43,7 +43,7 @@ p, form { margin: 0 0 14px 0; }
 p { margin: 0 0 2px; padding: 0; font-size: 13px; color: #666; line-height: 15px; }
 a { color: blue; }
 a:hover { color: #000; }
-input, textarea, select { font-size: 11px; font-family: Arial, sans-serif; color: #4F535C; }
+input, textarea, select { font-size: 11px; font-family: Arial, sans-serif; color: #4F535C; margin-left: 0 }
 strong { font-weight: bold; color: #b63d94; }
 em { font-style: italic; }
 sup { font-size: 8px; vertical-align: super; }
@@ -233,8 +233,11 @@ table#records th {
 
 #record { border: 1px solid #959595; }
 #record fieldset input { width: 300px; }
+#record fieldset input.number { width: 25px; }
 #record fieldset input[type=radio] { width: 20px; }
-
+#record fieldset input#domain { width: 100px; }
+#record fieldset div { margin: 6px 0 3px 0; }
+#record label.error { color: red }
 
 /*---- OK till here -------------------------*/
 

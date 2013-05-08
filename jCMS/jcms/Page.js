@@ -24,6 +24,7 @@ function Page(basis, app) {
 }
 module.exports = Page;
 
+
 Page.trim = function (url) {
   return url.replace("/","").replace(" ", "");
 };
@@ -76,15 +77,15 @@ Page.prototype.setLink = function(link, app, isNew) {
   // if we have a user defined link, store it in the url field as well in the app's url hashmap
   
   // delete the current link from the app's hashmap
-  if (isNew != true) {
-    if ((typeof this.link != "undefined") && (this.link != "")) {
+  if (isNew !== true) {
+    if ((typeof this.link !== "undefined") && (this.link !== "")) {
       delete app.urls[this.language + "/" + this.link];
     }
   }
   
-  if (link != '') {
+  if (link !== '') {
     // check if this link is not already used
-   if (isNew == true) {
+   if (isNew === true) {
       if (app.urls[this.language + "/" + link]) {
         return false;
       }
@@ -101,10 +102,11 @@ Page.prototype.setLink = function(link, app, isNew) {
 
 Page.prototype.addRoot = function() {
   function goUp(aPage) {
-    if (aPage.item.parentId < 0)
+    if (aPage.item.parentId < 0) {
       return aPage;
-    else
+    } else {
       return goUp(aPage.parent);
+    }
   }
   this.root = goUp(this);
 };
@@ -130,20 +132,24 @@ Page.prototype.addChildren = function(list) {
 };
 
 Page.prototype.sortChildren = function(order) {
-  var kEqual = 0, kBefore = -1, kAfter = 1;
+  var kEqual = 0; // kBefore = -1, kAfter = 1;
   
   this.children.sort( function(a, b) {
-    if (a == b)
+    if (a == b) {
       return kEqual;
+    }
       
-    if (order == jcms.Item.kAlphabetical)
+    if (order == jcms.Item.kAlphabetical) {
       return a.title.localeCompare(b.title);
+    }
       
-    if (order == jcms.Item.kDate)
+    if (order == jcms.Item.kDate) {
       return b.item.dated.getTime() - a.item.dated.getTime();
+    }
       
-    if (order == jcms.Item.kManual)
+    if (order == jcms.Item.kManual) {
       return a.item.sortorder - b.item.sortorder;
+    }
     
     console.log("Page.sortChildren -> We should't be here... orderby = " + order);
     return kEqual;
@@ -173,12 +179,12 @@ Page.prototype.getContent = function(connection) {
         // rWorks databases only have 1 content record per page
         //  jCMS should have multiple, with a name
         //  this name should be used as index into content[]
-        if (result.length == 0) {
+        if (result.length === 0) {
           self.content[0] = "";
           // console.log("no content for " + self.title + " -> nothing");
         } else {
           for (var i = 0; i < result.length; i++) {
-            self.content[i] = (result[i].data == null) ? "" : result[i].data;
+            self.content[i] = (result[i].data === null) ? "" : result[i].data;
             // console.log(self.title + " -> " + self.content[i].length + " bytes");
           }
         }
@@ -188,19 +194,20 @@ Page.prototype.getContent = function(connection) {
 
 Page.prototype.getDisplay = function() {
   // check if this page is marked as: "show first subitem"
-  if ((this.item.showcontent == 'S') && (this.children.length > 0))
+  if ((this.item.showcontent == 'S') && (this.children.length > 0)) {
     return this.children[0].getDisplay();
-  else
+  } else {
     return this;
+  }
 };
 
 
 Page.prototype.shortString = function() {
   return  this.title + " ("+ this.item.id + "/" + this.item.parentId + "), order = " + this.item.orderby + ", content = " +
-                  ((this.content != undefined) ? (this.content[0].length + " bytes") : "none");
+                  ((typeof this.content != "undefined") ? (this.content[0].length + " bytes") : "none");
 };
 Page.prototype.contentLength = function() {
-  return (this.content != undefined) ? this.content[0].length : 0;
+  return (typeof this.content != "undefined") ? this.content[0].length : 0;
 };
 
 Page.prototype.needsLogin = function() {
@@ -337,16 +344,16 @@ Page.prototype.updateContent = function(controller, id, content, next) {
   console.log("Page.updateContent -> " + self.language + "/" + self.itemId + " - id = " + id);
   controller.query("update content set data = ? where item = ? and language = ?",
       [content, self.itemId, self.language], next);
-}
+};
 
 
 Page.prototype.deleteElements = function( whenDone ) {
   // delete all elements with this.language = elements.language and this.id = elements.page
   whenDone();
-}
+};
 
 Page.prototype.copyElements = function( language, id, whenDone ) {
   // copy all elements with language = elements.language and this.id = elements.page
   whenDone();
-}
+};
 

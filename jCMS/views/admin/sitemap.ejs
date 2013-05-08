@@ -5,25 +5,24 @@
 <% include header.ejs %>
 
 <body>
-
-<script src="<%=static%>/js/lib/jquery-1.9.1<%=min%>.js"></script>
-<script src="<%=static%>/js/lib/jquery-ui-1.10.1<%=min%>.js"></script>
-<script src="<%=static%>/js/lib/jquery.validate<%=min%>.js"></script>
-<script src="<%=static%>/js/lib/localization/messages_<%=page.language%>.js"></script>
-
-<script type="text/javascript" src="<%=static%>/js/lib/jquery.jstree.js"></script>
-<script type="text/javascript" src="<%=static%>/js/tinymce/jquery.tinymce.js"></script>
-
- 
-<script type="text/javascript" src="<%=static%>/js/sitemap-editor.js"></script>
-<script type="text/javascript" src="<%=static%>/js/atom-tree.js"></script>
-<script type="text/javascript">
-$(document).ready( function() {
-  var gTree = new jAtomTree(0, <%=shownode%>, gContext, gLanguage, "sitemap", gImages);
-  gTree.getNode = getPage;
-  gTree.init();
-});
-</script>
+	<script src="<%=static%>/js/lib/jquery-1.9.1<%=min%>.js"></script>
+	<script src="<%=static%>/js/lib/jquery-ui-1.10.1<%=min%>.js"></script>
+	<script src="<%=static%>/js/lib/jquery.validate<%=min%>.js"></script>
+	<script src="<%=static%>/js/lib/localization/messages_<%=page.language%>.js"></script>
+	
+	<script type="text/javascript" src="<%=static%>/js/lib/jquery.jstree.js"></script>
+	<script type="text/javascript" src="<%=static%>/js/tinymce/jquery.tinymce.js"></script>
+	
+	 
+	<script type="text/javascript" src="<%=static%>/js/sitemap-editor.js"></script>
+	<script type="text/javascript" src="<%=static%>/js/atom-tree.js"></script>
+	<script type="text/javascript">
+		$(document).ready( function() {
+		  var gTree = new jAtomTree(0, <%=shownode%>, gContext, gLanguage, "sitemap", gImages);
+		  gTree.getNode = getPage;
+		  gTree.init();
+		});
+	</script>
 
   <div id="wrapper">
     <% var cat="S"; %>

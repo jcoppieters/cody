@@ -11,7 +11,7 @@
 	        <li <%- (cat == 'F') ? 'class="active"' : '' %>><a href="<%=context%>/<%=page.language%>/files">Files</a></li>		
 	        <li <%- (cat == 'O') ? 'class="active"' : '' %>><a href="<%=context%>/<%=page.language%>/forms">Forms</a></li>
 	        <% if (login.level >= 99) { %>		
-	          <li <%- (cat == 'U') ? 'class="active"' : '' %>><a href="<%=context%>/<%=page.language%>/users">Users</a></li>
+	          <li <%- (cat == 'U') ? 'class="active"' : '' %>><a href="<%=context%>/<%=page.language%>/users/list">Users</a></li>
 	          <li <%- (cat == 'Y') ? 'class="active"' : '' %>><a href="<%=context%>/<%=page.language%>/system">System</a></li>
 	        <% } %>	
         <% } %>	
@@ -37,7 +37,7 @@
     <% if ( message != "" ) { %>
       <p class="notification <%=status%>"><%= message %></p>
       <script>
-       $(document).ready( function () { $(".notification.warning").delay(6000).fadeOut(1000); } );
+       $(document).ready( function () { $(".notification.success").delay(6000).fadeOut(1000); } );
       </script>
     <% } %> 
     

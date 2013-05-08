@@ -16,9 +16,8 @@ function SitemapController(context) {
   // init inherited controller
   jcms.TreeController.call(this, context);
 }
-SitemapController.prototype = new jcms.TreeController();
 
-
+SitemapController.prototype = Object.create( jcms.TreeController.prototype );
 module.exports = SitemapController;
 
 
@@ -474,7 +473,7 @@ SitemapController.prototype.respace = function( parent, finish ) {
     
   }, function whenDone(err) {
     if (err) { console.log("SitemapController - respace: error = " + err); }
-    if (typeof finish == "function") { finish.call(self); }
+    if (typeof finish == "function") { finish(); }
     
   });
 

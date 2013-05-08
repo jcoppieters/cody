@@ -156,6 +156,40 @@ Application.each = function(list, iterator, finished) {
 };
 
 
+// Daisy chain functions
+// - functionList is a list of functions to be executed
+// - each function is executed, with a callback function to be called at the end
+// - if this callback is passed an error, the execution is terminated 
+//   and the finish function will be called with this error
+// - the finish function is called at the end with no error if everything went well
+//
+// Example:
+//  var flist = [function(done) { nr++; done(); }, 
+//               function(done) { nr += 2; done(); }];
+//  var nr = 0;
+//  Application.doList(flist, function(err) { 
+//    console.log("error ? " + err + ", total = " + nr); 
+//  });
+//
+//TODO: not tested yet!!!
+Application.doList = function(functionList, finished) {
+  var nr = functionList.length;
+  function one(current) {
+   if (current >= nr) {
+     finished();
+     
+   } else {
+     functionList[current]( function(err) {
+       if (err) {
+         finished(err);
+       }
+       one(current+1);
+     });
+   }
+  }
+  one(0);
+};
+
 //////////////////
 // Page serving //
 //////////////////
@@ -223,7 +257,7 @@ Application.prototype.handToController = function(context) {
   }
   
   controller.doRequest( function(fn, header) {
-    // should always be called by doRequest
+    // calback function should always be called by doRequest
     //  render with given or the template in the context (controller may have changed it)
     //  if no render template present ( == "") either
     //    -- assume the controller performed res.writeHead() / .write() / .end() -- ajax req?
@@ -274,6 +308,8 @@ Application.prototype.getConnection = function() {
         user: 'root', password: 'Jd2qqNAt',
         database: this.name
     });
+  } else {
+    this.log("Application", "Returned existing connection");
   }
   
   return this.connection;
@@ -404,7 +440,7 @@ Application.prototype.getSubDomain = function(path) {
   pos = path.indexOf("/", pos+1);
   if (pos < 0) { return ""; }
   
-  return path.substring(pos+1); 
+  return path.substring(pos+1);
 };
 
 Application.prototype.getPage = function(languageOrLink, itemId) {
@@ -448,12 +484,12 @@ Application.prototype.genRoots = function() {
   //   - lookup for each page its 'toplevel' (root)
   for (var i in this.pages) {
     var p = this.pages[i];
-    if (p.item.id ==  0) this.roots[p.language] = p;
+    if (p.item.id ==  0){  this.roots[p.language] = p; }
     
     //TODO: remove compatibility mode with rWorks -> delete the < 50 !
     //TODO: we should store items (I think)
-    if ((p.item.parentId == -1) && (p.item.id <= 50) && (p.item.id != 0)) this.admins.push(p);  
-    if ((p.item.parentId == -2) || ((p.item.parentId == -1) && (p.item.id > 50))) this.globals.push(p);
+    if ((p.item.parentId == -1) && (p.item.id <= 50) && (p.item.id != 0)) { this.admins.push(p); }  
+    if ((p.item.parentId == -2) || ((p.item.parentId == -1) && (p.item.id > 50))) { this.globals.push(p); }
     
     // let the page find its toplevel
     p.addRoot();
@@ -507,7 +543,7 @@ Application.prototype.deletePagesForItem = function( itemId, finish ) {
     var lan = self.languages[i].id;
     var P = self.getPage(lan, itemId);
     delete self.urls[lan+"/"+itemId];
-    if (P.link != "") {
+    if (P.link !== "") {
       delete self.urls[lan+"/"+P.link];
     }
   }
@@ -583,16 +619,21 @@ Application.prototype.fetchDomains = function() {
   var self = this;
   
   // fetch all user domains
-  jcms.User.loadDomains(self.connection, function(result) {
-    self.domains = [];
-    for (var i = 0; i < result.length; i++) {
-    self.domains.push(result[i].domain);
-    }
+  jcms.User.getDomains(self.connection, function(result) {
+    self.storeDomains(result);
     self.log("Application.fetchDomains", "fetched " + result.length + " domains");
     
     // next step
     self.fetchAtoms();
   });
+};
+
+Application.prototype.storeDomains = function(result) {
+  var self = this;
+  self.domains = [];
+  for (var i = 0; i < result.length; i++) {
+    self.domains.push(result[i].domain);
+  }
 };
 
 

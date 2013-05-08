@@ -6,13 +6,13 @@ var jcms = require('./index.js');
 
 console.log("loading " + module.id);
 
-module.exports = Template;
 
 function Template(basis, controllers) {
   // copy from basis
   for (var a in basis) {
-    if (basis.hasOwnProperty(a))
+    if (basis.hasOwnProperty(a)) {
       this[a] = basis[a];
+    }
   }
   // stay compatible with current rWorks databases
   this.fn += ".ejs";
@@ -25,10 +25,14 @@ function Template(basis, controllers) {
   this.controller = controllers[className];
   
   // if no controller found -> attach standard Controller
-  if (this.controller == null) {
+  if (typeof this.controller == "undefined") {
     this.controller = controllers['Controller'];
   }
 }
+
+module.exports = Template;
+
+
 
 Template.loadTemplates = function(connection, store) {
   connection.query('select * from templates', [], function(err, result) {
@@ -39,11 +43,12 @@ Template.loadTemplates = function(connection, store) {
 
 Template.prototype.getController = function(context) {
   return new this.controller(context);
-}
+};
 Template.prototype.getView = function() {
   return this.fn;
-}
+};
 
+//TODO: never used ??
 Template.prototype.render = function (res, fn, context) {
 
   // read fn
@@ -52,4 +57,4 @@ Template.prototype.render = function (res, fn, context) {
   // replace ${...}  to  <%=  %>
   //   and ask ejs to render the rest
   res.render(x.replace(/<${(.*?)}/g, "<%=$1%>"), context);
-}
+};

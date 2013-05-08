@@ -5,7 +5,6 @@
 console.log("loading " + module.id);
 var jcms = require("./index.js");
 
-module.exports = Context;
 
 function Context(path, page, app, req, res) {
   this.version = app.version;
@@ -22,9 +21,16 @@ function Context(path, page, app, req, res) {
 
   // copy query params and body params into this.params and .param
   this.params = {};
-  for(var x in req.query) this.params[x] = req.query[x];
-  for(var x in req.body) this.params[x] = req.body[x];
-  
+  for(var q in req.query) {
+    if (req.query.hasOwnProperty(q)) { 
+     this.params[q] = req.query[q];
+    }
+  }
+  for(var b in req.body) {
+    if (req.body.hasOwnProperty(b)) { 
+      this.params[b] = req.body[b];
+    }
+  }
   this.request = this.params.request || this.subdomain || "";
   
   this.status = "success";
@@ -41,24 +47,22 @@ function Context(path, page, app, req, res) {
   this.session = req.session;
   this.setLogin(this.session.login);
 }
+module.exports = Context;
 
-Context.prototype.setLogin = function(login) {
-	this.session.login = login;
-	this.login = new jcms.User(login);
-};
-Context.prototype.isLoggedIn = function() {
-  return (this.login) && (this.login.active == "Y");
-};
-Context.prototype.getLogin = function() {
-	return this.login || new jcms.User({});
-};
 
+//
+// mini contexts for saving in between login requests
+//
 
 Context.prototype.getMini = function() {
   var mini = {};
   
   mini.params = {};
-  for(var x in this.params) { mini.params[x] = this.params[x]; }
+  for(var x in this.params) { 
+    if (mini.params.hasOwnProperty(x)) { 
+      mini.params[x] = this.params[x];
+    }
+  }
   mini.params = this.params;
   
   mini.path = this.path;
@@ -73,7 +77,11 @@ Context.prototype.getMini = function() {
 
 Context.prototype.copyFromMini = function(mini) {
   this.params = {};
-  for(var x in mini.params) { this.params[x] = mini.params[x]; }
+  for(var x in mini.params) { 
+    if (mini.params.hasOwnProperty(x)) { 
+      this.params[x] = mini.params[x]; 
+    }
+  }
   
   this.path = mini.path;
   this.request = mini.request;
@@ -85,9 +93,77 @@ Context.prototype.copyFromMini = function(mini) {
   this.page = this.app.findPage(this.path, this.page.language);
 };
 
+
+//
+// login stuff
+//
+
+Context.prototype.setLogin = function(login) {
+  this.session.login = login;
+  this.login = new jcms.User(login);
+};
+Context.prototype.isLoggedIn = function() {
+  return (this.login) && (this.login.active === "Y");
+};
+Context.prototype.getLogin = function() {
+  return this.login || new jcms.User({});
+};
+
+
+//
+// General utility
+//
+
 Context.prototype.getUnique = function() {
   return new Date().getTime();
 };
+
+Context.prototype.optionList = function(theList, theId, theIdName, theNameName) {
+  var x = "";
+  
+  if (typeof theList[0] === "string") {
+    for (var j=0; j < theList.length; j++) {
+      var S = theList[j];
+      x += "<option value=\"" + S + "\"" + ((S == theId) ? "selected" : "") + ">" + S + "</option>\n";
+    }
+    
+  } else {
+    var idName = theIdName || "id";
+    var nameName = theNameName || "name";
+    
+    for (var i=0; i < theList.length; i++) {
+      var O = theList[i];
+      x += "<option value=\"" + O[idName] + "\"" + ((O[idName] == theId) ? "selected" : "") + ">" + O[nameName] + "</option>\n";
+    }
+  }
+  return x;
+};
+
+Context.prototype.find = function(theList, theId, theIdName) {
+  var idName = theIdName || "id";
+  for (var i=0; i < theList.length; i++) {
+    var R = theList[i];
+    if (R[idName] == theId) {
+      return R;
+    }
+  }
+  return {};
+};
+
+
+//
+// Param handlers
+//
+
+Context.prototype.getParam = function(paramName, defaultValue) {
+  var x = this.params[paramName];
+  return (typeof x == "undefined") ? defaultValue : x;
+};
+
+Context.prototype.setParam = function(paramName, value) {
+  this.params[paramName] = value;
+};
+
 
 
 function two(n) {
@@ -136,12 +212,4 @@ Context.prototype.getDate = function(paramName, defaultValue) {
   }
 };
 
-Context.prototype.getParam = function(paramName, defaultValue) {
-  var x = this.params[paramName];
-  return (typeof x == "undefined") ? defaultValue : x;
-};
-
-Context.prototype.setParam = function(paramName, value) {
-  this.params[paramName] = value;
-};
 

@@ -3,7 +3,6 @@
 //
 //
 console.log("loading " + module.id);
-module.exports = Static;
 
 var libpath = require("path"),
     http = require("http"),
@@ -22,39 +21,45 @@ function Static(req, res) {
   this.request = req;
   this.response = res;
 }
+module.exports = Static;
+
 
 Static.prototype.dump = function () {
   this.response.writeHead(200, { "Content-Type": "text/plain" });
-  this.response.write("Cache dump\n----------\n")
+  this.response.write("Cache dump\n----------\n");
   var cnt = 0;
   for (var c in cache) {
-    this.response.write(c + ": " + cache[c].length + " bytes\n");
-    cnt += cache[c].length;
+    if (cache.hasOwnProperty(c)) {
+      this.response.write(c + ": " + cache[c].length + " bytes\n");
+      cnt += cache[c].length;
+    }
   }
-  this.response.write("---------------------------\n")
-  this.response.write("Total bytes cached: " + cnt + " bytes\n")
-  this.response.write("---------------------------\n")
+  this.response.write("---------------------------\n");
+  this.response.write("Total bytes cached: " + cnt + " bytes\n");
+  this.response.write("---------------------------\n");
   this.response.end();
-}
+};
 
 Static.prototype.addCache = function (filename, file) {
   if (nrCache >= maxCache) {
     // should be sorted on number of uses
     var nr = Math.floor(Math.random() * maxCache) + 1;
     for (var c in cache) {
-      nr--;
-      if (nr == 0) {
-        delete cache[c];
-        nrCache--;
-        // console.log("static -> deleted from cache: " + c);
-        break;
+      if (cache.hasOwnProperty(c)) {
+        nr--;
+        if (nr === 0) {
+          delete cache[c];
+          nrCache--;
+          // console.log("static -> deleted from cache: " + c);
+          break;
+        }
       }
     }
   }
   cache[filename] = file;
   nrCache++;
   // console.log("Static -> added to cache: " + filename);
-}
+};
 
 Static.prototype.tryCache = function (filename) {
   var file = cache[filename];
@@ -68,7 +73,7 @@ Static.prototype.tryCache = function (filename) {
     return true;
   }
   return false;
-}
+};
 
 Static.prototype.serve = function () {
   var self = this;
@@ -84,8 +89,9 @@ Static.prototype.serve = function () {
     
   
   // try serving from cache
-  if (self.tryCache(filename))
+  if (self.tryCache(filename)) {
     return;
+  }
   
   // check if this file exists
   fs.exists(filename, function (exists) {
@@ -119,4 +125,4 @@ Static.prototype.serve = function () {
         self.addCache(filename, file);
       });
   });
-}
+};

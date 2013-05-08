@@ -5,7 +5,6 @@
 console.log("loading " + module.id);
 var jcms = require('./index.js');
 
-module.exports = Item;
 
 //!! basis objects (passed to Item constructor or created with addDefaults have a parent that is an integer)
 //Objects created with the contructor Item have a parent and parentId that are integers
@@ -37,6 +36,10 @@ function Item(basis, app) {
     app.err("Item.constructor", "did not find a form with id = " + this.formId + " for item " + this.id + " / " + this.name);
   }
 }
+
+module.exports = Item;
+
+
   
 Item.addDefaults = function(basis, parent) {
   if (typeof parent == "undefined") { parent = {}; }

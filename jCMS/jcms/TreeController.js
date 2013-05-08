@@ -21,9 +21,9 @@ function TreeController(context) {
 
   context.shownode = this.getRoot();
 }
-module.exports = TreeController;
 
-TreeController.prototype = new jcms.Controller();
+TreeController.prototype = Object.create( jcms.Controller.prototype );
+module.exports = TreeController;
 
 
 // Next 4 should be overridden
@@ -62,9 +62,9 @@ Node.prototype.doDelete = function(controller, finish) {}
 
 TreeController.prototype.toId = function(theNode) {
   if (theNode.indexOf("id_") === 0) {
-    return parseInt(theNode.substring(3));
+    return parseInt(theNode.substring(3), 10);
   } else {
-    return parseInt(theNode);
+    return parseInt(theNode, 10);
   }
 };
 
@@ -218,7 +218,7 @@ TreeController.prototype.saveInfo = function( nodeId, finish ) {
   console.log("TreeController.saveInfo: node = " + nodeId );
   
   var anObject = this.getObject(this.toId(nodeId));
-  if (anObject) {
+  if (typeof anObject != "undefined") {
      self.context.shownode = anObject.parentId;
      anObject.scrapeFrom(this);
       var F = self.context.req.files;
@@ -367,7 +367,7 @@ TreeController.prototype.respace = function(theParent) {
   var nr = 0;
     var aList = theParent.getChildren();
 
-  for  (var i in aList) { var node = aList[i];
+  for (var i in aList) { var node = aList[i];
     nr += 10;
     if (node.getSortOrder() != nr) {
       node.setSortOrder(nr);

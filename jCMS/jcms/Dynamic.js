@@ -8,7 +8,7 @@ var libpath = require("path"),
     http = require("http"),
     fs = require("fs"),
     url = require("url"),
-    mime = require("mime");
+    mime = require("mime"),
     jcms = require("./index.js");
  
 
@@ -54,4 +54,4 @@ Dynamic.prototype.serve = function () {
         self.response.end();
       });
   });
-}
+};

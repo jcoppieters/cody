@@ -17,9 +17,8 @@ function ImageController(context) {
   jcms.TreeController.call(this, context);
   
 }
-ImageController.prototype = new jcms.TreeController();
 
-
+ImageController.prototype = Object.create( jcms.TreeController.prototype );
 module.exports = ImageController;
 
 
