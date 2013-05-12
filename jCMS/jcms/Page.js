@@ -102,12 +102,14 @@ Page.prototype.setLink = function(link, app, isNew) {
 
 Page.prototype.addRoot = function() {
   function goUp(aPage) {
+    //console.log("goUp: " + aPage.item.id + " -> " + aPage.item.parentId);
     if (aPage.item.parentId < 0) {
       return aPage;
     } else {
       return goUp(aPage.parent);
     }
   }
+  //console.log("AddRoot: " + this.itemId);
   this.root = goUp(this);
 };
 
@@ -165,7 +167,7 @@ Page.prototype.getView = function() {
   return this.item.template.getView();
 };
 
-Page.prototype.getContent = function(connection) {
+Page.prototype.getContent = function(connection, finished) {
   var self = this;
   
   //todo: replace content by elements...
@@ -189,6 +191,7 @@ Page.prototype.getContent = function(connection) {
           }
         }
         
+        finished();
       });
 };
 

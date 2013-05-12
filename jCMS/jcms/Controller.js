@@ -154,5 +154,3 @@ Controller.prototype.feedBack = function(success, message) {
   this.context.success = success;
 };
 
-
-

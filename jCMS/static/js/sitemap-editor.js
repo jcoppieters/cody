@@ -142,7 +142,7 @@ function saveEditor() {
   var content = $("#editContent").html();
   $.ajax({
          type: "POST", url: "./sitemap",
-         data: "request=savedata&node="+gCurrentNode+"&data=" + escape( content ),
+         data: "request=savedata&node="+gTree.getCurrentNode()+"&data=" + escape( content ),
          success: function(msg){
             if (msg.status != "OK") {
               alert("Data not saved!\nGot error from server: " + msg.status + ", see console.");

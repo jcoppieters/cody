@@ -26,7 +26,7 @@ module.exports = ImageController;
 ImageController.prototype.doRequest = function( finish ) {
   var self = this;
   
-  self.context.fn = "admin/images.ejs";
+  self.context.fn = "cms/images.ejs";
   
   if (self.context.request == "imagelist") {
     self.getImageList();

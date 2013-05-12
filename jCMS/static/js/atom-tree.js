@@ -27,6 +27,10 @@ this.warnUser = function(message) {
   $('#right_cont').html("<p class='warning'>" + message + "</p>");
 };
 
+this.getCurrentNode = function() {
+  return this.currentNode;
+}
+
 this.getNode = function(id) {
   var self = this;
   
@@ -121,7 +125,7 @@ this.doEdit = function(aNode) {
   var self = this; 
   var t = $("#tree").jstree("get_selected"); 
 
-  if (aNode != null) {
+  if (aNode) {
     self.getNode(aNode);
   } else if (t) {
     self.getNode(t.attr("id"));
@@ -213,7 +217,7 @@ this.init = function () {
       
     } else if (data.func == "rename_node") {
         //console.log("Tree - Before: rename_node, please-open = " + self.pleaseOpen);
-        if (self.pleaseOpen != null) {
+        if (self.pleaseOpen !== null) {
           // we're only here after a create_node, set the name and open the item for editing
           $.getJSON("./"+theService, {request: 'rename', name: data.args[1], node: self.pleaseOpen},
               function(msg){

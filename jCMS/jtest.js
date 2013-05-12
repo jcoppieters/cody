@@ -38,11 +38,11 @@ server.use(express.cookieParser("a secret"));
 server.use(express.cookieSession());
 
 
-var app = new jcms.Application("essen", "v0.1a1", "/Users/johan/git/jCMS/jCMS");
+var app = new jcms.Application("essen1", "v0.1a1", "/Users/johan/git/jCMS/jCMS");
  // path should be  /usr/local/data  on production
  app.init();
- app.addController("TAgendaController", essen.AgendaController);
- app.addController("TBookingController", essen.BookingController);
+ app.addController("AgendaController", essen.AgendaController);
+ app.addController("BookingController", essen.BookingController);
 
 
 

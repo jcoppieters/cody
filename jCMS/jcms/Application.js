@@ -20,9 +20,12 @@ console.log("loading " + module.id);
 
 
 function Application(name, version, datapath) {
-  this.roots = {};          // hashmap with all pages having item.id = 0, for all languages
-  this.admins = [];         // array with all pages having parent = -1
-  this.globals = [];        // array with all pages having parent = -2
+  // hashmaps with a (special) page per language
+  this.homepages = {};
+  this.dashboards = {};
+  this.globals = {};
+  this.orphans = {};
+  this.logins = {};
   
   this.templates = null;    // hashmap with (id - template)
   this.items = null;        // hashmap with (id - item)
@@ -49,6 +52,16 @@ Application.kDefaultLanguage = "nl";
 
 // Atom roots
 Application.kImageRoot = 1;
+Application.kFileRoot = 2;
+
+// Content root id's
+Application.kNoPage = -1;
+Application.kHomePage = 1;
+Application.kLoginPage = 2;
+Application.kOrphansPage = 3;
+Application.kFooterPage = 4;
+Application.kDashboardPage = 9;
+Application.kGlobalPage = 99;
 
 
 
@@ -67,17 +80,14 @@ Application.prototype.addController = function(name, controller) {
 };
 
 Application.prototype.addControllers = function() {
-  // do this dynamically for all templates[x].class -- Tim ?
+  // do this dynamically for all templates[x].controllerName -- Tim ?
   this.addController('Controller', jcms.Controller);
+  this.addController('ContentController', jcms.Controller);
   this.addController('LoginController', jcms.LoginController);
+  this.addController('UserController', jcms.UserController);
   this.addController('SitemapController', jcms.SitemapController);
   this.addController('ImageController', jcms.ImageController);
   
-  // add compatibility with rWorks (todo: sitemap, imagetree, filetree, formtree, system)
-  this.addController('rWorks.TContentController', jcms.Controller);
-  this.addController('rWorks.TLoginController', jcms.LoginController);
-  this.addController('rWorks.TSitemapController', jcms.SitemapController);
-  this.addController('rWorks.TImageTreeController', jcms.ImageController);
 };
 
 
@@ -164,24 +174,25 @@ Application.each = function(list, iterator, finished) {
 // - the finish function is called at the end with no error if everything went well
 //
 // Example:
-//  var flist = [function(done) { nr++; done(); }, 
-//               function(done) { nr += 2; done(); }];
+//  var anObject = { nr: 0 };
+//  var aList = [ [anObject, function(done) { this.nr++; done(); }], 
+//                [anObject, function(done) { this.nr += 2; done(); }] ];
 //  var nr = 0;
 //  Application.doList(flist, function(err) { 
-//    console.log("error ? " + err + ", total = " + nr); 
+//    console.log("error ? " + err + ", total = " + anObject.nr); 
 //  });
 //
-//TODO: not tested yet!!!
 Application.doList = function(functionList, finished) {
   var nr = functionList.length;
   function one(current) {
    if (current >= nr) {
-     finished();
+     if (typeof finished === "function") { finished(); }
      
    } else {
-     functionList[current]( function(err) {
+     var entry = functionList[current];
+     entry[1].call( entry[0], function(err) {
        if (err) {
-         finished(err);
+         if (typeof finished === "function") { finished(err); }
        }
        one(current+1);
      });
@@ -197,7 +208,7 @@ Application.prototype.servePage = function(req, res) {
   var self = this;
    
   // can't show all content, because during init, it is fetched async
-  if (! this.dumped) this.dump();
+  if (! this.dumped) { this.dump(); }
   
   // get url path, strip leading '/'
   var path = req._parsedUrl.pathname.substring(1);
@@ -227,7 +238,7 @@ Application.prototype.buildContext = function (path, req, res) {
   var context = new jcms.Context(path, page, self, req, res);
   console.log("servePage - params -> ");  console.log(context.params);
   console.log("servePage - session -> "); console.log(context.session);
-  console.log("servePage - files -> "); console.log(req.files);
+  console.log("servePage - files -> ");   console.log(req.files);
   return context;
 };
 
@@ -235,11 +246,11 @@ Application.prototype.handToController = function(context) {
   var self = this;
   
   // make a controller and send it 'doRequest'
-  self.log("handToController -> controller", context.page.item.template.class);
+  self.log("handToController", context.page.item.template.controllerName);
   var controller = context.page.getController(context);
   
-  if (controller == null) {
-    self.err("handToController", "No controller found for " + context.page.item.template.class);
+  if (controller === null) {
+    self.err("handToController", "No controller found for " + context.page.item.template.controllerName);
     return;
   }
   
@@ -271,8 +282,8 @@ Application.prototype.handToController = function(context) {
         context.fn = fn; 
       }
       
-      self.log("Application.handToController -> finish - template file = ", (context.fn=="") ? "** none **" : context.fn);
-      if (context.fn != "") {
+      self.log("Application.handToController -> finish - template file = ", (context.fn==="") ? "** none **" : context.fn);
+      if (context.fn !== "") {
         context.res.render(context.fn, context);
       }
     }
@@ -309,9 +320,12 @@ Application.prototype.getConnection = function() {
         database: this.name
     });
   } else {
-    this.log("Application", "Returned existing connection");
+    this.log("Application", "Returning existing connection");
   }
   
+  if (typeof this.connection === "undefined") {
+    throw(new Error("Fatal error: No database connection"));
+  }
   return this.connection;
 };
 
@@ -320,10 +334,25 @@ Application.prototype.returnConnection = function( connection ) {
   
 };
 
+///////////////////////////////////////////
+// Fetch all structured data into memory //
+///////////////////////////////////////////
+Application.prototype.fetchStructures = function() {
+  Application.doList([
+    [this, Application.prototype.fetchLanguages],
+    [this, Application.prototype.fetchTemplates],
+    [this, Application.prototype.fetchItems],
+    [this, Application.prototype.fetchPages],
+    [this, Application.prototype.fetchForms],
+    [this, Application.prototype.fetchDomains],
+    [this, Application.prototype.fetchAtoms]
+  ]);
+};
+
 ///////////////
 // Languages //
 ///////////////
-Application.prototype.fetchStructures = function() {
+Application.prototype.fetchLanguages = function(done) {
   var self = this;
   
   jcms.Page.loadLanguages(this.connection, function(result) {
@@ -331,7 +360,7 @@ Application.prototype.fetchStructures = function() {
     self.log("Application.fetchLanguages", "fetched " + result.length + " languages");
     
     // next step
-    self.fetchTemplates();
+    done();
   });
 };
 
@@ -353,7 +382,7 @@ Application.prototype.findLanguage = function(url) {
 Application.prototype.getTemplate = function(templateId) {
   return this.templates[templateId];
 };
-Application.prototype.fetchTemplates = function() {
+Application.prototype.fetchTemplates = function(done) {
   var self = this;
   
   jcms.Template.loadTemplates(this.connection, function(result) {
@@ -368,7 +397,7 @@ Application.prototype.fetchTemplates = function() {
     self.log("Application.fetchTemplates", "fetched " + result.length + " templates");
     
     // next step
-    self.fetchItems();
+    done();
   });
 };
 
@@ -395,7 +424,7 @@ Application.prototype.addItem = function(anItem) {
   self.log("Application.addItem", "added " + anItem.id + " / " + anItem.name);
 };
 
-Application.prototype.fetchItems = function() {
+Application.prototype.fetchItems = function(done) {
   var self = this;
   
   jcms.Item.loadItems(this.connection, function(result) {
@@ -415,7 +444,7 @@ Application.prototype.fetchItems = function() {
     // console.log(self.items);
     
     // next step
-    self.fetchPages();
+    done();
   });
 };
 
@@ -457,17 +486,17 @@ Application.prototype.findPage = function(path, language) {
   var aPage = this.urls[pageLink];
   
   // if page not found -> serve the language/notfound page
-  if (aPage == null) {
+  if (typeof aPage === "undefined") {
     aPage = this.urls[language + "/notfound"];
   }
   
   // if no notfound-page -> try to serve the home page
-  if (aPage == null) {
+  if (typeof aPage === "undefined") {
     aPage = this.urls[language + "/welcome"];
     console.log("Application.findPage - " + language + "/welcome");
   }
   
-  if (aPage != null) {
+  if (typeof aPage !== "undefined") {
     aPage = aPage.getDisplay();
   }
   
@@ -475,21 +504,22 @@ Application.prototype.findPage = function(path, language) {
 };
 
 Application.prototype.genRoots = function() {
-  this.roots = {};
-  this.globals = [];
-  this.admins = [];
+  this.homepages = {};
+  this.dashboards = {};
+  this.globals = {};
+  this.orphans = {};
+  this.logins = {};
   
   // loop through all pages
-  //   - put in 'roots' (parent = 0) or 'admin' (parent = -1) or 'global' (parent = -2)
+  //   - put in correct special page variable for quick access +
   //   - lookup for each page its 'toplevel' (root)
   for (var i in this.pages) {
     var p = this.pages[i];
-    if (p.item.id ==  0){  this.roots[p.language] = p; }
-    
-    //TODO: remove compatibility mode with rWorks -> delete the < 50 !
-    //TODO: we should store items (I think)
-    if ((p.item.parentId == -1) && (p.item.id <= 50) && (p.item.id != 0)) { this.admins.push(p); }  
-    if ((p.item.parentId == -2) || ((p.item.parentId == -1) && (p.item.id > 50))) { this.globals.push(p); }
+    if (p.item.id === Application.kHomePage)      {  this.homepages[p.language] = p; }
+    if (p.item.id === Application.kOrphanPage)    {  this.orphans[p.language] = p; }
+    if (p.item.id === Application.kDashboardPage) {  this.dashboards[p.language] = p; }
+    if (p.item.id === Application.kGlobalPage)    {  this.globals[p.language] = p; }
+    if (p.item.id === Application.kLoginPage)     {  this.logins[p.language] = p; }    
     
     // let the page find its toplevel
     p.addRoot();
@@ -514,24 +544,28 @@ Application.prototype.addPage = function(page) {
 	this.buildSitemap();
 };
 
-Application.prototype.fetchPages = function() {
+Application.prototype.fetchPages = function(done) {
   var self = this;
   
   jcms.Page.loadPages(self.connection, function(result) {
     self.pages = [];
     self.urls = {};
-    for (var i = 0; i < result.length; i++) {
-      var O = new jcms.Page(result[i], self);
-              
-      O.addTo(self);
-      O.getContent(self.connection);
-    }
-    self.buildSitemap();
     
-    self.log("Application.fetchPages", "fetched " + result.length + " pages");
-    
-    // next step
-    self.fetchForms();
+    Application.each(result, function(nextOne) {
+      
+      var onePage = new jcms.Page(this, self);
+      
+      onePage.addTo(self);
+      onePage.getContent(self.connection, nextOne);
+
+    }, function(err) { 
+      self.buildSitemap();
+      
+      self.log("Application.fetchPages", "fetched " + result.length + " pages");
+      
+      // next step
+      done();
+    });
   });
 };
 
@@ -579,14 +613,25 @@ Application.prototype.dump = function() {
   }
   
   this.dumped = true;
-  console.log("Roots:");
-  printLevel(this.roots, 0);
+  console.log("--- Controllers ---");
+  for (var c in this.controllers) {
+    console.log(c);
+  }
   
-  console.log("--- Admin ---");
-  printLevel(this.admins, 1);
+  console.log("--- Homepages ---");
+  printLevel(this.homepages, 0);
+  
+  console.log("--- Dashboard ---");
+  printLevel(this.dashboards, 0);
+  
+  console.log("--- Pages ---");
+  printLevel(this.orphans, 0);
   
   console.log("--- Global ---");
-  printLevel(this.globals, 1);
+  printLevel(this.globals, 0);
+  
+  console.log("--- Logins ---");
+  printLevel(this.logins, 0);
   
   console.log("----------------");
   console.log("Total content: " + cnt + " bytes");
@@ -602,20 +647,20 @@ Application.prototype.getForm = function(formId) {
   //TODO: read forms from the database...
   // return this.forms[formId];
 };
-Application.prototype.fetchForms = function() {
+Application.prototype.fetchForms = function(done) {
    var self = this;
   
    // fetch all forms
   
    // next step
-   self.fetchDomains();
+   done();
 };
 
 
 /////////////////////
 //Users - Domains //
 /////////////////////
-Application.prototype.fetchDomains = function() {
+Application.prototype.fetchDomains = function(done) {
   var self = this;
   
   // fetch all user domains
@@ -624,7 +669,7 @@ Application.prototype.fetchDomains = function() {
     self.log("Application.fetchDomains", "fetched " + result.length + " domains");
     
     // next step
-    self.fetchAtoms();
+    done();
   });
 };
 
@@ -669,7 +714,7 @@ Application.prototype.getAtomChildren = function(parent) {
   return list;
 };
 
-Application.prototype.fetchAtoms = function() {
+Application.prototype.fetchAtoms = function(done) {
   var self = this;
   
   // fetch all atoms
@@ -680,8 +725,8 @@ Application.prototype.fetchAtoms = function() {
     }
     self.log("Application.fetchAtoms", "fetched " + result.length + " atoms");
     
-    // no next step -- we used to close our connection here
-    // but now we keep it open to serve requests
+    // next step
+    done();
   });
 };
 

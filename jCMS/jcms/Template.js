@@ -14,18 +14,17 @@ function Template(basis, controllers) {
       this[a] = basis[a];
     }
   }
-  // stay compatible with current rWorks databases
-  this.fn += ".ejs";
-  if (this.fn.indexOf("/") < 0) {
-    this.fn = "front/" + this.fn;
+  
+  // find controller based on its name
+  this.controllerName = this.controller;
+  this.controller = controllers[this.controllerName];
+  
+  if (typeof this.controller === "undefined") {
+    console.log("Template - controllerName = " + this.controllerName + " not found");
   }
   
-  // find controller based on the class name
-  var className = this['class'];
-  this.controller = controllers[className];
-  
   // if no controller found -> attach standard Controller
-  if (typeof this.controller == "undefined") {
+  if (typeof this.controller === "undefined") {
     this.controller = controllers['Controller'];
   }
 }
@@ -48,13 +47,3 @@ Template.prototype.getView = function() {
   return this.fn;
 };
 
-//TODO: never used ??
-Template.prototype.render = function (res, fn, context) {
-
-  // read fn
-  var x = "";
-  
-  // replace ${...}  to  <%=  %>
-  //   and ask ejs to render the rest
-  res.render(x.replace(/<${(.*?)}/g, "<%=$1%>"), context);
-};

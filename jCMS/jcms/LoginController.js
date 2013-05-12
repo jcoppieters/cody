@@ -23,7 +23,7 @@ function LoginController(context) {
 	this.loggedOutUrl = "/" + (context.language || "nl");
 		
 	// use this view for the admin operations
-	this.adminView = "admin/users.ejs";
+	this.adminView = "cms/users.ejs";
 	  
 	// init inherited controller
 	jcms.Controller.call(this, context);
@@ -57,29 +57,7 @@ LoginController.prototype.doRequest = function( finish ) {
     // redirect internally
     var anApp = self.app;
     var aContext = anApp.buildContext( self.loggedOutUrl, self.context.req, self.context.res );
-    anApp.handToController(aContext);
-    
-    
-  } else if (self.isRequest("save")) {
-    self.doSave( this.getInt("id", -1), function() {
-      self.setRequest("list");
-      self.doList( finish );
-    });
-      
-  } else if (self.isRequest("delete")) {
-    self.doDelete( this.getInt("id", -1), function() {
-      self.setRequest("list");
-      self.doList( finish );
-    });
-    
-  } else if (this.isRequest("edit")) {
-    self.doGet( this.getInt("id", -1), finish);
-    
-  } else if (this.isRequest("new")) {
-    self.doGet( NaN, finish );
-           
-  } else if (this.isRequest("list")) {
-    self.doList( finish );
+    anApp.handToController(aContext);    
     
   } else {
    finish();
@@ -162,76 +140,5 @@ LoginController.prototype.continuRequest = function(finish) {
     var aContext = anApp.buildContext( self.loggedInUrl, self.context.req, self.context.res );
     anApp.handToController(aContext);
   }
-};
-
-
-LoginController.prototype.doDelete = function( theId, finish ) {
-  var self = this;
-  
-  jcms.User.deleteUser(self, theId, function(isOK) {
-    if (isOK) {
-      self.feedBack(true, "Successfully deleted the user");
-    } else {
-      self.feedBack(false, "Failed to delete the user");
-    }
-    finish();
-  });
-};
-
-	
-LoginController.prototype.doSave = function( theId, finish ) {
-  var self = this;
-  jcms.User.getUser( self, theId, function(aUser) {
-    aUser.scrapeFrom(self);
-    aUser.doUpdate(self, function() {
-      if (aUser.id === self.getLoginId()) {
-        self.setLogin(aUser);
-      }
-      finish();
-    });    
-  });
-};
-
-
-LoginController.prototype.doGet = function(id, finish) {
-  var self = this;
-  
-  self.doGetRefs( function() {
-    if (isNaN(id) || (id <= 0)) {
-      self.context.user = new jcms.User({id: 0});
-      finish();
-    } else {
-      jcms.User.getUser( self, id, function(record) {
-        self.context.user = record;
-        finish();
-      });
-    }
-  });
-};
-
-
-LoginController.prototype.doGetRefs = function(finish) {
-  var self = this;
-  
-  jcms.User.getDomains( self, function(list) {
-    // also update the list which is kept in the Application object
-    self.app.storeDomains(list);
-    self.context.domains = self.app.domains;
-    
-    jcms.User.getLevels( self, self.getLoginLevel(), function(list) {
-      self.context.levels = list;
-      
-      finish();
-    });
-  });
-};
-
-LoginController.prototype.doList = function(finish) {
-  var self = this;
-  jcms.User.getUsers(self, self.getLoginLevel(), function(list) {
-    self.context.users = list;
-    
-    self.doGetRefs(finish);
-  });
 };
 

@@ -9,6 +9,7 @@ module.exports.User = require("./User.js");
 module.exports.Context = require("./Context.js");
 module.exports.Controller = require("./Controller.js");
 module.exports.LoginController = require("./LoginController.js");
+module.exports.UserController = require("./UserController.js");
 
 module.exports.TreeController = require("./TreeController.js");
 module.exports.SitemapController = require("./SitemapController.js");

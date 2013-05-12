@@ -17,8 +17,9 @@
 	<script type="text/javascript" src="<%=static%>/js/sitemap-editor.js"></script>
 	<script type="text/javascript" src="<%=static%>/js/atom-tree.js"></script>
 	<script type="text/javascript">
+	  var gTree;
 		$(document).ready( function() {
-		  var gTree = new jAtomTree(0, <%=shownode%>, gContext, gLanguage, "sitemap", gImages);
+		  gTree = new jAtomTree(1, <%=shownode%>, gContext, gLanguage, "sitemap", gImages);
 		  gTree.getNode = getPage;
 		  gTree.init();
 		});
@@ -46,19 +47,19 @@
 			
 	      <div id="tree">
 	        <ul>
-	          <li id="id_0" class="open" rel="root"><a href="#"><ins>&nbsp;</ins>Website</a>
+	          <li id="id_1" class="open" rel="root"><a href="#"><ins>&nbsp;</ins>Website</a>
 	            <%- controller.getTree() %>
 	          </li>
 	          
-	          <li id="id_x" class="closed" rel="root"><a href="#"><ins>&nbsp;</ins>General</a>
-	            <%- controller.getGlobalTree() %>
-	          </li>
-	         
-			  		<% if ((login) && (login.level >= 99)) { %>
-		         <li id="id_1" class="closed" rel="root"><a href="#"><ins>&nbsp;</ins>System</a>
-		            <%- controller.getAdminTree() %>
-		         </li>
-	          <% } %>
+            <li id="id_3" class="closed" rel="root"><a href="#"><ins>&nbsp;</ins>Pages</a>
+              <%- controller.getOrphansTree() %>
+            </li>
+           
+            <% if ((login) && (login.level >= 99)) { %>
+             <li id="id_9" class="closed" rel="root"><a href="#"><ins>&nbsp;</ins>Dashboard</a>
+                <%- controller.getDashboardTree() %>
+             </li>
+            <% } %>
 	        </ul>
 	      </div>
 	    </div>

@@ -25,7 +25,7 @@ module.exports = SitemapController;
 SitemapController.prototype.doRequest = function( finish ) {
   var self = this;
   
-  self.context.fn = "admin/sitemap.ejs";
+  self.context.fn = "cms/sitemap.ejs";
   
   if (self.context.request == "realdelete") {
     self.realDelete( self.getParam("node"), function whenDone(result) {
@@ -57,17 +57,19 @@ SitemapController.prototype.doRequest = function( finish ) {
 };
 
 /* One off object for making roots for Globals and General */
-function Root(aList, id, name) {
+function Root(controller, id, name) {
+  var myRoot = controller.getObject(id);
+  var myChildren = myRoot.getChildren();
+  
   this.getId = function() { return id; };
   this.getName = function() { return name; };
-  this.hasChildren = function() { return true; };
-  this.getChildren = function() { return aList; };
+  this.hasChildren = function() { return (myChildren.length > 0); };
+  this.getChildren = function() { return myChildren; };
  }
  
 /* Overridden - Config functions */
 SitemapController.prototype.getRoot = function() {
-  return 0;
-  // return this.app.roots[this.context.page.language];
+  return jcms.Application.kHomePage;
 };
 
 SitemapController.prototype.getType = function(theNode) { 
@@ -415,18 +417,18 @@ SitemapController.prototype.saveInfo = function( nodeId, finish ) {
 
 
 SitemapController.prototype.toId = function( nodeId ) {
-  return (! nodeId) ? 0 : ((nodeId.indexOf("_") > 0) ? nodeId.substring(3) : nodeId);
+  return (typeof nodeId === "undefined") ? 0 : ((nodeId.indexOf("_") > 0) ? nodeId.substring(3) : nodeId);
 };
 
 
 /* Controller specific, called from template */
 
-SitemapController.prototype.getAdminTree = function() {
-  return this.getTree( new Root(this.app.admins, 1, "Admin") );
+SitemapController.prototype.getDashboardTree = function() {
+  return this.getTree( new Root(this, jcms.Application.kDashboardPage, "Dashboard") );
 };
 
-SitemapController.prototype.getGlobalTree = function() {
-  return this.getTree( new Root(this.app.globals, 1, "Globals") );
+SitemapController.prototype.getOrphansTree = function() {
+  return this.getTree( new Root(this, jcms.Application.kOrphansPage, "Pages") );
 };
 
 

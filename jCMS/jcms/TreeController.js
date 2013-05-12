@@ -183,7 +183,7 @@ TreeController.prototype.getList = function( theRoot ) {
 // The complete tree for the admin part of the site
 TreeController.prototype.getTree = function( theRoot ) {
   var self = this;
-  var aRoot = (typeof theRoot === "object") ? theRoot : self.getObject((typeof theRoot == "undefined") ? self.getRoot() : theRoot);
+  var aRoot = (typeof theRoot === "object") ? theRoot : self.getObject((typeof theRoot === "undefined") ? self.getRoot() : theRoot);
   
   function renderTree( theNode, open, descend ) {
     var aTree = "";
