@@ -8,9 +8,23 @@ var jcms = require('./index.js');
 console.log("loading " + module.id);
 
 
+/* One off object for making roots for Globals and General */
+
+function Root(controller, id, name) {
+  var myRoot = controller.getObject(id);
+  var myChildren = myRoot.getChildren();
+  
+  this.getId = function() { return id; };
+  this.getName = function() { return name; };
+  this.hasChildren = function() { return (myChildren.length > 0); };
+  this.getChildren = function() { return myChildren; };
+ }
+ 
+
+/* Actual SitemapController */
+
 function SitemapController(context) {
   // only called for using my methods
-  if (context === undefined) { return; }
   console.log("SitemapController.constructor -> page(" + context.page.itemId + ") = " + context.page.title + ", request = " + context.request);
   
   // init inherited controller
@@ -18,12 +32,16 @@ function SitemapController(context) {
 }
 
 SitemapController.prototype = Object.create( jcms.TreeController.prototype );
+// needed?  SitemapController.prototype.constructor = SitemapController;
+
 module.exports = SitemapController;
 
 
 
 SitemapController.prototype.doRequest = function( finish ) {
   var self = this;
+  
+  console.log("sitemap constructor name = " + this.constructor.name);
   
   self.context.fn = "cms/sitemap.ejs";
   
@@ -38,7 +56,7 @@ SitemapController.prototype.doRequest = function( finish ) {
     
   } else if (self.context.request == "savedata") {
     //TODO: get id from page editor
-    self.saveData( self.getParam("node"), self.getParam("data"), 0, finish);
+    self.saveData( self.getParam("node"), self.getParam("content"), finish);
 
     
   } else if (self.context.request == "adjust") {
@@ -56,17 +74,6 @@ SitemapController.prototype.doRequest = function( finish ) {
   }
 };
 
-/* One off object for making roots for Globals and General */
-function Root(controller, id, name) {
-  var myRoot = controller.getObject(id);
-  var myChildren = myRoot.getChildren();
-  
-  this.getId = function() { return id; };
-  this.getName = function() { return name; };
-  this.hasChildren = function() { return (myChildren.length > 0); };
-  this.getChildren = function() { return myChildren; };
- }
- 
 /* Overridden - Config functions */
 SitemapController.prototype.getRoot = function() {
   return jcms.Application.kHomePage;
@@ -86,7 +93,7 @@ SitemapController.prototype.getObject = function(id) {
 
 /* SitemapController - Specific actions */
 
-SitemapController.prototype.saveData = function(thePage, theData, theId, finish) {    
+SitemapController.prototype.saveData = function(thePage, theId, finish) {    
   var self = this;
   console.log("Received SitemapController - saveData, pageId = " + thePage);
   
@@ -98,8 +105,15 @@ SitemapController.prototype.saveData = function(thePage, theData, theId, finish)
       return;
     }
     
-    aPage.content[theId] = theData;
-    aPage.updateContent(this, theId, theData, function(err) {
+    var aContent;
+    if (theId) {
+      aContent = aPage.getContent(theId);
+    } else {
+      aContent = new jcms.Content(aPage.item.id);
+    }
+    aContent.scrapeFrom(self);
+    
+    aContent.doUpdate(self, function(err) {
       if (err) {
         finish( { status: "NOK", error: err } );
       } else {
@@ -110,7 +124,7 @@ SitemapController.prototype.saveData = function(thePage, theData, theId, finish)
     
   } catch (e) {
     console.log(e);
-    console.log("SitemapController.SaveData: failed to save the content of page " + thePage);
+    console.log("SitemapController.SaveData: failed to save the content of page " + thePage + " with id = " + theId);
 
     finish( { status: "NOK", error: e } );
   }
@@ -264,7 +278,7 @@ SitemapController.prototype.renameObject = function( title, nodeId, finish ) {
     try {
       aPage.doUpdate(self, function() {
         
-       // perhaps overkill but for sortorder == alphabetical the order of pages can change
+       // perhaps overkill but for (sortorder == alphabetical) the order of pages can change
        self.app.buildSitemap();
        
        // rename the item if it's the page of the default language (although item names are not shown)

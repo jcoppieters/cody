@@ -109,6 +109,11 @@ div .language { border-top: 1px solid #ccc; margin: 2px 0 0px 0; padding: 4px 0 
 #onepage label.bold { color: #1c94c4; font-weight: bold;  }
 #onepage label.title { color: #1c94c4; display: block; text-align: left; float: none; }
 
+#onepage label.kind { height: 13px; width: 14px; line-height: 14px; border: 3px solid lightgrey;
+        padding: 4px 2px 4px 6px; margin-left: 5px; margin-right: 30px;
+        font-size: 16px; color: lightgrey; font-weight: bolder; }
+
+#onepage .ui-widget-content { background-color: white }
 
 #onepage label.error { font-size: 9px; color: red; margin-left: 5px }
 

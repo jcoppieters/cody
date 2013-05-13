@@ -50,11 +50,13 @@ Page.addDefaults = function(basis, item) {
 
 Page.loadPages = function(connection, store) {
   connection.query('select * from pages', [], function(err, result) {
+    if (err) { console.log(err); throw(new Error("Page.loadPages failed with sql errors")); }
     store(result);
   });
 };
 Page.loadLanguages = function(connection, store) {
   connection.query('select * from languages order by sortorder', [], function(err, result) {
+    if (err) { console.log(err); throw(new Error("Page.loadLanguages failed with sql errors")); }
     store(result);
   });
 };
@@ -100,6 +102,7 @@ Page.prototype.setLink = function(link, app, isNew) {
   return true;
 };
 
+
 Page.prototype.addRoot = function() {
   function goUp(aPage) {
     //console.log("goUp: " + aPage.item.id + " -> " + aPage.item.parentId);
@@ -112,6 +115,7 @@ Page.prototype.addRoot = function() {
   //console.log("AddRoot: " + this.itemId);
   this.root = goUp(this);
 };
+
 
 Page.prototype.addChildren = function(list) {
   
@@ -167,27 +171,24 @@ Page.prototype.getView = function() {
   return this.item.template.getView();
 };
 
-Page.prototype.getContent = function(connection, finished) {
+
+Page.prototype.loadContent = function(app, finished) {
   var self = this;
   
-  //todo: replace content by elements...
-  //TODO: alter table elements string -> data = text, object -> atom
-  connection.query(
-     "select data from content where item = ? and language = ?",
+  app.connection.query(
+     "select * from content where item = ? and language = ? order by sortorder",
      [this.itemId, this.language],
      function(err, result) {
-        self.content = {};
+       if (err) { console.log(err); throw(new Error("Page.getContent failed with sql errors")); }
+        self.content = [];
         
-        // rWorks databases only have 1 content record per page
-        //  jCMS should have multiple, with a name
-        //  this name should be used as index into content[]
         if (result.length === 0) {
-          self.content[0] = "";
+          self.content[0] = new jcms.Content({}, self, app);
           // console.log("no content for " + self.title + " -> nothing");
         } else {
           for (var i = 0; i < result.length; i++) {
-            self.content[i] = (result[i].data === null) ? "" : result[i].data;
-            // console.log(self.title + " -> " + self.content[i].length + " bytes");
+            self.content[i] = new jcms.Content(result[i], self);
+            console.log(self.content[i].name + " -> " + self.content[i].data.length + " bytes");
           }
         }
         
@@ -206,11 +207,18 @@ Page.prototype.getDisplay = function() {
 
 
 Page.prototype.shortString = function() {
-  return  this.title + " ("+ this.item.id + "/" + this.item.parentId + "), order = " + this.item.orderby + ", content = " +
-                  ((typeof this.content != "undefined") ? (this.content[0].length + " bytes") : "none");
+  return  this.title + " ("+ this.item.id + "/" + this.item.parentId + "), order = " + this.item.orderby +
+          ", content = " + this.nrContent() + ", size = " + this.contentLength() + " bytes";
 };
 Page.prototype.contentLength = function() {
-  return (typeof this.content != "undefined") ? this.content[0].length : 0;
+  if (typeof this.content === "undefined") { return 0; }
+  var total = 0;
+  this.content.forEach( function (c) { total += c.contentLength(); });
+  return total;
+};
+
+Page.prototype.nrContent = function() {
+  return (typeof this.content != "undefined") ?  0 : this.content.length;
 };
 
 Page.prototype.needsLogin = function() {
@@ -256,14 +264,33 @@ Page.prototype.getId = function() {
   return this.item.id;
 };
 
+Page.prototype.getContent = function(name) {
+  for (var ic in this.content) { 
+    if (this.content[ic].name === name) {
+      return this.content[ic];
+    }
+  }
+  return null;
+};
+Page.prototype.getKind = function(kind) {
+  var result = [];
+  for (var ic in this.content) { 
+    if (this.content[ic].kind === kind) {
+      result.push(this.content[ic]);
+    }
+  }
+  return result;
+};
+
+
 
 Page.prototype.scrapeFrom = function(controller) {
   var self = this;
   // get all page info from the controller
   self.title = controller.getParam("title", self.title); 
-  self.active = controller.getParam("active"); 
-  self.keywords = controller.getParam("keywords");
-  self.description = controller.getParam("description");
+  self.active = controller.getParam("active", "N"); 
+  self.keywords = controller.getParam("keywords", "");
+  self.description = controller.getParam("description", "");
   self.setLink(controller.getParam("link"), controller.app, false);
   
   // missing: updated (automatically on doUpdate), created (invariable), language (invariable)
@@ -286,7 +313,7 @@ Page.prototype.doUpdate = function(controller, next, isNew) {
         } else {
           console.log("Page.doUpdate -> inserted page: " + self.language + "/" + self.itemId);
           self.created = self.updated = new Date();
-          if (typeof next == "function") { next.call(self, controller); }
+          if (typeof next == "function") { next(); }
         }
     });
     
@@ -301,7 +328,7 @@ Page.prototype.doUpdate = function(controller, next, isNew) {
           } else {
             console.log("Page.doUpdate -> updated page: " + self.language + "/" + self.itemId);
             self.updated = new Date();
-           if (typeof next == "function") { next.call(self, controller); }
+           if (typeof next == "function") { next(); }
           }
     });
   }
@@ -319,7 +346,7 @@ Page.prototype.doDelete = function(controller, next) {
           console.log(err); 
         } else {
           console.log("Page.doDelete -> deleted page: " + self.language + "/" + self.itemId);
-          if (typeof next == "function") { next.call(self, controller); }
+          if (typeof next == "function") { next(); }
         }
   });
 };
@@ -335,28 +362,19 @@ Page.prototype.doDeactivate = function(controller, next) {
           console.log(err); 
         } else {
           console.log("Page.doDeactivate -> deactived page: " + self.language + "/" + self.itemId);
-            if (typeof next == "function") { next.call(self, controller); }
+            if (typeof next == "function") { next(); }
         }
   });
 };
 
-Page.prototype.updateContent = function(controller, id, content, next) {
-  var self = this;
-  
-  //TODO: pass id to query once the content table is extended
-  console.log("Page.updateContent -> " + self.language + "/" + self.itemId + " - id = " + id);
-  controller.query("update content set data = ? where item = ? and language = ?",
-      [content, self.itemId, self.language], next);
-};
 
-
-Page.prototype.deleteElements = function( whenDone ) {
-  // delete all elements with this.language = elements.language and this.id = elements.page
+Page.prototype.deleteContent = function( whenDone ) {
+  // delete all content with this.language = content.language and this.id = content.page
   whenDone();
 };
 
-Page.prototype.copyElements = function( language, id, whenDone ) {
-  // copy all elements with language = elements.language and this.id = elements.page
+Page.prototype.copyContent = function( language, id, whenDone ) {
+  // copy all content with language = content.language and this.id = content.page
   whenDone();
 };
 

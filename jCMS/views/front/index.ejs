@@ -14,10 +14,10 @@
 
     <% include menu-top %>
 
-		<div class="content <%= (page.parent && page.parent.children.length > 0 && page.parent.itemId != 0) ? 'withNav' : '' %>"
+		<div class="content <%= (page.parent && page.parent.children.length > 0 && page.parent.itemId != 1) ? 'withNav' : '' %>"
          role="main">
 
-			<% if (page.parent && (page.parent.itemId != 0)) { %>
+			<% if (page.parent && (page.parent.itemId != 1)) { %>
          <% include menu-left %>
       <% } %>
 			
@@ -25,7 +25,9 @@
 			<section>
 				<h1><%= page.title %></h1>
 
-				<%- page.content[0] %>
+        <% for (var ic in page.content) { %>
+				  <%- page.content[ic].render() %>
+				<% } %>
 			</section>
 			</div>
 		</div>

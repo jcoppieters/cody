@@ -43,18 +43,21 @@ User.sqlGetLevelList = "select id, name from levels where id <= ? order by id";
 
 User.getUsers = function(controller, level, store) {
   controller.query(User.sqlGetUserList, [level], function(err, result) {
+    if (err) { console.log(err); throw(new Error("User.getUsers failed with sql errors")); }
     store(result);
   });
 };
 
 User.getDomains = function(controller, store) {
   controller.query(User.sqlGetDomainList, [], function(err, result) {
+    if (err) { console.log(err); throw(new Error("User.getDomains failed with sql errors")); }
     store(result);
   });
 };
 
 User.getLevels = function(controller, level, store) {
   controller.query(User.sqlGetLevelList, [level], function(err, result) {
+    if (err) { console.log(err); throw(new Error("User.getLevels failed with sql errors")); }
     store(result);
   });
 };
@@ -71,6 +74,7 @@ User.getUser = function() {
   if (arguments.length === 4) {
     store = arguments[3];  
     controller.query(User.sqlGetUserByPw, [arguments[1], arguments[2]], function(error, results) {
+      if (error) { console.log(error); throw(new Error("User.getUser failed with sql errors")); }
       store(new User(results[0]));
    });
 
@@ -78,6 +82,7 @@ User.getUser = function() {
   } else if (arguments.length === 3) {
     store = arguments[2];  
     controller.query(User.sqlGetUserById, [arguments[1]], function(error, results) {
+      if (error) { console.log(error); throw(new Error("User.getUser failed with sql errors")); }
       store(new User(results[0]));
     });
   }
@@ -143,12 +148,16 @@ User.addBadLogin = function(controller, theUserName, finish) {
 User.prototype.clearBadLogins = function(controller, finish) {
   var self = this;
   
-//TODO:  if (self.badlogins > 0) { ... } else { finish(); }
-  controller.query(User.sqlClearBadLogins, [self.username], function(err, result) {
-    if (err) { console.log(err); }
-    console.log("Cleared bad logins");
-    finish();
-  });
+  if (self.badlogins > 0) { 
+    controller.query(User.sqlClearBadLogins, [self.username], function(err, result) {
+      if (err) { console.log(err); throw(new Error("User.clearBadLogins failed with sql errors")); }
+      console.log("Cleared bad logins");
+      finish();
+    });
+  } else { 
+    // no need to access the database if there are no badLogins
+    finish(); 
+  }
 };
 
 
@@ -166,7 +175,7 @@ User.prototype.doUpdate = function(controller, finish) {
                      "values (?, ?, ?, ?, ?,  ?, ?, ?, ?, ?, ?)", values,
         function(err, result) {
           if (err) { 
-            console.log(err); 
+            console.log(err); throw(new Error("User.doUpdate/insert failed with sql errors")); 
           } else {
             self.id = result.insertId;
             console.log("inserted user: " + self.id);
@@ -182,7 +191,7 @@ User.prototype.doUpdate = function(controller, finish) {
                      "where id = ?", values,
       function(err) {
         if (err) { 
-          console.log(err); 
+          console.log(err); throw(new Error("User.doUpdate/update failed with sql errors")); 
         } else {
           console.log("updated user: " + self.id);
           if (typeof finish == "function") { finish(); }

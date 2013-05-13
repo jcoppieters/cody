@@ -63,19 +63,20 @@ function getPage(id) {
          $("#right_cont #doDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( function() { self.doRealDelete(); });
          
          $("#right_cont #doAdjust").button({ icons: { primary: "ui-icon-close"}, text: true}).click( doAdjust );
-         $("#right_cont #doAddFile").button({ icons: { primary: "ui-icon-plus"}, text: true}).click( doAddFile );
+         $("#right_cont #doAddContent").button({ icons: { primary: "ui-icon-plus"}, text: true}).click( doAddContent );
          
-         $("#right_cont #doEditor").button({ icons: { primary: "ui-icon-pencil"}, text: true}).click( doEditor );
+         $("#right_cont .doEditor").button({ icons: { primary: "ui-icon-pencil"}, text: true}).click( doEditor );
          
          
-         // decode of data element
-         $("editData").val( unescape($("#editData").val()) );
-         $("#editDataLength").text(editData.value.length + " bytes");
 
-
+         // Content //
          // make list sortable
-         $("#files").sortable().disableSelection();
-  
+         $("#content").sortable().disableSelection();
+         // decode of data element
+         //$("editData").val( unescape($("#editData").val()) );
+         //$("#editDataLength").text(editData.value.length + " bytes");
+         
+         
          // add date pickers
          $.datepicker.setDefaults({
             showOn: "both",
@@ -103,23 +104,26 @@ function getPage(id) {
 }
 
 function doEditor() {
-  showEditor($("#editData").val());
+  var block = $(this).parent();
+  var gCurrentBlock = block.attr("id");
+  
+  var kind = block.find(".kind").val();
+  var data = block.find(".data").val();
+  showEditor(data);
   return false;
 }
 function doSaveEditor() {
-  saveEditor();
+  saveEditor(gCurrentBlock);
 }
 function doCancelEditor() {
   hideEditor();
 }
 
-
-
-function saveOrder() {
-  var serialStr = $("#otherElements").val();
-  $("#files li").each(function() { serialStr += (serialStr != ""  ? "," : "") + $(this).attr("id"); });
-  $("#elements").val(serialStr);
-};
+function doAddContent() {
+  // ask the kind (text, form, image, file)
+  
+  // add a div with id = 0, sortorder = 10 + last one
+}
 
 
 function hideEditor() {
@@ -137,12 +141,19 @@ function showEditor( content ) {
   $("#editContent").tinymce().show();
   $("#editContent").html(content);
 }
-function saveEditor() {
+function saveEditor(theId) {
   hideEditor();
   var content = $("#editContent").html();
+  var block = $("#"+theId);
   $.ajax({
          type: "POST", url: "./sitemap",
-         data: "request=savedata&node="+gTree.getCurrentNode()+"&data=" + escape( content ),
+         data: "request=savedata&node="+gTree.getCurrentNode()+
+                 "&kind=" + block.find(".kind").val() +
+                 "&name=" + block.find(".name").val() +
+                 "&sortorder=" + block.find(".sortorder").val() +
+                 "&atom=" + block.find(".atom").val() +
+                 "&kind=" + $("#" + theId + " .kind").val() +
+                 "&data=" + escape( content ),
          success: function(msg){
             if (msg.status != "OK") {
               alert("Data not saved!\nGot error from server: " + msg.status + ", see console.");
@@ -151,8 +162,8 @@ function saveEditor() {
               showEditor( content );
              } else {
                // replace data in our form
-               $("#editData").val( content );    
-               $("#editDataLength").html( content.length + " bytes");
+               block.find(".data").val( content );    
+               block.find(".length").html( content.length + " bytes");
              }
            }
        });
@@ -163,6 +174,13 @@ function saveEditor() {
 //  - files, forms, content and images are all content blocks attached to a page
 //
 ////////
+
+function saveOrder() {
+  var serialStr = $("#otherElements").val();
+  $("#files li").each(function() { serialStr += (serialStr != ""  ? "," : "") + $(this).attr("id"); });
+  $("#elements").val(serialStr);
+};
+
 
 function hideFileEditor() {
   $("#FileEditor").hide();

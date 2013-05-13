@@ -28,13 +28,6 @@ function Item(basis, app) {
   // add a 'parentId' for consistency
   //  this.parent will be replaced once all items are created in 'pickParent'
   this.parentId = this.parent;
-  
-  // add a 'formId' for consistency
-  this.formId = this.form;
-  this.form = app.getForm(this.formId);
-  if (typeof this.form == "undefined") {
-    app.err("Item.constructor", "did not find a form with id = " + this.formId + " for item " + this.id + " / " + this.name);
-  }
 }
 
 module.exports = Item;
@@ -72,6 +65,7 @@ Item.prototype.pickParent = function(itemList) {
 
 Item.loadItems = function(connection, store) {
   connection.query('select * from items', [], function(err, result) {
+    if (err) { console.log(err); throw(new Error("Item.loadItems failed with sql errors")); }
     store(result);
   });
 };
@@ -138,18 +132,18 @@ Item.prototype.scrapeFrom = function(controller) {
 Item.prototype.doUpdate = function(controller, finish) {
   var self = this;
   
-  var values = [self.name, self.parentId, self.user, self.templateId, self.orderby, self.sortorder, self.dated,
-                 self.validfrom, self.validto, self.active, self.showcontent, self.allowdelete, self.allowinsert, self.needslogin,
-                self.defaultoper, self.formId, self.allowedgroups];
+  var values = [self.name, self.parentId, self.user, self.templateId, self.orderby, self.sortorder, 
+                self.dated, self.validfrom, self.validto, self.active, self.showcontent, self.needslogin,
+                self.defaultrequest, self.allowedgroups];
   
   // new or existing record?
   if ((typeof self.id == "undefined") || (self.id === 0)) {
     
     console.log("Item.doUpdate -> insert item " + self.name);
     controller.query("insert into items (name, parent, user, template, orderby, sortorder, " +
-                     " dated, validfrom, validto, active, showcontent, allowdelete, allowinsert, needslogin, " +
-                     " defaultoper, form, allowedgroups) " +
-                     "values (?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?, ?, ?, ?,  ?, ?, ?)", values,
+                     " dated, validfrom, validto, active, showcontent, needslogin, " +
+                     " defaultrequest, allowedgroups) " +
+                     "values (?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?, ?,  ?, ?)", values,
       function(err, result) {
         if (err) { 
           console.log("Item.doUpdate -> erroring inserting item: " + self.name);
@@ -157,7 +151,7 @@ Item.prototype.doUpdate = function(controller, finish) {
         } else {
           self.id = result.insertId;
           console.log("Item.doUpdate -> inserted item: " + self.id);
-          if (typeof finish == "function") { finish.call(self, controller); }
+          if (typeof finish == "function") { finish(); }
         }
     });
     
@@ -165,8 +159,8 @@ Item.prototype.doUpdate = function(controller, finish) {
     console.log("Item.doUpdate -> update item " + self.id + " - " + self.name);
     values.push(self.id);
     controller.query("update items set name = ?, parent = ?, user = ?, template = ?, orderby = ?, sortorder = ?, " +
-                     " dated = ?, validfrom = ?, validto = ?, active = ?, showcontent = ?, allowdelete = ?, allowinsert = ?, needslogin = ?, " +
-                     " defaultoper = ?, form = ?, allowedgroups = ? " +
+                     " dated = ?, validfrom = ?, validto = ?, active = ?, showcontent = ?, needslogin = ?, " +
+                     " defaultrequest = ?, allowedgroups = ? " +
                      "where id = ?", values,
       function(err) {
         if (err) { 
@@ -174,7 +168,7 @@ Item.prototype.doUpdate = function(controller, finish) {
           console.log(err); 
         } else {
           console.log("Item.doUpdate -> updated item: " + self.id);
-          if (typeof finish == "function") { finish.call(self, controller); }
+          if (typeof finish == "function") { finish(); }
         }
     });
   }
@@ -195,7 +189,7 @@ Item.prototype.doDelete = function(controller, finish) {
       } else {
         controller.app.deletePagesForItem(self.id, function() {
           console.log("Item.doDelete -> deleted all pages from item: " + self.id);
-          if (typeof finish == "function") { finish.call(self, controller); }
+          if (typeof finish == "function") { finish(); }
         });
       }
     });

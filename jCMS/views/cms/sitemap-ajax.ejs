@@ -2,7 +2,6 @@
  	<form action="./sitemap" method="post" class="clearfix" name="onepage" id="onepage">
     <input type="hidden" name="request" id="request" value="save" /> 
     <input type="hidden" name="node" value="<%=page.item.id%>" /> 
-    <input type="hidden" name="editData" id="editData" value="<%= page.content[0] %>" />
      
     <% if (page.link == 'global') { %>
         <input name="dated" id="dated" type="hidden" value="<%= page.item.dated %>" />
@@ -36,11 +35,37 @@
 		  </ul>
 	
 		  <div id="content">
-	      <div>
-	        <label for="">Text</label>
-	        <button id="doEditor">Edit <%=page.language.toUpperCase()%> Content</button>
-	        <span id="editDataLength"></span>
+		    <% for (var ic in page.content) { var c = page.content[ic]; %>
+	      <div id="<%= c.id %>">
+          <input type="hidden" name="data<%= c.id %>" class="data" value="<%= c.data %>" />
+          <input type="hidden" name="kind<%= c.id %>" class="kind" value="<%= c.kind %>" />
+          <input type="hidden" name="sortorder<%= c.id %>" class="sortorder" value="<%= c.sortorder %>" />
+	        <label class="kind"><%= c.kind.toUpperCase() %></label>
+	        
+	        <% if (c.kind == "T") { %>
+           <input type="hidden" name="atom<%= c.id %>" class="atom" value="0" />
+	         <button class="doEditor">Edit <%= page.language.toUpperCase() %> Content</button>
+	         <span><%= c.data.length %></span>
+	         
+          <% } else if (c.kind == "M") { %> 
+           <input type="hidden" name="atom<%= c.id %>" class="atom" value="0" />
+           <select name="form" id="form"><option value="0">-</option>
+             <% for (var x in app.forms) { var f = app.forms[x]; %>
+               <option value="<%= f.id %>" <%= (f.id==c.atom) ? 'selected' : '' %>><%= f.name %></option>
+             <% } %>
+           </select>
+          
+          <% } else if (c.kind == "F") { %> 
+           <input type="hidden" name="atom<%= c.id %>" class="atom" value="<%= c.atom %>" />
+          
+          <% } else if (c.kind == "I") { %> 
+           <input type="hidden" name="atom<%= c.id %>" class="atom" value="<%= c.atom %>" />
+          
+	        <% } %>
+	        <input type="text" name="name<%= c.id %>" class="name" value="<%= c.name %>" />
+	        
 	      </div>
+	      <% } %>
 	    </div>  
 	    
 	    <div id="seo" class="horizontal">
@@ -57,10 +82,10 @@
 	     <div id="options" class="horizontal"> 
 	        <div>
 	          <label for="active">Active</label>
-	          <input name="active" id="active" type="checkbox" value="Y" <%= (page.isActive()) ? 'checked' : '' %> />
+	          <input name="active" id="active" type="checkbox" value="Y" <%= checked(page.isActive()) %> />
 	          <% if (login.level >= 50) { %>
 	            <label for="needslogin">Needs login</label>
-	            <input name="needslogin" id="needslogin" type="checkbox" value="Y" "<%= (page.item.needsLogin()) ? 'checked' : '' %>" />         
+	            <input name="needslogin" id="needslogin" type="checkbox" value="Y" <%= checked(page.item.needsLogin()) %> />         
 	          <% } %>
 	        </div>
 					<div>
@@ -82,13 +107,6 @@
 									<option value="<%= t.id %>" <%= (t.id==page.item.templateId) ? 'selected' : '' %>><%= t.name %></option>
 								<% } %>
 							</select>
-	
-							<label for="form">Form</label>
-							<select name="form" id="form"><option value="0">-</option>
-								<% for (var x in app.forms) { var f = app.forms[x]; %>
-									<option value="<%= f.id %>" <%= (f.id==page.item.formId) ? 'selected' : '' %>><%= f.name %></option>
-								<% } %>
-								</select>
 						</div>
 	
 					<div>
@@ -130,7 +148,7 @@
 	
 		<div id="action_buttons">
 			<button id="doSave">Save</button>
-			<button id="doAddFile">Add File</button>
+			<button id="doAddContent">Add Content</button>
 			
 			<% if (! page.isActive()) { %>
 				<button id="doDelete">Delete</button>

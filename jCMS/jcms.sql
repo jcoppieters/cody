@@ -14,7 +14,7 @@ CREATE TABLE `atoms` (
   `created` datetime DEFAULT '0000-00-00',
   `updated` datetime DEFAULT '0000-00-00',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
+) AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO `atoms` VALUES 
@@ -38,7 +38,7 @@ DROP TABLE IF EXISTS `domains`;
 CREATE TABLE `domains` (
   `id` varchar(32) NOT NULL DEFAULT '',
   `name` varchar(32) DEFAULT '?'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 INSERT INTO `domains` VALUES ('admin','Admin'),('cms','CMS Users'),('user','Users');
 
@@ -60,7 +60,7 @@ CREATE TABLE `templates` (
   `system` char(1) DEFAULT 'N',
   `defaultchild` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 INSERT INTO `templates` VALUES 
 (2,'Login',       'LoginController',         'front/login.ejs','',0,'Y',0),
@@ -96,11 +96,10 @@ CREATE TABLE `items` (
   `showcontent` char(1) DEFAULT 'Y',
   `needslogin` char(1) DEFAULT 'N',
   `defaultrequest` varchar(32) DEFAULT '',
-  `form` int(11) NOT NULL DEFAULT '0',
   `allowedgroups` varchar(128) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `parent_idx` (`parent`,`active`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 INSERT INTO `items` VALUES 
 (1,'Website',  -1, 1,100,'A',100,'2010-01-01','2010-01-01','2100-01-01','Y','S','N','',0,''),
@@ -142,7 +141,7 @@ CREATE TABLE `languages` (
   `name` varchar(32) DEFAULT '',
   `sortorder` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 INSERT INTO `languages` VALUES ('nl','Nederlands',1);
 
@@ -164,7 +163,7 @@ CREATE TABLE `pages` (
   `created` datetime DEFAULT '0000-00-00',
   `updated` datetime DEFAULT '0000-00-00',
   PRIMARY KEY (`item`,`language`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `pages`
@@ -200,34 +199,22 @@ INSERT INTO `pages` VALUES
 
 DROP TABLE IF EXISTS `content`;
 CREATE TABLE `content` (
-  `item` int(11) NOT NULL DEFAULT '0',
-  `language` varchar(2) NOT NULL DEFAULT 'nl',
-  `nr` int(11) NOT NULL DEFAULT 1,
-  `data` text,
-  PRIMARY KEY (`item`,`language`,nr)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-INSERT INTO `content` values
-(97,'nl',1,'<p><span>Huisartsenpraktijk De Essen draagt zorg voor uw privacy. Lees deze Privacyverklaring om meer te weten te komen over de manier waarop persoonsgegevens worden ingezameld en verwerkt op deze website. In dit geval handelt Huisartsenpraktijk De Essen daarbij steeds in overeenstemming met de bepalingen van de Belgische privacywet (Wet van 8 december 1992 tot bescherming van de persoonlijke levenssfeer ten opzichte van de verwerking van persoonsgegevens). De persoonlijke gegevens beperken zich enkel tot uw e-mailadres.</span></p>\n<p><span><strong>Verantwoordelijke</strong></span></p>\n<p><span>De verantwoordelijke voor de verwerking is Huisartsenpraktijk De Essen; Lage Bekeweg 1, 8200 Brugge - St. Andries.</span></p>\n<p><span><strong>Kennisname</strong></span></p>\n<p><span>U kan van deze persoonsgegevens kennis nemen door een aanvraag te richten aan Huisartsenpraktijk De Essen</span><span>(brief, fax of e-mail) en ze, indien nodig, doen verbeteren of verwijderen. Indien u niet gecontacteerd wenst te worden in het kader van email marketing, zullen uw gegevens op uw verzoek kosteloos uit de betrokken lijsten worden</span></p>\n<p><span><strong>Cookies</strong></span></p>\n<p><span>Wij gebruiken cookies om uw toekomstig bezoek aan onze site vlotter te laten verlopen. Een cookie is een klein stukje tekst dat op uw harde schijf wordt geplaatst. Cookies worden veel gebruikt om een hoger functionaliteit, en dus betere dienst, aan de bezoekers te kunnen aanbieden. [U kan het gebruik van cookies uitschakelen, al leidt dit er wel toe dat effecten opsommen die ten gevolge van het uitschakelen van cookies worden veroorzaakt.]</span></p>\n<p><span><strong>Veiligheid</strong></span></p>\n<p><span>Huisartsenpraktijk De Essen verbindt zich ertoe om al de gepaste technische en organisatorische maatregelen te treffen om uw persoonsgegevens te beschermen tegen vernietiging, verlies, onbedoelde wijziging, beschadiging of openbaarmaking.</span></p>\n<p><span><strong>Toestemming</strong></span></p>\n<p><span>Door u akkoord te verklaren met deze voorwaarden en condities geeft u ook uw toestemming voor de verwerking van uw persoonsgegevens voor de doeleinden zoals hierboven beschreven.</span></p>'),
-(98,'nl',1,'<p><span>Door gebruik te maken van deze website verklaart u zich akkoord met onderstaande voorwaarden en condities.</span></p>\n<p><span><strong>1. Website</strong></span></p>\n<p>De eigenaar van deze website is&nbsp;<br /> Huisartsenpraktijk De Essen,<br /> Lagebekeweg 1<br /> 8200, Brugge,&nbsp;<br /> Belgi&euml;<br /> Tel: 32(0)50 395066,&nbsp;<br /> E-mail: secretariaat@de-essen.be&nbsp;<br />ON: 0811.314.136</p>\n<p><span>Als u niet akkoord gaat met onderstaande voorwaarden wordt u verzocht de website te verlaten. Huisartsenpraktijk De Essen behoudt zich het recht voor deze voorwaarden periodisch aan te passen waarna de leden op de hoogte zullen worden gebracht van deze wijzigingen. Wanneer u na deze kennisgeving de website blijft gebruiken verklaart u zich akkoord met de doorgevoerde wijzigingen. Huisartsenpraktijk De Essen&nbsp; kan eventueel andere diensten aanbieden aan de gebruikers van deze site. In dat geval zullen de geldende voorwaarden apart worden medegedeeld.</span></p>\n<p><span><strong>2. Toegankelijkheid</strong></span></p>\n<p><span>Huisartsenpraktijk De Essen&nbsp; probeert zo goed als mogelijk de website 24 uur per dag toegankelijk te houden, nochtans kan het gebeuren dat de website ontoegankelijk is voor een korte periode omwille van onderhoudswerken, aanpassingen of technische redenen.</span></p>\n<p><span><strong>3. Verantwoordelijkheid</strong></span></p>\n<p><span>Huisartsenpraktijk De Essen weerlegt elke verantwoordelijkheid met betrekking tot deze website en de aangeboden informatie. Huisartsenpraktijk De Essen&nbsp; verzekert niet dat de informatie op deze website correct, compleet of actueel is. Alle informatie, producten en diensten op deze website kunnen fouten bevatten. De gebruiker wordt verzocht hiermee rekening te houden.</span></p>\n<div><span><br /></span></div>');
-
---
--- Table structure for table `elements`
---
-
-DROP TABLE IF EXISTS `elements`;
-CREATE TABLE `elements` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL auto_increment,
   `item` int(11) NOT NULL DEFAULT '0',
   `language` varchar(2) NOT NULL DEFAULT 'nl',
   `sortorder` int(11) DEFAULT '0',
-  `kind` char(1) NOT NULL DEFAULT '',
-  `name` varchar(64) NOT NULL DEFAULT '',
-  `string` varchar(255) NOT NULL DEFAULT '',
-  `object` int(11) DEFAULT '0',
+  `intro` char(1) NOT NULL DEFAULT 'N',  /* Yes, No */
+  `kind` char(1) NOT NULL DEFAULT 'T',   /* Text, forM, File, Image */
+  `atom` int(11) DEFAULT '0',
+  `name` varchar(32) NOT NULL DEFAULT '',
+  `data` text NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
-  KEY `item` (`item`,`language`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+  KEY (`item`,`language`)
+) DEFAULT CHARSET=utf8;
+
+INSERT INTO `content` values
+(0,97,'nl',10,'T',0,'','<p><span>Huisartsenpraktijk De Essen draagt zorg voor uw privacy. Lees deze Privacyverklaring om meer te weten te komen over de manier waarop persoonsgegevens worden ingezameld en verwerkt op deze website. In dit geval handelt Huisartsenpraktijk De Essen daarbij steeds in overeenstemming met de bepalingen van de Belgische privacywet (Wet van 8 december 1992 tot bescherming van de persoonlijke levenssfeer ten opzichte van de verwerking van persoonsgegevens). De persoonlijke gegevens beperken zich enkel tot uw e-mailadres.</span></p>\n<p><span><strong>Verantwoordelijke</strong></span></p>\n<p><span>De verantwoordelijke voor de verwerking is Huisartsenpraktijk De Essen; Lage Bekeweg 1, 8200 Brugge - St. Andries.</span></p>\n<p><span><strong>Kennisname</strong></span></p>\n<p><span>U kan van deze persoonsgegevens kennis nemen door een aanvraag te richten aan Huisartsenpraktijk De Essen</span><span>(brief, fax of e-mail) en ze, indien nodig, doen verbeteren of verwijderen. Indien u niet gecontacteerd wenst te worden in het kader van email marketing, zullen uw gegevens op uw verzoek kosteloos uit de betrokken lijsten worden</span></p>\n<p><span><strong>Cookies</strong></span></p>\n<p><span>Wij gebruiken cookies om uw toekomstig bezoek aan onze site vlotter te laten verlopen. Een cookie is een klein stukje tekst dat op uw harde schijf wordt geplaatst. Cookies worden veel gebruikt om een hoger functionaliteit, en dus betere dienst, aan de bezoekers te kunnen aanbieden. [U kan het gebruik van cookies uitschakelen, al leidt dit er wel toe dat effecten opsommen die ten gevolge van het uitschakelen van cookies worden veroorzaakt.]</span></p>\n<p><span><strong>Veiligheid</strong></span></p>\n<p><span>Huisartsenpraktijk De Essen verbindt zich ertoe om al de gepaste technische en organisatorische maatregelen te treffen om uw persoonsgegevens te beschermen tegen vernietiging, verlies, onbedoelde wijziging, beschadiging of openbaarmaking.</span></p>\n<p><span><strong>Toestemming</strong></span></p>\n<p><span>Door u akkoord te verklaren met deze voorwaarden en condities geeft u ook uw toestemming voor de verwerking van uw persoonsgegevens voor de doeleinden zoals hierboven beschreven.</span></p>'),
+(0,98,'nl',10,'T',0,'','<p><span>Door gebruik te maken van deze website verklaart u zich akkoord met onderstaande voorwaarden en condities.</span></p>\n<p><span><strong>1. Website</strong></span></p>\n<p>De eigenaar van deze website is&nbsp;<br /> Huisartsenpraktijk De Essen,<br /> Lagebekeweg 1<br /> 8200, Brugge,&nbsp;<br /> Belgi&euml;<br /> Tel: 32(0)50 395066,&nbsp;<br /> E-mail: secretariaat@de-essen.be&nbsp;<br />ON: 0811.314.136</p>\n<p><span>Als u niet akkoord gaat met onderstaande voorwaarden wordt u verzocht de website te verlaten. Huisartsenpraktijk De Essen behoudt zich het recht voor deze voorwaarden periodisch aan te passen waarna de leden op de hoogte zullen worden gebracht van deze wijzigingen. Wanneer u na deze kennisgeving de website blijft gebruiken verklaart u zich akkoord met de doorgevoerde wijzigingen. Huisartsenpraktijk De Essen&nbsp; kan eventueel andere diensten aanbieden aan de gebruikers van deze site. In dat geval zullen de geldende voorwaarden apart worden medegedeeld.</span></p>\n<p><span><strong>2. Toegankelijkheid</strong></span></p>\n<p><span>Huisartsenpraktijk De Essen&nbsp; probeert zo goed als mogelijk de website 24 uur per dag toegankelijk te houden, nochtans kan het gebeuren dat de website ontoegankelijk is voor een korte periode omwille van onderhoudswerken, aanpassingen of technische redenen.</span></p>\n<p><span><strong>3. Verantwoordelijkheid</strong></span></p>\n<p><span>Huisartsenpraktijk De Essen weerlegt elke verantwoordelijkheid met betrekking tot deze website en de aangeboden informatie. Huisartsenpraktijk De Essen&nbsp; verzekert niet dat de informatie op deze website correct, compleet of actueel is. Alle informatie, producten en diensten op deze website kunnen fouten bevatten. De gebruiker wordt verzocht hiermee rekening te houden.</span></p>\n<div><span><br /></span></div>');
 
 
 
@@ -239,7 +226,7 @@ DROP TABLE IF EXISTS `levels`;
 CREATE TABLE `levels` (
   `id` int(11) DEFAULT NULL,
   `name` varchar(32) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 INSERT INTO `levels` VALUES (2,'user'),(50,'admin'),(99,'super');
 
@@ -264,7 +251,7 @@ CREATE TABLE `users` (
   `nr` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_idx` (`username`,`active`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO `users` VALUES 

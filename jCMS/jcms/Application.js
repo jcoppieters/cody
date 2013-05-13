@@ -20,13 +20,6 @@ console.log("loading " + module.id);
 
 
 function Application(name, version, datapath) {
-  // hashmaps with a (special) page per language
-  this.homepages = {};
-  this.dashboards = {};
-  this.globals = {};
-  this.orphans = {};
-  this.logins = {};
-  
   this.templates = null;    // hashmap with (id - template)
   this.items = null;        // hashmap with (id - item)
   this.pages = null;        // array with all pages
@@ -43,7 +36,7 @@ function Application(name, version, datapath) {
   this.version = version;
   this.datapath = datapath;
   
-  this.dumped = false;  
+  this.dumpStructures = true;  
 }
 module.exports = Application;
 
@@ -72,7 +65,7 @@ Application.prototype.init = function() {
   
   // daisy chained loading of all CMS elements:
   //   languages, templates, items, pages, forms, ...
-  this.fetchStructures();
+  this.fetchStructures();  
 };
 
 Application.prototype.addController = function(name, controller) {
@@ -207,9 +200,6 @@ Application.doList = function(functionList, finished) {
 Application.prototype.servePage = function(req, res) {
   var self = this;
    
-  // can't show all content, because during init, it is fetched async
-  if (! this.dumped) { this.dump(); }
-  
   // get url path, strip leading '/'
   var path = req._parsedUrl.pathname.substring(1);
   self.log("------------------------------------------------------------------- " + new Date() + "--");
@@ -338,15 +328,23 @@ Application.prototype.returnConnection = function( connection ) {
 // Fetch all structured data into memory //
 ///////////////////////////////////////////
 Application.prototype.fetchStructures = function() {
+  var self = this;
   Application.doList([
-    [this, Application.prototype.fetchLanguages],
-    [this, Application.prototype.fetchTemplates],
-    [this, Application.prototype.fetchItems],
-    [this, Application.prototype.fetchPages],
-    [this, Application.prototype.fetchForms],
-    [this, Application.prototype.fetchDomains],
-    [this, Application.prototype.fetchAtoms]
-  ]);
+    [self, Application.prototype.fetchLanguages],
+    [self, Application.prototype.fetchTemplates],
+    [self, Application.prototype.fetchItems],
+    [self, Application.prototype.fetchPages],
+    [self, Application.prototype.fetchForms],
+    [self, Application.prototype.fetchDomains],
+    [self, Application.prototype.fetchAtoms]
+  ], function(err){
+    if (err) {
+      self.log("fetchStructures", "!! some of our loading functions failed !!");
+    } else {
+      self.log("fetchStructures", "finished loading the database structures");
+      if (self.dumpStructures) { self.dump(); }
+    }
+  });
 };
 
 ///////////////
@@ -356,7 +354,9 @@ Application.prototype.fetchLanguages = function(done) {
   var self = this;
   
   jcms.Page.loadLanguages(this.connection, function(result) {
-    self.languages = result;
+    for (var i in result) {
+      if (result.hasOwnProperty(i)) { self.languages.push(result[i]); }
+    }
     self.log("Application.fetchLanguages", "fetched " + result.length + " languages");
     
     // next step
@@ -504,25 +504,9 @@ Application.prototype.findPage = function(path, language) {
 };
 
 Application.prototype.genRoots = function() {
-  this.homepages = {};
-  this.dashboards = {};
-  this.globals = {};
-  this.orphans = {};
-  this.logins = {};
-  
-  // loop through all pages
-  //   - put in correct special page variable for quick access +
-  //   - lookup for each page its 'toplevel' (root)
+  // loop through all pages and lookup its 'toplevel' (root)
   for (var i in this.pages) {
-    var p = this.pages[i];
-    if (p.item.id === Application.kHomePage)      {  this.homepages[p.language] = p; }
-    if (p.item.id === Application.kOrphanPage)    {  this.orphans[p.language] = p; }
-    if (p.item.id === Application.kDashboardPage) {  this.dashboards[p.language] = p; }
-    if (p.item.id === Application.kGlobalPage)    {  this.globals[p.language] = p; }
-    if (p.item.id === Application.kLoginPage)     {  this.logins[p.language] = p; }    
-    
-    // let the page find its toplevel
-    p.addRoot();
+    this.pages[i].addRoot();
   }  
 };
 
@@ -556,7 +540,7 @@ Application.prototype.fetchPages = function(done) {
       var onePage = new jcms.Page(this, self);
       
       onePage.addTo(self);
-      onePage.getContent(self.connection, nextOne);
+      onePage.loadContent(self, nextOne);
 
     }, function(err) { 
       self.buildSitemap();
@@ -599,8 +583,18 @@ Application.prototype.deletePagesForItem = function( itemId, finish ) {
 };
 
 Application.prototype.dump = function() {
+  var self = this;
   var cnt = 0;
   
+  function printPage(lan, id) {
+    var p = self.getPage(lan, id);
+    if (p) {
+      console.log(" " + p.shortString());
+    } else {
+      console.log(" ** missing page **");
+    }
+  }
+
   function printLevel(r, nr) {
     var tab = "";
     for (var i=0; i<nr; i++) { tab = tab + " "; }
@@ -611,29 +605,37 @@ Application.prototype.dump = function() {
       printLevel(r[p].children, nr+2);
     }
   }
-  
-  this.dumped = true;
+  function printChildren(lan, id) {
+    console.log("- " + lan + " -");
+    var p = self.getPage(lan, id);
+    printLevel(p.getChildren() , 1);
+  }
+ 
   console.log("--- Controllers ---");
-  for (var c in this.controllers) {
+  for (var c in self.controllers) {
     console.log(c);
   }
   
-  console.log("--- Homepages ---");
-  printLevel(this.homepages, 0);
+  console.log("\n--- Homepages ---");
+  self.languages.forEach( function(lan) { printChildren(lan.id, Application.kHomePage); });
   
-  console.log("--- Dashboard ---");
-  printLevel(this.dashboards, 0);
+  console.log("\n--- Dashboard ---");
+  self.languages.forEach( function(lan) { printChildren(lan.id, Application.kDashboardPage); });
   
-  console.log("--- Pages ---");
-  printLevel(this.orphans, 0);
+  console.log("\n--- Footers ---");
+  self.languages.forEach( function(lan) { printChildren(lan.id, Application.kFooterPage); });
   
-  console.log("--- Global ---");
-  printLevel(this.globals, 0);
+  console.log("\n--- Pages ---");
+  self.languages.forEach( function(lan) { printChildren(lan.id, Application.kOrphansPage); });
   
-  console.log("--- Logins ---");
-  printLevel(this.logins, 0);
+  console.log("\n--- Globals ---");
+  self.languages.forEach( function(lan) { printPage(lan.id, Application.kGlobalPage); });
   
-  console.log("----------------");
+  console.log("\n--- Logins ---");
+  self.languages.forEach( function(lan) { printPage(lan.id, Application.kLoginPage); });
+
+  
+  console.log("\n----------------");
   console.log("Total content: " + cnt + " bytes");
   console.log("----------------");
 };

@@ -3,6 +3,7 @@ module.exports.Application = require("./Application.js");
 module.exports.Atom = require("./Atom.js");
 module.exports.Item = require("./Item.js");
 module.exports.Page = require("./Page.js");
+module.exports.Content = require("./Content.js");
 module.exports.Template = require("./Template.js");
 module.exports.User = require("./User.js");
 

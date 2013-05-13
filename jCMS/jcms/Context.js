@@ -111,11 +111,15 @@ Context.prototype.getLogin = function() {
 
 
 //
-// General utility
+// General utilities
 //
 
 Context.prototype.getUnique = function() {
   return new Date().getTime();
+};
+
+Context.prototype.checked = function( bool ) {
+  return (bool) ? 'checked' : '';
 };
 
 Context.prototype.optionList = function(theList, theId, theIdName, theNameName) {
