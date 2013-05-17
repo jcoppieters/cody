@@ -14,7 +14,7 @@ var path = ".";
 
 var cache = {},
     nrCache = 0,
-    maxCache = 1; //30;
+    maxCache = 1; //30
 
 
 function Static(req, res) {

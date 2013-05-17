@@ -38,19 +38,18 @@ ImageController.prototype.doRequest = function( finish ) {
   }
 };
 
+
 ImageController.prototype.getRoot = function() {
   return jcms.Application.kImageRoot;
 };
-
 ImageController.prototype.getType = function(theNode) { 
   return ((theNode.extention === "xxx") || (theNode.extention === "")) ? "folder" : "image"; 
 };
-
-ImageController.prototype.getFilePath = function() { 
-  return this.context.dynamic + "/images"; 
-};
 ImageController.prototype.getObject = function(id) {
   return this.app.getAtom(id);
+};
+ImageController.prototype.getFolder = function() { 
+  return "/images"; 
 };
 
 

@@ -26,20 +26,22 @@ TreeController.prototype = Object.create( jcms.Controller.prototype );
 module.exports = TreeController;
 
 
+TreeController.prototype.getFilePath = function() { 
+  return this.context.dynamic + this.getFolder(); 
+};
+
 // Next 4 should be overridden
 TreeController.prototype.getRoot = function() { 
   throw new Error("TreeController.getRoot should be overridden - return an id");
 };
-
 TreeController.prototype.getType = function(theNode) { 
   throw new Error("TreeController.getType should be overridden - return a string (image, folder, ...)");
 };
-
-TreeController.prototype.getFilePath = function() { 
-  throw new Error("TreeController.getFilePath should be overridden - return a full path string (/data/images/...)");
-};
 TreeController.prototype.getObject = function(id) {
   throw new Error("TreeController.getObject should be overridden - return an Atom with the specified id");
+};
+TreeController.prototype.getFolder = function() { 
+  throw new Error("TreeController.getFolder should be overridden - return an Atom with the specified id");
 };
 
 
@@ -60,13 +62,16 @@ Node.prototype.doDelete = function(controller, finish) {}
 */
       
 
-TreeController.prototype.toId = function(theNode) {
-  if (theNode.indexOf("id_") === 0) {
+TreeController.toId = function(theNode) {
+  if (typeof theNode === "undefined") { 
+    return 0;
+  } else if (theNode.indexOf("id_") === 0) {
     return parseInt(theNode.substring(3), 10);
   } else {
     return parseInt(theNode, 10);
   }
 };
+
 
 TreeController.prototype.doRequest = function( finish ) {
   var self = this;
@@ -217,7 +222,7 @@ TreeController.prototype.saveInfo = function( nodeId, finish ) {
   var self = this;
   console.log("TreeController.saveInfo: node = " + nodeId );
   
-  var anObject = this.getObject(this.toId(nodeId));
+  var anObject = this.getObject(TreeController.toId(nodeId));
   if (typeof anObject != "undefined") {
      self.context.shownode = anObject.parentId;
      anObject.scrapeFrom(this);
@@ -262,7 +267,7 @@ TreeController.prototype.addObject = function( title, refNode, type, kind, finis
   var self = this;
   console.log("Received TreeController - addObject, refnode = " + refNode + ", title = " + title + ", type = " + type + ", kind = " + kind);
   
-  var refNodeId = self.toId(refNode);
+  var refNodeId = TreeController.toId(refNode);
   var orderNr, aParent;
   var ext = (kind === "folder") ? "xxx" : "---";
 
@@ -298,7 +303,7 @@ TreeController.prototype.renameObject = function( title, nodeId, finish ) {
   var self = this;
   console.log("Received TreeController - rename, node = " + nodeId + ", title = " + title);
   
-  var anObject = this.getObject(this.toId(nodeId));
+  var anObject = this.getObject(TreeController.toId(nodeId));
   if (typeof anObject != "undefined") {
     try {
       anObject.setName(title);
@@ -318,7 +323,7 @@ TreeController.prototype.renameObject = function( title, nodeId, finish ) {
 
 TreeController.prototype.deleteObject = function( nodeId, finish ) {
   var self = this;
-  var anObject = self.getObject(this.toId(nodeId));
+  var anObject = self.getObject(TreeController.toId(nodeId));
   if (self.app.hasAtomChildren(anObject)) {
     finish({ status: "NOE", error: "not empty"});
     
@@ -359,7 +364,7 @@ TreeController.prototype.makeSelect = function( type ) {
 
 TreeController.prototype.fetchNode = function( nodeId ) {
   console.log("TreeController.FetchNode: nodeId = " + nodeId);
-  this.context.atom = this.getObject(this.toId(nodeId));
+  this.context.atom = this.getObject(TreeController.toId(nodeId));
 };
 
 TreeController.prototype.respace = function(theParent) {

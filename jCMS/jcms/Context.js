@@ -46,6 +46,8 @@ function Context(path, page, app, req, res) {
   
   this.session = req.session;
   this.setLogin(this.session.login);
+  
+  this.jcms = jcms;
 }
 module.exports = Context;
 
@@ -124,8 +126,9 @@ Context.prototype.checked = function( bool ) {
 
 Context.prototype.optionList = function(theList, theId, theIdName, theNameName) {
   var x = "";
-  
-  if (typeof theList[0] === "string") {
+  var first = jcms.Application.findFirst(theList);
+
+  if (typeof first === "string") {
     for (var j=0; j < theList.length; j++) {
       var S = theList[j];
       x += "<option value=\"" + S + "\"" + ((S == theId) ? "selected" : "") + ">" + S + "</option>\n";
@@ -135,9 +138,11 @@ Context.prototype.optionList = function(theList, theId, theIdName, theNameName) 
     var idName = theIdName || "id";
     var nameName = theNameName || "name";
     
-    for (var i=0; i < theList.length; i++) {
-      var O = theList[i];
-      x += "<option value=\"" + O[idName] + "\"" + ((O[idName] == theId) ? "selected" : "") + ">" + O[nameName] + "</option>\n";
+    for (var i in theList) {
+      if (theList.hasOwnProperty(i)) {
+        var O = theList[i];
+        x += "<option value=\"" + O[idName] + "\"" + ((O[idName] == theId) ? "selected" : "") + ">" + O[nameName] + "</option>\n";
+      }
     }
   }
   return x;

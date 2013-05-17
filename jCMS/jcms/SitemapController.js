@@ -56,7 +56,7 @@ SitemapController.prototype.doRequest = function( finish ) {
     
   } else if (self.context.request == "savedata") {
     //TODO: get id from page editor
-    self.saveData( self.getParam("node"), self.getParam("content"), finish);
+    self.saveData( self.getParam("node"), jcms.TreeController.toId(self.getParam("id")), finish);
 
     
   } else if (self.context.request == "adjust") {
@@ -82,8 +82,7 @@ SitemapController.prototype.getRoot = function() {
 SitemapController.prototype.getType = function(theNode) { 
   return ""; 
 };
-
-SitemapController.prototype.getFilePath = function() { 
+SitemapController.prototype.getFolder = function() { 
   return ""; 
 };
 SitemapController.prototype.getObject = function(id) {
@@ -97,7 +96,7 @@ SitemapController.prototype.saveData = function(thePage, theId, finish) {
   var self = this;
   console.log("Received SitemapController - saveData, pageId = " + thePage);
   
-  var aPage = self.getObject( self.toId(thePage) );
+  var aPage = self.getObject( jcms.TreeController.toId(thePage) );
   try {
     
     if (! self.isAllowed(aPage.item)) {
@@ -106,12 +105,12 @@ SitemapController.prototype.saveData = function(thePage, theId, finish) {
     }
     
     var aContent;
-    if (theId) {
+    if (theId !== "") {
       aContent = aPage.getContent(theId);
     } else {
-      aContent = new jcms.Content(aPage.item.id);
+      aContent = new jcms.Content({item: aPage.item.id}, aPage, self.app);
     }
-    aContent.scrapeFrom(self);
+    aContent.scrapeFrom(self, thePage, aPage.item.id);
     
     aContent.doUpdate(self, function(err) {
       if (err) {
@@ -136,7 +135,7 @@ SitemapController.prototype.addObject = function( title, refNode, type, kind, fi
     var self = this;
     console.log("Received SitemapController - addObject, refnode = " + refNode + ", type = " + type);
     
-    var refNodeId = self.toId(refNode);
+    var refNodeId = jcms.TreeController.toId(refNode);
     var orderNr, aParent;
 
     // fetch the user id
@@ -215,16 +214,16 @@ SitemapController.prototype.moveObject = function( nodeId, refNode, type, finish
   
   // fetch the parent and insertion point
   if (type == "inside") {
-    aParent = this.app.getItem(this.toId(refNode));
+    aParent = this.app.getItem(jcms.TreeController.toId(refNode));
     orderNr = 9999;
   } else {  
-    var refItem = this.app.getItem(this.toId(refNode));
+    var refItem = this.app.getItem(jcms.TreeController.toId(refNode));
     aParent = this.app.getItem(refItem.parentId);
     orderNr = refItem.sortorder + ((type == "before") ? -5 : +5);
   }
   
   // fetch the node to be moved
-  var anItem = this.app.getItem(this.toId(nodeId));
+  var anItem = this.app.getItem(jcms.TreeController.toId(nodeId));
   var curParent = this.app.getItem(anItem.parentId);
   
   // check the new target parent
@@ -265,7 +264,7 @@ SitemapController.prototype.renameObject = function( title, nodeId, finish ) {
   var self = this;
   console.log("Received SitemapController - renameObject, node = " + nodeId + ", title = " + title);
       
-  var aPage = self.getObject( self.toId(nodeId) );
+  var aPage = self.getObject( jcms.TreeController.toId(nodeId) );
   if (aPage) {
       
     if (! self.isAllowed(aPage.item)) {
@@ -310,7 +309,7 @@ SitemapController.prototype.realDelete = function( node, finish ) {
   console.log("Received SitemapController - realdelete, node = " + node);
   
   //request to delete a node from the tree
-  var aPage = self.getObject( self.toId(node) );
+  var aPage = self.getObject( jcms.TreeController.toId(node) );
   var anItem = aPage.item;
   
   if (! self.isAllowed(anItem)) {
@@ -342,7 +341,7 @@ SitemapController.prototype.deleteObject = function( nodeId, finish ) {
   console.log("Received SitemapController - deleteObject, node = " + nodeId);
   
   try {
-    var aPage = self.getObject( self.toId(nodeId) );
+    var aPage = self.getObject( jcms.TreeController.toId(nodeId) );
     
     if (! self.isAllowed(aPage.item)) {
       finish( { status: "NAL" } );
@@ -369,7 +368,7 @@ SitemapController.prototype.uploadFile = function( filePath, nodeId ) {
 SitemapController.prototype.fetchNode = function( theNode ) {
   var self = this;
   
-  var aPage = self.getObject( self.toId(theNode) );
+  var aPage = self.getObject( jcms.TreeController.toId(theNode) );
   if (! self.isAllowed(aPage.item)) { return {status: "NAL"}; }
   
   // just switch the page in our current context and we're done ??
@@ -410,7 +409,7 @@ SitemapController.prototype.updateElements = function( nodeId, finish ) {
 SitemapController.prototype.saveInfo = function( nodeId, finish ) {
 	var self = this;
 	
-  var aPage = self.getObject( self.toId(nodeId) );
+  var aPage = self.getObject( jcms.TreeController.toId(nodeId) );
   var anItem = aPage.item;
 
   anItem.scrapeFrom(self);
@@ -430,10 +429,6 @@ SitemapController.prototype.saveInfo = function( nodeId, finish ) {
  };
 
 
-SitemapController.prototype.toId = function( nodeId ) {
-  return (typeof nodeId === "undefined") ? 0 : ((nodeId.indexOf("_") > 0) ? nodeId.substring(3) : nodeId);
-};
-
 
 /* Controller specific, called from template */
 
@@ -450,7 +445,7 @@ SitemapController.prototype.adjustElements = function( theNode, finish ) {
   var self = this;
   console.log("SiteMapController.adjustElements: add correct Elements for (" + theNode + ")");
   
-  var aPage = self.getObject( self.toId(theNode) );
+  var aPage = self.getObject( jcms.TreeController.toId(theNode) );
 
   self.saveInfo(theNode, function whenDone() {
     aPage.deleteElements( function (){

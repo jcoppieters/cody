@@ -64,7 +64,7 @@ CREATE TABLE `templates` (
 
 INSERT INTO `templates` VALUES 
 (2,'Login',       'LoginController',         'front/login.ejs','',0,'Y',0),
-(4,'Dashboard',   'DashBoardController',     'cms/dashboard.ejs','',0,'Y',0),
+(9,'Dashboard',   'DashBoardController',     'cms/dashboard.ejs','',0,'Y',0),
 
 (11,'CMS-System',     'SystemController',    '','',0,'Y',0),
 (12,'CMS-Users',      'UserController',      'cms/users.ejs','',0,'Y',0),
@@ -102,25 +102,25 @@ CREATE TABLE `items` (
 ) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 INSERT INTO `items` VALUES 
-(1,'Website',  -1, 1,100,'A',100,'2010-01-01','2010-01-01','2100-01-01','Y','S','N','',0,''),
+(1,'Website',  -1, 1,100,'A',100,'2010-01-01','2010-01-01','2100-01-01','Y','S','N','',''),
 
 
-(3,'Pages',    -1, 1,100,'M',0,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',0,''),
-  (2, 'Login',  3, 1,2,'A',99,'2010-01-01','2010-01-01','2100-01-01','Y','Y','N','',0,''),
-  (99,'Global', 3, 1,100,'A',0,'2010-01-01','2010-01-01','2100-01-01','Y','Y','N','',0,''),
+(3,'Pages',    -1, 1,100,'M',0,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',''),
+  (2, 'Login',  3, 1,2,'A',99,'2010-01-01','2010-01-01','2100-01-01','Y','Y','N','',''),
+  (99,'Global', 3, 1,100,'A',0,'2010-01-01','2010-01-01','2100-01-01','Y','Y','N','',''),
 
-(4,'Footer',   -1, 1,100,'M',0,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',0,''),
-  (97,'Privacy Verklaring',4, 1,100,'A',0,'2010-01-01','2010-01-01','2100-01-01','Y','Y','N','',0,''),
-  (98,'Disclaimer',        4, 1,100,'A',0,'2010-01-01','2010-01-01','2100-01-01','Y','Y','N','',0,''),
+(4,'Footer',   -1, 1,100,'M',0,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',''),
+  (97,'Privacy Verklaring',4, 1,100,'A',0,'2010-01-01','2010-01-01','2100-01-01','Y','Y','N','',''),
+  (98,'Disclaimer',        4, 1,100,'A',0,'2010-01-01','2010-01-01','2100-01-01','Y','Y','N','',''),
 
-(9,'Dashboard',-1, 1,2,'M',0,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',0,''),
-  (10,'CMS', 9, 1,2,'A',10,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',0,''),
-    (11,'CMS - System', 10, 1,11,'A',98,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',0,''),
-    (12,'CMS - Users',  10, 1,12,'A',50,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','list',0,''),
-    (13,'CMS - Sitemap',10, 1,13,'A',10,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',0,''),
-    (14,'CMS - Images', 10, 1,14,'A',20,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',0,''),
-    (15,'CMS - Files',  10, 1,15,'A',30,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',0,''),
-    (16,'CMS - Forms',  10, 1,16,'A',40,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',0,'');
+(9,'Dashboard',-1, 1,9,'M',0,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',''),
+  (10,'CMS', 9, 1,2,'M',10,'2010-01-01','2010-01-01','2100-01-01','Y','S','Y','',''),
+    (11,'CMS - Sitemap',10, 1,13,'A',10,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',''),
+    (12,'CMS - Images', 10, 1,14,'A',20,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',''),
+    (13,'CMS - Files',  10, 1,15,'A',30,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',''),
+    (14,'CMS - Forms',  10, 1,16,'A',40,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',''),
+    (15,'CMS - Users',  10, 1,12,'A',50,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','list',''),
+    (16,'CMS - System', 10, 1,11,'A',60,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','','');
 
 
 		
@@ -180,14 +180,13 @@ INSERT INTO `pages` VALUES
   (98,'nl','Disclaimer','disclaimer','Y','','','2010-01-01','2012-08-20 17:09:50'),
 
 (9,'nl','Dashboard','dashboard','Y','','','2010-01-01','2010-01-01'),
-  (10,'nl','Beheer CMS','cms','Y','','','2010-01-01','2010-01-01'),
-	  (11,'nl','Beheer - Systeem','system','Y','','','2010-01-01','2010-01-01'),
-	  (12,'nl','Beheer - Gebruikers','users','Y','','','2010-01-01','2010-01-01'),
-	  (13,'nl','Beheer - Structuur','sitemap','Y','','','2010-01-01','2010-01-01'),
-	  (14,'nl','Beheer - Beelden','images','Y','','','2010-01-01','2010-01-01'),
-	  (15,'nl','Beheer - Bestanden','files','Y','','','2010-01-01','2010-01-01'),
-	  (16,'nl','Beheer - Formulieren','forms','Y','','','2010-01-01','2010-01-01');
-
+  (10,'nl','Website CMS','cms','Y','','','2010-01-01','2010-01-01'),
+	  (11,'nl','Structuur','sitemap','Y','','','2010-01-01','2010-01-01'),
+	  (12,'nl','Beelden','images','Y','','','2010-01-01','2010-01-01'),
+	  (13,'nl','Bestanden','files','Y','','','2010-01-01','2010-01-01'),
+	  (14,'nl','Formulieren','forms','Y','','','2010-01-01','2010-01-01'),
+    (15,'nl','Gebruikers','users','Y','','','2010-01-01','2010-01-01'),
+    (16,'nl','Systeem','system','Y','','','2010-01-01','2010-01-01');
 
 
 -- INSERT INTO `pages` VALUES 
@@ -213,8 +212,8 @@ CREATE TABLE `content` (
 ) DEFAULT CHARSET=utf8;
 
 INSERT INTO `content` values
-(0,97,'nl',10,'T',0,'','<p><span>Huisartsenpraktijk De Essen draagt zorg voor uw privacy. Lees deze Privacyverklaring om meer te weten te komen over de manier waarop persoonsgegevens worden ingezameld en verwerkt op deze website. In dit geval handelt Huisartsenpraktijk De Essen daarbij steeds in overeenstemming met de bepalingen van de Belgische privacywet (Wet van 8 december 1992 tot bescherming van de persoonlijke levenssfeer ten opzichte van de verwerking van persoonsgegevens). De persoonlijke gegevens beperken zich enkel tot uw e-mailadres.</span></p>\n<p><span><strong>Verantwoordelijke</strong></span></p>\n<p><span>De verantwoordelijke voor de verwerking is Huisartsenpraktijk De Essen; Lage Bekeweg 1, 8200 Brugge - St. Andries.</span></p>\n<p><span><strong>Kennisname</strong></span></p>\n<p><span>U kan van deze persoonsgegevens kennis nemen door een aanvraag te richten aan Huisartsenpraktijk De Essen</span><span>(brief, fax of e-mail) en ze, indien nodig, doen verbeteren of verwijderen. Indien u niet gecontacteerd wenst te worden in het kader van email marketing, zullen uw gegevens op uw verzoek kosteloos uit de betrokken lijsten worden</span></p>\n<p><span><strong>Cookies</strong></span></p>\n<p><span>Wij gebruiken cookies om uw toekomstig bezoek aan onze site vlotter te laten verlopen. Een cookie is een klein stukje tekst dat op uw harde schijf wordt geplaatst. Cookies worden veel gebruikt om een hoger functionaliteit, en dus betere dienst, aan de bezoekers te kunnen aanbieden. [U kan het gebruik van cookies uitschakelen, al leidt dit er wel toe dat effecten opsommen die ten gevolge van het uitschakelen van cookies worden veroorzaakt.]</span></p>\n<p><span><strong>Veiligheid</strong></span></p>\n<p><span>Huisartsenpraktijk De Essen verbindt zich ertoe om al de gepaste technische en organisatorische maatregelen te treffen om uw persoonsgegevens te beschermen tegen vernietiging, verlies, onbedoelde wijziging, beschadiging of openbaarmaking.</span></p>\n<p><span><strong>Toestemming</strong></span></p>\n<p><span>Door u akkoord te verklaren met deze voorwaarden en condities geeft u ook uw toestemming voor de verwerking van uw persoonsgegevens voor de doeleinden zoals hierboven beschreven.</span></p>'),
-(0,98,'nl',10,'T',0,'','<p><span>Door gebruik te maken van deze website verklaart u zich akkoord met onderstaande voorwaarden en condities.</span></p>\n<p><span><strong>1. Website</strong></span></p>\n<p>De eigenaar van deze website is&nbsp;<br /> Huisartsenpraktijk De Essen,<br /> Lagebekeweg 1<br /> 8200, Brugge,&nbsp;<br /> Belgi&euml;<br /> Tel: 32(0)50 395066,&nbsp;<br /> E-mail: secretariaat@de-essen.be&nbsp;<br />ON: 0811.314.136</p>\n<p><span>Als u niet akkoord gaat met onderstaande voorwaarden wordt u verzocht de website te verlaten. Huisartsenpraktijk De Essen behoudt zich het recht voor deze voorwaarden periodisch aan te passen waarna de leden op de hoogte zullen worden gebracht van deze wijzigingen. Wanneer u na deze kennisgeving de website blijft gebruiken verklaart u zich akkoord met de doorgevoerde wijzigingen. Huisartsenpraktijk De Essen&nbsp; kan eventueel andere diensten aanbieden aan de gebruikers van deze site. In dat geval zullen de geldende voorwaarden apart worden medegedeeld.</span></p>\n<p><span><strong>2. Toegankelijkheid</strong></span></p>\n<p><span>Huisartsenpraktijk De Essen&nbsp; probeert zo goed als mogelijk de website 24 uur per dag toegankelijk te houden, nochtans kan het gebeuren dat de website ontoegankelijk is voor een korte periode omwille van onderhoudswerken, aanpassingen of technische redenen.</span></p>\n<p><span><strong>3. Verantwoordelijkheid</strong></span></p>\n<p><span>Huisartsenpraktijk De Essen weerlegt elke verantwoordelijkheid met betrekking tot deze website en de aangeboden informatie. Huisartsenpraktijk De Essen&nbsp; verzekert niet dat de informatie op deze website correct, compleet of actueel is. Alle informatie, producten en diensten op deze website kunnen fouten bevatten. De gebruiker wordt verzocht hiermee rekening te houden.</span></p>\n<div><span><br /></span></div>');
+(0,97,'nl',10,'N','T',0,'','<p><span>Huisartsenpraktijk De Essen draagt zorg voor uw privacy. Lees deze Privacyverklaring om meer te weten te komen over de manier waarop persoonsgegevens worden ingezameld en verwerkt op deze website. In dit geval handelt Huisartsenpraktijk De Essen daarbij steeds in overeenstemming met de bepalingen van de Belgische privacywet (Wet van 8 december 1992 tot bescherming van de persoonlijke levenssfeer ten opzichte van de verwerking van persoonsgegevens). De persoonlijke gegevens beperken zich enkel tot uw e-mailadres.</span></p>\n<p><span><strong>Verantwoordelijke</strong></span></p>\n<p><span>De verantwoordelijke voor de verwerking is Huisartsenpraktijk De Essen; Lage Bekeweg 1, 8200 Brugge - St. Andries.</span></p>\n<p><span><strong>Kennisname</strong></span></p>\n<p><span>U kan van deze persoonsgegevens kennis nemen door een aanvraag te richten aan Huisartsenpraktijk De Essen</span><span>(brief, fax of e-mail) en ze, indien nodig, doen verbeteren of verwijderen. Indien u niet gecontacteerd wenst te worden in het kader van email marketing, zullen uw gegevens op uw verzoek kosteloos uit de betrokken lijsten worden</span></p>\n<p><span><strong>Cookies</strong></span></p>\n<p><span>Wij gebruiken cookies om uw toekomstig bezoek aan onze site vlotter te laten verlopen. Een cookie is een klein stukje tekst dat op uw harde schijf wordt geplaatst. Cookies worden veel gebruikt om een hoger functionaliteit, en dus betere dienst, aan de bezoekers te kunnen aanbieden. [U kan het gebruik van cookies uitschakelen, al leidt dit er wel toe dat effecten opsommen die ten gevolge van het uitschakelen van cookies worden veroorzaakt.]</span></p>\n<p><span><strong>Veiligheid</strong></span></p>\n<p><span>Huisartsenpraktijk De Essen verbindt zich ertoe om al de gepaste technische en organisatorische maatregelen te treffen om uw persoonsgegevens te beschermen tegen vernietiging, verlies, onbedoelde wijziging, beschadiging of openbaarmaking.</span></p>\n<p><span><strong>Toestemming</strong></span></p>\n<p><span>Door u akkoord te verklaren met deze voorwaarden en condities geeft u ook uw toestemming voor de verwerking van uw persoonsgegevens voor de doeleinden zoals hierboven beschreven.</span></p>'),
+(0,98,'nl',10,'N','T',0,'','<p><span>Door gebruik te maken van deze website verklaart u zich akkoord met onderstaande voorwaarden en condities.</span></p>\n<p><span><strong>1. Website</strong></span></p>\n<p>De eigenaar van deze website is&nbsp;<br /> Huisartsenpraktijk De Essen,<br /> Lagebekeweg 1<br /> 8200, Brugge,&nbsp;<br /> Belgi&euml;<br /> Tel: 32(0)50 395066,&nbsp;<br /> E-mail: secretariaat@de-essen.be&nbsp;<br />ON: 0811.314.136</p>\n<p><span>Als u niet akkoord gaat met onderstaande voorwaarden wordt u verzocht de website te verlaten. Huisartsenpraktijk De Essen behoudt zich het recht voor deze voorwaarden periodisch aan te passen waarna de leden op de hoogte zullen worden gebracht van deze wijzigingen. Wanneer u na deze kennisgeving de website blijft gebruiken verklaart u zich akkoord met de doorgevoerde wijzigingen. Huisartsenpraktijk De Essen&nbsp; kan eventueel andere diensten aanbieden aan de gebruikers van deze site. In dat geval zullen de geldende voorwaarden apart worden medegedeeld.</span></p>\n<p><span><strong>2. Toegankelijkheid</strong></span></p>\n<p><span>Huisartsenpraktijk De Essen&nbsp; probeert zo goed als mogelijk de website 24 uur per dag toegankelijk te houden, nochtans kan het gebeuren dat de website ontoegankelijk is voor een korte periode omwille van onderhoudswerken, aanpassingen of technische redenen.</span></p>\n<p><span><strong>3. Verantwoordelijkheid</strong></span></p>\n<p><span>Huisartsenpraktijk De Essen weerlegt elke verantwoordelijkheid met betrekking tot deze website en de aangeboden informatie. Huisartsenpraktijk De Essen&nbsp; verzekert niet dat de informatie op deze website correct, compleet of actueel is. Alle informatie, producten en diensten op deze website kunnen fouten bevatten. De gebruiker wordt verzocht hiermee rekening te houden.</span></p>\n<div><span><br /></span></div>');
 
 
 

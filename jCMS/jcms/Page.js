@@ -174,26 +174,34 @@ Page.prototype.getView = function() {
 
 Page.prototype.loadContent = function(app, finished) {
   var self = this;
+  var nr = 1;
   
   app.connection.query(
-     "select * from content where item = ? and language = ? order by sortorder",
-     [this.itemId, this.language],
-     function(err, result) {
-       if (err) { console.log(err); throw(new Error("Page.getContent failed with sql errors")); }
-        self.content = [];
-        
-        if (result.length === 0) {
-          self.content[0] = new jcms.Content({}, self, app);
-          // console.log("no content for " + self.title + " -> nothing");
-        } else {
-          for (var i = 0; i < result.length; i++) {
-            self.content[i] = new jcms.Content(result[i], self);
-            console.log(self.content[i].name + " -> " + self.content[i].data.length + " bytes");
+    "select * from content where item = ? and language = ? order by intro desc, sortorder asc",
+    [this.itemId, this.language],
+    function(err, result) {
+      if (err) { 
+        console.log(err); 
+        throw(new Error("Page.getContent failed with sql errors")); 
+      }
+      self.content = [];
+
+      if (result.length === 0) {
+        self.content[0] = new jcms.Content({}, self, app);
+        // console.log("no content for " + self.title + " -> nothing");
+      } else {
+        for (var i = 0; i < result.length; i++) {
+          self.content[i] = new jcms.Content(result[i], self, app);
+          if (self.content[i].name === "") { 
+            self.content[i].name = "Content" + nr; 
+            nr++; 
           }
+          console.log("  " + self.content[i].name + " = " + self.content[i].data.length + " bytes");
         }
-        
-        finished();
-      });
+      }
+
+      finished();
+    });
 };
 
 Page.prototype.getDisplay = function() {

@@ -101,7 +101,7 @@ Atom.prototype.getFileName = function() {
   return this.id + "." + this.extention; 
 };
 Atom.prototype.getPathName = function(controller) {
-  return controller.app.getDataPath() + "/data/images/" + this.id + "." + this.extention;
+  return controller.app.getDataPath() + "/data" + controller.getFolder() + "/" + this.id + "." + this.extention;
 };
 
 Atom.prototype.getId = function() { 

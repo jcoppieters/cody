@@ -1,47 +1,19 @@
 <% if (login) { %>
-    <ul id="navigation">
-    	<% if (cat.indexOf('w') == 0) { %>
-	        <li <%- (cat == 'wA') ? 'class="active"' : '' %>><a href="<%=context%>/<%=page.language%>/agenda">Agenda</a></li>		
-	        <li <%- (cat == 'wW') ? 'class="active"' : '' %>><a href="<%=context%>/<%=page.language%>/week">Weekschema</a></li>		
-	        <li <%- (cat == 'wD') ? 'class="active"' : '' %>><a href="<%=context%>/<%=page.language%>/drs">Contacten</a></li>		
-        
-      <% } else { %>
-	        <li <%- (cat == 'S') ? 'class="active"' : '' %>><a href="<%=context%>/<%=page.language%>/sitemap">Content</a></li>		
-	        <li <%- (cat == 'I') ? 'class="active"' : '' %>><a href="<%=context%>/<%=page.language%>/images">Images</a></li>		
-	        <li <%- (cat == 'F') ? 'class="active"' : '' %>><a href="<%=context%>/<%=page.language%>/files">Files</a></li>		
-	        <li <%- (cat == 'O') ? 'class="active"' : '' %>><a href="<%=context%>/<%=page.language%>/forms">Forms</a></li>
-	        <% if (login.level >= 99) { %>		
-	          <li <%- (cat == 'U') ? 'class="active"' : '' %>><a href="<%=context%>/<%=page.language%>/users/list">Users</a></li>
-	          <li <%- (cat == 'Y') ? 'class="active"' : '' %>><a href="<%=context%>/<%=page.language%>/system">System</a></li>
-	        <% } %>	
-        <% } %>	
-    </ul>  
 
-    <div id="welcome_top">
-    	<% if (cat.indexOf('w') == 0) { %>
-				<strong class="active">PRAKTIJK</strong> 
-				<strong><a href="<%=context%>/<%=page.language%>/sitemap">WEBSITE</a></strong>
-      <% } else { %>
-				<strong><a href="<%=context%>/<%=page.language%>/agenda">PRAKTIJK</a></strong>
-				<strong class="active">WEBSITE</strong>
-      <% } %>	
-
-			<span>Welkom <%=login.name%></span>
-			
-			<div id="logout_top">
-				<a href="<%=context%>/<%=page.language%>/login/logout">Logout</a> |
-				<a target=_blank href="http://www.jcms.be/cms_manual.pdf">Manual</a>
-			</div>
-    </div>
-    
-    <% if ( message != "" ) { %>
-      <p class="notification <%=status%>"><%= message %></p>
-      <script>
-       $(document).ready( function () { $(".notification.success").delay(6000).fadeOut(1000); } );
-      </script>
-    <% } %> 
+  <nav>
+    <ul>
+     <% for (var i in page.parent.children) {  
+       var p = page.parent.children[i]; 
+       if (p.isVisible()) { %>
+         <li><a href="<%=context%>/<%= p.url %>" class="<%= (p == page) ? 'active' : '' %>"><%= p.title %></a></li>
+       <% } %>
+     <% } %>
+   </ul>
+  </nav>
     
 <% } else { %>
-	<h1>Login first</h1>
+
+  <h1>Login first</h1>
+	
 <% } %>	
     

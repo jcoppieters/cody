@@ -1,5 +1,5 @@
 <div id="content_data">
- 	<form action="./images" method="post" class="clearfix" name="onepage" id="onepage" enctype="multipart/form-data">
+ 	<form action="./files" method="post" class="clearfix" name="onepage" id="onepage" enctype="multipart/form-data">
     <input type="hidden" name="request" id="request" value="save" /> 
     <input type="hidden" name="node" value="<%= atom.id %>" /> 
 
@@ -30,16 +30,10 @@
         </div>
         
         <div>
-          <label for="fileupload">Image</label>
+          <label for="fileupload">File</label>
           <input id="fileToUpload" type="file" size="30" name="fileToUpload" class="input" onchange='$("#preview").attr("src","")'/>
         </div>  
         
-        <% if (atom.extention != 'xxx') { %>
-	        <div>
-	          <label for="preview">Preview</label>
-	          <img id="preview" src="<%= controller.getFilePath() %>/<%= atom.id %>.<%= atom.extention %>?now=<%= getUnique() %>" />
-	        </div>      
-        <% } %>       
       <% } %>  
       </div>     
     </fieldset>

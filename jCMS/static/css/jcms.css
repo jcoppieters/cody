@@ -33,16 +33,18 @@ table { border-collapse: collapse; border-spacing: 0; }
 
 /* general
 ------------------------------------------------------------------*/
-body { background-color: #fff; font-family:"Trebuchet MS", Arial, Verdana; font-size: 12px; }
+body { background-color: #F4F4F4; color: #363730; font-family:"Trebuchet MS", Arial, Verdana; font-size: 12px; }
 h1 { margin: 0 0 15px; font-size: 14px; font-weight: bold; color: #414141; }
 h2 { margin: 0 0 15px; font-size: 12px; font-weight: bold; color: #414141; }
-h3 {}
+h3 {  margin: 2px 0 15px 0; font-size: 16px; font-weight: bold; color: #0D7FC6;  }
 h4 {}
-ul, ol { margin: 0 0 14px 16px; }
+h5 {}
+ul, ol { margin: 0 0 14px 0; }
 p, form { margin: 0 0 14px 0; }
 p { margin: 0 0 2px; padding: 0; font-size: 13px; color: #666; line-height: 15px; }
-a { color: blue; }
-a:hover { color: #000; }
+a { color: #363730; text-decoration: none }
+a:hover { color: #363730; text-decoration: underline }
+a:visited { color: #363730 }
 input, textarea, select { font-size: 11px; font-family: Arial, sans-serif; color: #4F535C; margin-left: 0 }
 strong { font-weight: bold; color: #b63d94; }
 em { font-style: italic; }
@@ -67,105 +69,193 @@ sub { font-size: 8px; vertical-align: sub; }
 .ui-datepicker-trigger { vertical-align: top; margin-top: 2px; margin-left: 4px; }
 
 
-#wrapper { width: 1000px; margin: 0 auto; background: url(../images/admin-bg.gif) repeat-x 0 top; }
-#wrapper_data { clear: both; width: 1000px; overflow: hidden; padding: 0px 0 0; }
+/* Page layout 
+------------------------------------------------------------------*/
+body > section { width: 1000px; margin: 0 auto; }
+body > section > div { clear: both; margin: 10px 2px 0 2px  }
 
-#left_nav { width: 345px;  float: left; margin-top: 7px;}
-#right_cont { float: right; width: 650px; margin-top: 7px;}
-#tree { margin-top: 10px; width: 330px; background: none; }
 
-#content_buttons { margin: 5px; text-align: center; }
-#content_div { border: 1px solid #ccc; background-color: rgb(240, 240, 238);}
-#content_div textarea { width: 798px; }
-#content_div tr.mceLast { display: none }
+/* Top navigation
+------------------------------------------------------------------*/
+header { width: 100% }
+  header > img { display: inline-block; border: none; margin: 20px 10px 10px 2px; vertical-align: top }
+  header > span { display: inline-block; font-size: 32px; font-weight: bolder; margin: 15px 10px 10px 0px; vertical-align: top }
+  header > span#breadcrumb { display: inline-block; font-size: 16px; font-weight: normal; margin: 29px 10px 10px 20px; 
+                             vertical-align: top; color: #EA7B00 }
+  header > span#breadcrumb a { text-decoration: none; color: #363730 }
+  header > span#breadcrumb a:visited { text-decoration: none }
+  header > span#breadcrumb a:hover { text-decoration: underline }
+  
+  header > section { display: block; float: right; margin: 30px 4px 10px 10px; vertical-align: top }
+  header > section > a { margin: 0 0 0 16px; font-size: 14px; font-weigth: bold }
+ 
+	header > nav { clear: both; background-color: #363730; height: 24px; padding: 15px; margin: 0 2px 0 2px; }
+	  header > nav ul {}
+	  header > nav li { display: inline-block; margin: 4px 12px 4px 8px }
+	  header > nav a { color: white; font-size: 16px; font-weight: bold }
+	  header > nav a:hover { color: white; text-decoration: underline; }
+	  header > nav a:visited { color: white; }
+	  header > nav a.active { color: #EA7B00 }
 
-#content_data { width: 647px; border: 1px solid #ccc; clear:both; }
-#content_data form { padding: 0px; margin: 0px; }
-#content_data fieldset { padding: 2px }
+/* footer
+------------------------------------------------------------------*/
 
-#action_buttons { padding: 5px 5px 5px 5px;  background-color: rgb(240, 240, 238); clear:both }
-div .language { border-top: 1px solid #ccc; margin: 2px 0 0px 0; padding: 4px 0 10px 0; }
+footer { clear: both; width: 1000px; margin: 15px auto 0 auto; }
+  footer #copyright { width: 400px; text-align: left; display: inline-block; margin-left: 2px; }
+  footer #version { float: right; width: 200px; text-align: right; margin-right: 2px }
+  
+  
+/* dashboard layout
+------------------------------------------------------------------*/
+#dashboard nav { clear: both }
+  #dashboard nav > section { vertical-align: top; background-color: white; border: 1px solid #CFCFCF; 
+                             display: inline-block; width: 190px; padding: 8px ; margin: 12px 14px 5px 1px }
+  #dashboard nav > section ul { list-style-type: circle; }
+  #dashboard nav > section li { margin: 8px 2px 8px 22px; font-size: 14px }
 
-#preview { max-width:200px; max-height: 150px }
-.noline { text-decoration: none }
 
-/*---- tree -------------------------*/
+
+/* tree edit layout
+------------------------------------------------------------------*/
+
+#left_nav { width: 345px;  display: inline-block; margin-top: 7px;}
+#right_cont { display: inline-block; width: 645px; margin-top: 7px; vertical-align: top }
+
+
+
+/* tree manager
+------------------------------------------------------------------*/
+#tree { width: 330px; background: white; border: solid 1px #CFCFCF; margin: 10px 0 0 2px  }
 #tree.jstree li.deleted a  { color: #BBB; }
-#tree.jstree > ul > li { margin-top: 18px; }
+#tree.jstree > ul { margin: 0 0 8px 5px }
+#tree.jstree > ul > li { margin-top: 8px }
 #tree.jstree li.invisible a  { color: #999; }
-#tree.jstree a { height: 17px; width: 90% }
-.open {}
+#tree.jstree a { height: 18px; width: 90%; padding: 4px 2px 0 1px; border: solid 1px white }
+#tree.jstree a.jstree-hovered { padding: 4px 2px 0 1px; border: solid 1px #d8f0fa} 
 #tree.jstree li[rel=root] > a { font-size: 13px; color: #1c94c4; font-weight: bold }
-
-/*---- item/page editor -------------*/
-
-.horizontal label { display: inline-block; float: none; margin-left: 25px; width: inherit;
-                    text-align: right; vertical-align: top; margin-right: 5px }
-.horizontal label:first-child { width: 100px; }
-
-#onepage div div div, #onepage fieldset div div { margin-top: 6px; margin-bottom: 3px; }
-
-#onepage label { font-size: 13px; height: 16px; line-height: 22px; margin-left: 5px;  }
-#onepage label.bold { color: #1c94c4; font-weight: bold;  }
-#onepage label.title { color: #1c94c4; display: block; text-align: left; float: none; }
-
-#onepage label.kind { height: 13px; width: 14px; line-height: 14px; border: 3px solid lightgrey;
-        padding: 4px 2px 4px 6px; margin-left: 5px; margin-right: 30px;
-        font-size: 16px; color: lightgrey; font-weight: bolder; }
-
-#onepage .ui-widget-content { background-color: white }
-
-#onepage label.error { font-size: 9px; color: red; margin-left: 5px }
-
-#onepage input.dater { width: 80px }
-#onepage input.long, #onepage textarea.long { width: 350px }
-#onepage input, #onepage textarea { margin-left: 5px }
-#onepage img { margin-left: 5px; margin-top: 5px }
-#onepage p.content_text { display: inline-block; margin-top: 2px; margin-left: 5px;}
-#onepage #editDataLength { padding-left: 10px; margin: 0; line-height: 20px; font-size: 12px;  }
-#onepage #domains { width: 100px }
-#onepage input#allowedgroups { width: 246px }
-
-#content_div .defaultSkin .mceIframeContainer { padding: 3px; }
-
-#FileEditor { display: none; background-color:#F0F0EE; padding: 5px; border: 1px solid #CCC; margin-bottom: 6px; }
-#FileEditor buttons { padding: 3px; }
+#tree.jstree li[rel=root] > a.jstree-clicked { border: solid 1px #99defd }
 
 
+/* item/page/content editor with "#right_cont"
+------------------------------------------------------------------*/
+label.kind { display: inline-block; width: 13px; height: 16px; text-align: center; vertical-align: top;
+             border: 3px solid lightgrey; padding: 1px 4px 4px 6px; 
+             font-size: 16px; color: lightgrey; font-weight: bolder; }
+
+#block_selector { }
+  #block_selector #stringlist { display: inline-block; margin: 22px 0px 0px 15px }
+  #block_selector #stringlist a {  margin: 0 }
+  #block_selector label.kind { margin: 14px 8px 12px 15px; color: #1c94c4;
+                               font-weight: bolder; font-size: 13px; height: 19px; line-height: 22px;}
+  #block_selector a { margin: 22px 0px 0px 15px; color: #363730; font-weight: bolder; font-size: 13px; height: 19px; display: inline-block }
+  #block_selector a:visited { color: #363730; }
+  #block_selector a:hover { color: #1c94c4; }
+
+#content_div { border: 1px solid #ccc; background-color: rgb(240, 240, 238);}
+  #content_div #content_buttons { margin: 5px; text-align: center; }
+  #content_div { border: 1px solid #ccc; background-color: rgb(240, 240, 238);}
+  #content_div textarea { width: 798px; }
+  #content_div tr.mceLast { display: none }
 
 
-/*---- tabs -------------------------*/
-ul#content_tabs {
-	padding: 0px 0 0 10px; margin: 0; text-align: center;  
-}
+#content_data { background: white; border: solid 1px #cfcfcf; margin: 2px 0 0 2px }
+  #content_data form { }
+
+  #content_data section { margin: 10px; }
+    #content_data section > div { margin: 10px 5px 5px 8px; }
+    #content_data section button { margin-top: -1px; height: 25px }
+  #content_data > div { margin: 10px 5px 5px 8px; }
+  #content_data input { font-size: 13px; height: 19px; line-height: 22px }
+  #content_data label { font-size: 13px; height: 19px; line-height: 22px; margin-bottom: 4px }
+  #content_data label { color: #1c94c4; font-weight: bolder;  }
+  #content_data label[for=title] { display: block; text-align: left; float: none; }
+
+  #content_data #tabs { margin: 5px 17px 5px 17px; border-radius: 0; border: 1px solid #cfcfcf; }
+  body#images #content_data #tabs { margin-top: 16px }
+    #content_data #tabs > div { padding: 5px 5px 5px 5px; }
+    #content_data #tabs .ui-widget-header { border: none; background: none; background-color: #F4F4F4 }
+    #content_data #tabs.ui-widget-content { background: none; background-color: white }
+    #content_data #tabs li.ui-state-default a, li.ui-state-default a:visited { color: #363730 }
+    #content_data #tabs li.ui-state-active a, li.ui-state-active a:visited { color: #eb8f00 }
+    #content_data #tabs li { border-color: #cccccc; }
+    
+  #content_data #content {}
+    #content_data #content #contentButtons { border: none; margin: 5px 0 5px 0; padding-left: 0px }
+    #content_data #content article { border: solid 1px #cfcfcf; margin: 5px 2px 18px 2px; padding: 5px; width: 575px; height: 55px;
+                     border-radius: 3px; -moz-border-radius: 5px; border-radius: 5px;
+                     box-shadow: 2px 2px 5px lightgrey; -moz-box-shadow: 2px 2px 5px lightgrey; -webkit-box-shadow: 2px 2px 5px lightgrey;
+                     background-color: white  }
+
+      #content_data #content h4 { margin: 10px 0 10px 3px; color: #1c94c4 }
+      #content_data #content article > label.kind { margin: 14px 8px 12px 5px }
+	    #content_data #content article > div.actions { display: inline-block; vertical-align:top; margin-top: 14px; float: right }
+	    #content_data #content article > div.actions > span { display: inline-block; margin-left: 5px; 
+	                                                          background-image: url(ui-lightness/images/ui-icons_ef8c08_256x240.png) }
+	                                                            
+      #content_data #content article > div.input { display: inline-block; width: 410px }
+      #content_data #content article > div.inputE { display: inline-block; width: 340px }
+      #content_data #content article > div.inputE > span { display: inline-block; overflow: hidden; vertical-align:top; margin: 20px 0 0 5px }
+      #content_data #content article > div > h5 { display: inline-block; width: 400px; margin: 2px 0 2px 0; font-size: 12px }
+      #content_data #content article > div > img { display: inline-block; height: 55px }
+      #content_data #content article > div > img.icon { height: 16px; margin-top: 18px }
+      #content_data #content article > div > select { display: inline-block; margin-top: 18px }
+      #content_data #content article > div.inputE > p { display: inline-block; width: 330px; overflow: hidden; height: 45px  }
+      #content_data #content article > div.input > textarea { display: inline-block; width: 400px; overflow: hidden; height: 30px; border-color: #cfcfcf }
+       
+  #content_data #seo {  }
+    #content_data #seo div { margin: 10px 0 10px 4px }
+    #content_data #seo label { width: 80px; vertical-align: top; display: inline-block }
+    #content_data #seo input { width: 300px; vertical-align: top; display: inline-block }
+    #content_data #seo textarea { width: 390px; vertical-align: top; display: inline-block }
+    #content_data #seo span { font-size: 13px; margin-top: 5px; display: inline-block }
+    
+  #content_data #options {  }
+    #content_data #options div { margin: 10px 0 10px 4px }
+    #content_data #options label { margin-left: 16px; width: 80px; vertical-align: top; display: inline-block; text-align: right }
+    #content_data #options label:first-child { margin: 0; width: 110px; text-align: left }
+    #content_data #options label[for=validto] { width: 18px }
+    #content_data #options input[type=text] { width: 300px; vertical-align: top; display: inline-block; }
+    #content_data #options input[type=text].dater { width: 90px; }
+    #content_data #options input[type=checkbox] { margin-top: 0px }
+    #content_data #options span { font-size: 13px; margin-top: 5px; display: inline-block }
+    #content_data #options label { width: 80px; vertical-align: top; display: inline-block }
+    #content_data #options p { display: inline-block; }
+
+  #content_data #action_buttons { margin: 15px 17px 5px 15px }
+    #content_data #action_buttons span#last_modif { margin:10px 2px 0 0 ; float: right; display: inline-block }
 
 
-ul#content_tabs li {
-	float: left;
-	font-size: 12px;
-	list-style: none;
-	margin: 0px 10px 0 0;
-	padding: 8px 15px;
-	line-height: 12px;
-	position: relative;
-	background-color: #999; 
-	border: 1px solid #fff;
-	z-index: 10;
-}
+/* backoffice tables + edit forms
+------------------------------------------------------------------*/
 
-ul#content_tabs li a {
-	color: #e8e8e4; text-decoration: none; display: block; margin: 0; font-size: 12px; 
-}
-	
-ul#content_tabs li.active {
-	background-color: #000000;
-}
+#records { border-collapse:collapse; text-align: left; margin: 8px 0px 2px 0px; width: 100%;
+           box-shadow: 2px 2px 5px lightgrey; -moz-box-shadow: 2px 2px 5px lightgrey; -webkit-box-shadow: 2px 2px 5px lightgrey }
+  #records th { background-color: #F4F4F4; border: solid 1px #cfcfcf; padding: 6px; }
+  #records td { background-color: white; border: solid 1px #cfcfcf; padding: 6px 4px 10px 6px }
+  #records .right { text-align: right }
+  #records .center { text-align: center }
+  #records td a,
+  #records td a:visited { color: #363730; }
+  #records td a:hover { color: #1c94c4; }
+  #records td.edit span { background-position: -64px -112px; background-image: url(ui-lightness/images/ui-icons_ef8c08_256x240.png);
+                          width: 16px; height: 16px; display: inline-block; vertical-align: bottom; margin: 0px 4px -1px 0; }
 
-ul#content_tabs li.active a, ul#navigation li a:hover{
-	color: #fff;
-}
+#record { background-color: white; border: solid 1px #cfcfcf; padding: 8px; 
+          box-shadow: 2px 2px 5px lightgrey; -moz-box-shadow: 2px 2px 5px lightgrey; -webkit-box-shadow: 2px 2px 5px lightgrey }
+  #record label:first-child { width: 100px; margin-left: 0 }
+  #record label { width: 80px; vertical-align: top; display: inline-block; color: #1c94c4; 
+                  font-weight: bolder; text-align: left; margin: 5px 0 0 20px }
+  #record label.choice { width: inherit; margin-left: 2px; margin-right: 10px; color: inherit; font-weight: normal }
+  #record input[type=text] { width: 300px; vertical-align: top; display: inline-block }
+  #record input.number { width: 20px; }
+  #record fieldset > div { margin: 10px }
+  #record #action_buttons { margin: 15px 11px 0px 11px; border-top: solid 1px #cfcfcf; padding: 11px 0 6px 0;}
 
-
+  #record label.error { color: red; width: inherit }
+  
+  
+/* login - NOT OK
+------------------------------------------------------------------*/
 
 #login #wrapper { height: 600px; background: url(../images/admin-bg_login.png) no-repeat; }
 #login h1 { width: 505px; margin: 0; padding: 170px 295px 10px 0; background: url(../images/admin-bg_border.gif) repeat-x bottom; color: #fff; text-align: right; font-size: 24px; }
@@ -175,185 +265,3 @@ ul#content_tabs li.active a, ul#navigation li a:hover{
 #loginForm .action_buttons { margin-right: 0; }
 #loginForm .action_buttons input { width: 69px; height: 24px; border: 0; background: url(../images/admin-bt_login.png) no-repeat; color: #fff; font-size: 13px; font-weight: bold; font-family: Verdana, Arial, sans-serif; cursor: pointer; }
 
-ul#navigation { padding: 3px 0 5px 20px; margin: 0; text-align: center; }
-
-ul#navigation li {
-	float: left;
-	font-size: 13px;
-	list-style: none;
-	margin: 35px -1px 0 0;
-	padding: 8px 13px;
-	line-height: 13px;
-	position: relative;
-	background-color: #a39f9f; 
-	border: 1px solid #fff;
-	z-index: 10;
-	}
-
-ul#navigation li.submenu { 
-	background: black;
-	margin-right: 15px;
-}
-
-ul#navigation li a {
-	color: #e8e8e4;
-	text-decoration: none;
-	display: block;
-	margin: 0;
-	font-size: 15px;
-	
-	}
-ul#navigation li.active {
-	background-color: #38bef1;
-}
-
-ul#navigation li.active a, ul#navigation li a:hover{
-	color: #fff;
-}
-	
-
-table#records {
-	clear: both;
-	width: 100%; 
-	margin: 10px 0px 10px 0px; 
-	border: 1px solid #959595;
-	border-collapse: separate;
-	}
-	
-table#records td {
-	padding: 8px 20px; 
-	font-size: 12px;
-	text-align: left; 
-	}
-	
-table#records td.detail { line-height: 16px; padding: 6px 20px; }
-table#orderitems td { line-height: 15px; padding: 1px 10px; }
-
-table#records th {
-	padding: 6px 20px;
-	background-color: #38bef1;
-	font-size: 12px;
-	text-align: left;
-	color: #fff;
-	}
-
-#record { border: 1px solid #959595; }
-#record fieldset input { width: 300px; }
-#record fieldset input.number { width: 25px; }
-#record fieldset input[type=radio] { width: 20px; }
-#record fieldset input#domain { width: 100px; }
-#record fieldset div { margin: 6px 0 3px 0; }
-#record label.error { color: red }
-
-/*---- OK till here -------------------------*/
-
-ul#personalia{
-	margin: 0 5px 20px 0;
-	overflow: hidden; 
-	clear:both;
-	width: 100%; 
-}
-
-ul#personalia li {
-	float: left;
-	font-size: 13px;
-	list-style: none;
-	line-height: 13px;
-	margin: 0 10px 0 0;
-	background-color: #a39f9f; 
-	padding: 5px 10px;
-}
-	
-	
-ul#personalia li a{
-	color:#e8e8e4; 
-	text-decoration: none; 
-}
-	
-ul#personalia li.active {
-	background-color: #38bef1;
-}
-
-
-ul#personalia li.active a, ul#personalia li a:hover {
-	color:#fff; 
-}
-	
-fieldset h2  { 
-	background-color: #38bef1; 
-	padding: 5px; 
-	color:#fff; 
-}
-	
-	
-
-#radio_top { margin: 0 0 0 20px; }
-
-/*-----------------------------------*/
-
-form { padding: 8px 10px 10px 10px; }
-
-fieldset { 
-	float:left; 
-	width: 700px; 
-	max-width:700px; 
-	}
-
-fieldset div.gegevens div { 
-	padding: 0 0 10px 0;  }
-	
-fieldset div.gegevens div.name input { 
-	width: 400px; }
-	
-fieldset div.gegevens div.room input { 
-	width: 130px; }
-	
-fieldset div.gegevens div.born input { 
-	width: 130px; }
-	
-fieldset div.gegevens div.sex, div.gegevens div.level { 
-	margin-right: 5px; }
-
-fieldset div.gegevens div.dtype option, fieldset div.gegevens div.education option { width: 100px; } 
-fieldset div.note textarea {
-	width: 400px; 
-	height: 120px; 
-	}
-
-label {
-	float: left;
-	width:100px;
-	font-size: 12px; 
-	line-height:20px; 
-	}
-
-.buttons{
-	float: right;
-	}
-
-.right_align{
-	text-align: center;
-	}
-	
-div.checks { clear: none; margin-left: 100px; line-height: 20px;}
-
-
-#welcome_top { color: #fff; float: left; margin-top: -56px; padding-left: 10px; width: 980px;  }
-
-#welcome_top strong { background-color: #A39F9F; border: 1px solid white; padding: 3px 10px 3px 10px; }
-#welcome_top strong a { text-decoration: none; color: #fff }
-#welcome_top strong.active { background-color: #38BEF1; color: #fff; }
-#welcome_top span { margin-left: 150px }
-
-#logout_top { float: right }
-#logout_top a { color: #fff; }
-
-
-	
-/*--- footer ---*/
-#footer { clear: both; width: 1000px; margin: 0 auto; margin-top: 10px; }
-#copyright { float: left; width: 200px; text-align: left; }
-#cieLink { float: right; width: 200px; text-align: right; }
-#cieLink a { color: #666; }
-	
-	

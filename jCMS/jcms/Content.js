@@ -22,14 +22,14 @@ function Content(basis, page, app) {
   this.page = page;
   this.itemId = (page && page.item) ? page.item.id : 0;
   
-  this.atomId = this.atom;
-  this.getAtom(app);
+  this.getAtom(this.atom, app);
 }
 
 module.exports = Content;
 
-Content.prototype.getAtom = function(app) {
-  this.atom = (this.atomId > 0) ? app.getAtom(this.atomId) : null;
+Content.prototype.getAtom = function(atomId, app) {
+  this.atomId = atomId;
+  this.atom = (atomId > 0) ? app.getAtom(atomId) : null;
 };
 Content.prototype.contentLength = function() {
   return (this.data) ? this.data.length : 0;
@@ -66,10 +66,12 @@ Content.prototype.render = function() {
 
 
 Content.prototype.scrapeFrom = function(controller) {
-  this.atomId = controller.getParam("atom", this.atomId);
-  this.getAtom(controller.app);
-  
+  this.item = controller.getParam("item", this.item);
+  this.language = controller.getParam("language", this.language);
   this.name = controller.getParam("name", "");
+  this.intro = controller.getParam("intro", "N");
+  this.atom = controller.getParam("atom", "N");
+    this.getAtom(this.atom, controller.app);
   this.data = controller.getParam("data", "");
   this.kind = controller.getParam("kind", "T");
   this.sortorder = controller.getParam("sortorder", 10);
@@ -92,28 +94,27 @@ Content.prototype.doDelete = function(controller, finish) {
 
 Content.prototype.doUpdate = function(controller, isNew, finish) {
   var self = this;
-  var values = [self.itemId, self.language, self.sortorder, self.kind, self.atomId, self.name, self.data];
+  var values = [self.item, self.language, self.sortorder, self.intro, self.kind , self.atom, self.nameId, self.data];
   
   // new or existing record?
   if (isNew) {
     console.log("Content.doUpdate -> insert content " + self.name);
-    controller.query("insert into pages (title, link, active, keywords, description , updated, created, item, language) " +
+    controller.query("insert into content (item, language, sortorder, intro, kind , atom, name, data) " +
                      "values (?, ?, ?, ?, ?, now(), now(), ?, ?)", values,
       function(err, result) {
         if (err) { 
           console.log("Content.doUpdate -> error inserting content: " + self.language + "/" + self.itemId);
           console.log(err); 
         } else {
-          console.log("Content.doUpdate -> inserted content: " + self.language + "/" + self.itemId);
-          self.created = self.updated = new Date();
+          console.log("Content.doUpdate -> inserted content: " + self.language + "/" + self.itemId + "/" + self.id);
           if (typeof finish == "function") { finish(); }
         }
     });
     
   } else {
     console.log("Content.doUpdate -> update content " + self.itemId + " - " + self.title);
-    controller.query("update pages set title = ?, link = ?, active = ?, keywords = ?, description = ?, updated = now() " +
-                     " where item = ? and language = ?", values,
+    controller.query("update content set item=?, language=?, sortorder=?, intro=?, kind=? , atom=?, name=?, data=? " +
+                     " where id = ?", values,
         function(err) {
           if (err) { 
             console.log("Content.doUpdate -> error updating content: " + self.language + "/" + self.itemId);

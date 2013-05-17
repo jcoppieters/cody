@@ -7,13 +7,15 @@
 ///////////////////////
 // Editor functions  //
 ///////////////////////
+var gCurrentBlock = "";
 
 $(document).ready(function() {
   
   $("#doSaveEditor").button({ icons: { primary: "ui-icon-check"}, text: true}).click(doSaveEditor);
   $("#doCancelEditor").button({ icons: { primary: "ui-icon-close"}, text: true}).click(doCancelEditor);
 
-
+  $("#block_selector").dialog({autoOpen: false, width: 240});
+  
   $('#editContent').tinymce({
     external_image_list_url: gContext + "/" + gLanguage + "/images?request=imagelist",
     script_url : gStatic + '/js/tinymce/tiny_mce.js',
@@ -57,8 +59,9 @@ function getPage(id) {
          self.currentNode = id;  
          
          $("#right_cont").html(msg).show();
-         $( "#tabs" ).tabs();
+         $("#tabs").tabs();
          
+         $("#right_cont #doView").button({ icons: { primary: "ui-icon-link"}, text: true}).click( doView );
          $("#right_cont #doSave").button({ icons: { primary: "ui-icon-check"}, text: true}).click( function() { self.doSave(); });
          $("#right_cont #doDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( function() { self.doRealDelete(); });
          
@@ -66,12 +69,14 @@ function getPage(id) {
          $("#right_cont #doAddContent").button({ icons: { primary: "ui-icon-plus"}, text: true}).click( doAddContent );
          
          $("#right_cont .doEditor").button({ icons: { primary: "ui-icon-pencil"}, text: true}).click( doEditor );
-         
+         $("#right_cont .doEditorI").button({ icons: { primary: "ui-icon-pencil"}, text: true}).click( doEditorI );
+         $("#right_cont .doEditorF").button({ icons: { primary: "ui-icon-pencil"}, text: true}).click( doEditorF );
+         $("#right_cont .doDeletor").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( doDeletor );
          
 
          // Content //
          // make list sortable
-         $("#content").sortable().disableSelection();
+         $("#content > div").sortable().disableSelection();
          // decode of data element
          //$("editData").val( unescape($("#editData").val()) );
          //$("#editDataLength").text(editData.value.length + " bytes");
@@ -91,24 +96,46 @@ function getPage(id) {
           
          $("#domains").change( function() {
             var g = $('#allowedgroups').val();
-            if (g != "") {
-            	$('#allowedgroups').val( g + ((g.length > 0) ? ',':'') + $('#domains').val() );
+            if (g !== "") {
+              $('#allowedgroups').val( g + ((g.length > 0) ? ',':'') + $('#domains').val() );
             }
          });
           
          // avoid "leave page" dialog from browser
          window.onbeforeunload = function() { };
+         
+         // put short text into the P's of the text-data content blocks
+         $("input.textdata").each(function() {
+           var name = $(this).attr("name");
+           var txt = $($(this).val()).text();
+           $("#content_data #"+name).html(txt.substring(0,80) + "<br>...");
+         });
       }
    }
  });
 }
 
+function doView() {
+}
+
+function doDeletor() {
+}
+
+function doAdjust() {
+}
+
+function doEditorI() {
+}
+
+function doEditorF() {
+}
+
 function doEditor() {
-  var block = $(this).parent();
-  var gCurrentBlock = block.attr("id");
+  var block = $(this).parent().parent();
+  gCurrentBlock = block.attr("id");
   
   var kind = block.find(".kind").val();
-  var data = block.find(".data").val();
+  var data = block.find(".textdata").val();
   showEditor(data);
   return false;
 }
@@ -120,9 +147,14 @@ function doCancelEditor() {
 }
 
 function doAddContent() {
+  $("#block_selector").dialog("open");
   // ask the kind (text, form, image, file)
   
   // add a div with id = 0, sortorder = 10 + last one
+  return false;
+}
+function selectedContent() {
+  $("#block_selector").dialog("close");
 }
 
 
@@ -144,11 +176,13 @@ function showEditor( content ) {
 function saveEditor(theId) {
   hideEditor();
   var content = $("#editContent").html();
-  var block = $("#"+theId);
+  var block = $("#content_data #"+theId);
   $.ajax({
          type: "POST", url: "./sitemap",
          data: "request=savedata&node="+gTree.getCurrentNode()+
-                 "&kind=" + block.find(".kind").val() +
+                 "&id=" + theId +
+                 "&item=" + $("#node").val() +
+                 "&language=" + $("#language").val() +
                  "&name=" + block.find(".name").val() +
                  "&sortorder=" + block.find(".sortorder").val() +
                  "&atom=" + block.find(".atom").val() +
@@ -160,12 +194,12 @@ function saveEditor(theId) {
               console.log(msg);
               // don't rollback the data (user otherwise looses it's input), just show the editor again
               showEditor( content );
-             } else {
-               // replace data in our form
-               block.find(".data").val( content );    
-               block.find(".length").html( content.length + " bytes");
-             }
-           }
+            } else {
+              // replace data in our form
+              var name = block.find(".textdata").val( content ).attr("name");
+              $("#content_data #"+name).html($(content).text().substring(0,80) + "<br>...");
+            }
+          }
        });
 }
 

@@ -103,6 +103,16 @@ this.doAddImage = function () {
     self.WarnUser("Please select an item first");
   }
 };
+this.doAddFile = function () {
+  var self = this;
+  var t = $("#tree").jstree("get_selected"); 
+  self.nextType = "file";
+  if (t) {
+    $("#tree").jstree("create", t, "inside", ({ attr: { rel : "file" } })); 
+  } else { 
+    self.WarnUser("Please select an item first");
+  }
+};
 this.doRename = function() {
   var self = this;
   var t = $("#tree").jstree("get_selected"); 
@@ -142,6 +152,7 @@ this.init = function () {
   $("#doAdd").button({ icons: { primary: "ui-icon-plus"}, text: true}).click(function() { self.doAdd(); });
   $("#doAddFolder").button({ icons: { primary: "ui-icon-plus"}, text: true}).click(function() { self.doAddFolder(); });
   $("#doAddImage").button({ icons: { primary: "ui-icon-plus"}, text: true}).click(function() { self.doAddImage(); });
+  $("#doAddFile").button({ icons: { primary: "ui-icon-plus"}, text: true}).click(function() { self.doAddFile(); });
   $("#doRename").button({ icons: { primary: "ui-icon-pencil"}, text: true}).click(function() { self.doRename(); });
   $("#doDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click(function() { self.doDelete(); });
   $("#doEdit").button({ icons: { primary: "ui-icon-wrench"}, text: true}).click(function() { self.doEdit(); });

@@ -4,7 +4,7 @@
 
 <% include header.ejs %>
 
-<body>
+<body id="users">
 
 	<script src="<%=static%>/js/lib/jquery-1.9.1<%=min%>.js"></script>
 	<script src="<%=static%>/js/lib/jquery-ui-1.10.1<%=min%>.js"></script>
@@ -13,6 +13,8 @@
 	
 	<script>
 	  $(document).ready( function() {
+	    $("#records td.edit a").prepend("<span class='icon-pencil'></span>");
+	    
       $("#doNew").button({ icons: { primary: "ui-icon-plus"}, text: true}).click( function() {
         $("#request").val("new"); 
         $("#record").submit();
@@ -37,14 +39,16 @@
 	  });
 	</script>
 
-  <div id="wrapper">
-    <% var cat="U"; %>
-    <% include navigation.ejs %>
+  <section>
+    <header>
+      <% include top.ejs %>
+      <% include navigation.ejs %>
+    </header>
     
-    <div id="wrapper_data">	
+    <div>
 	
     <% if (typeof user != "undefined") { %>
-		<form action="./" method="post" id="record">
+		<form action="./users" method="post" id="record">
    			<input type="hidden" name="request" id="request" value="save" /> 
    			<input type="hidden" name="id" value="<%- user.id %>" /> 
 
@@ -78,19 +82,20 @@
 				</div>
         <div>
           <label for="active">Active</label>
-          <input name="active" id="active" type="radio" value="Y" <%= (user.active == 'Y') ? 'checked' : '' %> />Yes
-          <input name="active" id="active" type="radio" value="N" <%= (user.active != 'Y') ? 'checked' : '' %> />No
+          <input name="active" id="activeY" type="radio" value="Y" <%= checked(user.active == 'Y') %> /><label class="choice" for="activeY">Yes</label>
+          <input name="active" id="activeN" type="radio" value="N" <%= checked(user.active != 'Y') %> /><label class="choice" for="activeN">No</label>
         </div>
         <div>
           <label for="badlogins">Bad logins</label>
-          <input name="badlogins" id="badlogins" type="text" value="<%- user.badlogins %>"  class="required number"/>
-          Max allowed
-          <input name="maxbadlogins" id="maxbadlogins" type="text" value="<%- user.maxbadlogins %>"  class="required number"/>
+          <input name="badlogins" id="badlogins" type="text" class="number" value="<%- user.badlogins %>"  class="required number"/>
+          
+          <label for="maxbadlogins">Max allowed</label>
+          <input name="maxbadlogins" id="maxbadlogins" type="text" class="number" value="<%- user.maxbadlogins %>"  class="required number"/>
         </div>
         <div>
           <label for="nomail">Allows Mail</label>
-          <input name="nomail" id="nomail" type="radio" value="Y" <%= (user.nomail == 'Y') ? 'checked' : '' %> />No
-          <input name="nomail" id="nomail" type="radio" value="N" <%= (user.nomail != 'Y') ? 'checked' : '' %> />Yes
+          <input name="nomail" id="nomailY" type="radio" value="Y" <%= checked(user.nomail == 'Y') %> /><label class="choice" for="nomailY">No</label>
+          <input name="nomail" id="nomailN" type="radio" value="N" <%= checked(user.nomail != 'Y') %> /><label class="choice" for="nomailN">Yes</label>
         </div>
 				<div>
 					<label for="email">Email</label>
@@ -109,8 +114,9 @@
       
       
     <% if (typeof users != "undefined") { %>
-    <form action="./" method="post" id="record" name="onepage">
+    <form action="./users" method="post" id="search">
  	   	<input type="hidden" name="request" id="request" value="list" /> 
+ 	   	<!--TODO: add  search button + input field -->
 			<button id="doNew">New</button>
 									
 			<table id="records"> 
@@ -120,7 +126,7 @@
 				
 			  <% for (var i=0; i < users.length; i++) { var u = users[i]; %>			  
 					<tr>
-						<td><a href="./?request=edit&amp;id=<%= u.id %>"><%= (u.name==='') ? '--' : u.name %></a></td>
+						<td class="edit"><a href="./users?request=edit&amp;id=<%= u.id %>"><%= (u.name==='') ? '--' : u.name %></a></td>
 						<td><%= u.username %></td> 
 						<td><%= u.password %></td> 
 						<td><%= u.domain %></td> 
@@ -138,6 +144,6 @@
     </div>
  
     <% include footer.ejs %>
-  </div>
+  </section>
 </body>
 </html>

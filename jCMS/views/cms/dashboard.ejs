@@ -1,0 +1,41 @@
+<!doctype html>
+
+<html lang="<%=page.language%>">
+
+<% include header.ejs %>
+
+<body id="dashboard">
+  <div>
+	  <header>
+	    <% include top.ejs %>
+	  </header>
+
+  <% if (login) { %>
+    <nav>
+      <% for (var i in page.children) {  
+	      var p = page.children[i]; 
+	      if (p.isVisible()) { %>
+	        <section>
+	          <h3><%= p.title %></h3>
+	          <ul>
+	            <% for (var j in p.children) {
+	              var sp = p.children[j];
+	              if (sp.isVisible()) { %>
+	                <li><a href="<%=context%>/<%= sp.url %>"><%= sp.title %></a></li>
+	              <% } %>
+	            <% } %>
+	          </ul>
+	        </section>
+	      <% } %>
+      <% } %>
+    </nav>
+    
+  <% } else { %>
+	  <h1>Login first</h1>
+  <% } %>	
+ 
+  <% include footer.ejs %>
+ </div>
+</body>
+</html>
+    

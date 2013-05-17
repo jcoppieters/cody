@@ -4,7 +4,7 @@
 
 <% include header.ejs %>
 
-<body id="images">
+<body id="files">
 
 <script src="<%=static%>/js/lib/jquery-1.9.1<%=min%>.js"></script>
 <script src="<%=static%>/js/lib/jquery-ui-1.10.1<%=min%>.js"></script>
@@ -17,7 +17,7 @@
 <script type="text/javascript" src="<%=static%>/js/atom-tree.js"></script>
 <script type="text/javascript"> 
 	$(document).ready( function() {
-	  var gTree = new jAtomTree(1, <%=shownode%>, gContext, gLanguage, "images", gImages);
+	  var gTree = new jAtomTree(1, <%=shownode%>, gContext, gLanguage, "files", gFiles);
 	  gTree.init();
 	});
 </script>
@@ -33,13 +33,13 @@
 		
  	    <div id="left_nav">
 	      <button id="doAddFolder">Add Folder</button>
-	      <button id="doAddImage">Add Image</button><br>
+	      <button id="doAddFile">Add File</button><br>
 	      <button id="doRename" >Rename</button>
 	      <button id="doDelete" >Delete</button>
 	      <button id="doEdit" >Edit</button>
 
         <div id="tree">
-          <ul><li id="id_<%= controller.getRoot() %>" class="open" rel="root"><a href="#"><ins>&nbsp;</ins>Images</a>
+          <ul><li id="id_<%= controller.getRoot() %>" class="open" rel="root"><a href="#"><ins>&nbsp;</ins>Files</a>
               <%- controller.getTree() %>
           </li></ul>
         </div>

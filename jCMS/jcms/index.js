@@ -15,6 +15,7 @@ module.exports.UserController = require("./UserController.js");
 module.exports.TreeController = require("./TreeController.js");
 module.exports.SitemapController = require("./SitemapController.js");
 module.exports.ImageController = require("./ImageController.js");
+module.exports.FileController = require("./FileController.js");
 
 module.exports.Static = require("./Static");
 module.exports.Dynamic = require("./Dynamic");

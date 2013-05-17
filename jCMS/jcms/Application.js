@@ -73,13 +73,14 @@ Application.prototype.addController = function(name, controller) {
 };
 
 Application.prototype.addControllers = function() {
-  // do this dynamically for all templates[x].controllerName -- Tim ?
+  //TODO: do this dynamically for all templates[x].controllerName -- Tim ?
   this.addController('Controller', jcms.Controller);
   this.addController('ContentController', jcms.Controller);
   this.addController('LoginController', jcms.LoginController);
   this.addController('UserController', jcms.UserController);
   this.addController('SitemapController', jcms.SitemapController);
   this.addController('ImageController', jcms.ImageController);
+  this.addController('FileController', jcms.FileController);
   
 };
 
@@ -118,6 +119,17 @@ Application.prototype.getDataPath = function() {
 ///////////////
 Application.endOfTime = function() {
 	return new Date(2100,12,31,23,59,59);
+};
+
+Application.findFirst = function(theList) {
+  var first = null;
+  for (var f in theList) { 
+    if (theList.hasOwnProperty(f)) {
+      first = theList[f]; 
+      break; 
+    }
+  }
+  return first;
 };
 
 // Daisy chain operators
@@ -331,12 +343,12 @@ Application.prototype.fetchStructures = function() {
   var self = this;
   Application.doList([
     [self, Application.prototype.fetchLanguages],
+    [self, Application.prototype.fetchAtoms],
     [self, Application.prototype.fetchTemplates],
     [self, Application.prototype.fetchItems],
     [self, Application.prototype.fetchPages],
     [self, Application.prototype.fetchForms],
-    [self, Application.prototype.fetchDomains],
-    [self, Application.prototype.fetchAtoms]
+    [self, Application.prototype.fetchDomains]
   ], function(err){
     if (err) {
       self.log("fetchStructures", "!! some of our loading functions failed !!");
@@ -373,6 +385,56 @@ Application.prototype.isDefaultLanguage = function(language) {
 Application.prototype.findLanguage = function(url) {
   var i = url.indexOf("/");
   return (i > 0) ? url.substring(0, i) : Application.kDefaultLanguage;
+};
+
+
+///////////
+//Atoms //
+///////////
+Application.prototype.getAtom = function(id) {
+  return this.atoms[id];
+};
+
+Application.prototype.addAtom = function(atom) {
+  this.atoms[atom.id] = atom;
+  atom.app = this;
+};
+
+Application.prototype.hasAtomChildren = function(parent) {
+  for (var i = 0; i < this.atoms.length; i++) {
+    if  (this.atoms[i].id == parent.id) {
+      return true;
+    }
+  }
+  return false;
+};
+Application.prototype.getAtomChildren = function(parent) {
+  var self = this;
+  var list = [];
+  for (var i in this.atoms) {
+    var anAtom = self.atoms[i];
+    if (parent.isChild(anAtom)) {
+      list.push(anAtom);
+    }
+  }
+  list.sort( function(a, b) { return a.sortorder - b.sortorder; });
+  return list;
+};
+
+Application.prototype.fetchAtoms = function(done) {
+  var self = this;
+
+  //fetch all atoms
+  jcms.Atom.loadAtoms(self.connection, function(result) {
+    self.atoms = {};
+    for (var i = 0; i < result.length; i++) {
+      self.addAtom(new jcms.Atom(result[i]));
+    }
+    self.log("Application.fetchAtoms", "fetched " + result.length + " atoms");
+
+    // next step
+    done();
+  });
 };
 
 
@@ -538,6 +600,7 @@ Application.prototype.fetchPages = function(done) {
     Application.each(result, function(nextOne) {
       
       var onePage = new jcms.Page(this, self);
+      self.log("Application.fetchPages", onePage.title);
       
       onePage.addTo(self);
       onePage.loadContent(self, nextOne);
@@ -682,54 +745,4 @@ Application.prototype.storeDomains = function(result) {
     self.domains.push(result[i].domain);
   }
 };
-
-
-///////////
-// Atoms //
-///////////
-Application.prototype.getAtom = function(id) {
-  return this.atoms[id];
-};
-
-Application.prototype.addAtom = function(atom) {
-  this.atoms[atom.id] = atom;
-  atom.app = this;
-};
-
-Application.prototype.hasAtomChildren = function(parent) {
-  for (var i = 0; i < this.atoms.length; i++) {
-    if (this.atoms[i].id == parent.id) {
-      return true;
-    }
-  }
-  return false;
-};
-Application.prototype.getAtomChildren = function(parent) {
-  var list = [];
-  for (var i in this.atoms) {
-    var anAtom = this.atoms[i];
-    if (parent.isChild(anAtom)) {
-      list.push(anAtom);
-    }
-  }
-  list.sort( function(a, b) { return a.sortorder - b.sortorder; });
-  return list;
-};
-
-Application.prototype.fetchAtoms = function(done) {
-  var self = this;
-  
-  // fetch all atoms
-  jcms.Atom.loadAtoms(self.connection, function(result) {
-    self.atoms = {};
-    for (var i = 0; i < result.length; i++) {
-      self.addAtom(new jcms.Atom(result[i]));
-    }
-    self.log("Application.fetchAtoms", "fetched " + result.length + " atoms");
-    
-    // next step
-    done();
-  });
-};
-
 

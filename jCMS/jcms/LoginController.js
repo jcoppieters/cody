@@ -9,8 +9,6 @@ var jcms = require("./index.js");
 
 
 function LoginController(context) {
-  // only called for using my methods
-  if (typeof context == "undefined") { return; }
   console.log("LoginController.constructor -> page(" + context.page.itemId + ") = " + context.page.title + ", request = " + context.request);
   
   

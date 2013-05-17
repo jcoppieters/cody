@@ -48,15 +48,21 @@ Item.addDefaults = function(basis, parent) {
   basis.active = basis.active || "Y";
   basis.template = basis.template || parent.template.defaultchild;
   basis.showcontent = basis.showcontent || Item.kContent;
-  basis.allowdelete = basis.allowdelete || parent.allowdelete;
-  basis.allowinsert = basis.allowinsert || parent.allowinsert;
   basis.needslogin = basis.needslogin || parent.needslogin;
-  basis.defaultoper = basis.defaultoper || "list";
-  basis.form = basis.form || parent.formId;
+  basis.defaultrequest = basis.defaultrequest || "list";
   basis.allowedgroups = basis.allowedgroups || parent.allowedgroups;
   
   return basis;
 };
+
+Item.orderbyList = [ { id: 'M', name: 'Manual'},
+                     { id: 'A', name: 'Alphabetical'},
+                     { id: 'D', name: 'Chronological'} ];
+Item.showcontentList = [ { id: 'Y', name: 'Content'},
+                         { id: 'S', name: 'First subitem'},
+                         { id: 'N', name: 'All subitems'},
+                         { id: 'D', name: 'Don\'t show subitems'},
+                         { id: 'L', name: 'Lightbox (not yet implemented)'} ];
 
 
 Item.prototype.pickParent = function(itemList) {
@@ -102,15 +108,6 @@ Item.prototype.setTemplate = function(templateId, controller) {
     }
   }
 };
-Item.prototype.setForm = function(formId, controller) {
-  this.formId = formId;
-  if (typeof controller != "undefined") {
-    this.form = controller.app.getForm(formId);
-    if (typeof this.form == "undefined") {
-      controller.feedback("Couldn't find the form with id = " + formId + " for item " + this.id + " / " + this.name);
-    }
-  }
-};
 
 
 Item.prototype.scrapeFrom = function(controller) {
@@ -122,10 +119,9 @@ Item.prototype.scrapeFrom = function(controller) {
   this.showcontent = controller.getParam("showcontent");
   this.allowedgroups = controller.getParam("allowedgroups");
   this.setTemplate(controller.getParam("template"), controller);      
-  this.setForm(controller.getParam("form"), controller);
   this.orderby = controller.getParam("orderby");
-  
-  // missing: user (at create time), allowdelete, allowinsert, defaultoper (??)
+  this.defaultrequest = controller.getParam("defaultrequest", this.defaultrequest || "list");
+  // user is only filled at creation time
 };
 
 
