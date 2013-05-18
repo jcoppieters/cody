@@ -5,7 +5,7 @@
 console.log("loading " + module.id);
 
 var mysql = require("mysql");
-var jcms = require("../jcms/index.js");
+var cody = require("../cody/index.js");
 
 var kOneDay = 24 * 60 * 60 * 1000;
 var gDays = {0: "Maandag", 1: "Dinsdag", 2: "Woensdag", 3: "Donderdag", 4: "Vrijdag", 5: "Zaterdag", 6: "Zondag"};
@@ -19,10 +19,10 @@ function BookingController(context) {
   console.log("BookingController.constructor -> page: ("
                 + context.page.itemId + ") " + context.page.title);
   
-  jcms.Controller.call(this, context);
+  cody.Controller.call(this, context);
 }
 
-BookingController.prototype = new jcms.Controller();
+BookingController.prototype = new cody.Controller();
 
 
 BookingController.prototype.doRequest = function( finish ) {
@@ -103,7 +103,7 @@ BookingController.prototype.step1 = function( theDate, finish ) {
     function(err, results) {
       self.context.dr = results[0];
     
-      //jcms.Controller.prototype.doRequest.call(self, finish);
+      //cody.Controller.prototype.doRequest.call(self, finish);
       finish();
     });
 }
@@ -179,7 +179,7 @@ BookingController.prototype.step0 = function( theDate, finish ) {
         // console.log(self.context.dayList);
         self.context.maxRows = maxRows;
         
-        //jcms.Controller.prototype.doRequest.call(self, finish);
+        //cody.Controller.prototype.doRequest.call(self, finish);
         finish();
       }
       

@@ -1,7 +1,7 @@
 //
 // Johan Coppieters 
 //   - mar 2011 - rWorks
-//   - mar 2013 - jCMS
+//   - mar 2013 - cody
 //
 //
 ///////////////////////
@@ -15,6 +15,8 @@ $(document).ready(function() {
   $("#doCancelEditor").button({ icons: { primary: "ui-icon-close"}, text: true}).click(doCancelEditor);
 
   $("#block_selector").dialog({autoOpen: false, width: 240});
+  $("#block_selector a").click( selectedContent );
+
   
   $('#editContent').tinymce({
     external_image_list_url: gContext + "/" + gLanguage + "/images?request=imagelist",
@@ -57,18 +59,19 @@ function getPage(id) {
              
        } else {
          self.currentNode = id;  
+         $("#newContentForm #node").val(id);
          
          $("#right_cont").html(msg).show();
          $("#tabs").tabs();
          
          $("#right_cont #doView").button({ icons: { primary: "ui-icon-link"}, text: true}).click( doView );
-         $("#right_cont #doSave").button({ icons: { primary: "ui-icon-check"}, text: true}).click( function() { self.doSave(); });
-         $("#right_cont #doDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( function() { self.doRealDelete(); });
+         $("#right_cont #doSave").button({ icons: { primary: "ui-icon-check"}, text: true}).click( function() { saveOrder(); self.doSave(); return false; });
+         $("#right_cont #doDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( function() { self.doRealDelete(); return false; });
          
          $("#right_cont #doAdjust").button({ icons: { primary: "ui-icon-close"}, text: true}).click( doAdjust );
          $("#right_cont #doAddContent").button({ icons: { primary: "ui-icon-plus"}, text: true}).click( doAddContent );
          
-         $("#right_cont .doEditor").button({ icons: { primary: "ui-icon-pencil"}, text: true}).click( doEditor );
+         $("#right_cont .doEditorT").button({ icons: { primary: "ui-icon-pencil"}, text: true}).click( doEditorT );
          $("#right_cont .doEditorI").button({ icons: { primary: "ui-icon-pencil"}, text: true}).click( doEditorI );
          $("#right_cont .doEditorF").button({ icons: { primary: "ui-icon-pencil"}, text: true}).click( doEditorF );
          $("#right_cont .doDeletor").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( doDeletor );
@@ -77,9 +80,6 @@ function getPage(id) {
          // Content //
          // make list sortable
          $("#content > div").sortable().disableSelection();
-         // decode of data element
-         //$("editData").val( unescape($("#editData").val()) );
-         //$("#editDataLength").text(editData.value.length + " bytes");
          
          
          // add date pickers
@@ -116,21 +116,129 @@ function getPage(id) {
 }
 
 function doView() {
+  window.open( gContext + "/" + $("#language").val() + "/" + $("#node").val(), "_blank");
+  return false;
 }
 
 function doDeletor() {
+  var article = $(this).parent().parent();
+  var theId = article.attr("id");
+  
+  $.ajax({
+    type: "POST", url: "./sitemap",
+    data: "request=deletecontent&node="+$("#node").val()+"&id=" + theId,
+    success: function(msg){
+       if (msg.status != "OK") {
+         alert("Data not saved!\nGot error from server: " + msg.status + ", see console.");
+         console.log(msg);
+       } else {
+         // remove the block from our page
+         article.remove();
+       }
+     }
+  });
+  return false;
 }
 
 function doAdjust() {
+  $("#request").val("adjust");
+  $("#onepage").submit();
+}
+
+
+function doAddContent() {
+  $("#block_selector").dialog("open");
+  // ask the kind (text, form, image, file)  
+  return false;
+}
+function selectedContent() {
+  $("#block_selector").dialog("close");
+  var node = $("#node").val();
+  var kind = $(this).attr("rel");
+  
+  $.ajax({
+    type: "POST", url: "./sitemap",
+    data: "request=addcontent&node="+node+"&kind=" + kind,
+    success: function(msg){
+       if (msg.status != "OK") {
+         alert("Data not saved!\nGot error from server: " + msg.status + ", see console.");
+         console.log(msg);
+       } else {
+         gTree.getNode(node);
+       }
+     }
+  });
+  return false;
+}
+
+function doAtomEditor(button, type, feedback) {
+  $.ajax({
+    type: "GET", 
+    url: gContext + "/" + gLanguage + "/" + type,
+    data: "request=menu",
+    success: function(msg){
+      if (msg.indexOf("<") < 0) {
+        alert("Sorry, no files in your library yet.");
+      }
+      // find the block (<article>) that we are editing
+      var article = button.parent().parent();
+      var span = article.find("div.inputE > span");
+      var img = article.find("div.inputE > img");
+      
+      // create the UL as DOM element and add it after the image's name
+      var list = $(msg);
+      span.after(list);
+      
+      // hide the image and its name
+      span.hide();
+      img.hide();
+      
+      // hide the button
+      button.hide();
+      
+      // attach a menu to the UL
+      var menu = list.menu();
+      menu.on("menuselect", function(event, ui){ 
+        var li = $(ui.item);
+        
+        // change the IMG, SPAN and others within the ARTICLE with all data found in the LI
+        feedback(article, img, span, li);
+        
+        // no need for menu.menu("destroy"); as we remove the complete list
+        list.remove();
+        
+        // show name, image and button again
+        span.show();
+        img.show();
+        button.show();
+      });
+    }
+  });
 }
 
 function doEditorI() {
+  doAtomEditor($(this), "images", function(article, img, span, li) {
+      // set image, name and (hidden) atom value
+      img.attr("src", gDynamic + "/images/" + li.attr("rel"));
+      span.text(li.attr("title"));
+      article.find(".atom").val(li.attr("id"));
+  });        
+  return false;
 }
 
 function doEditorF() {
+  doAtomEditor($(this), "files", function(article, img, span, li) {
+    // set image, name and (hidden) atom value
+    var fn = li.attr("rel");
+    img.attr("src", gStatic + "/images/extentions/" + fn.substring(fn.lastIndexOf(".")+1) + ".gif");
+    span.text(li.attr("title"));
+    article.find(".atom").val(li.attr("id"));
+  });
+  return false;
 }
 
-function doEditor() {
+
+function doEditorT() {
   var block = $(this).parent().parent();
   gCurrentBlock = block.attr("id");
   
@@ -145,18 +253,6 @@ function doSaveEditor() {
 function doCancelEditor() {
   hideEditor();
 }
-
-function doAddContent() {
-  $("#block_selector").dialog("open");
-  // ask the kind (text, form, image, file)
-  
-  // add a div with id = 0, sortorder = 10 + last one
-  return false;
-}
-function selectedContent() {
-  $("#block_selector").dialog("close");
-}
-
 
 function hideEditor() {
   // rich text editor
@@ -177,114 +273,57 @@ function saveEditor(theId) {
   hideEditor();
   var content = $("#editContent").html();
   var block = $("#content_data #"+theId);
+  
+  // do we need to save it to the server?
+  // on "save" all content is transmitted again...
+  // perhaps just calling next 2 lines is enough:
+  // var name = block.find(".textdata").val( content ).attr("name");
+  // $("#content_data #"+name).html($(content).text().substring(0,80) + "<br>...");
+
   $.ajax({
-         type: "POST", url: "./sitemap",
-         data: "request=savedata&node="+gTree.getCurrentNode()+
-                 "&id=" + theId +
-                 "&item=" + $("#node").val() +
-                 "&language=" + $("#language").val() +
-                 "&name=" + block.find(".name").val() +
-                 "&sortorder=" + block.find(".sortorder").val() +
-                 "&atom=" + block.find(".atom").val() +
-                 "&kind=" + $("#" + theId + " .kind").val() +
-                 "&data=" + escape( content ),
-         success: function(msg){
-            if (msg.status != "OK") {
-              alert("Data not saved!\nGot error from server: " + msg.status + ", see console.");
-              console.log(msg);
-              // don't rollback the data (user otherwise looses it's input), just show the editor again
-              showEditor( content );
-            } else {
-              // replace data in our form
-              var name = block.find(".textdata").val( content ).attr("name");
-              $("#content_data #"+name).html($(content).text().substring(0,80) + "<br>...");
-            }
-          }
-       });
+     type: "POST", url: "./sitemap",
+     data: "request=savedata&node="+gTree.getCurrentNode()+
+             "&id=" + theId +
+             "&item=" + $("#node").val() +
+             "&language=" + $("#language").val() +
+             "&name=" + block.find(".name").val() +
+             "&sortorder=" + block.find(".sortorder").val() +
+             "&atom=" + block.find(".atom").val() +
+             "&kind=" + $("#" + theId + " .kind").val() +
+             "&data=" + escape( content ),
+     success: function(msg){
+        if (msg.status != "OK") {
+          alert("Data not saved!\nGot error from server: " + msg.status + ", see console.");
+          console.log(msg);
+          // don't rollback the data (user otherwise looses it's input), just show the editor again
+          showEditor( content );
+        } else {
+          // replace data in our form
+          var name = block.find(".textdata").val( content ).attr("name");
+          $("#content_data #"+name).html($(content).text().substring(0,80) + "<br>...");
+        }
+      }
+   });
 }
 
-////////
-//TODO: redo this part
-//  - files, forms, content and images are all content blocks attached to a page
-//
-////////
+///////////////////////
+// ordening elements //
+///////////////////////
 
 function saveOrder() {
-  var serialStr = $("#otherElements").val();
-  $("#files li").each(function() { serialStr += (serialStr != ""  ? "," : "") + $(this).attr("id"); });
-  $("#elements").val(serialStr);
-};
-
-
-function hideFileEditor() {
-  $("#FileEditor").hide();
-}
-function showFileEditor(nr) {
-  // try to move the editor just in front of the element
-  // didn't succeed, so there's some error in the code below.
-  //parent = $('#N'+nr).parent();
-  //x = $('#FileEditor').clone();
-  //$('#FileEditor').remove();
-  //parent.insertAfter( x );
-  
-  $('#FileEditor').show();
-  $('#currentElement').val(nr);
-  $('#filename').val( $('#N'+nr).val() );
-  $('#fileurl').text( $('#S'+nr).val() );
-}
-function saveFileEditor() {
-  var nr = $('#currentElement').val();
-  var fn = $('#filename').val();
-  var url = $('#fileurl').text();
-
-  if (url != '') {
-    $('#S'+nr).val( url );
-    $('#A'+nr).attr("href", gContext + "/data/files/" + url );
-    
-    parts = url.split('.');
-    $('#I'+nr).attr("src", gContext + "/images/extentions/" + parts[1] + ".gif" );
-  }
-  $('#N'+nr).val( fn );
-  $('#F'+nr).text( fn );
-  
-  $('#FileEditor').hide();
-  // console.log(('#N'+nr) + " <= " + fn + " - " + url + " - " + parts[1]);
-}
-
-function addFileDiv(filenr, elementid, filename, img, url) {
-  if ($('#files').size() == 0) {
-    $('#page').append('<div><label>Files</label><ul id="files"></ul></div>');
-  }
-  $('#files').append(
-  '<li id="' + elementid + '">' +
-   '<div class="File"><label><img class="handle" src="<%=images}/move.png" /> File '+filenr+'</label>' +
-    '<span id="F' + elementid + '">'+filename+'</span>' +
-    '<input name="K' + elementid + '" id="K' + elementid + '" type="hidden" value="F" />' +
-    '<input name="N' + elementid + '" id="N' + elementid + '" type="hidden" value="" />' +
-    '<input name="S' + elementid + '" id="S' + elementid + '" type="hidden" value="'+filename+'" />' +
-    '<a href="'+url+'" target=_blank id="A' + elementid + '"><img id="I' + elementid + '" src="'+img+'" border=0 /></a>' +
-    '<a href="#" onclick="showFileEditor('+elementid+');">Edit</a> |' +
-    '<a href="#" onclick="deleteFile('+elementid+');">Delete</a> <br />' +
-   '</div>' +
-  '</li>');
-}
-
-function addFile(nr) {
-  var nr = $('#nrElements').val() * 1 + 1;
-  $('#nrElements').val(nr);
-  
-  var xnr = 900 + nr;
-  var currValues = $('#elements').val();
-  $('#elements').val( (currValues != "") ? currValues+","+xnr : xnr );
-
-  addFileDiv(nr, xnr, '&lt;no file&gt;', gImages + '/extentions/xxx.gif', '#');
-  
-  showFileEditor(xnr);
-}
-
-function deleteFile(nr) {
-  $('#F'+nr).parent().hide();
-  $('#K'+nr).val('X');
+  var nr = 10;
+  var inMain = false;
+  $("#content article,#content h4").each(function(){
+    var block = $(this);
+    var id = block.attr("id");
+    if (id) {
+      block.find(".intro").val( (inMain) ? 'N' : 'Y' );
+      block.find(".sortorder").val(nr);
+      nr = nr + 10;
+    } else if (block.hasClass("main")) { 
+      inMain = true; 
+    }
+  });
 }
 
 

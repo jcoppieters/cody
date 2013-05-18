@@ -10,7 +10,7 @@
 //  - compiler for typo's in attributes
 //  - compiler checking for missing params
 
-// todo for the jcms framework
+// todo for the cody framework
 //
 // Front
 // - log in, with sessions
@@ -30,7 +30,7 @@ var server = express();
 var fs = require('fs');
 
 var ejs = require('ejs');
-var jcms = require('./jcms');
+var cody = require('./cody');
 var essen = require('./site');
 
 server.use(express.bodyParser());
@@ -38,7 +38,7 @@ server.use(express.cookieParser("a secret"));
 server.use(express.cookieSession());
 
 
-var app = new jcms.Application("essen1", "v0.1a1", "/Users/johan/git/jCMS/jCMS");
+var app = new cody.Application("essen1", "v0.1a1", "/Users/johan/git/jcms/jcms");
  // path should be  /usr/local/data  on production
  app.init();
  app.addController("AgendaController", essen.AgendaController);
@@ -53,12 +53,12 @@ server.all('/nl/*', function(req, res){
 
 // next 2 should be done by Apache front end
 server.get('/static/*', function(req, res){
-  var fileserver = new jcms.Static(req, res);
+  var fileserver = new cody.Static(req, res);
   fileserver.serve();
 });
 
 server.get('/data/*', function(req, res){
-  var fileserver = new jcms.Dynamic(req, res, app.getDataPath());
+  var fileserver = new cody.Dynamic(req, res, app.getDataPath());
   fileserver.serve();
 });
 

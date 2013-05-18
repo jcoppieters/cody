@@ -5,7 +5,7 @@
 console.log("loading " + module.id);
 
 var mysql = require("mysql");
-var jcms = require("../jcms/index.js");
+var cody = require("../cody/index.js");
 
 module.exports = AgendaController;
 
@@ -13,10 +13,10 @@ function AgendaController(context) {
   console.log("AgendaController.constructor -> page: ("
                 + context.page.itemId + ") " + context.page.title);
   
-  jcms.Controller.call(this, context);
+  cody.Controller.call(this, context);
 }
 
-AgendaController.prototype = new jcms.Controller();
+AgendaController.prototype = new cody.Controller();
 
 
 AgendaController.prototype.doRequest = function( finish ) {

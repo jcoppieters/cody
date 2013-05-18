@@ -1,7 +1,7 @@
 
 //Johan Coppieters 
 //- mar 2011 - rWorks
-//- mar 2013 - jCMS
+//- mar 2013 - cody
 
 
 
@@ -78,7 +78,7 @@ this.doAdd = function() {
   var self = this;
   var t = $("#tree").jstree("get_selected"); 
   if (t) {
-    $("#sitemap").jstree("create", t, "inside");
+    $("#tree").jstree("create", t, "inside");
   } else {
     self.warnUser("Please select an item first");
   }

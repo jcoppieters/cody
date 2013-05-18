@@ -14,25 +14,38 @@
         <p class="content_text">Created: <%= formatDate(atom.created) %> @ <%= formatTime(atom.created) %>
           <br> Last Modified: <%= formatDate(atom.updated) %> @  <%= formatTime(atom.updated) %></p>
       </div>
+      
       <% if(atom.extention == '') { %>
         <input type="hidden" name="extention" value="" />
-        <input type="hidden" name="caption" value="" />
+        <input type="hidden" name="note" value="" />
+        
       <% } else { %>
+        <div>
+          <label for="note">Note</label>
+          <textarea name="note" id="note" cols="60" rows="3"><%= atom.note %></textarea>
+        </div>
+        
         <% if ( atom.extention != 'xxx') { %>
         <div>
           <label for="extention">Extention</label>
           <input name="extention" id="extention" type="text" value="<%= atom.extention %>" size="4" />
         </div>
         <% } %>
-        <div>
-          <label for="note">Note</label>
-          <textarea name="note" id="note" cols="60" rows="3"><%= atom.note %></textarea>
-        </div>
         
         <div>
-          <label for="fileupload">File</label>
+          <label for="preview">Current</label>
+          <a href="<%=atom.getPathName(controller)%>?u=<%=getUnique()%>">
+            <img class="icon" src="<%=static%>/images/extentions/<%=atom.extention%>.gif" /></a>
+          <a href="<%=atom.getPathName(controller)%>?u=<%=getUnique()%>" class="filelink">
+            <%= atom.getFileName() %></a>
+        </div>      
+        
+        
+        <div>
+          <label for="fileupload">Change</label>
           <input id="fileToUpload" type="file" size="30" name="fileToUpload" class="input" onchange='$("#preview").attr("src","")'/>
         </div>  
+        
         
       <% } %>  
       </div>     
