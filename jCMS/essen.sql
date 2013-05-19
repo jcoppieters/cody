@@ -41,6 +41,9 @@ INSERT INTO `atoms` VALUES
 (34,24,30,'Praktijk','De Praktijk','jpg','2012-08-15 20:51:13','2012-08-15 22:52:11'),
 (35,24,30,'Kaartje','','JPG','2012-08-15 20:57:34','2012-08-15 22:57:44');
 
+INSERT INTO `atoms` VALUES
+ (40,2,10,'PDFs','','','2012-08-15 18:55:51','2012-08-15 18:55:54'),
+ (41,40,10,'a file','','pdf','2012-08-15 18:55:51','2012-08-15 18:55:54');
 
 --
 -- Dumping data for table `templates`
@@ -163,10 +166,6 @@ INSERT INTO `content` VALUES
 (0,104,'nl',10,'N','T',0,'','<p>Wij hebben als huisarts ook nood aan vakantie en vrije tijd. Daarnaast kunnen wij ook afwezig zijn voor het volgen van bepaalde opleidingen.</p>\n<p>De&nbsp;afwezigheid van een&nbsp;arts&nbsp;wordt een tijd op voorhand aangekondigd op deze website en in de wachtzaal. De consultaties worden dan overgenomen door de overblijvende artsen.<strong><br /></strong></p>\n<p><strong>Dr. Tack zal afwezig zijn op:</strong><br />- 01/10/12 t/m 15/10/12</p>\n<p><strong>Dr. Gheyle zal afwezig zijn op:</strong><br />- 29/10/12 t/m 19/11/12</p>\n<p><strong>Dr. Fevery zal afwezig zijn op:</strong><br />- 07/09/12 t/m 23/09/12</p>'),
 (0,107,'nl',10,'N','T',0,'','<p>In onze praktijk&nbsp;beschikken&nbsp;wij over de ideale omstandigheden om u te onderzoeken en te behandelen (aanwezigheid van medische materiaal en volledige dossiergegevens).</p>\n<p>Daarom vragen wij om zoveel&nbsp;als mogelijk&nbsp;bij ons op consultatie te komen.</p>\n<p>Indien dit wegens omstandigheden niet mogelijk is, kan u steeds een huisbezoek aanvragen.&nbsp;Gelieve dit bij voorkeur te doen tussen 08u00 en 10u30.</p>\n<p>Voor de huisbezoeken hebben wij een beurtrolsysteem. Wij kunnen u niet steeds garanderen dat uw huisarts naar keuze kan langskomen voor huisbezoeken die op de dag zelf worden aangevraagd. Dit kan enkel gegarandeerd worden voor huisbezoeken die op voorhand gepland worden.</p>\n<hr />\n<p>Voor nieuwe pati&euml;nten (aansluiting in praktijk na 1 januari 2009) kunnen wij enkel nog huisbezoeken doen in de regio\'s St-Andries, St-Michiels en Varsenare.</p>');
 
-
---
--- Dumping data for table `elements`
---
 
 INSERT INTO `content` VALUES 
 (0,99,'nl',10,'Y','S',0,'From Email','secretariaat@de-essen.be'),
