@@ -16,10 +16,10 @@ function AgendaController(context) {
   cody.Controller.call(this, context);
 }
 
-AgendaController.prototype = new cody.Controller();
+AgendaController.prototype = Object.create( cody.Controller.prototype );
 
 
 AgendaController.prototype.doRequest = function( finish ) {
   finish();
-}
+};
 

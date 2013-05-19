@@ -1,6 +1,8 @@
   <img src="<%=context%>/static/images/cms/logo.png">
   <span>Cody CMS</span>
-  <span id="breadcrumb"><a href="<%=context%>/<%=page.language%>/dashboard">Dashboard</a> » <%=page.parent.title%></span>
+  <% if (page.parent) { %>
+    <span id="breadcrumb"><a href="<%=context%>/<%=page.language%>/dashboard">Dashboard</a> » <%=page.parent.title%></span>
+  <% } %>
   <section>
     <a href="<%=context%>/static/manual.pdf">Help</a>
     <a href="<%=context%>/<%=page.language%>/users?request=edit&id=<%=login.id%>">Account</a>

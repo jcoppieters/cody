@@ -32,15 +32,15 @@
 
 					<% if (step == 99) { %>
 	  					<p class="notification <%=status%>">Onze excuses,
-                  iemand heeft ondertussen dit tijdstip bij deze arts al ingenomen,
-                  probeert U nog eens.</p>
+                           iemand heeft ondertussen dit tijdstip bij deze arts al ingenomen,
+                           probeert U nog eens.</p>
 						<br><br>
 						<p><a class="maakAfspraak button icons" href="afspraak">Klik hier voor een afspraak</a></p>
 					<% } %>
 					
           
 					<% if (step == 0) { %>
-						<% if (page.content[0].data != "") { %>
+						<% if ((page.content[0]) && (page.content[0].data != "")) { %>
 							<p><%- page.content[0].data %></p>
 						<% } %>
 

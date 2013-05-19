@@ -11,7 +11,8 @@ console.log("loading " + module.id);
 function ImageController(context) {
   // only called for using my methods
   if (context === undefined) { return; }
-  console.log("ImageController.constructor -> page(" + context.page.itemId + ") = " + context.page.title + ", request = " + context.request);
+  console.log("ImageController.constructor -> page(" + context.page.itemId + ") = " +
+              context.page.title + ", request = " + context.request);
   
   // init inherited controller
   cody.TreeController.call(this, context);

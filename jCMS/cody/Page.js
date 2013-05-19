@@ -420,18 +420,13 @@ Page.prototype.fetchContent = function( app, language, itemId, next ) {
       }
       self.content = [];
 
-      if (result.length === 0) {
-        self.content[0] = new cody.Content({}, self, app);
-        // console.log("no content for " + self.title + " -> nothing");
-      } else {
-        for (var i = 0; i < result.length; i++) {
-          self.content[i] = new cody.Content(result[i], self, app);
-          if (self.content[i].name === "") { 
-            self.content[i].name = "Content" + nr; 
-            nr++; 
-          }
-          console.log("  " + self.content[i].name + " = " + self.content[i].data.length + " bytes");
+      for (var i = 0; i < result.length; i++) {
+        self.content[i] = new cody.Content(result[i], self, app);
+        if (self.content[i].name === "") {
+          self.content[i].name = "Content" + nr;
+          nr++;
         }
+        console.log("  " + self.content[i].name + " = " + self.content[i].data.length + " bytes");
       }
 
       next();

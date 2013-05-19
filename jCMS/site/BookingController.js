@@ -13,7 +13,6 @@ var gMonths = {1: "Januari", 2: "Februari", 3: "Maart", 4: "April", 5: "Mei", 6:
                7: "Juli", 8: "Augustus", 9: "September", 10: "Oktober", 11: "November", 12: "December"};
 
 
-module.exports = BookingController;
 
 function BookingController(context) {
   console.log("BookingController.constructor -> page: ("
@@ -21,8 +20,9 @@ function BookingController(context) {
   
   cody.Controller.call(this, context);
 }
+BookingController.prototype = Object.create( cody.Controller.prototype );
+module.exports = BookingController;
 
-BookingController.prototype = new cody.Controller();
 
 
 BookingController.prototype.doRequest = function( finish ) {
@@ -31,19 +31,19 @@ BookingController.prototype.doRequest = function( finish ) {
   
   var aDate = this.getDate("date") || new Date();
 
-  if (this.request == "") {
+  if (this.isRequest("")) {
     this.context.step = 0;
     this.step0( aDate, finish );
   
-  } else if (this.request == "form") {
+  } else if (this.isRequest("form")) {
     this.context.step = 1;
     this.step1( aDate, finish );
   
-  } else if (this.request == "Bevestig") {
+  } else if (this.isRequest("Bevestig")) {
     this.context.step = 2;
     this.step2( aDate, finish );
   }
-}
+};
 
 BookingController.prototype.step2 = function( theDate, finish ) {
   var self = this;
@@ -84,11 +84,11 @@ BookingController.prototype.step2 = function( theDate, finish ) {
         });
       }
   });
-}
+};
 
 BookingController.prototype.sendTheMails = function( dr, title ) {
   console.log("BookingController.sendTheMails -> to: " + dr + " - " + title);
-}
+};
 
 
 BookingController.prototype.step1 = function( theDate, finish ) {
@@ -103,10 +103,9 @@ BookingController.prototype.step1 = function( theDate, finish ) {
     function(err, results) {
       self.context.dr = results[0];
     
-      //cody.Controller.prototype.doRequest.call(self, finish);
       finish();
     });
-}
+};
 
 BookingController.prototype.step0 = function( theDate, finish ) {
   var self = this;
@@ -194,7 +193,7 @@ BookingController.prototype.step0 = function( theDate, finish ) {
   dayNumber = -1;
   theDate = new Date(theDate.getTime() - kOneDay);
   doNext();
-}
+};
 
 
 

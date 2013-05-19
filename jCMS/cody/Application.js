@@ -81,7 +81,8 @@ Application.prototype.addControllers = function() {
   this.addController('SitemapController', cody.SitemapController);
   this.addController('ImageController', cody.ImageController);
   this.addController('FileController', cody.FileController);
-  
+  this.addController('DashboardController', cody.DashboardController);
+
 };
 
 
@@ -286,7 +287,7 @@ Application.prototype.handToController = function(context) {
       
       self.log("Application.handToController -> finish - template file = ", (context.fn==="") ? "** none **" : context.fn);
       if (context.fn !== "") {
-        context.res.render(context.fn, context);
+        context.res.render("../views/" +context.fn, context);
       }
     }
       
