@@ -1,0 +1,274 @@
+/* reset
+------------------------------------------------------------------*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+body { line-height: 1; }
+ol, ul { list-style: none; }
+blockquote, q { quotes: none; }
+blockquote:before,
+blockquote:after,
+q:before, q:after { content: ''; content: none; }
+/* remember to define focus styles! */
+:focus { outline: 0; }
+/* remember to highlight inserts somehow! */
+ins { text-decoration: none; }
+del { text-decoration: line-through; }
+/* tables still need 'cellspacing="0"' in the markup */
+table { border-collapse: collapse; border-spacing: 0; }
+
+/* general
+------------------------------------------------------------------*/
+body { background-color: #F4F4F4; color: #363730; font-family:"Trebuchet MS", Arial, Verdana; font-size: 12px; }
+h1 { margin: 0 0 15px; font-size: 14px; font-weight: bold; color: #414141; }
+h2 { margin: 0 0 15px; font-size: 12px; font-weight: bold; color: #414141; }
+h3 {  margin: 2px 0 15px 0; font-size: 16px; font-weight: bold; color: #0D7FC6;  }
+h4 {}
+h5 {}
+ul, ol { margin: 0 0 14px 0; }
+p, form { margin: 0 0 14px 0; }
+p { margin: 0 0 2px; padding: 0; font-size: 13px; color: #666; line-height: 15px; }
+a { color: #363730; text-decoration: none }
+a:hover { color: #363730; text-decoration: underline }
+a:visited { color: #363730 }
+input, textarea, select { font-size: 11px; font-family: Arial, sans-serif; color: #4F535C; margin-left: 0 }
+strong { font-weight: bold; color: #b63d94; }
+em { font-style: italic; }
+sup { font-size: 8px; vertical-align: super; }
+sub { font-size: 8px; vertical-align: sub; }
+
+.img_left { float: left; margin: 0 10px 10px 0; }
+.img_right { float: right; margin: 0 0 10px 10px; }
+
+.clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.clearfix { display: inline-block; }
+/* Hide from IE Mac \*/
+.clearfix { display: block; }
+/* End hide from IE Mac */
+
+.odd { background-color: #f0f0f0;	}
+.hidden { display: none; }
+
+.warning { clear: both; padding: 5px 10px; background: #fef9f9; border: 1px solid #f00; color: #f00; text-align: left; }
+
+/*-----------------------------------*/
+.ui-datepicker-trigger { vertical-align: top; margin-top: 2px; margin-left: 4px; }
+
+
+/* Page layout 
+------------------------------------------------------------------*/
+body > section { width: 1000px; margin: 0 auto; }
+body > section > div { clear: both; margin: 10px 2px 0 2px  }
+
+
+/* Top navigation
+------------------------------------------------------------------*/
+header { width: 100% }
+  header > img { display: inline-block; border: none; margin: 20px 10px 10px 2px; vertical-align: top }
+  header > span { display: inline-block; font-size: 32px; font-weight: bolder; margin: 15px 10px 10px 0px; vertical-align: top }
+  header > span#breadcrumb { display: inline-block; font-size: 16px; font-weight: normal; margin: 29px 10px 10px 20px; 
+                             vertical-align: top; color: #EA7B00 }
+  header > span#breadcrumb a { text-decoration: none; color: #363730 }
+  header > span#breadcrumb a:visited { text-decoration: none }
+  header > span#breadcrumb a:hover { text-decoration: underline }
+  
+  header > section { display: block; float: right; margin: 30px 4px 10px 10px; vertical-align: top }
+  header > section > a { margin: 0 0 0 16px; font-size: 14px; font-weigth: bold }
+ 
+	header > nav { clear: both; background-color: #363730; height: 24px; padding: 15px; margin: 0 2px 0 2px; }
+	  header > nav ul {}
+	  header > nav li { display: inline-block; margin: 4px 12px 4px 8px }
+	  header > nav a { color: white; font-size: 16px; font-weight: bold }
+	  header > nav a:hover { color: white; text-decoration: underline; }
+	  header > nav a:visited { color: white; }
+	  header > nav a.active { color: #EA7B00 }
+
+/* footer
+------------------------------------------------------------------*/
+
+footer { clear: both; width: 1000px; margin: 15px auto 0 auto; }
+  footer #copyright { width: 400px; text-align: left; display: inline-block; margin-left: 2px; }
+  footer #version { float: right; width: 200px; text-align: right; margin-right: 2px }
+  
+  
+/* dashboard layout
+------------------------------------------------------------------*/
+#dashboard nav { clear: both }
+  #dashboard nav > section { vertical-align: top; background-color: white; border: 1px solid #CFCFCF; 
+                             display: inline-block; width: 190px; padding: 8px ; margin: 12px 14px 5px 1px }
+  #dashboard nav > section ul { list-style-type: circle; }
+  #dashboard nav > section li { margin: 8px 2px 8px 22px; font-size: 14px }
+
+
+
+/* tree edit layout
+------------------------------------------------------------------*/
+
+#left_nav { width: 345px;  display: inline-block; margin-top: 7px;}
+#right_cont { display: inline-block; width: 645px; margin-top: 7px; vertical-align: top }
+
+
+
+/* tree manager
+------------------------------------------------------------------*/
+#tree { width: 330px; background: white; border: solid 1px #CFCFCF; margin: 10px 0 0 2px  }
+#tree.jstree li.deleted a  { color: #BBB; }
+#tree.jstree > ul { margin: 0 0 8px 5px }
+#tree.jstree > ul > li { margin-top: 8px }
+#tree.jstree li.invisible a  { color: #999; }
+#tree.jstree a { height: 18px; width: 90%; padding: 4px 2px 0 1px; border: solid 1px white }
+#tree.jstree a.jstree-hovered { padding: 4px 2px 0 1px; border: solid 1px #d8f0fa} 
+#tree.jstree li[rel=root] > a { font-size: 13px; color: #1c94c4; font-weight: bold }
+#tree.jstree li[rel=root] > a.jstree-clicked { border: solid 1px #99defd }
+
+
+/* item/page/content editor with "#right_cont"
+------------------------------------------------------------------*/
+label.kind { display: inline-block; width: 13px; height: 16px; text-align: center; vertical-align: top;
+             border: 3px solid lightgrey; padding: 1px 4px 4px 6px; 
+             font-size: 16px; color: lightgrey; font-weight: bolder; }
+
+#block_selector { }
+  #block_selector #stringlist { display: inline-block; margin: 22px 0px 0px 15px }
+  #block_selector #stringlist a {  margin: 0 }
+  #block_selector label.kind { margin: 14px 8px 12px 15px; color: #1c94c4;
+                               font-weight: bolder; font-size: 13px; height: 19px; line-height: 22px;}
+  #block_selector a { margin: 22px 0px 0px 15px; color: #363730; font-weight: bolder; font-size: 13px; height: 19px; display: inline-block }
+  #block_selector a:visited { color: #363730; }
+  #block_selector a:hover { color: #1c94c4; }
+
+#content_div { border: 1px solid #ccc; background-color: rgb(240, 240, 238);}
+  #content_div #content_buttons { margin: 5px; text-align: center; }
+  #content_div { border: 1px solid #ccc; background-color: rgb(240, 240, 238);}
+  #content_div textarea { width: 798px; }
+  #content_div tr.mceLast { display: none }
+
+
+#content_data { background: white; border: solid 1px #cfcfcf; margin: 2px 0 0 2px }
+  #content_data form { }
+
+  #content_data section { margin: 10px; }
+    #content_data section > div { margin: 10px 5px 5px 8px; }
+    #content_data section button { margin-top: -1px; height: 25px }
+  #content_data > div { margin: 10px 5px 5px 8px; }
+  #content_data input { font-size: 13px; height: 19px; line-height: 22px }
+  #content_data label { font-size: 13px; height: 19px; line-height: 22px; margin-bottom: 4px }
+  #content_data label { color: #1c94c4; font-weight: bolder;  }
+  #content_data label[for=title] { display: block; text-align: left; float: none; }
+
+  #content_data #tabs { margin: 5px 17px 5px 17px; border-radius: 0; border: 1px solid #cfcfcf; }
+  body#images #content_data #tabs,
+  body#files #content_data #tabs,
+  body#forms #content_data #tabs { margin-top: 16px }
+    #content_data #tabs > div { padding: 5px 5px 5px 5px; }
+    #content_data #tabs .ui-widget-header { border: none; background: none; background-color: #F4F4F4 }
+    #content_data #tabs.ui-widget-content { background: none; background-color: white }
+    #content_data #tabs li.ui-state-default a, li.ui-state-default a:visited { color: #363730 }
+    #content_data #tabs li.ui-state-active a, li.ui-state-active a:visited { color: #eb8f00 }
+    #content_data #tabs li { border-color: #cccccc; }
+    
+  #content_data #content {}
+    #content_data #content #contentButtons { border: none; margin: 5px 0 5px 0; padding-left: 0px }
+    #content_data #content article { border: solid 1px #cfcfcf; margin: 5px 2px 18px 2px; padding: 5px; width: 575px; height: 55px;
+                     border-radius: 3px; -moz-border-radius: 5px; border-radius: 5px;
+                     box-shadow: 2px 2px 5px lightgrey; -moz-box-shadow: 2px 2px 5px lightgrey; -webkit-box-shadow: 2px 2px 5px lightgrey;
+                     background-color: white  }
+
+      #content_data #content h4 { margin: 10px 0 10px 3px; color: #1c94c4 }
+      #content_data #content article > label.kind { margin: 14px 8px 12px 5px }
+	    #content_data #content article > div.actions { display: inline-block; vertical-align:top; margin-top: 14px; float: right }
+	    #content_data #content article > div.actions > span { display: inline-block; margin-left: 5px; 
+	                                                          background-image: url(ui-lightness/images/ui-icons_ef8c08_256x240.png) }
+	                                                          
+      #content_data #content article > div.inputE > ul { display: block; z-index: 999; position: relative }
+
+      #content_data #content article > div.input { display: inline-block; width: 410px }
+      #content_data #content article > div.inputE { display: inline-block; width: 340px }
+      #content_data #content article > div.inputE > span { display: inline-block; overflow: hidden; vertical-align:top; margin: 20px 0 0 5px }
+      #content_data #content article > div > h5 { display: inline-block; width: 400px; margin: 2px 0 2px 0; font-size: 12px }
+      #content_data #content article > div > img { display: inline-block; height: 55px }
+      #content_data #content article > div > img.icon { height: 16px; margin-top: 18px }
+      #content_data #content article > div > select { display: inline-block; margin-top: 18px }
+      #content_data #content article > div.inputE > p { display: inline-block; width: 330px; overflow: hidden; height: 45px  }
+      #content_data #content article > div.input > textarea { display: inline-block; width: 400px; overflow: hidden; height: 30px; border-color: #cfcfcf }
+       
+  #content_data #seo {  }
+    #content_data #seo div { margin: 10px 0 10px 4px }
+    #content_data #seo label { width: 80px; vertical-align: top; display: inline-block }
+    #content_data #seo input { width: 300px; vertical-align: top; display: inline-block }
+    #content_data #seo textarea { width: 390px; vertical-align: top; display: inline-block }
+    #content_data #seo span { font-size: 13px; margin-top: 5px; display: inline-block }
+    
+  #content_data #options {  }
+    #content_data #options div { margin: 10px 0 10px 4px }
+    #content_data #options label { margin-left: 16px; width: 80px; vertical-align: top; display: inline-block; text-align: right }
+    #content_data #options label:first-child { margin: 0; width: 110px; text-align: left }
+    #content_data #options label[for=validto] { width: 18px }
+    #content_data #options input[type=text] { width: 300px; vertical-align: top; display: inline-block; }
+    #content_data #options input[type=text].dater { width: 90px; }
+    #content_data #options input[type=checkbox] { margin-top: 0px }
+    #content_data #options span { font-size: 13px; margin-top: 5px; display: inline-block }
+    #content_data #options label { width: 80px; vertical-align: top; display: inline-block }
+    #content_data #options p { display: inline-block; }
+    #content_data #options .filelink { display: inline-block; vertical-align: top; margin-top: 5px }
+
+  #content_data #action_buttons { margin: 15px 17px 5px 15px }
+    #content_data #action_buttons span#last_modif { margin:10px 2px 0 0 ; float: right; display: inline-block }
+
+
+/* backoffice tables + edit forms
+------------------------------------------------------------------*/
+
+#records { border-collapse:collapse; text-align: left; margin: 8px 0px 2px 0px; width: 100%;
+           box-shadow: 2px 2px 5px lightgrey; -moz-box-shadow: 2px 2px 5px lightgrey; -webkit-box-shadow: 2px 2px 5px lightgrey }
+  #records th { background-color: #99defd; border: solid 1px #cfcfcf; padding: 6px; }
+  #records td { background-color: white; border: solid 1px #cfcfcf; padding: 6px 4px 10px 6px }
+  #records .right { text-align: right }
+  #records .center { text-align: center }
+  #records td a,
+  #records td a:visited { color: #363730; }
+  #records td a:hover { color: #1c94c4; }
+  #records td.edit span { background-position: -64px -112px; background-image: url(ui-lightness/images/ui-icons_ef8c08_256x240.png);
+                          width: 16px; height: 16px; display: inline-block; vertical-align: bottom; margin: 0px 4px -1px 0; }
+
+#record { background-color: white; border: solid 1px #cfcfcf; padding: 8px; 
+          box-shadow: 2px 2px 5px lightgrey; -moz-box-shadow: 2px 2px 5px lightgrey; -webkit-box-shadow: 2px 2px 5px lightgrey }
+  #record label:first-child { width: 100px; margin-left: 0 }
+  #record label { width: 80px; vertical-align: top; display: inline-block; color: #1c94c4; 
+                  font-weight: bolder; text-align: left; margin: 5px 0 0 20px }
+  #record label.choice { width: inherit; margin-left: 2px; margin-right: 10px; color: inherit; font-weight: normal }
+  #record input[type=text] { width: 300px; vertical-align: top; display: inline-block }
+  #record input.number { width: 20px; }
+  #record input#domain { width: 100px }
+  #record select#domains { width: 196px }
+  #record fieldset > div { margin: 10px }
+  #record #action_buttons { margin: 15px 11px 0px 11px; border-top: solid 1px #cfcfcf; padding: 11px 0 6px 0;}
+
+  #record label.error { color: red; width: inherit }
+  
+  
+/* login - NOT OK
+------------------------------------------------------------------*/
+
+#login #wrapper { height: 600px; background: url(../images/admin-bg_login.png) no-repeat; }
+#login h1 { width: 505px; margin: 0; padding: 170px 295px 10px 0; background: url(../images/admin-bg_border.gif) repeat-x bottom; color: #fff; text-align: right; font-size: 24px; }
+  #loginForm { width: 255px; padding: 35px 295px 30px 250px; background: url(../images/admin-bg_border.gif) repeat-x bottom; color: #fff; text-align: right; }
+    #loginForm fieldset { float: none;  width: 255px; } // max-width: auto;
+      #loginForm fieldset div { padding-bottom: 5px; }
+    #loginForm .action_buttons { margin-right: 0; }
+      #loginForm .action_buttons input { width: 69px; height: 24px; border: 0; background: url(../images/admin-bt_login.png) no-repeat; color: #fff; font-size: 13px; font-weight: bold; font-family: Verdana, Arial, sans-serif; cursor: pointer; }
+

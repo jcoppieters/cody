@@ -1,0 +1,211 @@
+<div id="content_data">
+ 	<form action="./pages" method="post" class="clearfix" name="onepage" id="onepage">
+    <input type="hidden" name="request" id="request" value="save" /> 
+    <input type="hidden" name="node" id="node" value="<%=page.item.id%>" /> 
+    <input type="hidden" name="language" id="language" value="<%=page.language%>" /> 
+    
+    <section>
+	    <div>
+	      <label for="title">Page Title</label>
+	      <input name="title" id="title" type="text" value="<%= page.title %>" size="62" />
+	      <button id="doView">View Page</button>
+	    </div> 
+    </section>
+    
+    <div id="tabs">
+		  <ul>
+		    <li><a href="#content">Content</a></li>
+		    <li><a href="#seo">SEO</a></li>
+		    <li><a href="#options">Options</a></li>
+		  </ul>
+	
+      <!-- --------- -->
+		  <div id="content">
+      <!-- --------- -->
+		    <h4>Intro</h4>
+		    <div>
+		    <% var prev = "X";
+		       for (var ic in page.content) { var c = page.content[ic];
+	           if ((prev != c.intro) && (c.intro == "N")) { prev = c.intro; %>
+	            <h4 class="main">Main</h4>
+	           <% } %>
+		      <article id="id_<%= c.id %>">
+	          <input type="hidden" name="kind_<%= c.id %>" class="kind" value="<%= c.kind %>" />
+            <input type="hidden" name="sortorder_<%= c.id %>" class="sortorder" value="<%= c.sortorder %>" />
+            <input type="hidden" name="intro_<%= c.id %>" class="intro" value="<%= c.intro %>" />
+		        <label class="kind"><%= c.kind.toUpperCase() %></label>
+		        	          
+		        <% if (c.kind == "T") { %>
+		         <div class="inputE">
+               <input type="hidden" name="atom_<%= c.id %>" class="atom" value="<%= c.atomId %>" />
+		           <input type="hidden" name="data_<%= c.id %>" class="textdata" value="<%= c.data %>" />
+		           <p id="data_<%= c.id %>"></p>
+	           </div>
+	           <div class="actions">
+	             <button class="doEditorT">Edit</button>
+	             <button class="doDeletor">Delete</button>
+	             <span class="ui-icon-arrowthick-2-n-s ui-icon">x</span>
+	           </div>
+		         
+	          <% } else if (c.kind == "M") { %> 
+              <div class="input">
+		           <select name="atom_<%= c.id %>"><option value="0">-</option>
+		             <%- optionList(app.forms, c.atom) %>
+		           </select>
+              </div>
+              <div class="actions">
+                <button class="doDeletor">Delete</button>
+                <span class="ui-icon-arrowthick-2-n-s ui-icon">x</span>
+              </div>
+	          
+            <% } else if (c.kind == "S") { %>
+              <div class="input">
+                <input type="hidden" name="atom_<%= c.id %>" class="atom" value="<%= c.atomId %>" />
+                <h5><%= c.name %></h5>
+                <textarea name="data_<%= c.id %>" class="stringdata"><%= c.data %></textarea>
+              </div>
+              <div class="actions">
+                <button class="doDeletor">Delete</button>
+                <span class="ui-icon-arrowthick-2-n-s ui-icon">x</span>
+              </div>
+             
+            <% } else if (c.kind == "F") { %> 
+              <div class="inputE">
+                <input type="hidden" name="atom_<%= c.id %>" class="atom" value="<%= c.atomId %>" />
+                <% if (c.atomId != 0) { %>
+                  <% if ((c.atom.extention !== "") && (c.atom.extention !== "xxx")) { %>
+                    <img class="icon" src="<%=static%>/images/extentions/<%=c.atom.extention%>.gif" />
+                    <span><%= c.atom.name %>.<%= c.atom.extention %></span>
+                  <% } else { %>
+                    <img class="icon" src="<%=static%>/images/extentions/xxx.gif" />
+                    <span><%= c.atom.name %></span>
+                  <% } %>
+                <% } %>
+              </div>
+              <div class="actions">
+                <button class="doEditorF">Edit</button>
+                <button class="doDeletor">Delete</button>
+                <span class="ui-icon-arrowthick-2-n-s ui-icon">x</span>
+              </div>
+             
+            <% } else if (c.kind == "I") { %> 
+              <div class="inputE">
+                <input type="hidden" name="atom_<%= c.id %>" class="atom" value="<%= c.atomId %>" />
+	              <% if (c.atomId != 0) { %>
+	               <img src="<%=dynamic%>/images/<%=c.atom.getFileName()%>" />
+	               <span><%=c.atom.name%>.<%=c.atom.extention%></span>
+                <% } else { %>
+                  <img src="<%=static%>/images/extentions/gif.gif" />
+                  <span>- none -</span>
+	              <% } %>
+              </div>
+              <div class="actions">
+                <button class="doEditorI">Edit</button>
+                <button class="doDeletor">Delete</button>
+                <span class="ui-icon-arrowthick-2-n-s ui-icon">x</span>
+              </div>
+	          
+            <% } %>
+		      </article>
+	      <% } %>
+	      </div>
+	      
+	      <div id="contentButtons">
+	        <button id="doAddContent">Add Content</button>
+		      <% if ((login.level >= 99) && (page.link != 'global')) { %>
+		        <button id="doAdjust">Adjust</button>
+		      <% } %>
+	      </div>
+	      
+	    </div>  
+	    
+      <!-- ----- -->
+	    <div id="seo">
+      <!-- ----- -->
+	      <div>
+	        <label for="link">Link</label>
+	        <span>/<%=page.language%>/</span> <input name="link" id="link" type="text" value="<%= page.link %>" size="25" />
+	        <span>(/<%= page.language %>/<%= page.item.id %>)</span>
+	      </div>
+        <div>
+          <label for="keywords">Keywords</label>
+          <textarea name="keywords" id="keywords" rows="2"><%= page.keywords %></textarea>
+        </div>
+        <div>
+          <label for="description">Description</label>
+          <textarea name="description" id="description" rows="4"><%= page.description %></textarea>
+        </div>
+      </div>
+	    
+	    <!-- -------- -->
+			<div id="options"> 
+      <!-- -------- -->
+				<div>
+					<label for="active">Active</label>
+					<input name="active" id="active" type="checkbox" value="Y" <%= checked(page.isActive()) %> />
+					<% if (login.level >= 50) { %>
+					  <label for="needslogin">Needs login</label>
+					  <input name="needslogin" id="needslogin" type="checkbox" value="Y" <%= checked(page.item.needsLogin()) %> />         
+					<% } %>
+				</div>
+				<div>
+					<label for="dated">Date</label>
+					<input name="dated" id="dated" type="text" value="<%= formatDate(page.item.dated) %>" class="dater"/>
+				</div>
+				<div>
+					<label for="validfrom">Valid from</label>
+					<input name="validfrom" id="validfrom" type="text" value="<%= formatDate(page.item.validfrom) %>"  class="dater"/>
+					<label for="validto"> to </label>
+					<input name="validto" id="validto" type="text" value="<%= formatDate(page.item.validto) %>"  class="dater"/>
+				</div>
+			
+				<% if (login && (login.level >= 99)) { %>
+					<div>
+						<label for="template">Template</label>
+						<select name="template" id="template">
+						  <%- optionList(app.templates, page.item.templateId, "id", "name") %>
+						</select>
+					</div>
+
+					<div>
+						<label for="orderby">Order sublevels</label>
+					  <select name="orderby" id="orderby">
+							  <%- optionList(cody.Item.orderbyList, page.item.orderby) %>
+						</select>
+							
+						<label for="showcontent">Show</label>
+						<select name="showcontent" id="showcontent">
+						   <%- optionList(cody.Item.showcontentList, page.item.showcontent) %>
+						</select>
+					</div>
+			  <% } %>
+							
+				<% if (login.level < 50) { %>
+					<input name="needslogin" id="needslogin" type="hidden" value="<%=page.item.needsLogin%>" />
+					<input name="allowedgroups" id="allowedgroups" type="hidden" value="<%=page.item.allowedGroups%>" />
+				<% } else { %>
+				 <div>
+					  <label for="allowedgroups">Allowed Groups</label>
+						<input name="allowedgroups" id="allowedgroups" type="text" value="<%= page.item.allowedgroups %>" class="long" />
+	          <select name="domains" id="domains">
+	            <option value="">add a group</option>
+              <%- optionList(app.domains, '') %>
+	          </select> 
+				 </div>
+				<% } %>
+	    </div>
+		</div>	
+	
+		<div id="action_buttons">
+			<button id="doSave">Save</button>
+			
+			<% if (! page.isActive()) { %>
+				<button id="doDelete">Delete</button>
+			<% } %>
+							
+			<span id="last_modif">Last Modified: <%= formatDate(page.updated) %></span>
+	  </div>
+	  
+  </form>
+</div>	
+

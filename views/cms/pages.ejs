@@ -1,0 +1,101 @@
+<!doctype html>
+
+<html lang="<%=page.language%>">
+
+<% include header.ejs %>
+
+<body id="pages">
+	<script src="<%=static%>/js/lib/jquery-1.9.1<%=min%>.js"></script>
+	<script src="<%=static%>/js/lib/jquery-ui-1.10.1<%=min%>.js"></script>
+	<script src="<%=static%>/js/lib/jquery.validate<%=min%>.js"></script>
+	<script src="<%=static%>/js/lib/localization/messages_<%=page.language%>.js"></script>
+	
+	<script type="text/javascript" src="<%=static%>/js/lib/jquery.jstree.js"></script>
+	<script type="text/javascript" src="<%=static%>/js/tinymce/jquery.tinymce.js"></script>
+	
+	 
+	<script type="text/javascript" src="<%=static%>/js/pages-editor.js"></script>
+	<script type="text/javascript" src="<%=static%>/js/atom-tree.js"></script>
+	<script type="text/javascript">
+	  var gTree;
+		$(document).ready( function() {
+		  gTree = new jAtomTree(1, <%=shownode%>, gContext, gLanguage, "pages", gImages);
+		  gTree.getNode = getPage;
+		  gTree.init();
+		});
+	</script>
+
+  <section>
+    <header>
+      <% include top.ejs %>
+      <% include navigation.ejs %>
+    </header>
+    
+		<div>
+		
+			<div id="content_div" style="display: none;">
+				<textarea name="editContent" id="editContent"></textarea>
+				<div id="content_buttons">
+					<button id="doSaveEditor">Save</button>
+					<button id="doCancelEditor">Cancel</button>
+				</div>
+			</div>
+	
+ 	    <div id="left_nav">
+				<button id="doAdd">Add</button>
+				<button id="doRename">Rename</button>  
+				<button id="doDelete">Delete</button>
+				<button id="doEdit">Edit</button>
+			
+	      <div id="tree">
+	        <ul>
+	          <li id="id_1" class="open" rel="root"><a href="#"><ins>&nbsp;</ins>Website</a>
+	            <%- controller.getTree() %>
+	          </li>
+	          
+            <li id="id_3" class="closed" rel="root"><a href="#"><ins>&nbsp;</ins>Pages</a>
+              <%- controller.getOrphansTree() %>
+            </li>
+           
+            <% if ((login) && (login.level >= 99)) { %>
+             <li id="id_9" class="closed" rel="root"><a href="#"><ins>&nbsp;</ins>Dashboard</a>
+                <%- controller.getDashboardTree() %>
+             </li>
+            <% } %>
+	        </ul>
+	      </div>
+	    </div>
+	    
+	    <div id="right_cont">
+			</div>
+       
+		</div>
+		
+		<% include footer.ejs %>
+  </section>
+  
+  <div id="block_selector" title="New content block">
+	  <div>
+      <label class="kind">T</label>
+      <a href="#" rel="T" id="doAddTextBlock">Add text  »</a>
+    </div>
+    <div>
+      <label class="kind">I</label>
+      <a href="#" rel="I" id="doAddImageBlock">Add image »</a>
+    </div>
+    <div>
+      <label class="kind">F</label>
+      <a href="#" rel="F" id="doAddFileBlock">Add file »</a>
+    </div>
+    <div>
+      <label class="kind">M</label>
+      <a href="#" rel="M" id="doAddFormBlock">Add form »</a>
+    </div>
+    <div>
+      <label class="kind">S</label>
+      <a href="#" rel="S" id="doAddFormBlock">Add String »</a>
+    </div>
+  </div>
+ 
+</body>
+</html>
