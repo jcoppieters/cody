@@ -46,8 +46,15 @@
 				<button id="doRename">Rename</button>  
 				<button id="doDelete">Delete</button>
 				<button id="doEdit">Edit</button>
-			
-	      <div id="tree">
+
+          <div id="ltabs" class="ui-tabs ui-widget">
+              <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+                <% for (var iL in app.languages) var L = app.languages[iL]; { %>
+                  <li class="ui-state-default ui-corner-top <%= (page.language === L.id) ? 'ui-tabs-active ui-state-active' : '' %>" ><a href="<%=context%>/<%=L.id%>/pages" class="ui-tabs-anchor"><%=L.id.toUpperCase()%></a></li>
+                <% } %>
+              </ul>
+
+	      <div id="tree" class="ui-corner-bottom">
 	        <ul>
 	          <li id="id_1" class="open" rel="root"><a href="#"><ins>&nbsp;</ins>Website</a>
 	            <%- controller.getTree() %>
@@ -65,7 +72,8 @@
 	        </ul>
 	      </div>
 	    </div>
-	    
+	          </div>
+
 	    <div id="right_cont">
 			</div>
        

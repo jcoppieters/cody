@@ -3,21 +3,13 @@
 //
 //
 
-// missing versus Java
-//
-//  - consistent "this"
-//  - function overloading
-//  - compiler for typo's in attributes
-//  - compiler checking for missing params
-
 // todo for the cody framework
 //
 // Front
-// - log in, with sessions
 // - sending mails with templates
 //
 // Back
-// - everything (pages, ..., users)
+// - forms
 //
 //
 // todo general
@@ -43,8 +35,6 @@ var app = new cody.Application("essen1", "v0.1a1", ".");
  app.init();
  app.addController("AgendaController", essen.AgendaController);
  app.addController("BookingController", essen.BookingController);
-
-
 
 server.all('/nl/*', function(req, res){
   app.servePage(req, res);

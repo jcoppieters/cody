@@ -125,7 +125,9 @@ footer { clear: both; width: 1000px; margin: 15px auto 0 auto; }
 
 /* tree manager
 ------------------------------------------------------------------*/
-#tree { width: 330px; background: white; border: solid 1px #CFCFCF; margin: 10px 0 0 2px  }
+#tree { width: 330px; background: white; border: solid 1px #CFCFCF; margin: 0px 0 0 2px  }
+body#images #tree, body#files #tree { margin-top: 10px }
+
 #tree.jstree li.deleted a  { color: #BBB; }
 #tree.jstree > ul { margin: 0 0 8px 5px }
 #tree.jstree > ul > li { margin-top: 8px }
@@ -151,6 +153,13 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
   #block_selector a:visited { color: #363730; }
   #block_selector a:hover { color: #1c94c4; }
 
+
+#left_nav #ltabs { margin-top: 10px; padding: 0 }
+    #left_nav #ltabs .ui-widget-header { border: none; background: none; background-color: #F4F4F4 }
+    #left_nav #ltabs li.ui-state-default a, li.ui-state-default a:visited { color: #363730 }
+    #left_nav #ltabs li.ui-state-active a, li.ui-state-active a:visited { color: #eb8f00 }
+    #left_nav #ltabs li { border-color: #cccccc; }
+
 #content_div { border: 1px solid #ccc; background-color: rgb(240, 240, 238);}
   #content_div #content_buttons { margin: 5px; text-align: center; }
   #content_div { border: 1px solid #ccc; background-color: rgb(240, 240, 238);}
@@ -164,17 +173,17 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
   #content_data section { margin: 10px; }
     #content_data section > div { margin: 10px 5px 5px 8px; }
     #content_data section button { margin-top: -1px; height: 25px }
-  #content_data > div { margin: 10px 5px 5px 8px; }
+  #content_data > div { margin: 10px 5px 5px 8px; border: 1px solid #cfcfcf; }
   #content_data input { font-size: 13px; height: 19px; line-height: 22px }
   #content_data label { font-size: 13px; height: 19px; line-height: 22px; margin-bottom: 4px }
   #content_data label { color: #1c94c4; font-weight: bolder;  }
   #content_data label[for=title] { display: block; text-align: left; float: none; }
 
-  #content_data #tabs { margin: 5px 17px 5px 17px; border-radius: 0; border: 1px solid #cfcfcf; }
+  #content_data #tabs { margin: 5px 17px 5px 14px; border-radius: 0;  }
   body#images #content_data #tabs,
   body#files #content_data #tabs,
   body#forms #content_data #tabs { margin-top: 16px }
-    #content_data #tabs > div { padding: 5px 5px 5px 5px; }
+    #content_data #tabs > div { padding: 5px 5px 5px 5px; margin: 0px 0 0 2px; border: solid 1px #cfcfcf }
     #content_data #tabs .ui-widget-header { border: none; background: none; background-color: #F4F4F4 }
     #content_data #tabs.ui-widget-content { background: none; background-color: white }
     #content_data #tabs li.ui-state-default a, li.ui-state-default a:visited { color: #363730 }

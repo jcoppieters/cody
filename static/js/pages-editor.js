@@ -62,8 +62,9 @@ function getPage(id) {
          $("#newContentForm #node").val(id);
          
          $("#right_cont").html(msg).show();
-         $("#tabs").tabs();
-         
+         $("#tabs").tabs().removeClass("ui-widget-content").removeClass("ui-corner-all");
+         $("#tabs ul").removeClass("ui-widget-header");
+
          $("#right_cont #doView").button({ icons: { primary: "ui-icon-link"}, text: true}).click( doView );
          $("#right_cont #doSave").button({ icons: { primary: "ui-icon-check"}, text: true}).click( function() { saveOrder(); self.doSave(); return false; });
          $("#right_cont #doDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( function() { self.doRealDelete(); return false; });
