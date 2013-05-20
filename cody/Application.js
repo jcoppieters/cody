@@ -326,7 +326,7 @@ Application.prototype.getConnection = function() {
         database: this.name
     });
   } else {
-    this.log("Application", "Returning existing connection");
+    this.log("Application.getConnection", "Returning existing connection");
   }
   
   if (typeof this.connection === "undefined") {
