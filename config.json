@@ -1,6 +1,8 @@
 {
-  "dbuser": "root",
-  "dbpassword": "Jd2qqNAt",
+  "dbuser": "cody",
+  "dbpassword": "ydoc",
   "dbhost": "localhost",
-  "datadir": "/usr/local"
+  "datadir": "/usr/local",
+  "name": "cody",
+  "db": "cody"
 }

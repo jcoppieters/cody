@@ -200,7 +200,7 @@ Page.prototype.isActive = function() {
 };
 Page.prototype.isVisible = function() { 
   var now = new Date();
-  return (this.active == 'Y') && (this.item.validfrom <= now) && (this.item.validto >= now); 
+  return (this.active == 'Y') && (this.item.validfrom <= now) && (this.item.validto >= now);
 };
 
 Page.prototype.getChildren = function() {

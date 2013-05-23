@@ -3,12 +3,6 @@
 //
 //
 
-// Next items are also in the issues on BitBucket
-//TODO: #1 - drop active from items
-//TODO: #1 - rename nr from users to sortorder
-
-//TODO: #2 - use allowdelete, allowinsert of item
-//TODO: #3 - set defaultrequest of item somewhere...
 
 var mysql = require('mysql');
 var cody = require('./index.js');
@@ -18,33 +12,41 @@ var config = require("../config.json");
 console.log("loading " + module.id);
 
 
-function Application(name, version, datapath) {
-  this.templates = null;    // hashmap with (id - template)
-  this.items = null;        // hashmap with (id - item)
-  this.pages = null;        // array with all pages
-  this.urls = null;         // hashmap with (urls - page)
-  this.atoms = null;        // hashmap with (id - atom)
+function Application(params) {
+  this.templates = {};      // hashmap with (id - template)
+  this.items = {};          // hashmap with (id - item)
+  this.pages = [];          // array with all pages
+  this.urls = {};           // hashmap with (urls - page)
+  this.atoms = {};          // hashmap with (id - atom)
   this.languages = [];      // array with all languages
-  this.domains = null;      // array with all (user) domains
+  this.domains = [];        // array with all (user) domains
   this.forms = {};          //TODO: hashmap with (id - form) -- or use some stuff from Yanic
   this.controllers = {};    // hashmap with (name - constructor)
     
-  this.testing = false;
-  this.logging = true;
-  this.name = name || config.name;
-  this.version = version;
-  this.datapath = datapath;
+  this.testing = params.testing || config.testing || false;
+  this.logging = params.logging || config.logging || true;
 
-  this.dbuser = config.dbuser || "root";
-  this.dbpassword = config.dbpassword || "toor";
-  this.dbhost = config.dbhost || "localhost";
-  
-  this.dumpStructures = true;  
+  this.defaultlanguage = params.defaultlanguage || config.defaultlanguage || Application.kDefaultLanguage;
+  Application.kDefaultLanguage = this.defaultlanguage;
+
+  this.name = params.name || config.name || "cody";
+  this.version =  params.version || config.version || "v0.1";
+  this.datapath =  params.datapath || config.datapath || ".";
+
+  this.dbuser = params.dbuser || config.dbuser || "cody";
+  this.dbpassword = params.dbpassword || config.dbpassword || "ydoc";
+  this.dbhost = params.dbhost || config.dbhost || "localhost";
+  this.db = params.db || config.db || "cody";
+
+  this.dumpStructures = params.dumpstructures || true;
+  if (this.logging) {
+    console.log(this);
+  }
 }
 module.exports = Application;
 
 // Constants
-Application.kDefaultLanguage = "nl";
+Application.kDefaultLanguage = "en";
 
 // Atom roots
 Application.kImageRoot = 1;
@@ -84,6 +86,7 @@ Application.prototype.addControllers = function() {
   this.addController('PageController', cody.PageController);
   this.addController('ImageController', cody.ImageController);
   this.addController('FileController', cody.FileController);
+  this.addController('TemplateController', cody.TemplateController);
   this.addController('DashboardController', cody.DashboardController);
 
 };
@@ -93,19 +96,19 @@ Application.prototype.err = function(p1, p2, res) {
   console.log("*** error ***");
   this.log(p1, p2);
   
-  if (res !== undefined) {
+  if (typeof res !== "undefined") {
     res.writeHead(404, { "Content-Type": "text/plain" });
-    res.response.write("404 Not Found\n");
-    res.response.end();
+    res.write("404 Not Found\n");
+    res.end();
   }
 };
 Application.prototype.log = function(p1, p2) {
   if (this.logging) {
-    if (p1 === undefined && p2 === undefined) {
+    if (typeof p1 === "undefined" && typeof p2 === "undefined") {
       console.log("Application -> ");
       console.log(this);
       
-    } else if (p2 === undefined) {
+    } else if (typeof p2 === "undefined") {
       console.log(" - " + p1);
       
     } else {
@@ -223,7 +226,9 @@ Application.prototype.servePage = function(req, res) {
   
    
   var aContext = this.buildContext( path, req, res );
-  self.handToController(aContext);
+  if (aContext !== null) {
+    self.handToController(aContext);
+  }
 };
 
 Application.prototype.buildContext = function (path, req, res) {
@@ -233,7 +238,7 @@ Application.prototype.buildContext = function (path, req, res) {
   var language = self.findLanguage(path);
   var page = self.findPage(path, language);
   
-  if (page === null) {
+  if (typeof page == "undefined") {
       self.err("servePage", "No page found for path = " + path + " & language = " + language, res);
       return null;
   }
@@ -318,7 +323,6 @@ Application.prototype.getConnection = function() {
   if (typeof this.connection === "undefined") {
     this.log("Application", "Make new Connection");
     
-    //TODO: read from config file
     // https://github.com/felixge/node-mysql
     this.connection = mysql.createConnection({
         host: this.dbhost,
@@ -384,11 +388,11 @@ Application.prototype.getLanguages = function() {
 	return this.languages;
 };
 Application.prototype.isDefaultLanguage = function(language) {
-  return language == Application.kDefaultLanguage;
+  return language == this.defaultlanguage;
 };
 Application.prototype.findLanguage = function(url) {
   var i = url.indexOf("/");
-  return (i > 0) ? url.substring(0, i) : Application.kDefaultLanguage;
+  return (i > 0) ? url.substring(0, i) : this.defaultlanguage;
 };
 
 
@@ -466,7 +470,14 @@ Application.prototype.fetchTemplates = function(done) {
     done();
   });
 };
-
+Application.prototype.deleteTemplate = function(templateId) {
+  var self = this;
+  var aTemplate = self.templates[templateId];
+  if (typeof aTemplate != "undefined") {
+    delete self.templates[templateId];
+  }
+  return aTemplate;
+}
 
 ///////////
 // Items //

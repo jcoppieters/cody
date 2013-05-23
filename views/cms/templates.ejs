@@ -1,0 +1,124 @@
+<!doctype html>
+
+<html lang="<%=page.language%>">
+
+<% include header.ejs %>
+
+<body id="templates">
+
+	<script src="<%=static%>/js/lib/jquery-1.9.1<%=min%>.js"></script>
+	<script src="<%=static%>/js/lib/jquery-ui-1.10.1<%=min%>.js"></script>
+	<script src="<%=static%>/js/lib/jquery.validate<%=min%>.js"></script>
+	<script src="<%=static%>/js/lib/localization/messages_<%=page.language%>.js"></script>
+
+	<script>
+	  $(document).ready( function() {
+	    $("#records td.edit a").prepend("<span class='icon-pencil'></span>");
+
+      $("#doNew").button({ icons: { primary: "ui-icon-plus"}, text: true}).click( function() {
+        $("#request").val("new");
+        $("#record").submit();
+      });
+      $("#doSave").button({ icons: { primary: "ui-icon-check"}, text: true}).click( function() {
+        $("#request").val("save");
+        $("#record").submit();
+      });
+	    $("#doDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( function() {
+	      $("#request").val("delete");
+	      $("#record").submit();
+	    });
+	    $("#doCancel").button({ icons: { primary: "ui-icon-close"}, text: true}).click( function() {
+	      $("#request").val("list");
+	      $("#record").submit();
+	    });
+
+	    $("#record").validate();
+	  });
+	</script>
+
+  <section>
+    <header>
+      <% include top.ejs %>
+      <% include navigation.ejs %>
+    </header>
+
+    <div>
+
+    <% if (typeof template != "undefined") { %>
+		<form action="./templates" method="post" id="record">
+   			<input type="hidden" name="request" id="request" value="save" />
+   			<input type="hidden" name="id" value="<%- template.id %>" />
+
+			<fieldset class="horizontal">
+				<div>
+					<label for="name">Name</label>
+					<input name="name" id="name" type="text" value="<%- template.name %>" class="required"/>
+				</div>
+        <div>
+          <label for="system">System</label>
+          <input name="system" id="systemY" type="radio" value="Y" <%= checked(template.system == 'Y') %> /><label class="choice" for="systemY">Yes</label>
+          <input name="system" id="systemN" type="radio" value="N" <%= checked(template.system != 'Y') %> /><label class="choice" for="systemN">No</label>
+        </div>
+				<div>
+					<label for="controller">Controller</label>
+					<input name="controller" id="controller" type="text" value="<%- template.controllerName %>" class="required" />
+				</div>
+				<div>
+					<label for="fn">Render file</label>
+					<input name="fn" id="fn" type="text" value="<%- template.fn %>" class="required" />
+				</div>
+        <div>
+          <label for="maxnumber">Max allowed</label>
+          <input name="maxnumber" id="maxnumber" type="text" class="number" value="<%- template.maxnumber %>"  class="required number"/>
+        </div>
+        <div>
+          <label for="defaultchild">Default child</label>
+          <select name="defaultchild" id="defaultchild">
+            <option value="0">No children</option>
+            <%- optionList(app.templates, template.defaultchild, "id", "name") %>
+          </select>
+        </div>
+        <div>
+          <label for="allowedtemplates">Allowed children</label>
+          <input name="allowedtemplates" id="allowedtemplates" type="text" value="<%- template.allowedtemplates %>" />
+        </div>
+			</fieldset>
+			<div id="action_buttons">
+				<button id="doSave">Save</button>
+				<% if (template.id > 0) { %>
+					<button id="doDelete">Delete</button>
+				<% } %>
+				<button id="doCancel">Cancel</button>
+		  </div>
+		</form>
+    <% } %>
+
+
+    <% if (typeof templates != "undefined") { %>
+    <form action="./templates" method="post" id="search">
+ 	   	<input type="hidden" name="request" id="request" value="list" />
+			<button id="doNew">New</button>
+
+			<table id="records">
+			   <tr>
+				 <th>Name</th><th>Controller</th><th>Render</th><th>System</th>
+			   </tr>
+
+			  <% for (var i in templates) { var t = templates[i]; %>
+					<tr>
+						<td class="edit"><a href="./templates?request=edit&amp;id=<%= t.id %>"><%= (t.name==='') ? '--' : t.name %></a></td>
+						<td><%= t.controllerName %></td>
+						<td><%= t.fn %></td>
+						<td><%= (t.system === 'Y') ? 'yes' : 'no' %></td>
+					</tr>
+				<% } %>
+			</table>
+		</form>
+	  <% } %>
+
+    </div>
+
+    <% include footer.ejs %>
+  </section>
+</body>
+</html>

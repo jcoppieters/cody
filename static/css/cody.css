@@ -64,6 +64,7 @@ sub { font-size: 8px; vertical-align: sub; }
 .hidden { display: none; }
 
 .warning { clear: both; padding: 5px 10px; background: #fef9f9; border: 1px solid #f00; color: #f00; text-align: left; }
+body p.notification { margin-left: 2px; margin-right: 2px }
 
 /*-----------------------------------*/
 .ui-datepicker-trigger { vertical-align: top; margin-top: 2px; margin-left: 4px; }

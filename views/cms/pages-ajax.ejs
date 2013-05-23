@@ -168,14 +168,14 @@
 					</div>
 
 					<div>
-						<label for="orderby">Order sublevels</label>
-					  <select name="orderby" id="orderby">
-							  <%- optionList(cody.Item.orderbyList, page.item.orderby) %>
+					    <label for="orderby">Order sublevels</label>
+					    <select name="orderby" id="orderby">
+						  <%- optionList(cody.Item.orderbyList, page.item.orderby) %>
 						</select>
 							
 						<label for="showcontent">Show</label>
 						<select name="showcontent" id="showcontent">
-						   <%- optionList(cody.Item.showcontentList, page.item.showcontent) %>
+						  <%- optionList(cody.Item.showcontentList, page.item.showcontent) %>
 						</select>
 					</div>
 			  <% } %>
@@ -189,10 +189,10 @@
 						<input name="allowedgroups" id="allowedgroups" type="text" value="<%= page.item.allowedgroups %>" class="long" />
 	          <select name="domains" id="domains">
 	            <option value="">add a group</option>
-              <%- optionList(app.domains, '') %>
+                <%- optionList(app.domains, '') %>
 	          </select> 
-				 </div>
-				<% } %>
+		    </div>
+		  <% } %>
 	    </div>
 		</div>	
 	

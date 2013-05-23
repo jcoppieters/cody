@@ -14,7 +14,7 @@ CREATE TABLE `atoms` (
   `created` datetime DEFAULT '0000-00-00',
   `updated` datetime DEFAULT '0000-00-00',
   PRIMARY KEY (`id`)
-) AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
+) AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO `atoms` VALUES 
@@ -46,7 +46,7 @@ INSERT INTO `domains` VALUES ('admin','Admin'),('cms','CMS Users'),('user','User
 
 DROP TABLE IF EXISTS `templates`;
 CREATE TABLE `templates` (
-  `id` int(11) NOT NULL DEFAULT '0',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) DEFAULT '',
   `controller` varchar(64) DEFAULT '',
   `fn` varchar(128) DEFAULT '',
@@ -61,12 +61,13 @@ INSERT INTO `templates` VALUES
 (2,'Login',           'LoginController',     'front/login.ejs','',0,'Y',0),
 (9,'Dashboard',       'DashboardController', 'cms/dashboard.ejs','',0,'Y',0),
 
-(11,'CMS-System',     'SystemController',    '','',0,'Y',0),
-(12,'CMS-Users',      'UserController',      'cms/users.ejs','',0,'Y',0),
-(13,'CMS-Page',       'PageController',      'cms/pages.ejs','',0,'Y',0),
-(14,'CMS-Images',     'ImageController',     'cms/images.ejs','',0,'Y',0),
-(15,'CMS-Files',      'FileController',      'cms/files.ejs','',0,'Y',0),
-(16,'CMS-Forms',      'FormController',      'cms/forms.ejs','',0,'Y',0),
+(11,'CMS-Page',       'PageController',      'cms/pages.ejs','',0,'Y',0),
+(12,'CMS-Images',     'ImageController',     'cms/images.ejs','',0,'Y',0),
+(13,'CMS-Files',      'FileController',      'cms/files.ejs','',0,'Y',0),
+(14,'CMS-Forms',      'FormController',      'cms/forms.ejs','',0,'Y',0),
+(15,'CMS-Users',      'UserController',      'cms/users.ejs','',0,'Y',0),
+(16,'CMS-Templates',  'TemplateController',  'cms/templates.ejs','',0,'Y',0),
+(17,'CMS-System',     'SystemController',    '','',0,'Y',0),
 
 (100,'Content',       'ContentController',   'front/index.ejs','',999,'N',100);
 
@@ -87,35 +88,35 @@ CREATE TABLE `items` (
   `dated` date DEFAULT '0000-00-00',
   `validfrom` datetime NOT NULL DEFAULT '0000-00-00',
   `validto` datetime NOT NULL DEFAULT '0000-00-00',
-  `active` char(1) NOT NULL DEFAULT 'Y',
   `showcontent` char(1) DEFAULT 'Y',
   `needslogin` char(1) DEFAULT 'N',
   `defaultrequest` varchar(32) DEFAULT '',
-  `allowedgroups` varchar(128) NOT NULL DEFAULT '',
+  `alloweddomains` varchar(128) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
-  KEY `parent_idx` (`parent`,`active`)
+  KEY `parent_idx` (`parent`)
 ) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 INSERT INTO `items` VALUES 
-(1,'Website',  -1, 1,100,'A',100,'2010-01-01','2010-01-01','2100-01-01','Y','S','N','',''),
+(1,'Website',  -1, 1,100,'A',100,'2010-01-01','2010-01-01','2100-01-01','S','N','',''),
 
 
-(3,'Pages',    -1, 1,100,'M',0,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',''),
-  (2, 'Login',  3, 1,2,'A',99,'2010-01-01','2010-01-01','2100-01-01','Y','Y','N','',''),
-  (99,'Global', 3, 1,100,'A',0,'2010-01-01','2010-01-01','2100-01-01','Y','Y','N','',''),
+(3,'Pages',    -1, 1,100,'M',0,'2010-01-01','2010-01-01','2100-01-01','Y','Y','',''),
+  (2, 'Login',  3, 1,2,'A',99,'2010-01-01','2010-01-01','2100-01-01','Y','N','',''),
+  (99,'Global', 3, 1,100,'A',0,'2010-01-01','2010-01-01','2100-01-01','Y','N','',''),
 
-(4,'Footer',   -1, 1,100,'M',0,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',''),
-  (97,'Privacy Verklaring',4, 1,100,'A',0,'2010-01-01','2010-01-01','2100-01-01','Y','Y','N','',''),
-  (98,'Disclaimer',        4, 1,100,'A',0,'2010-01-01','2010-01-01','2100-01-01','Y','Y','N','',''),
+(4,'Footer',   -1, 1,100,'M',0,'2010-01-01','2010-01-01','2100-01-01','Y','Y','',''),
+  (97,'Privacy Verklaring',4, 1,100,'A',0,'2010-01-01','2010-01-01','2100-01-01','Y','N','',''),
+  (98,'Disclaimer',        4, 1,100,'A',0,'2010-01-01','2010-01-01','2100-01-01','Y','N','',''),
 
-(9,'Dashboard',-1, 1,9,'M',0,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',''),
-  (10,'CMS', 9, 1,2,'M',10,'2010-01-01','2010-01-01','2100-01-01','Y','S','Y','',''),
-    (11,'CMS - Page',10, 1,13,'A',10,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',''),
-    (12,'CMS - Images', 10, 1,14,'A',20,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',''),
-    (13,'CMS - Files',  10, 1,15,'A',30,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',''),
-    (14,'CMS - Forms',  10, 1,16,'A',40,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',''),
-    (15,'CMS - Users',  10, 1,12,'A',50,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','list',''),
-    (16,'CMS - System', 10, 1,11,'A',60,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','','');
+(9,'Dashboard',-1, 1,9,'M',0,'2010-01-01','2010-01-01','2100-01-01','Y','Y','',''),
+  (10,'CMS', 9, 1,2,'M',10,'2010-01-01','2010-01-01','2100-01-01','S','Y','',''),
+    (11,'CMS - Page',      10, 1,11,'A',10,'2010-01-01','2010-01-01','2100-01-01','Y','Y','',''),
+    (12,'CMS - Images',    10, 1,12,'A',20,'2010-01-01','2010-01-01','2100-01-01','Y','Y','',''),
+    (13,'CMS - Files',     10, 1,13,'A',30,'2010-01-01','2010-01-01','2100-01-01','Y','Y','',''),
+    (14,'CMS - Forms',     10, 1,14,'A',40,'2010-01-01','2010-01-01','2100-01-01','Y','Y','',''),
+    (15,'CMS - Users',     10, 1,15,'A',50,'2010-01-01','2010-01-01','2100-01-01','Y','Y','list',''),
+    (16,'CMS - Templates', 10, 1,16,'A',60,'2010-01-01','2010-01-01','2100-01-01','Y','Y','list',''),
+    (17,'CMS - System',    10, 1,17,'A',70,'2010-01-01','2010-01-01','2100-01-01','Y','Y','','');
 
 
 		
@@ -123,7 +124,7 @@ INSERT INTO `items` VALUES
 
 
 -- INSERT INTO `items` VALUES 
---  (101,'First Page',1,1,100,'A',10,'2010-01-01','2010-01-01','2100-01-01','Y','Y','Y','',0,'');
+--  (101,'First Page',1,1,100,'A',10,'2010-01-01','2010-01-01','2100-01-01','Y','Y','',0,'');
 
 
 --
@@ -181,7 +182,8 @@ INSERT INTO `pages` VALUES
 	  (13,'nl','Bestanden','files','Y','','','2010-01-01','2010-01-01'),
 	  (14,'nl','Formulieren','forms','Y','','','2010-01-01','2010-01-01'),
     (15,'nl','Gebruikers','users','Y','','','2010-01-01','2010-01-01'),
-    (16,'nl','Systeem','system','Y','','','2010-01-01','2010-01-01');
+    (16,'nl','Sjablonen','templates','Y','','','2010-01-01','2010-01-01'),
+    (17,'nl','Systeem','system','Y','','','2010-01-01','2010-01-01');
 
 
 -- INSERT INTO `pages` VALUES 
@@ -242,7 +244,7 @@ CREATE TABLE `users` (
   `email` varchar(128) NOT NULL DEFAULT '',
   `note` varchar(255) NOT NULL DEFAULT '',
   `nomail` char(1) NOT NULL DEFAULT 'N',
-  `nr` int(11) NOT NULL DEFAULT '0',
+  `sortorder` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_idx` (`username`,`active`)
 ) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

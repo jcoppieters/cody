@@ -8,7 +8,7 @@ var cody = require('./index.js');
 console.log("loading " + module.id);
 
 
-/* One off object for making roots for Globals and General */
+/* One off object for making roots for Pages and Dashboard */
 
 function Root(controller, id, name) {
   var myRoot = controller.getObject(id);
@@ -24,7 +24,6 @@ function Root(controller, id, name) {
 /* Actual PageController */
 
 function PageController(context) {
-  // only called for using my methods
   console.log("PageController.constructor -> page(" + context.page.itemId + ") = " + context.page.title + ", request = " + context.request);
   
   // init inherited controller
@@ -504,12 +503,12 @@ PageController.prototype.respace = function( parent, finish ) {
 
 PageController.prototype.isAllowed = function( theNode ) {
   var aUserDomain = this.getLogin().getDomain();
-  var anItemDomain = theNode.getAllowedGroups();
+  var anItemDomain = theNode.getAllowedDomains();
   
   console.log("TPageController.isAllowed: user = '" + aUserDomain + "', item = '" + anItemDomain + "'");
 
   if (aUserDomain.length === 0) { return false; }
-  if ((aUserDomain=="*") || (aUserDomain=="rWorks")) { return true; }
+  if ((aUserDomain=="*") || (aUserDomain=="cody")) { return true; }
     
   if ((anItemDomain.equals=="*") || (anItemDomain.length === 0)) { return true; }
   

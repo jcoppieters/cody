@@ -45,12 +45,11 @@ Item.addDefaults = function(basis, parent) {
   basis.dated = basis.dated || new Date();
   basis.validfrom = basis.validfrom || new Date();
   basis.validto = basis.validto || cody.Application.endOfTime();
-  basis.active = basis.active || "Y";
   basis.template = basis.template || parent.template.defaultchild;
   basis.showcontent = basis.showcontent || Item.kContent;
   basis.needslogin = basis.needslogin || parent.needslogin;
   basis.defaultrequest = basis.defaultrequest || "list";
-  basis.allowedgroups = basis.allowedgroups || parent.allowedgroups;
+  basis.alloweddomains = basis.alloweddomains || parent.alloweddomains;
   
   return basis;
 };
@@ -91,8 +90,8 @@ Item.kLightBox    = 'L';
 Item.kDefaultName  = 'New Page';
 
 
-Item.prototype.getAllowedGroups = function() {
-  return this.allowedgroups;
+Item.prototype.getAllowedDomains = function() {
+  return this.alloweddomains;
 };
 
 Item.prototype.needsLogin = function() {
@@ -117,7 +116,7 @@ Item.prototype.scrapeFrom = function(controller) {
   this.validto = controller.getDate("validto");
   this.needslogin = controller.getParam("needslogin");
   this.showcontent = controller.getParam("showcontent");
-  this.allowedgroups = controller.getParam("allowedgroups");
+  this.alloweddomains = controller.getParam("alloweddomains");
   this.setTemplate(controller.getParam("template"), controller);      
   this.orderby = controller.getParam("orderby");
   this.defaultrequest = controller.getParam("defaultrequest", this.defaultrequest || "list");
@@ -129,17 +128,17 @@ Item.prototype.doUpdate = function(controller, finish) {
   var self = this;
   
   var values = [self.name, self.parentId, self.user, self.templateId, self.orderby, self.sortorder, 
-                self.dated, self.validfrom, self.validto, self.active, self.showcontent, self.needslogin,
-                self.defaultrequest, self.allowedgroups];
+                self.dated, self.validfrom, self.validto, self.showcontent, self.needslogin,
+                self.defaultrequest, self.alloweddomains];
   
   // new or existing record?
   if ((typeof self.id == "undefined") || (self.id === 0)) {
     
     //console.log("Item.doUpdate -> insert item " + self.name);
     controller.query("insert into items (name, parent, user, template, orderby, sortorder, " +
-                     " dated, validfrom, validto, active, showcontent, needslogin, " +
-                     " defaultrequest, allowedgroups) " +
-                     "values (?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?, ?,  ?, ?)", values,
+                     " dated, validfrom, validto, showcontent, needslogin, " +
+                     " defaultrequest, alloweddomains) " +
+                     "values (?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?,  ?, ?)", values,
       function(err, result) {
         if (err) { 
           console.log("Item.doUpdate -> erroring inserting item: " + self.name);
@@ -155,8 +154,8 @@ Item.prototype.doUpdate = function(controller, finish) {
     //console.log("Item.doUpdate -> update item " + self.id + " - " + self.name);
     values.push(self.id);
     controller.query("update items set name = ?, parent = ?, user = ?, template = ?, orderby = ?, sortorder = ?, " +
-                     " dated = ?, validfrom = ?, validto = ?, active = ?, showcontent = ?, needslogin = ?, " +
-                     " defaultrequest = ?, allowedgroups = ? " +
+                     " dated = ?, validfrom = ?, validto = ?, showcontent = ?, needslogin = ?, " +
+                     " defaultrequest = ?, alloweddomains = ? " +
                      "where id = ?", values,
       function(err) {
         if (err) { 

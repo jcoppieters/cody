@@ -30,7 +30,7 @@ server.use(express.cookieParser("a secret"));
 server.use(express.cookieSession());
 
 
-var app = new cody.Application("essen1", "v0.1a1", ".");
+var app = new cody.Application({name: "cody", db: "cody", version: "v0.1a1", datapath: "."});
  // path should be  /usr/local  on production
  app.init();
  app.addController("AgendaController", essen.AgendaController);

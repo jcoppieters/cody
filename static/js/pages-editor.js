@@ -96,9 +96,9 @@ function getPage(id) {
          $("#onepage").validate();
           
          $("#domains").change( function() {
-            var g = $('#allowedgroups').val();
+            var g = $('#alloweddomains').val();
             if (g !== "") {
-              $('#allowedgroups').val( g + ((g.length > 0) ? ',':'') + $('#domains').val() );
+              $('#alloweddomains').val( g + ((g.length > 0) ? ',':'') + $('#domains').val() );
             }
          });
           

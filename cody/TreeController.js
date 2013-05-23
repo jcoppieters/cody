@@ -43,7 +43,7 @@ TreeController.prototype.getFolder = function() {
 
 
 /* required protocol for nodes:
-Node.prototype.getAllowedGroups = function() { return ""; }
+Node.prototype.getAllowedDomains = function() { return ""; }
 Node.prototype.hasChildren = function() { return false; }
 Node.prototype.isActive = function() { return true; }
 Node.prototype.isVisible = function() { return true; }

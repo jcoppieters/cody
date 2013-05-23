@@ -9,8 +9,6 @@ var cody = require("./index.js");
 
 
 function UserController(context) {
-  // only called for using my methods
-  if (typeof context == "undefined") { return; }
   console.log("UserController.constructor -> page(" + context.page.itemId + ") = " + context.page.title + ", request = " + context.request);
   
 		

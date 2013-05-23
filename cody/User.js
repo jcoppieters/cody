@@ -21,6 +21,7 @@ function User(basis) {
   this.active = this.active || "N";
   this.nomail = this.nomail || "N";
   this.note = this.note || "";
+  this.sortorder = this.sortorder || 10;
 }
 
 module.exports = User;
@@ -115,7 +116,11 @@ User.prototype.getLevel = function() {
 };
 
 User.prototype.getId = function() {
-	return this.id || 0;
+  return this.id || 0;
+};
+
+User.prototype.getSortOrder = function() {
+  return this.sortorder || 10;
 };
 
 User.prototype.getEmail = function() {
@@ -138,6 +143,7 @@ User.prototype.scrapeFrom = function(controller, finish) {
   this.badlogins = controller.getParam("badlogins", this.badlogins);
   this.maxbadlogins = controller.getParam("maxbadlogins", this.maxbadlogins);
   this.active = controller.getParam("active", this.active);
+  this.sortorder = controller.getParam("sortorder", this.sortorder);
 };
 
 // not on prototype, no user object exists
@@ -164,15 +170,15 @@ User.prototype.clearBadLogins = function(controller, finish) {
 User.prototype.doUpdate = function(controller, finish) {
   var self = this;
   var values = [self.username, self.name, self.password, self.domain, self.level, 
-                self.badlogins, self.maxbadlogins, self.active, self.email, self.note, self.nomail];
+                self.badlogins, self.maxbadlogins, self.active, self.email, self.note, self.nomail, self.sortorder];
   
   // new or existing record
   if ((typeof self.id == "undefined") || (self.id === 0)) {
     
     console.log("insert user " + this.username);
     controller.query("insert into users (username, name, password, domain, level, " +
-                     " badlogins, maxbadlogins, active, email, note, nomail) " +
-                     "values (?, ?, ?, ?, ?,  ?, ?, ?, ?, ?, ?)", values,
+                     " badlogins, maxbadlogins, active, email, note, nomail, sortorder) " +
+                     "values (?, ?, ?, ?, ?,  ?, ?, ?, ?, ?, ?, ?)", values,
         function(err, result) {
           if (err) { 
             console.log(err); throw(new Error("User.doUpdate/insert failed with sql errors")); 
@@ -187,7 +193,7 @@ User.prototype.doUpdate = function(controller, finish) {
     console.log("update user " + self.id + " - " + this.username);
     values.push(self.id);
     controller.query("update users set username = ?, name = ?, password = ?, domain = ?, level = ?, " +
-                     " badlogins = ?, maxbadlogins = ?, active = ?, email = ?, note = ?, nomail = ? " +
+                     " badlogins = ?, maxbadlogins = ?, active = ?, email = ?, note = ?, nomail = ?, sortorder = ? " +
                      "where id = ?", values,
       function(err) {
         if (err) { 

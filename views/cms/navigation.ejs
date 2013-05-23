@@ -15,5 +15,9 @@
 
   <h1>Login first</h1>
 	
-<% } %>	
-    
+<% } %>
+
+
+<% if (typeof success != "undefined") { %>
+  <p class="notification <%= status %>"><%= message %></p>
+<% } %>
