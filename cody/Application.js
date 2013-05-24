@@ -238,7 +238,7 @@ Application.prototype.buildContext = function (path, req, res) {
   var language = self.findLanguage(path);
   var page = self.findPage(path, language);
   
-  if (typeof page == "undefined") {
+  if (typeof page === "undefined") {
       self.err("servePage", "No page found for path = " + path + " & language = " + language, res);
       return null;
   }
@@ -285,11 +285,11 @@ Application.prototype.handToController = function(context) {
     //    -- assume the controller performed res.writeHead() / .write() / .end() -- ajax req?
     //    -- another controller has taken over
 
-    if (typeof fn == "object") {
+    if (typeof fn === "object") {
       controller.gen(fn, header);
       
     } else {
-      if (typeof fn != "undefined") { 
+      if (typeof fn !== "undefined") {
         context.fn = fn; 
       }
       
@@ -388,7 +388,7 @@ Application.prototype.getLanguages = function() {
 	return this.languages;
 };
 Application.prototype.isDefaultLanguage = function(language) {
-  return language == this.defaultlanguage;
+  return language === this.defaultlanguage;
 };
 Application.prototype.findLanguage = function(url) {
   var i = url.indexOf("/");
@@ -410,7 +410,7 @@ Application.prototype.addAtom = function(atom) {
 
 Application.prototype.hasAtomChildren = function(parent) {
   for (var i = 0; i < this.atoms.length; i++) {
-    if  (this.atoms[i].id == parent.id) {
+    if  (this.atoms[i].id === parent.id) {
       return true;
     }
   }
@@ -473,11 +473,11 @@ Application.prototype.fetchTemplates = function(done) {
 Application.prototype.deleteTemplate = function(templateId) {
   var self = this;
   var aTemplate = self.templates[templateId];
-  if (typeof aTemplate != "undefined") {
+  if (typeof aTemplate !== "undefined") {
     delete self.templates[templateId];
   }
   return aTemplate;
-}
+};
 
 ///////////
 // Items //
@@ -550,7 +550,7 @@ Application.prototype.getSubDomain = function(path) {
 };
 
 Application.prototype.getPage = function(languageOrLink, itemId) {
-  if (typeof itemId == "undefined") {
+  if (typeof itemId === "undefined") {
     return this.urls[languageOrLink];
   } else { 
     return this.urls[languageOrLink+"/"+itemId];

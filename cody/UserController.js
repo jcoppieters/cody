@@ -14,7 +14,7 @@ function UserController(context) {
 		
 	// use this view for the admin operations
 	this.adminView = "cms/users.ejs";
-	  
+
 	// init inherited controller
 	cody.Controller.call(this, context);
 }
@@ -82,6 +82,7 @@ UserController.prototype.doSave = function( theId, finish ) {
       if (aUser.id === self.getLoginId()) {
         self.setLogin(aUser);
       }
+      self.feedBack(true, "Successfully saved the user");
       finish();
     });    
   });

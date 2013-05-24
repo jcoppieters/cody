@@ -137,7 +137,7 @@ TreeController.prototype.doRequest = function( finish ) {
 TreeController.prototype.getArray = function( theRoot ) {
   var self = this;
   var imagePath = self.getFilePath();
-  var aRoot = self.getObject((typeof theRoot == "undefined") ? this.getRoot() : theRoot);
+  var aRoot = self.getObject((typeof theRoot === "undefined") ? this.getRoot() : theRoot);
 
   function dashes(cnt) { 
     var s = ""; 
@@ -166,7 +166,7 @@ TreeController.prototype.getArray = function( theRoot ) {
 //display the complete tree to be used in a select/menu.
 TreeController.prototype.getMenu = function( theRoot ) {
   var self = this;
-  var aRoot = (typeof theRoot === "object") ? theRoot : self.getObject((typeof theRoot == "undefined") ? self.getRoot() : theRoot);
+  var aRoot = (typeof theRoot === "object") ? theRoot : self.getObject((typeof theRoot === "undefined") ? self.getRoot() : theRoot);
   
   function renderTree( theNode ) {
     var aTree = "";
@@ -186,7 +186,7 @@ TreeController.prototype.getMenu = function( theRoot ) {
 //display the complete tree to be used in a select/menu.
 TreeController.prototype.getList = function( theRoot ) {
   var self = this;
-  var aRoot = (typeof theRoot === "object") ? theRoot : self.getObject((typeof theRoot == "undefined") ? self.getRoot() : theRoot);
+  var aRoot = (typeof theRoot === "object") ? theRoot : self.getObject((typeof theRoot === "undefined") ? self.getRoot() : theRoot);
   
   function renderTree( theNode ) {
     var aTree = "";
@@ -245,12 +245,12 @@ TreeController.prototype.saveInfo = function( nodeId, finish ) {
   console.log("TreeController.saveInfo: node = " + nodeId );
   
   var anObject = this.getObject(TreeController.toId(nodeId));
-  if (typeof anObject != "undefined") {
+  if (typeof anObject !== "undefined") {
      self.context.shownode = anObject.parentId;
      anObject.scrapeFrom(this);
       var F = self.context.req.files;
       
-      if ((typeof F != "undefined") && (typeof F.fileToUpload != "undefined")) {
+      if ((typeof F !== "undefined") && (typeof F.fileToUpload !== "undefined")) {
         F = F.fileToUpload;
        
         if (F.size !== 0) {
@@ -294,7 +294,7 @@ TreeController.prototype.addObject = function( title, refNode, type, kind, finis
   var ext = (kind === "folder") ? "xxx" : "---";
 
   // fetch the parent and sortorder
-  if (type == "inside") {
+  if (type === "inside") {
     orderNr = 5;
     aParent = self.app.getAtom(refNodeId);
   } else { 
@@ -326,7 +326,7 @@ TreeController.prototype.renameObject = function( title, nodeId, finish ) {
   console.log("Received TreeController - rename, node = " + nodeId + ", title = " + title);
   
   var anObject = this.getObject(TreeController.toId(nodeId));
-  if (typeof anObject != "undefined") {
+  if (typeof anObject !== "undefined") {
     try {
       anObject.setName(title);
       anObject.doUpdate(self, function() {

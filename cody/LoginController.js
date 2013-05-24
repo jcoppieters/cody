@@ -22,7 +22,7 @@ function LoginController(context) {
 		
 	// use this view for the admin operations
 	this.adminView = "cms/users.ejs";
-	  
+
 	// init inherited controller
 	cody.Controller.call(this, context);
 }
@@ -41,17 +41,18 @@ LoginController.prototype.doRequest = function( finish ) {
   
   self.context.fn = this.adminView;
 		
-  // request for displaying the login screen
   if (self.isRequest("")) {
-    
-    finish( self.loginView );
+   // request for displaying the login screen
+   finish( self.loginView );
 		
-  // request for trying to log in with the given parameters
   } else if (self.isRequest("login")) {
-    self.tryLogin( finish );    
+    // request for trying to log in with the given parameters
+    self.tryLogin( finish );
  
   } else if (self.isRequest("logout")) {
+    // clear login data from the session
     self.setLogin({});
+
     // redirect internally
     var anApp = self.app;
     var aContext = anApp.buildContext( self.loggedOutUrl, self.context.req, self.context.res );
@@ -70,8 +71,8 @@ LoginController.prototype.markLogin = function( theUserName, theLogin, locked, f
   // don't forget to call "finish"...
   
   console.log("LoginController.markLogin -> " +
-       ((theLogin.isActive()) ? "Login succesful for: " : 
-        ((locked) ? "User locked: " : "Login failed for: ")) + theUserName);
+    (theLogin.isActive() ? "Successfully log in for: " : locked ? "User locked: " : "Login failed for: ") +
+    theUserName);
     
   finish();
 };
@@ -99,12 +100,12 @@ LoginController.prototype.tryLogin = function( finish ) {
         // remember the user in the context and session
         self.setLogin(aUser);
         aUser.clearBadLogins(self, function() {
-          self.continuRequest( finish );
+          self.continuRequest();
         });
         
       } else {
         // failed to login, go back to the same screen
-        self.feedBack(false, (locked) ? "login-locked" : "login-failed");
+        self.feedBack(false, locked ? "login-locked" : "login-failed");
         cody.User.addBadLogin(self, aUserName, function() {
           finish(self.loginView);
         });
@@ -117,7 +118,7 @@ LoginController.prototype.tryLogin = function( finish ) {
 };
 
 
-LoginController.prototype.continuRequest = function(finish) {
+LoginController.prototype.continuRequest = function() {
   var self = this;
   var anApp = self.app;
   

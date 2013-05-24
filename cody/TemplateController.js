@@ -58,7 +58,7 @@ TemplateController.prototype.doDelete = function( theId, finish ) {
   var self = this;
 
   var aTemplate = this.app.deleteTemplate(theId);
-  if (typeof aTemplate != "undefined") {
+  if (typeof aTemplate !== "undefined") {
     aTemplate.doDelete(self, function() {
       self.feedBack(true, "Successfully deleted the template");
       finish();
@@ -73,18 +73,21 @@ TemplateController.prototype.doDelete = function( theId, finish ) {
 TemplateController.prototype.doSave = function( theId, finish ) {
   var self = this;
   var aTemplate = self.app.getTemplate(theId);
-  if (typeof aTemplate == "undefined") {
+  if (typeof aTemplate === "undefined") {
     aTemplate = new cody.Template({id: 0}, self.app.controllers);
   }
   aTemplate.scrapeFrom(self);
-  aTemplate.doUpdate(self, finish);
+  aTemplate.doUpdate(self, function() {
+    self.feedBack(true, "Successfully saved the template");
+    finish();
+  });
 };
 
 
 TemplateController.prototype.doGet = function(id, finish) {
   var self = this;
 
-  if ((typeof id == "undefined") || isNaN(id) || (id === 0)) {
+  if ((typeof id === "undefined") || isNaN(id) || (id === 0)) {
     self.context.template = new cody.Template({id: 0}, self.app.controllers);
   } else {
     self.context.template = self.app.getTemplate(id);

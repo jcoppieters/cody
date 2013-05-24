@@ -43,7 +43,7 @@ Content.prototype.renderText = function(controller) {
   return this.data;
 };
 Content.prototype.renderForm = function(controller) {
-  
+  return "--todo--";
 };
 Content.prototype.renderImage = function(controller) {
    if (this.atom) {
@@ -107,7 +107,7 @@ Content.prototype.doDelete = function(controller, finish) {
     } else {
       console.log("Content.doDelete -> deleted content, id = " + this.id + " of " + self.language + "/" + self.itemId);
     }
-    if (typeof finish == "function") { finish(); }
+    if (typeof finish === "function") { finish(); }
   });
 };
 
@@ -128,7 +128,7 @@ Content.prototype.doUpdate = function(controller, isNew, finish) {
         } else {
           self.id = result.insertId;
           console.log("Content.doUpdate -> inserted content: " + self.id + ", order: " + self.sortorder + ", for: " + self.language + "/" + self.itemId);
-          if (typeof finish == "function") { finish(); }
+          if (typeof finish === "function") { finish(); }
         }
     });
     
@@ -144,7 +144,7 @@ Content.prototype.doUpdate = function(controller, isNew, finish) {
           } else {
             console.log("Content.doUpdate -> updated content: " + self.id + ", order: " + self.sortorder + ", for: " + self.language + "/" + self.itemId);
             self.updated = new Date();
-            if (typeof finish == "function") { finish(); }
+            if (typeof finish === "function") { finish(); }
           }
     });
   }

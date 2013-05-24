@@ -18,7 +18,7 @@ function Page(basis, app) {
   // replace 'item' (an id) by the real object and add 'itemId'
   this.itemId = this.item;
   this.item = app.getItem(this.itemId);
-  if (typeof this.item == "undefined") {
+  if (typeof this.item === "undefined") {
     app.err("Application.fetchPages", "did not find item for page " + this.itemId + " / " + this.title);
   }
 }
@@ -27,7 +27,7 @@ module.exports = Page;
 
 Page.addDefaults = function(basis, item) {
   
-  if (typeof item == "undefined") { item = {}; }
+  if (typeof item === "undefined") { item = {}; }
   
   basis.item = basis.item || item.id;
   basis.language = basis.language || cody.Application.kDefaultLanguage;
@@ -118,7 +118,7 @@ Page.prototype.addChildren = function(list) {
   // loop through all pages and find pages having my parent id and language
   this.children = [];
   for (var i = 0; i < list.length; i++) {
-    if ((list[i].item.parentId == this.itemId) && (list[i].language == this.language)) {
+    if ((list[i].item.parentId === this.itemId) && (list[i].language === this.language)) {
       // parent and language match -> add to my children
       this.children.push(list[i]);
       
@@ -137,19 +137,19 @@ Page.prototype.sortChildren = function(order) {
   var kEqual = 0; // kBefore = -1, kAfter = 1;
   
   this.children.sort( function(a, b) {
-    if (a == b) {
+    if (a === b) {
       return kEqual;
     }
       
-    if (order == cody.Item.kAlphabetical) {
+    if (order === cody.Item.kAlphabetical) {
       return a.title.localeCompare(b.title);
     }
       
-    if (order == cody.Item.kDate) {
+    if (order === cody.Item.kDate) {
       return b.item.dated.getTime() - a.item.dated.getTime();
     }
       
-    if (order == cody.Item.kManual) {
+    if (order === cody.Item.kManual) {
       return a.item.sortorder - b.item.sortorder;
     }
     
@@ -169,7 +169,7 @@ Page.prototype.getView = function() {
 
 Page.prototype.getDisplay = function() {
   // check if this page is marked as: "show first subitem"
-  if ((this.item.showcontent == 'S') && (this.children.length > 0)) {
+  if ((this.item.showcontent === 'S') && (this.children.length > 0)) {
     return this.children[0].getDisplay();
   } else {
     return this;
@@ -196,11 +196,11 @@ Page.prototype.hasChildren = function() {
   return (this.children.length > 1);
 };
 Page.prototype.isActive = function() { 
-  return (this.active == 'Y'); 
+  return (this.active === 'Y');
 };
 Page.prototype.isVisible = function() { 
   var now = new Date();
-  return (this.active == 'Y') && (this.item.validfrom <= now) && (this.item.validto >= now);
+  return (this.active === 'Y') && (this.item.validfrom <= now) && (this.item.validto >= now);
 };
 
 Page.prototype.getChildren = function() {
@@ -265,7 +265,7 @@ Page.prototype.doUpdate = function(controller, next, isNew) {
         console.log("Page.doUpdate -> inserted page: " + self.language + "/" + self.itemId);
         self.created = self.updated = new Date();
       }
-      if (typeof next == "function") { next(); }
+      if (typeof next === "function") { next(); }
     });
     
   } else {
@@ -280,7 +280,7 @@ Page.prototype.doUpdate = function(controller, next, isNew) {
         console.log("Page.doUpdate -> updated page: " + self.language + "/" + self.itemId);
         self.updated = new Date();
       }
-      if (typeof next == "function") { next(); }
+      if (typeof next === "function") { next(); }
     });
   }
 };
@@ -298,7 +298,7 @@ Page.prototype.doDelete = function(controller, next) {
         } else {
           console.log("Page.doDelete -> deleted page: " + self.language + "/" + self.itemId);
         }
-        if (typeof next == "function") { next(); }
+        if (typeof next === "function") { next(); }
   });
 };
 
@@ -314,7 +314,7 @@ Page.prototype.doDeactivate = function(controller, next) {
         } else {
           console.log("Page.doDeactivate -> deactived page: " + self.language + "/" + self.itemId);
         }
-        if (typeof next == "function") { next(); }
+        if (typeof next === "function") { next(); }
   });
 };
 
@@ -339,7 +339,7 @@ Page.prototype.getContentIndex = function(id) {
 
 
 Page.prototype.nrContent = function() {
-  return (typeof this.content != "undefined") ?  0 : this.content.length;
+  return (typeof this.content !== "undefined") ?  0 : this.content.length;
 };
 
 
@@ -381,7 +381,7 @@ Page.prototype.deleteContentById = function( controller, theId, next ) {
         self.content.splice(i, 1);
         console.log("Page.deleteContentById -> deleted content " + theId + ", on: " + i + ", of: " + self.language + "/" + self.itemId);
       }
-      if (typeof next == "function") { next(); }
+      if (typeof next === "function") { next(); }
     });  
   } else {
     console.log("Page.deleteContentById: " + theId + " not found on " + self.language + "/" + self.itemId);
@@ -400,7 +400,7 @@ Page.prototype.deleteContent = function( controller, next ) {
     } else {
       self.content = [];
       console.log("Page.deleteContent -> deleted all content of: " + self.language + "/" + self.itemId);
-      if (typeof next == "function") { next(); }
+      if (typeof next === "function") { next(); }
     }
   });
 };

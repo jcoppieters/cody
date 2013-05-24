@@ -21,7 +21,7 @@ function Item(basis, app) {
   // replace 'template' by the real object and add 'templateId'
   this.templateId = this.template;
   this.template = app.getTemplate(this.templateId);
-  if (typeof this.template == "undefined") {
+  if (typeof this.template === "undefined") {
     app.err("Item.constructor", "did not find a template with id = " + this.templateId + " for item " + this.id + " / " + this.name);
   }
   
@@ -35,7 +35,7 @@ module.exports = Item;
 
   
 Item.addDefaults = function(basis, parent) {
-  if (typeof parent == "undefined") { parent = {}; }
+  if (typeof parent === "undefined") { parent = {}; }
   
   basis.name = basis.name || Item.kDefaultName;
   basis.parent = basis.parent || parent.id;
@@ -100,9 +100,9 @@ Item.prototype.needsLogin = function() {
 
 Item.prototype.setTemplate = function(templateId, controller) {
   this.templateId = templateId;
-  if (typeof controller != "undefined") {
+  if (typeof controller !== "undefined") {
     this.template = controller.app.getTemplate(templateId);
-    if (typeof this.template == "undefined") {
+    if (typeof this.template === "undefined") {
       controller.feedback("Couldn't find the template with id = " + templateId + " for item " + this.id + " / " + this.name);
     }
   }
@@ -132,7 +132,7 @@ Item.prototype.doUpdate = function(controller, finish) {
                 self.defaultrequest, self.alloweddomains];
   
   // new or existing record?
-  if ((typeof self.id == "undefined") || (self.id === 0)) {
+  if ((typeof self.id === "undefined") || (self.id === 0)) {
     
     //console.log("Item.doUpdate -> insert item " + self.name);
     controller.query("insert into items (name, parent, user, template, orderby, sortorder, " +
@@ -146,7 +146,7 @@ Item.prototype.doUpdate = function(controller, finish) {
         } else {
           self.id = result.insertId;
           console.log("Item.doUpdate -> inserted item: " + self.id);
-          if (typeof finish == "function") { finish(); }
+          if (typeof finish === "function") { finish(); }
         }
     });
     
@@ -163,7 +163,7 @@ Item.prototype.doUpdate = function(controller, finish) {
           console.log(err); 
         } else {
           console.log("Item.doUpdate -> updated item: " + self.id);
-          if (typeof finish == "function") { finish(); }
+          if (typeof finish === "function") { finish(); }
         }
     });
   }
@@ -189,7 +189,7 @@ Item.prototype.doDelete = function(controller, finish) {
               console.log(err); 
             } else {
               console.log("Item.doDelete -> deleted all content of item: " + self.id);
-              if (typeof finish == "function") { finish(); }
+              if (typeof finish === "function") { finish(); }
             }
           });
         });

@@ -131,7 +131,7 @@ User.prototype.isActive = function() {
 	return (this.active) ? (this.active === "Y") : false;
 };
 
-User.prototype.scrapeFrom = function(controller, finish) {
+User.prototype.scrapeFrom = function(controller) {
   this.username = controller.getParam("username", this.username);
   this.password = controller.getParam("password", this.password);
   this.name = controller.getParam("name", this.name);
@@ -173,7 +173,7 @@ User.prototype.doUpdate = function(controller, finish) {
                 self.badlogins, self.maxbadlogins, self.active, self.email, self.note, self.nomail, self.sortorder];
   
   // new or existing record
-  if ((typeof self.id == "undefined") || (self.id === 0)) {
+  if ((typeof self.id === "undefined") || (self.id === 0)) {
     
     console.log("insert user " + this.username);
     controller.query("insert into users (username, name, password, domain, level, " +
@@ -185,7 +185,7 @@ User.prototype.doUpdate = function(controller, finish) {
           } else {
             self.id = result.insertId;
             console.log("inserted user: " + self.id);
-            if (typeof finish == "function") { finish(); }
+            if (typeof finish === "function") { finish(); }
           }
     });
     
@@ -200,7 +200,7 @@ User.prototype.doUpdate = function(controller, finish) {
           console.log(err); throw(new Error("User.doUpdate/update failed with sql errors")); 
         } else {
           console.log("updated user: " + self.id);
-          if (typeof finish == "function") { finish(); }
+          if (typeof finish === "function") { finish(); }
         }
     });
   }
@@ -209,6 +209,6 @@ User.prototype.doUpdate = function(controller, finish) {
 User.prototype.doDelete = function(controller, finish) {
   var self = this;
   controller.query(User.sqlDeleteUser, [self.id], function(isOK) {
-    if (typeof finish == "function") { finish(isOK); }
+    if (typeof finish === "function") { finish(isOK); }
   });
 };

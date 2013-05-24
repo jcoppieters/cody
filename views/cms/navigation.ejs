@@ -18,6 +18,12 @@
 <% } %>
 
 
-<% if (typeof success != "undefined") { %>
+<% if (message !== "") { %>
   <p class="notification <%= status %>"><%= message %></p>
+  <% if (status === "success") { %>
+    <script>
+      $(document).ready( function () { $(".notification").delay(6000).fadeOut(1000); } );
+    </script>
+  <% } %>
 <% } %>
+

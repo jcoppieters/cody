@@ -166,7 +166,7 @@ Context.prototype.find = function(theList, theId, theIdName) {
 
 Context.prototype.getParam = function(paramName, defaultValue) {
   var x = this.params[paramName];
-  return (typeof x == "undefined") ? defaultValue : x;
+  return (typeof x === "undefined") ? defaultValue : x;
 };
 
 Context.prototype.setParam = function(paramName, value) {
@@ -187,10 +187,10 @@ Context.prototype.formatShortTime = function(aDate) {
 };
 
 Context.prototype.formatDate = function(aDate) {
-  if (this.dateFormat == "dd-mm-yyyy") {
+  if (this.dateFormat === "dd-mm-yyyy") {
     return two(aDate.getDate()) + "-" + two(aDate.getMonth()+1) + "-" + aDate.getFullYear();
 
-  } else if (this.dateFormat == "mm-dd-yyyy") {
+  } else if (this.dateFormat === "mm-dd-yyyy") {
     return two(aDate.getMonth()+1) + "-" + two(aDate.getDate()) + "-" + aDate.getFullYear();
 
   } else { // "yyyy-mm-dd"
@@ -203,15 +203,15 @@ Context.prototype.getDate = function(paramName, defaultValue) {
   //  for now we depend on the dateFormat field of this context
   
   var x = this.req.param(paramName);
-  if (typeof x == "undefined") { return defaultValue; }
+  if (typeof x === "undefined") { return defaultValue; }
   
   var parts = (x.indexOf("-") > 0) ? x.split("-") : x.split("/");
 
-  if (this.dateFormat == "dd-mm-yyyy") {
+  if (this.dateFormat === "dd-mm-yyyy") {
     return (parts.length < 3) ? 
       defaultValue : new Date(parts[2], parts[1]-1, parts[0]);
     
-  } else if (this.dateFormat == "mm-dd-yyyy") {
+  } else if (this.dateFormat === "mm-dd-yyyy") {
     return (parts.length < 3) ? 
       defaultValue : new Date(parts[2], parts[0]-1, parts[1]);
     

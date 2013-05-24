@@ -10,7 +10,7 @@ var cody = require("./index.js");
 
 function DashboardController(context) {
   console.log("DashboardController.constructor -> page(" + context.page.itemId + ") = " + context.page.title + ", request = " + context.request);
-  	  
+
 	// init inherited controller
 	cody.Controller.call(this, context);
 }

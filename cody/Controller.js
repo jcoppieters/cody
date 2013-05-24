@@ -10,7 +10,7 @@ var cody = require("./index.js");
 
 function Controller(context) {
   // only called for using my methods
-  if (typeof context == "undefined") { return; }
+  if (typeof context === "undefined") { return; }
   console.log("Controller.constructor -> page(" + context.page.itemId + ") = " + context.page.title + ", request = " + context.request);
   
   this.request = context.request;
@@ -93,14 +93,14 @@ Controller.prototype.getParam = function(paramName, defaultValue) {
 };
 Controller.prototype.getInt = function(paramName, defaultValue) {
   var x = this.context.getParam(paramName, defaultValue);
-  if (typeof x != "number") { x = parseInt(x, 10); }
+  if (typeof x !== "number") { x = parseInt(x, 10); }
   return isNaN(x) ? defaultValue : x;
 };
 Controller.prototype.getNum = function(paramName, defaultValue, precision) {
   var x = this.context.getParam(paramName, defaultValue);
-  if (typeof x != "number") { x = parseFloat(x); }
+  if (typeof x !== "number") { x = parseFloat(x); }
   if (isNaN(x)) { x = defaultValue; }
-  if (typeof precision != "undefined") { x = x.toFixed(precision); }
+  if (typeof precision !== "undefined") { x = x.toFixed(precision); }
   return x;
 };
 
@@ -134,13 +134,13 @@ Controller.prototype.closeConnection = function() {
 //
 
 Controller.prototype.gen = function( theContent, theHeader ) {
-  if (typeof theHeader == "undefined") {
+  if (typeof theHeader === "undefined") {
     this.context.res.writeHead(200, { "Content-Type": "application/json" });
   } else {
     this.context.res.writeHead(200, theHeader);
   }
   
-  if (typeof theContent != "string") {
+  if (typeof theContent !== "string") {
     this.context.res.write(JSON.stringify(theContent));
   } else {
     this.context.res.write(theContent);

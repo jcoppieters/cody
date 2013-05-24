@@ -46,7 +46,7 @@ PageController.prototype.doRequest = function( finish ) {
   
   if (self.isRequest("realdelete")) {
     self.realDelete( self.getParam("node"), function whenDone(result) {
-      if (result.status != "OK") { 
+      if (result.status !== "OK") {
         self.feedBack(false, "Something went wrong during delete."); 
       }
       finish();
@@ -156,7 +156,7 @@ PageController.prototype.addObject = function( title, refNode, type, kind, finis
     var userId = this.getLoginId();
     
     // fetch the parent and sortorder
-    if (type == "inside") {
+    if (type === "inside") {
       orderNr = 5;
       aParent = self.app.getItem(refNodeId);
     } else { 
@@ -219,6 +219,7 @@ PageController.prototype.addObject = function( title, refNode, type, kind, finis
 
 
 PageController.prototype.moveObject = function( nodeId, refNode, type, finish ) {
+  var self = this;
   // type = "before", "after" or "inside"
   console.log("Received PageController - moveObject, refnode = " + refNode +
               ", node = " + nodeId + ", type = " + type);
@@ -227,27 +228,27 @@ PageController.prototype.moveObject = function( nodeId, refNode, type, finish ) 
   var aParent;
   
   // fetch the parent and insertion point
-  if (type == "inside") {
-    aParent = this.app.getItem(cody.TreeController.toId(refNode));
+  if (type === "inside") {
+    aParent = self.app.getItem(cody.TreeController.toId(refNode));
     orderNr = 9999;
   } else {  
-    var refItem = this.app.getItem(cody.TreeController.toId(refNode));
-    aParent = this.app.getItem(refItem.parentId);
-    orderNr = refItem.sortorder + ((type == "before") ? -5 : +5);
+    var refItem = self.app.getItem(cody.TreeController.toId(refNode));
+    aParent = self.app.getItem(refItem.parentId);
+    orderNr = refItem.sortorder + ((type === "before") ? -5 : +5);
   }
   
   // fetch the node to be moved
-  var anItem = this.app.getItem(cody.TreeController.toId(nodeId));
-  var curParent = this.app.getItem(anItem.parentId);
+  var anItem = self.app.getItem(cody.TreeController.toId(nodeId));
+  var curParent = self.app.getItem(anItem.parentId);
   
   // check the new target parent
-  if (! this.isAllowed(aParent)) {
+  if (! self.isAllowed(aParent)) {
     finish( { status: "NAL" } );
     return;
   }
   
   // check the current parent
-  if (! this.isAllowed(curParent)) {
+  if (! self.isAllowed(curParent)) {
     finish( { status: "NAL" } );
     return;
   }
@@ -259,10 +260,10 @@ PageController.prototype.moveObject = function( nodeId, refNode, type, finish ) 
   anItem.sortorder = orderNr;
   
   try {
-    // anItem.doUpdate(this); -> done in respace too, so no need to call it here
-    this.app.buildPage();
-    
-    this.respace(aParent, function whenDone() {
+    // anItem.doUpdate(self); -> done in respace too, so no need to call it here
+    self.app.buildPage();
+
+    self.respace(aParent, function whenDone() {
       finish( { status: "OK" } );
     });
     
@@ -295,7 +296,7 @@ PageController.prototype.renameObject = function( title, nodeId, finish ) {
        self.app.buildPage();
        
        // rename the item if it's the page of the default language (although item names are not shown)
-       if ((self.app.isDefaultLanguage(aPage.language)) || (aPage.item.name == cody.Item.kDefaultName)) {
+       if ((self.app.isDefaultLanguage(aPage.language)) || (aPage.item.name === cody.Item.kDefaultName)) {
           aPage.item.name = title;
           aPage.item.doUpdate(self, function() {
             finish( { status: "OK" } );
@@ -389,11 +390,10 @@ PageController.prototype.fetchNode = function( theNode ) {
   
   //TODO: get all the (main) content blocks connected to this page
   // for the moment they are all there from startup
-  // question? how do I get rid of all the (main) blocks -- we keep the (intro) blocks
-
+  // question? how do I get rid of all the (main) blocks -- and keep the (intro) blocks
+  //  actually: "when" do I do this?
   
   console.log("PageController.FetchNode: node = " + theNode + " + language = " + aPage.language + " => " + self.context.page.item.id);
-
 };
 
 PageController.prototype.saveInfo = function( nodeId, finish ) {
@@ -483,7 +483,7 @@ PageController.prototype.respace = function( parent, finish ) {
     var aChildPage = this;
     nr += 10;
     console.log("PageController.Respace: checking '" + aChildPage.item.name + "' now = " + aChildPage.item.sortorder + " to " + nr);
-    if (aChildPage.item.sortorder != nr) {
+    if (aChildPage.item.sortorder !== nr) {
       aChildPage.item.sortorder = nr;
       aChildPage.item.doUpdate(self, function() {
         done();
@@ -494,7 +494,7 @@ PageController.prototype.respace = function( parent, finish ) {
     
   }, function whenDone(err) {
     if (err) { console.log("PageController - respace: error = " + err); }
-    if (typeof finish == "function") { finish(); }
+    if (typeof finish === "function") { finish(); }
     
   });
 
@@ -507,14 +507,20 @@ PageController.prototype.isAllowed = function( theNode ) {
   
   console.log("TPageController.isAllowed: user = '" + aUserDomain + "', item = '" + anItemDomain + "'");
 
-  if (aUserDomain.length === 0) { return false; }
-  if ((aUserDomain=="*") || (aUserDomain=="cody")) { return true; }
-    
-  if ((anItemDomain.equals=="*") || (anItemDomain.length === 0)) { return true; }
-  
+  // no userdomain -> not allowed
+  if (aUserDomain === "") { return false; }
+
+  // user has all rights or belongs to cody admin
+  if ((aUserDomain === "*") || (aUserDomain === "cody")) { return true; }
+
+  // item can be edited by any domain or no specific domains are set up
+  if ((anItemDomain === "*") || (anItemDomain === "")) { return true; }
+
+  // there is a user domain and the item has 1 of more domain
+  // loop through them all and check to see if there is a correspondence
   var aList = anItemDomain.split(",");
   for (var x in aList) {
-    if (aList[x]==aUserDomain) { 
+    if (aList[x]===aUserDomain) {
       return true; 
     }
   }

@@ -38,7 +38,7 @@ Template.prototype.findController = function(aControllerName, controllers) {
     // if no controller found -> attach standard Controller
     this.controller = controllers['Controller'];
   }
-}
+};
 
 Template.loadTemplates = function(connection, store) {
   connection.query('select * from templates', [], function(err, result) {
@@ -61,7 +61,7 @@ Template.prototype.doDelete = function(controller, done) {
 };
 
 
-Template.prototype.scrapeFrom = function(controller, finish) {
+Template.prototype.scrapeFrom = function(controller) {
   this.name = controller.getParam("name", this.username);
   var aControllerName = controller.getParam("controller", this.controller);
   this.findController(aControllerName, controller.app.controllers);
@@ -72,13 +72,14 @@ Template.prototype.scrapeFrom = function(controller, finish) {
   this.defaultchild = controller.getParam("defaultchild", this.defaultchild);
 };
 
+
 Template.prototype.doUpdate = function(controller, finish) {
   var self = this;
   var values = [self.name, self.controllerName, self.fn, self.allowedtemplates,
                 self.maxnumber, self.system, self.defaultchild];
 
   // new or existing record
-  if ((typeof self.id == "undefined") || (self.id === 0)) {
+  if ((typeof self.id === "undefined") || (self.id === 0)) {
 
     console.log("insert template " + this.name);
     controller.query("insert into templates (name, controller, fn,  allowedtemplates, maxnumber, system, defaultchild) " +
@@ -90,7 +91,7 @@ Template.prototype.doUpdate = function(controller, finish) {
           self.id = result.insertId;
           controller.app.templates[self.id] = self;
           console.log("inserted new template: " + self.id);
-          if (typeof finish == "function") { finish(); }
+          if (typeof finish === "function") { finish(); }
         }
       });
 
@@ -106,7 +107,7 @@ Template.prototype.doUpdate = function(controller, finish) {
         } else {
           controller.app.templates[self.id] = self;
           console.log("updated template: " + self.id);
-          if (typeof finish == "function") { finish(); }
+          if (typeof finish === "function") { finish(); }
         }
       });
   }

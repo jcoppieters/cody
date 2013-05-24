@@ -82,7 +82,7 @@ Static.prototype.serve = function () {
   var filename = libpath.join(path, uri);
   
   // should be moved to a SystemController
-  if (filename == "static/_") {
+  if (filename === "static/_") {
     this.dump();
     return;
   }
