@@ -179,6 +179,8 @@
             <select name="showcontent" id="showcontent">
               <%- optionList(cody.Item.showcontentList, page.item.showcontent) %>
             </select>
+          <% } else { %>
+            <input name="showcontent" id="showcontent" type="hidden" value="<%=page.item.showcontent%>" />
           <% } %>
         </div>
 

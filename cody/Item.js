@@ -103,7 +103,7 @@ Item.prototype.setTemplate = function(templateId, controller) {
   if (typeof controller !== "undefined") {
     this.template = controller.app.getTemplate(templateId);
     if (typeof this.template === "undefined") {
-      controller.feedback("Couldn't find the template with id = " + templateId + " for item " + this.id + " / " + this.name);
+      controller.feedBack("Couldn't find the template with id = " + templateId + " for item " + this.id + " / " + this.name);
     }
   }
 };

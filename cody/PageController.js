@@ -260,7 +260,7 @@ PageController.prototype.moveObject = function( nodeId, refNode, type, finish ) 
   
   try {
     // anItem.doUpdate(self); -> done in respace too, so no need to call it here
-    self.app.buildPage();
+    self.app.buildSitemap();
 
     self.respace(aParent, function whenDone() {
       finish( { status: "OK" } );
