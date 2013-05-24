@@ -389,7 +389,7 @@ this.init = function () {
           },
           "folder" : {
             valid_children : [ "html", "file", "image", "folder" ],
-            icon : { image : theImages + "/extentions/file.png" }
+            icon : { image : theImages + "/extentions/folder.png" }
           }
         }
       }
