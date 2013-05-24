@@ -74,10 +74,10 @@
                 <input type="hidden" name="atom_<%= c.id %>" class="atom" value="<%= c.atomId %>" />
                 <% if (c.atomId != 0) { %>
                   <% if ((c.atom.extention !== "") && (c.atom.extention !== "xxx")) { %>
-                    <img class="icon" src="<%=static%>/images/extentions/<%=c.atom.extention%>.gif" />
+                    <img class="icon" src="<%=static%>/images/extentions/<%=c.atom.extention%>.png" />
                     <span><%= c.atom.name %>.<%= c.atom.extention %></span>
                   <% } else { %>
-                    <img class="icon" src="<%=static%>/images/extentions/xxx.gif" />
+                    <img class="icon" src="<%=static%>/images/extentions/file.png" />
                     <span><%= c.atom.name %></span>
                   <% } %>
                 <% } %>
@@ -95,7 +95,7 @@
 	               <img src="<%=dynamic%>/images/<%=c.atom.getFileName()%>" />
 	               <span><%=c.atom.name%>.<%=c.atom.extention%></span>
                 <% } else { %>
-                  <img src="<%=static%>/images/extentions/gif.gif" />
+                  <img src="<%=static%>/images/extentions/gif.png" />
                   <span>- none -</span>
 	              <% } %>
               </div>
@@ -166,33 +166,35 @@
 						  <%- optionList(app.templates, page.item.templateId, "id", "name") %>
 						</select>
 					</div>
+        <% } %>
 
-					<div>
-					    <label for="orderby">Order sublevels</label>
-					    <select name="orderby" id="orderby">
-						  <%- optionList(cody.Item.orderbyList, page.item.orderby) %>
-						</select>
-							
-						<label for="showcontent">Show</label>
-						<select name="showcontent" id="showcontent">
-						  <%- optionList(cody.Item.showcontentList, page.item.showcontent) %>
-						</select>
-					</div>
-			  <% } %>
-							
+        <div>
+            <label for="orderby">Order sublevels</label>
+            <select name="orderby" id="orderby">
+            <%- optionList(cody.Item.orderbyList, page.item.orderby) %>
+          </select>
+
+          <% if (login && (login.level >= 99)) { %>
+            <label for="showcontent">Show</label>
+            <select name="showcontent" id="showcontent">
+              <%- optionList(cody.Item.showcontentList, page.item.showcontent) %>
+            </select>
+          <% } %>
+        </div>
+
 				<% if (login.level < 50) { %>
 					<input name="needslogin" id="needslogin" type="hidden" value="<%=page.item.needsLogin%>" />
-					<input name="allowedgroups" id="allowedgroups" type="hidden" value="<%=page.item.allowedGroups%>" />
+					<input name="alloweddomains" id="alloweddomains" type="hidden" value="<%=page.item.alloweddomains%>" />
 				<% } else { %>
 				 <div>
-					  <label for="allowedgroups">Allowed Groups</label>
-						<input name="allowedgroups" id="allowedgroups" type="text" value="<%= page.item.allowedgroups %>" class="long" />
+					  <label for="alloweddomains">Allowed Groups</label>
+						<input name="alloweddomains" id="alloweddomains" type="text" value="<%= page.item.alloweddomains %>" class="long" />
 	          <select name="domains" id="domains">
 	            <option value="">add a group</option>
                 <%- optionList(app.domains, '') %>
 	          </select> 
-		    </div>
-		  <% } %>
+		     </div>
+		    <% } %>
 	    </div>
 		</div>	
 	

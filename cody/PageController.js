@@ -43,6 +43,8 @@ PageController.prototype.doRequest = function( finish ) {
   console.log("Page constructor name = " + this.constructor.name);
   
   self.context.fn = "cms/pages.ejs";
+  self.context.opennode = "";
+  self.context.shownode = "";
   
   if (self.isRequest("realdelete")) {
     self.realDelete( self.getParam("node"), function whenDone(result) {
@@ -70,14 +72,16 @@ PageController.prototype.doRequest = function( finish ) {
 
     
   } else if (self.isRequest("adjust")) {
-    self.adjustElements( self.getParam("node"), function whenDone(result) {
+    self.adjustContent( self.getParam("node"), function whenDone(result) {
       // get all info and data on this node
-      self.setRequest("getnode");
-      cody.TreeController.prototype.doRequest.call(self, finish);
+      finish( { status: "OK" } );
     });
 
     
   } else {
+    self.context.shownode = cody.TreeController.toId(this.getParam("shownode", ""));
+    self.context.opennode = cody.TreeController.toId(this.getParam("opennode", ""));
+
     // super.doRequest
     cody.TreeController.prototype.doRequest.call(self, finish);
     
@@ -92,10 +96,10 @@ PageController.prototype.getRoot = function() {
 };
 
 PageController.prototype.getType = function(theNode) {
-  return ""; 
+  return (theNode.item.showcontent === cody.Item.kContent) ? "html" : "";
 };
 PageController.prototype.getFolder = function() {
-  return ""; 
+  return "";
 };
 PageController.prototype.getObject = function(id) {
   var language = this.context.page.language;  
@@ -201,10 +205,6 @@ PageController.prototype.addObject = function( title, refNode, type, kind, finis
             finish( { status: "NOK", error: err } );
             
           } else {
-            //TODO: add default elements from template and insert in the database
-            //aContent.FetchElements(aPage.fLanguage, - aDefaultTemplateId);
-            //aContent.doInsertElements();
-          
             finish( { status: "OK", node: "id_" + anItem.id } );
           }
         });
@@ -252,8 +252,7 @@ PageController.prototype.moveObject = function( nodeId, refNode, type, finish ) 
     finish( { status: "NAL" } );
     return;
   }
-  
-    
+
   // position in the tree
   anItem.parentId = aParent.id;
   console.log("PageController.MovePage: old order = " + anItem.sortorder + ", new order = " + orderNr);
@@ -293,7 +292,7 @@ PageController.prototype.renameObject = function( title, nodeId, finish ) {
       aPage.doUpdate(self, function() {
         
        // perhaps overkill but for (sortorder == alphabetical) the order of pages can change
-       self.app.buildPage();
+       self.app.buildSitemap();
        
        // rename the item if it's the page of the default language (although item names are not shown)
        if ((self.app.isDefaultLanguage(aPage.language)) || (aPage.item.name === cody.Item.kDefaultName)) {

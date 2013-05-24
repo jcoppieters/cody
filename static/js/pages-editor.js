@@ -39,6 +39,7 @@ $(document).ready(function() {
     //theme_advanced_resizing : true,
     theme_advanced_path : false
   });
+
 });
 
 function getPage(id) {
@@ -58,7 +59,8 @@ function getPage(id) {
       	 	WarnUser("You are not allowed to edit this page, sorry.");
              
        } else {
-         self.currentNode = id;  
+         self.currentNode = id;
+         self.openNode = id;
          $("#newContentForm #node").val(id);
          
          $("#right_cont").html(msg).show();
@@ -142,8 +144,22 @@ function doDeletor() {
 }
 
 function doAdjust() {
-  $("#request").val("adjust");
-  $("#onepage").submit();
+  var node = $("#node").val();
+
+  $.ajax({
+    type: "POST", url: "./pages",
+    data: "request=adjust&node="+node,
+    success: function(msg){
+      if (msg.status !== "OK") {
+        alert("Data not adjusted!\nGot error from server: " + msg.status + ", see console.");
+        console.log(msg);
+      } else {
+        gTree.getNode(node);
+      }
+    }
+  });
+  return false;
+
 }
 
 
@@ -161,7 +177,7 @@ function selectedContent() {
     type: "POST", url: "./pages",
     data: "request=addcontent&node="+node+"&kind=" + kind,
     success: function(msg){
-       if (msg.status != "OK") {
+       if (msg.status !== "OK") {
          alert("Data not saved!\nGot error from server: " + msg.status + ", see console.");
          console.log(msg);
        } else {
@@ -231,7 +247,7 @@ function doEditorF() {
   doAtomEditor($(this), "files", function(article, img, span, li) {
     // set image, name and (hidden) atom value
     var fn = li.attr("rel");
-    img.attr("src", gStatic + "/images/extentions/" + fn.substring(fn.lastIndexOf(".")+1) + ".gif");
+    img.attr("src", gStatic + "/images/extentions/" + fn.substring(fn.lastIndexOf(".")+1) + ".png");
     span.text(li.attr("title"));
     article.find(".atom").val(li.attr("id"));
   });
@@ -277,9 +293,13 @@ function saveEditor(theId) {
   
   // do we need to save it to the server?
   // on "save" all content is transmitted again...
-  // perhaps just calling next 2 lines is enough:
-  // var name = block.find(".textdata").val( content ).attr("name");
-  // $("#content_data #"+name).html($(content).text().substring(0,80) + "<br>...");
+  // perhaps just calling next 3 lines is enough:
+
+  var name = block.find(".textdata").val( content ).attr("name");
+  $("#content_data #"+name).html($(content).text().substring(0,80) + "<br>...");
+  return true;
+
+  // till here
 
   $.ajax({
      type: "POST", url: "./pages",
@@ -307,9 +327,9 @@ function saveEditor(theId) {
    });
 }
 
-///////////////////////
-// ordening elements //
-///////////////////////
+/////////////////////////////
+// ordering content blocks //
+/////////////////////////////
 
 function saveOrder() {
   var nr = 10;

@@ -53,7 +53,7 @@ Content.prototype.renderImage = function(controller) {
    }
 };
 Content.prototype.renderFile = function(controller) {
-  return "<a href='/data/files/" + this.atom.id + "." + this.atom.extention + "'><img class='icon' src='/static/images/extentions/" + this.atom.extention + ".gif'/></a>" +
+  return "<a href='/data/files/" + this.atom.id + "." + this.atom.extention + "'><img class='icon' src='/static/images/extentions/" + this.atom.extention + ".png'/></a>" +
          "<a href='/data/files/" + this.atom.id + "." + this.atom.extention + "' class='filelink'>" + this.atom.getFileName() + "</a>";
 };
 

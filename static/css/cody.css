@@ -274,11 +274,11 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
 /* login - NOT OK
 ------------------------------------------------------------------*/
 
-#login #wrapper { height: 600px; background: url(../images/admin-bg_login.png) no-repeat; }
-#login h1 { width: 505px; margin: 0; padding: 170px 295px 10px 0; background: url(../images/admin-bg_border.gif) repeat-x bottom; color: #fff; text-align: right; font-size: 24px; }
-  #loginForm { width: 255px; padding: 35px 295px 30px 250px; background: url(../images/admin-bg_border.gif) repeat-x bottom; color: #fff; text-align: right; }
-    #loginForm fieldset { float: none;  width: 255px; } // max-width: auto;
+#login #wrapper { height: 600px;  }
+#login h1 { width: 505px; margin: 0; padding: 170px 295px 10px 0; color: #fff; text-align: right; font-size: 24px; }
+  #loginForm { width: 255px; padding: 35px 295px 30px 250px; color: #fff; text-align: right; }
+    #loginForm fieldset { float: none;  width: 255px; }
       #loginForm fieldset div { padding-bottom: 5px; }
     #loginForm .action_buttons { margin-right: 0; }
-      #loginForm .action_buttons input { width: 69px; height: 24px; border: 0; background: url(../images/admin-bt_login.png) no-repeat; color: #fff; font-size: 13px; font-weight: bold; font-family: Verdana, Arial, sans-serif; cursor: pointer; }
+      #loginForm .action_buttons input { width: 69px; height: 24px; border: 0; color: #fff; font-size: 13px; font-weight: bold; font-family: Verdana, Arial, sans-serif; cursor: pointer; }
 

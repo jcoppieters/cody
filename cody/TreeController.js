@@ -38,7 +38,7 @@ TreeController.prototype.getObject = function(id) {
   throw new Error("TreeController.getObject should be overridden - return an Atom with the specified id");
 };
 TreeController.prototype.getFolder = function() { 
-  throw new Error("TreeController.getFolder should be overridden - return an Atom with the specified id");
+  throw new Error("TreeController.getFolder should be overridden - return a string / subpath in which the documents can be found");
 };
 
 
@@ -60,7 +60,7 @@ Node.prototype.doDelete = function(controller, finish) {}
       
 
 TreeController.toId = function(theNode) {
-  if (typeof theNode === "undefined") { 
+  if ((typeof theNode === "undefined") || (theNode === "")) {
     return 0;
   } else if (theNode.indexOf("id_") === 0) {
     return parseInt(theNode.substring(3), 10);
@@ -221,7 +221,7 @@ TreeController.prototype.getTree = function( theRoot ) {
                      (p.isVisible() ? "" : "invisible ") + 
                      (p.isActive() ? "" : "deleted");
          aTree += "<li id=\"id_" + p.getId() + "\" class=\"" + classes + "\"" +
-               (p.hasChildren() ? "" : " rel=\""+ self.getType(p) + "\"") +
+               " rel=\""+ self.getType(p) + "\"" +
               "><a href=\"#\">" + name + "</a>";
          if (descend > 0) {
            aTree += renderTree(p, false, descend-1);

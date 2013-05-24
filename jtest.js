@@ -39,6 +39,9 @@ var app = new cody.Application({name: "cody", db: "cody", version: "v0.1a1", dat
 server.all('/nl/*', function(req, res){
   app.servePage(req, res);
 });
+server.all('/en/*', function(req, res){
+  app.servePage(req, res);
+});
 
 
 // next 2 should be done by Apache front end

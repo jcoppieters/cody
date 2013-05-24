@@ -10,28 +10,34 @@
 ///////////////////////
 function jAtomTree(theRoot, theInitialNode, theContext, theLanguage, theService, theImages) {
     
-// theRoot: is prefilled by the calling template (0, 1, ...)
+// theRoot: is prefilled by the calling template (0, 1, ...) -- used for "don't close root"
 // theInitialNode: select this node and open the tree up to there
 // theLanguage: current language  of the cms
 // theContext: prefix for http calls to the cms
 // theService: is prefilled by the calling template (images, files, forms, ...) */
 // theImages: location of the static images of the cms
-  
-  
-this.currentNode = "";
-this.pleaseOpen = null;
-this.rootId = "id_"+theRoot;
-this.nextType = "";
+
+  if (theInitialNode == "0") { theInitialNode = theRoot; } console.log(theInitialNode);
+  this.currentNode = "id_"+theInitialNode;
+  this.openNode = "";
+  this.pleaseOpen = null;
+  this.rootId = "id_"+theRoot;
+  this.nextType = "";
+
 
 this.warnUser = function(message) {
   $('#right_cont').html("<p class='warning'>" + message + "</p>");
 };
 
-this.getCurrentNode = function() {
-  return this.currentNode;
-}
+  this.getCurrentNode = function() {
+    return this.currentNode;
+  };
 
-this.getNode = function(id) {
+  this.getOpenNode = function() {
+    return this.openNode;
+  };
+
+  this.getNode = function(id) {
   var self = this;
   
   if (id != self.rootId) {
@@ -40,14 +46,15 @@ this.getNode = function(id) {
       url: theContext + "/" + theLanguage + "/"+theService,
       data: "request=getnode&node=" + id,
       success: function(msg){
-        if (msg.substring(0,3) == "NOK") {
+        if (msg.substring(0,3) === "NOK") {
           self.warnUser("Got error from server: " + msg);
                
-        } else if (msg.substring(0,3) == "NAL") {
+        } else if (msg.substring(0,3) === "NAL") {
           self.warnUser("You are not allowed to edit this node, sorry.");
               
         } else {
-          self.currentNode = id; 
+          self.currentNode = id;
+          self.openNode = id;
           $("#right_cont").html(msg).show();  
             
           $("#doRealDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( function() { self.doRealDelete(); } );
@@ -162,7 +169,7 @@ this.init = function () {
 
   .bind("before.jstree", function(e, data) {
     var aNode = data.args[0]; 
-    var nodeId = (typeof aNode == "object") ? $(aNode).attr("id") : "id_xx";
+    var nodeId = (typeof aNode === "object") ? $(aNode).attr("id") : "id_xx";
 
     if (data.func === "delete_node") {
       if (theService === "pages") {
@@ -178,7 +185,7 @@ this.init = function () {
               // rename generates a callback and we don't want an update in the database
               // data.inst.set_text ( aNode , text ) jsTree.rename(aNode, "(" + aNode.text() + ")");
               var aName = data.inst.get_text(aNode);
-              if (aName.charAt(0) != '(') {
+              if (aName.charAt(0) !== '(') {
                 aNode.text("(" + aName + ")").prepend(icn);
               }
               self.getNode(nodeId);
@@ -226,13 +233,13 @@ this.init = function () {
       }
 
       
-    } else if (data.func == "rename_node") {
+    } else if (data.func === "rename_node") {
         //console.log("Tree - Before: rename_node, please-open = " + self.pleaseOpen);
         if (self.pleaseOpen !== null) {
           // we're only here after a create_node, set the name and open the item for editing
           $.getJSON("./"+theService, {request: 'rename', name: data.args[1], node: self.pleaseOpen},
               function(msg){
-                if (msg.status == "OK") {
+                if (msg.status === "OK") {
                  self.doEdit(self.pleaseOpen);
                  self.pleaseOpen = null;
                }
@@ -257,11 +264,11 @@ this.init = function () {
     
     $.getJSON("./"+theService, {request: 'rename', name: text, node: nodeId},
         function(msg){
-          if (msg.status == "NAL") {
+          if (msg.status === "NAL") {
             self.warnUser("You are not allowed to rename this item, sorry.");
             $.jstree.rollback(data.rlbk);
     
-          } else if (msg.status != "OK") {
+          } else if (msg.status !== "OK") {
             console.log(msg);
             self.warnUser("The rename of this item failed.<br>server status: " + msg.status);
             $.jstree.rollback(data.rlbk);
@@ -276,7 +283,7 @@ this.init = function () {
     //console.log("Tree - Move: " + aNode.text() + " " + type + " " + refNode.text());
 
     // Allow only one dummy node "website" as toplevel
-    if ((refNodeId == "id_0") && ((type == "before") || (type == "after"))) {
+    if ((refNodeId === "id_0") && ((type === "before") || (type === "after"))) {
       self.warnUser("Can't move this element.");
       $.jstree.rollback(data.rlbk);
 
@@ -284,11 +291,11 @@ this.init = function () {
       // type = "before", "after" or "inside"
       $.getJSON("./"+theService, {request: 'move', refnode: refNodeId, type: type, node: nodeId},
           function(msg) {
-            if (msg.status == "NAL") {
+            if (msg.status === "NAL") {
               self.warnUser("You are not allowed to move this item, sorry.");
               $.jstree.rollback(data.rlbk);
     
-            } else if (msg.status != "OK") {
+            } else if (msg.status !== "OK") {
               console.log(msg);
               self.warnUser("The move of this item failed.<br>server status: " + msg.status);
               $.jstree.rollback(data.rlbk);
@@ -301,9 +308,9 @@ this.init = function () {
   .bind("select_node.jstree", function (e, data) {
     // console.log("Tree - select");
     var nodeId = $(data.args[0]).parent().attr("id");
-    if (self.currentNode == nodeId) {
+    if (self.currentNode === nodeId) {
       self.doEdit();
-    } else {
+    } else if (typeof nodeId !== "undefined") {
       self.currentNode = nodeId;
     }
   })
@@ -318,16 +325,16 @@ this.init = function () {
   .bind("create_node.jstree", function(e, data) { console.log(data);
     var title = data.args[2].data[0], aNode = data.rslt.obj;
     var type = data.args[1] || "inside";  // insert type = before, after, inside, first, last
-    var refNode = (type == "inside") ? data.args[0] : data.args[1];
+    var refNode = (type === "inside") ? data.args[0] : data.args[1];
     var refNodeId = refNode.attr("id");
     
     $.getJSON("./"+theService, {request: 'insert', refnode: refNodeId, type: type, name: title, kind: self.nextType, extention: 'xxx'},
         function(msg){
-          if (msg.status == "NAL") {
+          if (msg.status === "NAL") {
             self.warnUser("You are not allowed to create and item here, sorry");
             $.jstree.rollback(data.rlbk);
     
-          } else if (msg.status == "NOK") {
+          } else if (msg.status === "NOK") {
             console.log(msg);
             self.warnUser("Creation of a new item failed.<br>server status: " + msg.status);
             $.jstree.rollback(data.rlbk);
@@ -351,34 +358,41 @@ this.init = function () {
       strings: { new_node: "New item" }
     },
     themes : {
-      theme: "default"   // alternatives: "apple", "default" or false (= no theme)
+      theme: "classic"   // alternatives: "apple" (not good -> alternating rows), "default", "classic" or false (= no theme)
     },
     ui: {
       select_limit: 1,
       "initially_select" : ['id_' + theInitialNode] 
     },
-    types: {
-      "root" : {
-        deletable: false,
-        renameable: false,
-        draggable: false,
-        clickable: true
-      },
-      "image" : {
-        valid_children : "none",
-        creatable: false,
-        icon : { image : theImages + "/extentions/jpg.gif" }
-      },
-      "file" : {
-        valid_children : "none",
-        creatable: false,
-        icon : { image : theImages + "/extentions/xxx.gif" }
-      },
-      "folder" : {
-        valid_children : [ "file", "image", "folder" ],
-        icon : { image : theImages + "/extentions/xxx.gif" }
+      types: {
+        types: {
+          "root" : {
+            deletable: false,
+            renameable: false,
+            draggable: false,
+            clickable: true
+          },
+          "image" : {
+            valid_children : "none",
+            creatable: false,
+            icon : { image : theImages + "/extentions/jpg.png" }
+          },
+          "html" : {
+            valid_children : [ "html", "file", "image", "folder" ],
+            creatable: false,
+            icon : { image : theImages + "/extentions/html.png" }
+          },
+          "file" : {
+            valid_children : "none",
+            creatable: false,
+            icon : { image : theImages + "/extentions/file.png" }
+          },
+          "folder" : {
+            valid_children : [ "html", "file", "image", "folder" ],
+            icon : { image : theImages + "/extentions/file.png" }
+          }
+        }
       }
-    }
   });
 
 };

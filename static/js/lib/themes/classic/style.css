@@ -12,13 +12,13 @@
 .jstree-classic .jstree-closed > ins { background-position:-54px 0; }
 .jstree-classic .jstree-leaf > ins { background-position:-36px 0; }
 
-.jstree-classic .jstree-hovered { background:#e7f4f9; border:1px solid #e7f4f9; padding:0 2px 0 1px; }
-.jstree-classic .jstree-clicked { background:navy; border:1px solid navy; padding:0 2px 0 1px; color:white; }
-.jstree-classic a .jstree-icon { background-position:-56px -19px; }
-.jstree-classic .jstree-open > a .jstree-icon { background-position:-56px -36px; }
+.jstree-classic .jstree-hovered { background:#e7f4f9; border:1px solid #d8f0fa; padding:0 2px 0 1px; }
+.jstree-classic .jstree-clicked { background:#beebff; border:1px solid #99defd; padding:0 2px 0 1px; }
+.jstree-classic a .jstree-icon { background-position:-56px -21px; }
+.jstree-classic .jstree-open > a .jstree-icon { background-position:-56px -38px; }
 .jstree-classic a.jstree-loading .jstree-icon { background:url("throbber.gif") center center no-repeat !important; }
 
-.jstree-classic.jstree-focused { background:white; }
+.jstree-classic.jstree-focused { background:ffffee; }
 
 .jstree-classic .jstree-no-dots li, 
 .jstree-classic .jstree-no-dots .jstree-leaf > ins { background:transparent; }
@@ -66,9 +66,9 @@
 .jstree-classic .jstree-open ins { _background-position:-72px 0; }
 .jstree-classic .jstree-closed ins { _background-position:-54px 0; }
 .jstree-classic .jstree-leaf ins { _background-position:-36px 0; }
-.jstree-classic .jstree-open a ins.jstree-icon { _background-position:-56px -36px; }
-.jstree-classic .jstree-closed a ins.jstree-icon { _background-position:-56px -19px; }
-.jstree-classic .jstree-leaf a ins.jstree-icon { _background-position:-56px -19px; }
+.jstree-classic .jstree-open a ins.jstree-icon { _background-position:-56px -38px; }
+.jstree-classic .jstree-closed a ins.jstree-icon { _background-position:-56px -21px; }
+.jstree-classic .jstree-leaf a ins.jstree-icon { _background-position:-56px -21px; }
 #vakata-contextmenu.jstree-classic-context ins { _display:none; }
 #vakata-contextmenu.jstree-classic-context li { _zoom:1; }
 .jstree-classic .jstree-undetermined a .jstree-checkbox { _background-position:-20px -19px; }

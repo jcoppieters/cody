@@ -19,11 +19,23 @@
 	<script type="text/javascript">
 	  var gTree;
 		$(document).ready( function() {
-		  gTree = new jAtomTree(1, <%=shownode%>, gContext, gLanguage, "pages", gImages);
+		  gTree = new jAtomTree(1, "<%=shownode%>", gContext, gLanguage, "pages", gImages);
 		  gTree.getNode = getPage;
 		  gTree.init();
-		});
-	</script>
+
+      // when switching languages, try to keep the same view
+      $("#ltabs > ul > li > a").click( function() {
+        window.location = $(this).attr("href") + "?opennode=" + gTree.getOpenNode() + "&shownode=" + gTree.getCurrentNode();
+        return false;
+      });
+    });
+
+    if ("<%=opennode%>" !== "0") {
+      $(window).load( function() {
+          gTree.getNode("<%=opennode%>");
+      });
+    }
+  </script>
 
   <section>
     <header>
@@ -36,7 +48,7 @@
 			<div id="content_div" style="display: none;">
 				<textarea name="editContent" id="editContent"></textarea>
 				<div id="content_buttons">
-					<button id="doSaveEditor">Save</button>
+					<button id="doSaveEditor">OK</button>
 					<button id="doCancelEditor">Cancel</button>
 				</div>
 			</div>
@@ -47,32 +59,32 @@
 				<button id="doDelete">Delete</button>
 				<button id="doEdit">Edit</button>
 
-          <div id="ltabs" class="ui-tabs ui-widget">
-              <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-                <% for (var iL in app.languages) var L = app.languages[iL]; { %>
-                  <li class="ui-state-default ui-corner-top <%= (page.language === L.id) ? 'ui-tabs-active ui-state-active' : '' %>" ><a href="<%=context%>/<%=L.id%>/pages" class="ui-tabs-anchor"><%=L.id.toUpperCase()%></a></li>
-                <% } %>
-              </ul>
-
-	      <div id="tree" class="ui-corner-bottom">
-	        <ul>
-	          <li id="id_1" class="open" rel="root"><a href="#"><ins>&nbsp;</ins>Website</a>
-	            <%- controller.getTree() %>
-	          </li>
-	          
-            <li id="id_3" class="closed" rel="root"><a href="#"><ins>&nbsp;</ins>Pages</a>
-              <%- controller.getOrphansTree() %>
-            </li>
-           
-            <% if ((login) && (login.level >= 99)) { %>
-             <li id="id_9" class="closed" rel="root"><a href="#"><ins>&nbsp;</ins>Dashboard</a>
-                <%- controller.getDashboardTree() %>
-             </li>
+        <div id="ltabs" class="ui-tabs ui-widget">
+          <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+            <% for (var iL in app.languages) { var L = app.languages[iL]; %>
+              <li class="ui-state-default ui-corner-top <%= (page.language === L.id) ? 'ui-tabs-active ui-state-active' : '' %>" ><a href="<%=context%>/<%=L.id%>/pages" class="ui-tabs-anchor"><%=L.id.toUpperCase()%></a></li>
             <% } %>
-	        </ul>
-	      </div>
+          </ul>
+
+          <div id="tree" class="ui-corner-bottom">
+            <ul>
+              <li id="id_1" class="open" rel="root"><a href="#"><ins>&nbsp;</ins>Website</a>
+                <%- controller.getTree() %>
+              </li>
+
+              <li id="id_3" class="closed" rel="root"><a href="#"><ins>&nbsp;</ins>Pages</a>
+                <%- controller.getOrphansTree() %>
+              </li>
+
+              <% if ((login) && (login.level >= 99)) { %>
+               <li id="id_9" class="closed" rel="root"><a href="#"><ins>&nbsp;</ins>Dashboard</a>
+                  <%- controller.getDashboardTree() %>
+               </li>
+              <% } %>
+            </ul>
+          </div>
+        </div>
 	    </div>
-	          </div>
 
 	    <div id="right_cont">
 			</div>
@@ -101,9 +113,8 @@
     </div>
     <div>
       <label class="kind">S</label>
-      <a href="#" rel="S" id="doAddFormBlock">Add String »</a>
+      <a href="#" rel="S" id="doAddStringBlock">Add String »</a>
     </div>
   </div>
- 
-</body>
+ </body>
 </html>

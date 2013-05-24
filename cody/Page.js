@@ -169,7 +169,7 @@ Page.prototype.getView = function() {
 
 Page.prototype.getDisplay = function() {
   // check if this page is marked as: "show first subitem"
-  if ((this.item.showcontent === 'S') && (this.children.length > 0)) {
+  if ((this.item.showcontent === cody.Item.kSubItem) && (this.children.length > 0)) {
     return this.children[0].getDisplay();
   } else {
     return this;
@@ -193,7 +193,7 @@ Page.prototype.getAllowedGroups = function() {
   return this.item.getAllowedgroups();
 };
 Page.prototype.hasChildren = function() {
-  return (this.children.length > 1);
+  return (this.children.length > 0);
 };
 Page.prototype.isActive = function() { 
   return (this.active === 'Y');
