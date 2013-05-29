@@ -44,7 +44,7 @@
 	           <div class="actions">
 	             <button class="doEditorT">Edit</button>
 	             <button class="doDeletor">Delete</button>
-	             <span class="ui-icon-arrowthick-2-n-s ui-icon">x</span>
+	             <span class="ui-icon-arrowthick-2-n-s ui-icon">Move</span>
 	           </div>
 		         
 	          <% } else if (c.kind == "M") { %> 
@@ -55,7 +55,7 @@
               </div>
               <div class="actions">
                 <button class="doDeletor">Delete</button>
-                <span class="ui-icon-arrowthick-2-n-s ui-icon">x</span>
+                <span class="ui-icon-arrowthick-2-n-s ui-icon">Move</span>
               </div>
 	          
             <% } else if (c.kind == "S") { %>
@@ -66,7 +66,7 @@
               </div>
               <div class="actions">
                 <button class="doDeletor">Delete</button>
-                <span class="ui-icon-arrowthick-2-n-s ui-icon">x</span>
+                <span class="ui-icon-arrowthick-2-n-s ui-icon">Move</span>
               </div>
              
             <% } else if (c.kind == "F") { %> 
@@ -85,7 +85,7 @@
               <div class="actions">
                 <button class="doEditorF">Edit</button>
                 <button class="doDeletor">Delete</button>
-                <span class="ui-icon-arrowthick-2-n-s ui-icon">x</span>
+                <span class="ui-icon-arrowthick-2-n-s ui-icon">Move</span>
               </div>
              
             <% } else if (c.kind == "I") { %> 
@@ -95,14 +95,13 @@
 	               <img src="<%=dynamic%>/images/<%=c.atom.getFileName()%>" />
 	               <span><%=c.atom.name%>.<%=c.atom.extention%></span>
                 <% } else { %>
-                  <img src="<%=static%>/images/extentions/gif.png" />
                   <span>- none -</span>
 	              <% } %>
               </div>
               <div class="actions">
                 <button class="doEditorI">Edit</button>
                 <button class="doDeletor">Delete</button>
-                <span class="ui-icon-arrowthick-2-n-s ui-icon">x</span>
+                <span class="ui-icon-arrowthick-2-n-s ui-icon">Move</span>
               </div>
 	          
             <% } %>

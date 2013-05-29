@@ -43,8 +43,8 @@ PageController.prototype.doRequest = function( finish ) {
   console.log("Page constructor name = " + this.constructor.name);
   
   self.context.fn = "cms/pages.ejs";
-  self.context.opennode = "";
-  self.context.shownode = "";
+  self.context.opennode = "0";
+  self.context.shownode = "0";
   
   if (self.isRequest("realdelete")) {
     self.realDelete( self.getParam("node"), function whenDone(result) {
@@ -91,6 +91,7 @@ PageController.prototype.doRequest = function( finish ) {
 
 
 /* Overridden - Config functions */
+
 PageController.prototype.getRoot = function() {
   return cody.Application.kHomePage;
 };
@@ -106,54 +107,74 @@ PageController.prototype.getObject = function(id) {
   return this.app.getPage(language, id);
 };
 
-/* PageController - Specific actions */
 
-PageController.prototype.saveContent = function(thePage, theId, finish) {
+
+/* PageController utilities */
+
+PageController.prototype.respace = function( parent, finish ) {
   var self = this;
-  
-  var aPage = self.getObject( cody.TreeController.toId(thePage) );
-  var aContentId = cody.TreeController.toId(theId);
-  
-  console.log("Received PageController - saveContent, pageId = " + thePage + ", contentId = " + aContentId);
-  try {
-    
-    if (! self.isAllowed(aPage.item)) {
-      finish( { status: "NAL" } );
-      return;
-    }
-    
-    var aContent;
-    if (aContentId !== 0) {
-      aContent = aPage.getContent(aContentId);
-    } else {
-      aContent = new cody.Content({item: aPage.item.id}, aPage, self.app);
-    }
-    aContent.scrapeFrom(self, thePage, aPage.item.id);
-    
-    aContent.doUpdate(self, (aContentId === 0), function(err) {
-      if (err) {
-        finish( { status: "NOK", error: err } );
-      } else {
-        finish( { status: "OK" } );
-      }
-    });
-    
-    
-  } catch (e) {
-    console.log(e);
-    console.log("PageController.SaveData: failed to save the content of page " + thePage + " with id = " + theId);
 
-    finish( { status: "NOK", error: e } );
-  }
+  // Find all children, any page of the item will do, they all have the same children in any language
+  var aPage = this.getObject(parent.id);
+
+  var nr = 0;
+  cody.Application.each(aPage.children, function respaceOnePage(done) {
+    var aChildPage = this;
+    nr += 10;
+    // console.log("PageController.Respace: checking '" + aChildPage.item.name + "' now = " + aChildPage.item.sortorder + " to " + nr);
+    if (aChildPage.item.sortorder !== nr) {
+      aChildPage.item.sortorder = nr;
+      aChildPage.item.doUpdate(self, function() {
+        done();
+      });
+    } else {
+      done();
+    }
+
+  }, function whenDone(err) {
+    if (err) { console.log("PageController - respace: error = " + err); }
+    if (typeof finish === "function") { finish(); }
+
+  });
+
 };
+
+
+PageController.prototype.isAllowed = function( theNode ) {
+  var aUserDomain = this.getLogin().getDomain();
+  var anItemDomain = theNode.getAllowedDomains();
+
+  console.log("TPageController.isAllowed: user = '" + aUserDomain + "', item = '" + anItemDomain + "'");
+
+  // no userdomain -> not allowed
+  if (aUserDomain === "") { return false; }
+
+  // user has all rights or belongs to cody admin
+  if ((aUserDomain === "*") || (aUserDomain === "cody")) { return true; }
+
+  // item can be edited by any domain or no specific domains are set up
+  if ((anItemDomain === "*") || (anItemDomain === "")) { return true; }
+
+  // there is a user domain and the item has 1 of more domain
+  // loop through them all and check to see if there is a correspondence
+  var aList = anItemDomain.split(",");
+  for (var x in aList) {
+    if (aList[x]===aUserDomain) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
 
 /* Overridden - Action functions */
 
 PageController.prototype.addObject = function( title, refNode, type, kind, finish ) {
     var self = this;
-    console.log("Received PageController - addObject, refnode = " + refNode + ", type = " + type);
-    
-    var refNodeId = cody.TreeController.toId(refNode);
+    console.log("Received PageController - addObject, refnode = " + refNode + ", type = " + type + ", kind = " + kind);
+
+  var refNodeId = cody.TreeController.toId(refNode);
     var orderNr, aParent;
 
     // fetch the user id
@@ -177,7 +198,7 @@ PageController.prototype.addObject = function( title, refNode, type, kind, finis
     }
     
     // make the item
-    var basis = cody.Item.addDefaults({name: title, user: userId, sortorder: orderNr}, aParent);
+    var basis = cody.Item.addDefaults({name: title, user: userId, sortorder: orderNr, template: kind}, aParent);
     var anItem = new cody.Item(basis, self.app);
     
     try {
@@ -255,7 +276,7 @@ PageController.prototype.moveObject = function( nodeId, refNode, type, finish ) 
 
   // position in the tree
   anItem.parentId = aParent.id;
-  console.log("PageController.MovePage: old order = " + anItem.sortorder + ", new order = " + orderNr);
+  // console.log("PageController.MovePage: old order = " + anItem.sortorder + " (of " + anItem.id + "), new order = " + orderNr);
   anItem.sortorder = orderNr;
   
   try {
@@ -326,9 +347,10 @@ PageController.prototype.realDelete = function( node, finish ) {
   var aPage = self.getObject( cody.TreeController.toId(node) );
   var anItem = aPage.item;
   
-  // if needed, show this node after the delete
+  // if possible, show this node after the delete
   self.context.shownode = anItem.parentId;
-  
+
+
   if (! self.isAllowed(anItem)) {
     finish( { status: "NAL" } );
     return;
@@ -377,23 +399,27 @@ PageController.prototype.deleteObject = function( nodeId, finish ) {
 };
 
 
-
 PageController.prototype.fetchNode = function( theNode ) {
   var self = this;
   
   var aPage = self.getObject( cody.TreeController.toId(theNode) );
-  if (! self.isAllowed(aPage.item)) { return {status: "NAL"}; }
+  if (! self.isAllowed(aPage.item)) {
+    this.gen("NAL,User is not allowed to edit this page with id = " + theNode, { "Content-Type": "application/html" });
+    return false;
+  }
   
   // just switch the page in our current context and we're done ??
   self.context.page = aPage;
   
   //TODO: get all the (main) content blocks connected to this page
   // for the moment they are all there from startup
-  // question? how do I get rid of all the (main) blocks -- and keep the (intro) blocks
+  // but then -> question? how do I get rid of all the (main) blocks -- and keep the (intro) blocks
   //  actually: "when" do I do this?
   
   console.log("PageController.FetchNode: node = " + theNode + " + language = " + aPage.language + " => " + self.context.page.item.id);
+  return true;
 };
+
 
 PageController.prototype.saveInfo = function( nodeId, finish ) {
 	var self = this;
@@ -436,13 +462,52 @@ PageController.prototype.getOrphansTree = function() {
 
 /* content stuff */
 
+PageController.prototype.saveContent = function(thePage, theId, finish) {
+  var self = this;
+
+  var aPage = self.getObject( cody.TreeController.toId(thePage) );
+  var aContentId = cody.TreeController.toId(theId);
+
+  console.log("Received PageController - saveContent, pageId = " + thePage + ", contentId = " + aContentId);
+  try {
+
+    if (! self.isAllowed(aPage.item)) {
+      finish( { status: "NAL" } );
+      return;
+    }
+
+    var aContent;
+    if (aContentId !== 0) {
+      aContent = aPage.getContent(aContentId);
+    } else {
+      aContent = new cody.Content({item: aPage.item.id}, aPage, self.app);
+    }
+    aContent.scrapeFrom(self, thePage, aPage.item.id);
+
+    aContent.doUpdate(self, (aContentId === 0), function(err) {
+      if (err) {
+        finish( { status: "NOK", error: err } );
+      } else {
+        finish( { status: "OK" } );
+      }
+    });
+
+
+  } catch (e) {
+    console.log(e);
+    console.log("PageController.SaveData: failed to save the content of page " + thePage + " with id = " + theId);
+
+    finish( { status: "NOK", error: e } );
+  }
+};
+
+
 PageController.prototype.adjustContent = function( theNode, finish ) {
   var self = this;
   console.log("PageController.adjustContent: add correct Content for " + theNode + "");
 
   var aPage = self.getObject( cody.TreeController.toId(theNode) );
   aPage.adjustContent( self, function() {
-    self.context.savedPage = aPage;
     self.context.fetchnode = "id_" + aPage.itemId;
     finish();
   });
@@ -459,6 +524,7 @@ PageController.prototype.addContent = function( theNode, theKind, finish ) {
   });
 };
 
+
 PageController.prototype.deleteContent = function( theNode, theId, finish ) {
   var self = this;
   console.log("PageController.deleteContent: delete content " + theId + ", for " + theNode + "");
@@ -467,63 +533,5 @@ PageController.prototype.deleteContent = function( theNode, theId, finish ) {
   aPage.deleteContentById(self, cody.TreeController.toId(theId), function() {
     finish();
   });
-};
-
-/* PageController utilities */
-
-PageController.prototype.respace = function( parent, finish ) {
-	var self = this;
-	
-  // Find all children, any page of the item will do, they all have the same children in any language
-  var aPage = this.getObject(parent.id);
-
-  var nr = 0;
-  cody.Application.each(aPage.children, function respaceOnePage(done) {
-    var aChildPage = this;
-    nr += 10;
-    console.log("PageController.Respace: checking '" + aChildPage.item.name + "' now = " + aChildPage.item.sortorder + " to " + nr);
-    if (aChildPage.item.sortorder !== nr) {
-      aChildPage.item.sortorder = nr;
-      aChildPage.item.doUpdate(self, function() {
-        done();
-      });
-    } else {
-      done();
-    }
-    
-  }, function whenDone(err) {
-    if (err) { console.log("PageController - respace: error = " + err); }
-    if (typeof finish === "function") { finish(); }
-    
-  });
-
-};
-
-
-PageController.prototype.isAllowed = function( theNode ) {
-  var aUserDomain = this.getLogin().getDomain();
-  var anItemDomain = theNode.getAllowedDomains();
-  
-  console.log("TPageController.isAllowed: user = '" + aUserDomain + "', item = '" + anItemDomain + "'");
-
-  // no userdomain -> not allowed
-  if (aUserDomain === "") { return false; }
-
-  // user has all rights or belongs to cody admin
-  if ((aUserDomain === "*") || (aUserDomain === "cody")) { return true; }
-
-  // item can be edited by any domain or no specific domains are set up
-  if ((anItemDomain === "*") || (anItemDomain === "")) { return true; }
-
-  // there is a user domain and the item has 1 of more domain
-  // loop through them all and check to see if there is a correspondence
-  var aList = anItemDomain.split(",");
-  for (var x in aList) {
-    if (aList[x]===aUserDomain) {
-      return true; 
-    }
-  }
-  
-  return false;
 };
 

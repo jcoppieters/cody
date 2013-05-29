@@ -117,8 +117,9 @@ TreeController.prototype.doRequest = function( finish ) {
     
   } else if (self.isRequest("getnode")) {
     // get all info and data on this node
-    this.fetchNode( self.getParam("node") );
-    finish( self.context.fn.replace(".ejs", "-ajax.ejs") );
+    if (this.fetchNode( self.getParam("node") )) {
+      finish( self.context.fn.replace(".ejs", "-ajax.ejs") );
+    }
         
     
   } else if (self.isRequest("save")) {
@@ -308,7 +309,7 @@ TreeController.prototype.addObject = function( title, refNode, type, kind, finis
   var anAtom = new cody.Atom(basis);
   anAtom.pickParent(self.app.atoms);
   
-  console.log(anAtom);
+  // console.log(anAtom);
 
   anAtom.doUpdate(self, function() {
     self.app.addAtom(anAtom);
@@ -387,6 +388,11 @@ TreeController.prototype.makeSelect = function( type ) {
 TreeController.prototype.fetchNode = function( nodeId ) {
   console.log("TreeController.FetchNode: nodeId = " + nodeId);
   this.context.atom = this.getObject(TreeController.toId(nodeId));
+  if (! this.context.atom) {
+    this.gen("NOK,Could not find the requested atom with id = " + nodeId, { "Content-Type": "application/html" });
+    return false;
+  }
+  return true;
 };
 
 TreeController.prototype.respace = function(theParent) {

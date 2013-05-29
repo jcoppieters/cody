@@ -15,7 +15,10 @@ $(document).ready(function() {
   $("#doCancelEditor").button({ icons: { primary: "ui-icon-close"}, text: true}).click(doCancelEditor);
 
   $("#block_selector").dialog({autoOpen: false, width: 240});
-  $("#block_selector a").click( selectedContent );
+  $("#block_selector a.makeChoice").click( selectedContent );
+
+  $("#template_selector").dialog({autoOpen: false, width: 300});
+  $("#template_selector a.makeChoice").click( selectedTemplate );
 
   
   $('#editContent').tinymce({
@@ -41,6 +44,27 @@ $(document).ready(function() {
   });
 
 });
+
+function addPage() {
+  var t = $("#tree").jstree("get_selected");
+  if (t) {
+    // ask the kind (text, form, image, file)
+    $("#template_selector").dialog("open");
+  } else {
+    this.warnUser("Please select an item first");
+  }
+  return false;
+};
+
+function selectedTemplate() {
+  $("#template_selector").dialog("close");
+  gTree.nextType = $(this).attr("rel");
+  var t = $("#tree").jstree("get_selected");
+  if (t) {
+    $("#tree").jstree("create", t, "inside", { attr: { rel : "html" } });
+  }
+}
+
 
 function getPage(id) {
   var self = this;
@@ -188,6 +212,7 @@ function selectedContent() {
   return false;
 }
 
+
 function doAtomEditor(button, type, feedback) {
   $.ajax({
     type: "GET", 
@@ -299,7 +324,9 @@ function saveEditor(theId) {
   $("#content_data #"+name).html($(content).text().substring(0,80) + "<br>...");
   return true;
 
-  // till here
+
+  /* "old" save immediate,
+     not needed anymore, everything is saved if the user clicks the "Save" button.
 
   $.ajax({
      type: "POST", url: "./pages",
@@ -325,6 +352,8 @@ function saveEditor(theId) {
         }
       }
    });
+  */
+
 }
 
 /////////////////////////////

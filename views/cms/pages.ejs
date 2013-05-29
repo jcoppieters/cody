@@ -21,6 +21,7 @@
 		$(document).ready( function() {
 		  gTree = new jAtomTree(1, "<%=shownode%>", gContext, gLanguage, "pages", gImages);
 		  gTree.getNode = getPage;
+      gTree.doAdd = addPage;
 		  gTree.init();
 
       // when switching languages, try to keep the same view
@@ -116,5 +117,29 @@
       <a href="#" rel="S" id="doAddStringBlock">Add String »</a>
     </div>
   </div>
+
+  <div id="template_selector" title="Add new page">
+    <% if (login.level > 50) { %>
+      <h3>System templates</h3>
+      <% for (var iT in app.templates) { var T = app.templates[iT]; %>
+        <% if (T.system === "Y") { %>
+          <div>
+            <img src="<%=static%>/images/extentions/html.png">
+            <a class="makeChoice" href="#" rel="<%= T.id %>">Add a "<%= T.name %>" page  »</a>
+          </div>
+        <% } %>
+      <% } %>
+      <h3>User templates</h3>
+    <% } %>
+    <% for (var iT in app.templates) { var T = app.templates[iT]; %>
+      <% if (T.system === "N") { %>
+        <div>
+          <img src="<%=static%>/images/extentions/html.png">
+          <a class="makeChoice" href="#" rel="<%= T.id %>">Add a "<%= T.name %>" page  »</a>
+        </div>
+      <% } %>
+    <% } %>
+  </div>
+
  </body>
 </html>
