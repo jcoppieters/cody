@@ -61,7 +61,11 @@ function selectedTemplate() {
   gTree.nextType = $(this).attr("rel");
   var t = $("#tree").jstree("get_selected");
   if (t) {
-    $("#tree").jstree("create", t, "inside", { attr: { rel : "html" } });
+    var ctype = {};
+    if ($("#template_selector input[name=showcontent]:checked").val() === "Y") {
+      ctype = { attr: { rel : "html" } };
+    }
+    $("#tree").jstree("create", t, "inside", ctype);
   }
 }
 

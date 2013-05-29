@@ -119,6 +119,10 @@
   </div>
 
   <div id="template_selector" title="Add new page">
+    <h3>Show</h3>
+    <input type="radio" name="showcontent" id="showcontentY" value="Y"><label for="showcontentY">Content</label>
+    <input type="radio" name="showcontent" id="showcontentN" value="S"><label for="showcontentN">First subitem</label>
+    <hr>
     <% if (login.level > 50) { %>
       <h3>System templates</h3>
       <% for (var iT in app.templates) { var T = app.templates[iT]; %>

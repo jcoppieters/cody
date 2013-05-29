@@ -163,6 +163,7 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
   #block_selector a:hover { color: #4d94cc; }
 
 #template_selector { }
+  #template_selector label { margin: 0 32px 0 4px; color: #333334; font-weight: bolder; font-size: 13px }
   #template_selector h3 { margin-top: 20px }
   #template_selector h3:first-child { margin-top: 10px }
   #template_selector > div { margin: 5px 0 5px 0 }

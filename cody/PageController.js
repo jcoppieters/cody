@@ -171,71 +171,72 @@ PageController.prototype.isAllowed = function( theNode ) {
 /* Overridden - Action functions */
 
 PageController.prototype.addObject = function( title, refNode, type, kind, finish ) {
-    var self = this;
-    console.log("Received PageController - addObject, refnode = " + refNode + ", type = " + type + ", kind = " + kind);
+  var self = this;
+  var show = this.getParam("showcontent", "Y");
+  console.log("Received PageController - addObject, refnode = " + refNode + ", type = " + type + ", kind = " + kind+ ", show = " + show);
 
   var refNodeId = cody.TreeController.toId(refNode);
-    var orderNr, aParent;
+  var orderNr, aParent;
 
-    // fetch the user id
-    var userId = this.getLoginId();
-    
-    // fetch the parent and sortorder
-    if (type === "inside") {
-      orderNr = 5;
-      aParent = self.app.getItem(refNodeId);
-    } else { 
-      // after -> is always at the end -> we never get this !! (worked with previous version of jsTree)
-      var refItem = self.app.getItem(refNodeId);
-      orderNr = refItem.sortorder + 10;
-      aParent = refItem.parent;
-    }
-    
-    // can we make modifications to this parent node
-    if (! self.isAllowed(aParent)) {
-      finish( { status: "NAL" } );
-      return;
-    }
-    
-    // make the item
-    var basis = cody.Item.addDefaults({name: title, user: userId, sortorder: orderNr, template: kind}, aParent);
-    var anItem = new cody.Item(basis, self.app);
-    
-    try {
-      anItem.doUpdate(self, function() {
-        // we need the id of the new item, so use the callback
-        self.app.addItem(anItem);
-          
-        // make the page in all languages
-        var langs = self.app.getLanguages();
- 
-        cody.Application.each( langs, function makePageForLanguage(done) {
-          // iterator over all languages
-          basis = cody.Page.addDefaults({language: this.id}, anItem);
-          var aPage = new cody.Page(basis, self.app);
-            
-          aPage.doUpdate(self, function() {
-              self.app.addPage(aPage);
-              aPage.adjustContent(self, done);
-          }, true);
-          
-        }, function whenDone(err) {
-          // terminator
-          
-          if (err) {
-            finish( { status: "NOK", error: err } );
-            
-          } else {
-            finish( { status: "OK", node: "id_" + anItem.id } );
-          }
-        });
+  // fetch the user id
+  var userId = this.getLoginId();
+
+  // fetch the parent and sortorder
+  if (type === "inside") {
+    orderNr = 5;
+    aParent = self.app.getItem(refNodeId);
+  } else {
+    // after -> is always at the end -> we never get this !! (worked with previous version of jsTree)
+    var refItem = self.app.getItem(refNodeId);
+    orderNr = refItem.sortorder + 10;
+    aParent = refItem.parent;
+  }
+
+  // can we make modifications to this parent node
+  if (! self.isAllowed(aParent)) {
+    finish( { status: "NAL" } );
+    return;
+  }
+
+  // make the item
+  var basis = cody.Item.addDefaults({name: title, user: userId, sortorder: orderNr, template: kind, showcontent: show}, aParent);
+  var anItem = new cody.Item(basis, self.app);
+
+  try {
+    anItem.doUpdate(self, function() {
+      // we need the id of the new item, so use the callback
+      self.app.addItem(anItem);
+
+      // make the page in all languages
+      var langs = self.app.getLanguages();
+
+      cody.Application.each( langs, function makePageForLanguage(done) {
+        // iterator over all languages
+        basis = cody.Page.addDefaults({language: this.id}, anItem);
+        var aPage = new cody.Page(basis, self.app);
+
+        aPage.doUpdate(self, function() {
+            self.app.addPage(aPage);
+            aPage.adjustContent(self, done);
+        }, true);
+
+      }, function whenDone(err) {
+        // terminator
+
+        if (err) {
+          finish( { status: "NOK", error: err } );
+
+        } else {
+          finish( { status: "OK", node: "id_" + anItem.id } );
+        }
       });
-        
-    } catch (e) {
-      console.log("PageController.AddPage: Failed to create the Item or Page objects.");
-      console.log(e);
-      finish( { status: "NOK", error: e } );
-    }
+    });
+
+  } catch (e) {
+    console.log("PageController.AddPage: Failed to create the Item or Page objects.");
+    console.log(e);
+    finish( { status: "NOK", error: e } );
+  }
 };
 
 

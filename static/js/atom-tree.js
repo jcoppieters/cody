@@ -327,8 +327,9 @@ function jAtomTree(theRoot, theInitialNode, theContext, theLanguage, theService,
       var type = data.args[1] || "inside";  // insert type = before, after, inside, first, last
       var refNode = (type === "inside") ? data.args[0] : data.args[1];
       var refNodeId = refNode.attr("id");
+      var show = $("#template_selector input[name=showcontent]:checked").val();
 
-      $.getJSON("./"+theService, {request: 'insert', refnode: refNodeId, type: type, name: title, kind: self.nextType, extention: 'xxx'},
+      $.getJSON("./"+theService, {request: 'insert', refnode: refNodeId, type: type, name: title, kind: self.nextType, extention: 'xxx', showcontent: show},
           function(msg){
             if (msg.status === "NAL") {
               self.warnUser("You are not allowed to create and item here, sorry");
