@@ -32,8 +32,15 @@ del { text-decoration: line-through; }
 table { border-collapse: collapse; border-spacing: 0; }
 
 /* general
+
+color definitions Cody
+  Bkgnd: F4F4F4
+  Black: #333334
+  Grey: #9d9d9c
+  Blue: #4d94cc
+  Yellow: #fcc14e
 ------------------------------------------------------------------*/
-body { background-color: #F4F4F4; color: #363730; font-family:"Trebuchet MS", Arial, Verdana; font-size: 12px; }
+body { background-color: #F4F4F4; color: #333334; font-family:"Trebuchet MS", Arial, Verdana; font-size: 12px; }
 h1 { margin: 0 0 15px; font-size: 14px; font-weight: bold; color: #414141; }
 h2 { margin: 0 0 15px; font-size: 12px; font-weight: bold; color: #414141; }
 h3 {  margin: 2px 0 15px 0; font-size: 16px; font-weight: bold; color: #0D7FC6;  }
@@ -42,9 +49,9 @@ h5 {}
 ul, ol { margin: 0 0 14px 0; }
 p, form { margin: 0 0 14px 0; }
 p { margin: 0 0 2px; padding: 0; font-size: 13px; color: #666; line-height: 15px; }
-a { color: #363730; text-decoration: none }
-a:hover { color: #363730; text-decoration: underline }
-a:visited { color: #363730 }
+a { color: #333334; text-decoration: none }
+a:hover { color: #333334; text-decoration: underline }
+a:visited { color: #333334 }
 input, textarea, select { font-size: 11px; font-family: Arial, sans-serif; color: #4F535C; margin-left: 0 }
 strong { font-weight: bold; color: #b63d94; }
 em { font-style: italic; }
@@ -79,24 +86,23 @@ body > section > div { clear: both; margin: 10px 2px 0 2px  }
 /* Top navigation
 ------------------------------------------------------------------*/
 header { width: 100% }
-  header > img { display: inline-block; border: none; margin: 20px 10px 10px 2px; vertical-align: top }
-  header > span { display: inline-block; font-size: 32px; font-weight: bolder; margin: 15px 10px 10px 0px; vertical-align: top }
-  header > span#breadcrumb { display: inline-block; font-size: 16px; font-weight: normal; margin: 29px 10px 10px 20px; 
-                             vertical-align: top; color: #EA7B00 }
-  header > span#breadcrumb a { text-decoration: none; color: #363730 }
+  header > img { display: inline-block; border: none; margin: 7px 10px 7px 2px; vertical-align: top; height: 58px }
+  header > span#breadcrumb { display: inline-block; font-size: 14px; font-weight: bold; margin: 32px 10px 10px 200px;
+                             vertical-align: top; color: #333334 }
+  header > span#breadcrumb a { text-decoration: none; color: #4d94cc }
   header > span#breadcrumb a:visited { text-decoration: none }
   header > span#breadcrumb a:hover { text-decoration: underline }
   
-  header > section { display: block; float: right; margin: 30px 4px 10px 10px; vertical-align: top }
-  header > section > a { margin: 0 0 0 16px; font-size: 14px; font-weigth: bold }
+  header > section { display: block; float: right; margin: 30px 4px 10px 10px; vertical-align: top; font-size: 14px; font-weight: bold }
+  header > section > a { margin-left: 16px; }
  
-	header > nav { clear: both; background-color: #363730; height: 24px; padding: 15px; margin: 0 2px 0 2px; }
+	header > nav { clear: both; background-color: #333334; height: 24px; padding: 15px; margin: 0 2px 0 2px; }
 	  header > nav ul {}
-	  header > nav li { display: inline-block; margin: 4px 12px 4px 8px }
+	  header > nav li { display: inline-block; margin: 6px 12px 4px 8px }
 	  header > nav a { color: white; font-size: 16px; font-weight: bold }
 	  header > nav a:hover { color: white; text-decoration: underline; }
 	  header > nav a:visited { color: white; }
-	  header > nav a.active { color: #EA7B00 }
+	  header > nav a.active { color: #fcc14e }
 
 /* footer
 ------------------------------------------------------------------*/
@@ -133,10 +139,12 @@ body#images #tree, body#files #tree { margin-top: 10px }
 #tree.jstree > ul { margin: 0 0 8px 5px }
 #tree.jstree > ul > li { margin-top: 8px }
 #tree.jstree li.invisible a  { color: #999; }
+#tree.jstree a.jstree-clicked { background: #fcc14e }
+#tree.jstree .jstree-hovered { background: lightgrey; border: solid 1px lightgrey }
 #tree.jstree a { height: 18px; width: 90%; padding: 4px 2px 0 1px; border: solid 1px white }
-#tree.jstree a.jstree-hovered { padding: 4px 2px 0 1px; border: solid 1px #d8f0fa} 
-#tree.jstree li[rel=root] > a { font-size: 13px; color: #1c94c4; font-weight: bold }
-#tree.jstree li[rel=root] > a.jstree-clicked { border: solid 1px #99defd }
+#tree.jstree a.jstree-hovered { padding: 4px 2px 0 1px }
+#tree.jstree li[rel=root] > a { font-size: 13px; color: #4d94cc; font-weight: bold }
+#tree.jstree li[rel=root] > a.jstree-clicked { border: solid 1px #fcc14e }
 
 
 /* item/page/content editor with "#right_cont"
@@ -148,25 +156,25 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
 #block_selector { }
   #block_selector #stringlist { display: inline-block; margin: 22px 0px 0px 15px }
   #block_selector #stringlist a {  margin: 0 }
-  #block_selector label.kind { margin: 14px 8px 12px 15px; color: #1c94c4;
+  #block_selector label.kind { margin: 14px 8px 12px 15px; color: #4d94cc;
                                font-weight: bolder; font-size: 13px; height: 19px; line-height: 22px;}
-  #block_selector a { margin: 22px 0px 0px 15px; color: #363730; font-weight: bolder; font-size: 13px; height: 19px; display: inline-block }
-  #block_selector a:visited { color: #363730; }
-  #block_selector a:hover { color: #1c94c4; }
+  #block_selector a { margin: 22px 0px 0px 15px; color: #333334; font-weight: bolder; font-size: 13px; height: 19px; display: inline-block }
+  #block_selector a:visited { color: #333334; }
+  #block_selector a:hover { color: #4d94cc; }
 
 #template_selector { }
   #template_selector h3 { margin-top: 20px }
   #template_selector h3:first-child { margin-top: 10px }
   #template_selector > div { margin: 5px 0 5px 0 }
   #template_selector img { padding-top: 2px }
-  #template_selector a { margin: 5px 0px 0px 10px; color: #363730; font-weight: bolder; font-size: 13px; height: 19px; display: inline-block; vertical-align:top }
-  #template_selector a:visited { color: #363730; }
-  #template_selector a:hover { color: #1c94c4; }
+  #template_selector a { margin: 5px 0px 0px 10px; color: #333334; font-weight: bolder; font-size: 13px; height: 19px; display: inline-block; vertical-align:top }
+  #template_selector a:visited { color: #333334; }
+  #template_selector a:hover { color: #4d94cc; }
 
 #left_nav #ltabs { margin-top: 10px; padding: 0 }
     #left_nav #ltabs .ui-widget-header { border: none; background: none; background-color: #F4F4F4 }
-    #left_nav #ltabs li.ui-state-default a, li.ui-state-default a:visited { color: #363730 }
-    #left_nav #ltabs li.ui-state-active a, li.ui-state-active a:visited { color: #eb8f00 }
+    #left_nav #ltabs li.ui-state-default a, li.ui-state-default a:visited { color: #333334 }
+    #left_nav #ltabs li.ui-state-active a, li.ui-state-active a:visited { color: #fcc14e }
     #left_nav #ltabs li { border-color: #cccccc; }
 
 #content_div { border: 1px solid #ccc; background-color: rgb(240, 240, 238);}
@@ -185,7 +193,7 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
   #content_data > div { margin: 10px 5px 5px 8px; border: 1px solid #cfcfcf; }
   #content_data input { font-size: 13px; height: 19px; line-height: 22px }
   #content_data label { font-size: 13px; height: 19px; line-height: 22px; margin-bottom: 4px }
-  #content_data label { color: #1c94c4; font-weight: bolder;  }
+  #content_data label { color: #4d94cc; font-weight: bolder;  }
   #content_data label[for=title] { display: block; text-align: left; float: none; }
 
   #content_data #tabs { margin: 5px 17px 5px 14px; border-radius: 0;  }
@@ -195,8 +203,8 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
     #content_data #tabs > div { padding: 5px 5px 5px 5px; margin: 0px 0 0 2px; border: solid 1px #cfcfcf }
     #content_data #tabs .ui-widget-header { border: none; background: none; background-color: #F4F4F4 }
     #content_data #tabs.ui-widget-content { background: none; background-color: white }
-    #content_data #tabs li.ui-state-default a, li.ui-state-default a:visited { color: #363730 }
-    #content_data #tabs li.ui-state-active a, li.ui-state-active a:visited { color: #eb8f00 }
+    #content_data #tabs li.ui-state-default a, li.ui-state-default a:visited { color: #333334 }
+    #content_data #tabs li.ui-state-active a, li.ui-state-active a:visited { color: #fcc14e }
     #content_data #tabs li { border-color: #cccccc; }
     
   #content_data #content {}
@@ -206,7 +214,7 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
                      box-shadow: 2px 2px 5px lightgrey; -moz-box-shadow: 2px 2px 5px lightgrey; -webkit-box-shadow: 2px 2px 5px lightgrey;
                      background-color: white  }
 
-      #content_data #content h4 { margin: 10px 0 10px 3px; color: #1c94c4 }
+      #content_data #content h4 { margin: 10px 0 10px 3px; color: #4d94cc }
       #content_data #content article > label.kind { margin: 14px 8px 12px 5px }
 	    #content_data #content article > div.actions { display: inline-block; vertical-align:top; margin-top: 14px; float: right }
 	    #content_data #content article > div.actions > span { display: inline-block; margin-left: 5px; 
@@ -218,7 +226,7 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
       #content_data #content article > div.inputE { display: inline-block; width: 340px }
       #content_data #content article > div.inputE > span { display: inline-block; overflow: hidden; vertical-align:top; margin: 20px 0 0 5px }
       #content_data #content article > div > h5 { display: inline-block; width: 400px; margin: 2px 0 2px 0; font-size: 12px }
-      #content_data #content article > div > img { display: inline-block; height: 55px }
+      #content_data #content article > div > img { display: inline-block; height: 50px; box-shadow: 1px 1px 5px grey; border: solid 1px grey; }
       #content_data #content article > div > img.icon { height: 16px; margin-top: 18px }
       #content_data #content article > div > select { display: inline-block; margin-top: 18px }
       #content_data #content article > div.inputE > p { display: inline-block; width: 330px; overflow: hidden; height: 45px  }
@@ -258,15 +266,15 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
   #records .right { text-align: right }
   #records .center { text-align: center }
   #records td a,
-  #records td a:visited { color: #363730; }
-  #records td a:hover { color: #1c94c4; }
+  #records td a:visited { color: #333334; }
+  #records td a:hover { color: #4d94cc; }
   #records td.edit span { background-position: -64px -112px; background-image: url(ui-lightness/images/ui-icons_ef8c08_256x240.png);
                           width: 16px; height: 16px; display: inline-block; vertical-align: bottom; margin: 0px 4px -1px 0; }
 
 #record { background-color: white; border: solid 1px #cfcfcf; padding: 8px; 
           box-shadow: 2px 2px 5px lightgrey; -moz-box-shadow: 2px 2px 5px lightgrey; -webkit-box-shadow: 2px 2px 5px lightgrey }
   #record label:first-child { width: 100px; margin-left: 0 }
-  #record label { width: 80px; vertical-align: top; display: inline-block; color: #1c94c4; 
+  #record label { width: 80px; vertical-align: top; display: inline-block; color: #4d94cc; 
                   font-weight: bolder; text-align: left; margin: 5px 0 0 20px }
   #record label.choice { width: inherit; margin-left: 2px; margin-right: 10px; color: inherit; font-weight: normal }
   #record input[type=text] { width: 300px; vertical-align: top; display: inline-block }
