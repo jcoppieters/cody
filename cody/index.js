@@ -1,23 +1,27 @@
-module.exports.Application = require("./Application.js");
+module.exports.Application = require("./apps/Application.js");
 
-module.exports.Atom = require("./Atom.js");
-module.exports.Item = require("./Item.js");
-module.exports.Page = require("./Page.js");
-module.exports.Content = require("./Content.js");
-module.exports.Template = require("./Template.js");
-module.exports.User = require("./User.js");
+module.exports.Atom = require("./models/Atom.js");
+module.exports.Item = require("./models/Item.js");
+module.exports.Page = require("./models/Page.js");
+module.exports.Content = require("./models/Content.js");
+module.exports.Template = require("./models/Template.js");
+module.exports.User = require("./models/User.js");
 
-module.exports.Context = require("./Context.js");
-module.exports.Controller = require("./Controller.js");
-module.exports.LoginController = require("./LoginController.js");
-module.exports.UserController = require("./UserController.js");
+module.exports.Path = require("./models/Path.js");
+module.exports.Context = require("./models/Context.js");
 
-module.exports.DashboardController = require("./DashboardController.js");
-module.exports.TreeController = require("./TreeController.js");
-module.exports.PageController = require("./PageController.js");
-module.exports.ImageController = require("./ImageController.js");
-module.exports.FileController = require("./FileController.js");
-module.exports.TemplateController = require("./TemplateController.js");
+module.exports.Controller = require("./controllers/Controller.js");
+module.exports.LoginController = require("./controllers/LoginController.js");
+module.exports.UserController = require("./controllers/UserController.js");
 
-module.exports.Static = require("./Static.js");
-module.exports.Dynamic = require("./Dynamic.js");
+module.exports.DashboardController = require("./controllers/DashboardController.js");
+module.exports.TreeController = require("./controllers/TreeController.js");
+module.exports.PageController = require("./controllers/PageController.js");
+module.exports.ImageController = require("./controllers/ImageController.js");
+module.exports.FileController = require("./controllers/FileController.js");
+module.exports.TemplateController = require("./controllers/TemplateController.js");
+
+module.exports.Static = require("./apps/Static.js");
+module.exports.Dynamic = require("./apps/Dynamic.js");
+
+module.exports.startWebApp = require("./startWebApp.js");

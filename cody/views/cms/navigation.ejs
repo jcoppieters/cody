@@ -1,0 +1,29 @@
+<% if (login) { %>
+
+  <nav>
+    <ul>
+     <% for (var i in page.parent.children) {  
+       var p = page.parent.children[i]; 
+       if (p.isVisible()) { %>
+         <li><a href="<%=path.prefix%>/<%= p.url %>" class="<%= (p == page) ? 'active' : '' %>"><%= p.title %></a></li>
+       <% } %>
+     <% } %>
+   </ul>
+  </nav>
+    
+<% } else { %>
+
+  <h1>Login first</h1>
+	
+<% } %>
+
+
+<% if (message !== "") { %>
+  <p class="notification <%= status %>"><%= message %></p>
+  <% if (status === "success") { %>
+    <script>
+      $(document).ready( function () { $(".notification").delay(6000).fadeOut(1000); } );
+    </script>
+  <% } %>
+<% } %>
+

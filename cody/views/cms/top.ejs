@@ -1,0 +1,9 @@
+  <img src="<%=cstatic%>/images/logoMC.png">
+  <% if (page.parent) { %>
+    <span id="breadcrumb"><a href="<%=path.prefix%>/<%=page.language%>/dashboard">Dashboard</a> » <%=page.parent.title%></span>
+  <% } %>
+  <section>
+    <a href="<%=cstatic%>/manual.pdf">Help</a>
+    <a href="<%=path.prefix%>/<%=page.language%>/users?request=edit&id=<%=login.id%>">Account</a>
+    <a href="<%=path.prefix%>/<%=page.language%>/login/logout">Sign out</a>
+  </section>
