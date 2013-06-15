@@ -1,22 +1,17 @@
-<% if (login) { %>
-
-  <nav>
+<nav>
+  <% if (isLoggedIn()) { %>
     <ul>
-     <% for (var i in page.parent.children) {  
-       var p = page.parent.children[i]; 
-       if (p.isVisible()) { %>
-         <li><a href="<%=path.prefix%>/<%= p.url %>" class="<%= (p == page) ? 'active' : '' %>"><%= p.title %></a></li>
-       <% } %>
-     <% } %>
-   </ul>
-  </nav>
-    
-<% } else { %>
-
-  <h1>Login first</h1>
-	
-<% } %>
-
+      <% for (var i in page.parent.children) {
+      var p = page.parent.children[i];
+      if (p.isVisible()) { %>
+      <li><a href="<%=path.prefix%>/<%= p.url %>" class="<%= (p == page) ? 'active' : '' %>"><%= p.title %></a></li>
+      <% } %>
+      <% } %>
+    </ul>
+  <% } else { %>
+    <h1 id="logintitle">Login</h1>
+  <% } %>
+</nav>
 
 <% if (message !== "") { %>
   <p class="notification <%= status %>"><%= message %></p>

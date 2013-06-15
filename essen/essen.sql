@@ -46,6 +46,8 @@ INSERT INTO `atoms` VALUES
 -- Dumping data for table `templates`
 --
 
+UPDATE `templates` set fn = 'front/index.ejs' where id = 100;
+
 INSERT INTO `templates` VALUES
  (101,'Afspraak maken','BookingController', 'front/agenda.ejs','',0,'N',0),
  (102,'Artsen',        'ContentController', 'front/artsen.ejs','',0,'N',0),

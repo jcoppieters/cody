@@ -1,25 +1,16 @@
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this essen.</p><![endif]-->
 
-<header class="content">
-	<a href="<%=path.prefix%>/<%=page.language%>/"><img src="<%=static%>/images/logoMC.png"
-		width="242" height="78" alt="Cody CMS" id="logo"></a>
+<header>
+	<a href="<%=path.prefix%>/<%=page.language%>/"><img src="<%=static%>/images/logoMC.png" alt="Cody CMS"></a>
   
-	<div id="contactData">
-		<div class="contact tel">050 39 50 66</div>
-		<div class="contact address">Howest Brugge</div>
-	</div>
-
 	<nav>
-		<ul id="mainNav">
-      <% for (var i in page.root.children) {  
-           var p = page.root.children[i]; 
-           if (p.isVisible()) { %>
-				<li class="<%= (p == page && p.itemId != 109) ? 'active' : '' %>">
-					<a href="<%=path.prefix%>/<%=p.url%>"><%= p.title %></a>
-				</li>
-      <%   } %>
-      <% } %>
-		</ul>
+    <% for (var ip in page.root.children) { var p = page.root.children[ip];
+         if (p.isVisible()) { %>
+           <a class="<%= (p == page) ? 'active' : '' %>" href="<%=path.prefix%>/<%=p.url%>"><%= p.title %></a>
+    <%   } %>
+    <% } %>
 	</nav>
 
 </header>
+
+<div id="ribbon"><a href="https://github.com/jcoppieters/cody/" target="_blank">Fork me on GitHub</a></div>

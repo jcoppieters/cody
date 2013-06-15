@@ -33,14 +33,15 @@ table { border-collapse: collapse; border-spacing: 0; }
 
 /* general
 
-color definitions Cody
-  Bkgnd: F4F4F4
-  Black: #333334
-  Grey: #9d9d9c
-  Blue: #4d94cc
-  Yellow: #fcc14e as background color
-  Yellow: #f3ad25 as font color
-  Yellow: #fee6b8 as highlighting
+      Bkgnd: F4F4F4
+      Black: #333334
+      Grey: #9d9d9c
+      Blue: #4d94cc
+      Yellow: #fcc14e - as background color
+      Yellow 40%: #fee6b8 - as highlighting
+      Yellow text: #f3ad25 - as font color
+
+
 ------------------------------------------------------------------*/
 body { background-color: #F4F4F4; color: #333334; font-family:"Trebuchet MS", Arial, Verdana; font-size: 12px; }
 h1 { margin: 0 0 15px; font-size: 14px; font-weight: bold; color: #414141; }
@@ -74,6 +75,14 @@ sub { font-size: 8px; vertical-align: sub; }
 
 .warning { clear: both; padding: 5px 10px; background: #fef9f9; border: 1px solid #f00; color: #f00; text-align: left; }
 body p.notification { margin-left: 2px; margin-right: 2px }
+
+
+/*-----------------------------------*/
+
+p.notification { clear: both; margin: 5px 0 5px 0; padding: 10px 10px 10px 36px; border: 1px solid; background-position: 10px 11px !important; background-repeat: no-repeat !important; }
+p.success { border-color: #9adf8f; background: #d5ffce url(../images/icon_tick_circle.png); color: #556652; }
+p.error { border-color: #df8f8f; background: #ffcece url(../images/icon_cross_circle.png); color: #665252; }
+
 
 /*-----------------------------------*/
 .ui-datepicker-trigger { vertical-align: top; margin-top: 2px; margin-left: 4px; }
@@ -259,7 +268,7 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
     #content_data #action_buttons span#last_modif { margin:10px 2px 0 0 ; float: right; display: inline-block }
 
 
-/* backoffice tables + edit forms
+/* back office tables + edit forms
 ------------------------------------------------------------------*/
 
 #records { border-collapse:collapse; text-align: left; margin: 8px 0px 2px 0px; width: 100%;
@@ -293,11 +302,11 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
 /* login - NOT OK
 ------------------------------------------------------------------*/
 
-#login #wrapper { height: 600px;  }
+nav h1#logintitle { color: white }
 #login h1 { width: 505px; margin: 0; padding: 170px 295px 10px 0; color: #fff; text-align: right; font-size: 24px; }
-  #loginForm { width: 255px; padding: 35px 295px 30px 250px; color: #fff; text-align: right; }
-    #loginForm fieldset { float: none;  width: 255px; }
-      #loginForm fieldset div { padding-bottom: 5px; }
-    #loginForm .action_buttons { margin-right: 0; }
-      #loginForm .action_buttons input { width: 69px; height: 24px; border: 0; color: #fff; font-size: 13px; font-weight: bold; font-family: Verdana, Arial, sans-serif; cursor: pointer; }
+  #logon { width: 255px; padding: 7px 295px 30px 50px; text-align: right; }
+    #logon fieldset { float: none;  width: 255px; }
+      #logon fieldset div { padding-bottom: 5px; }
+    #logon .action_buttons { margin-left: 120px; text-align: left }
+      #logon .action_buttons input { width: 69px; height: 24px; border: 0; color: #fff; font-size: 13px; font-weight: bold; font-family: Verdana, Arial, sans-serif; cursor: pointer; }
 

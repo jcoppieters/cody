@@ -109,11 +109,12 @@ BookingController.prototype.step1 = function( theDate, finish ) {
 
 BookingController.prototype.step0 = function( theDate, finish ) {
   var self = this;
+  console.log("BookingController.step0");
   
   theDate = makeMonday( theDate );
-  this.context.date = theDate;
-  this.context.prevDate = new Date(theDate.getTime() - 7 * kOneDay);
-  this.context.nextDate = new Date(theDate.getTime() + 7 * kOneDay);
+  self.context.date = theDate;
+  self.context.prevDate = new Date(theDate.getTime() - 7 * kOneDay);
+  self.context.nextDate = new Date(theDate.getTime() + 7 * kOneDay);
 
   var maxRows = 0;
   var cnt = 0;
@@ -178,7 +179,6 @@ BookingController.prototype.step0 = function( theDate, finish ) {
         // console.log(self.context.dayList);
         self.context.maxRows = maxRows;
         
-        //cody.Controller.prototype.doRequest.call(self, finish);
         finish();
       }
       

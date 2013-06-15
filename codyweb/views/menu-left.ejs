@@ -1,9 +1,9 @@
 <nav>
-	<ul class="subNav">
+	<ul>
 		<% for (var i in page.parent.children) { 
 		     var subpage = page.parent.children[i]; 
 		     if (subpage.isVisible()) { %>
-			     <li <%= (page == subpage) ? 'class="active"' : '' %> ><a
+			     <li><a <%- (page == subpage) ? 'class="active"' : '' %>
 				       href="<%=path.prefix%>/<%=subpage.url%>"><%=subpage.title%></a></li>
     <%   } %>
     <% } %>

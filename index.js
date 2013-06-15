@@ -37,7 +37,7 @@ cody.server.get("/cody/static/*", function(req, res){
 
 // startup all the webapplications
 
-// var essen = require("./essen");
+var essen = require("./essen");
 var codyweb = require("./codyweb");
 
 

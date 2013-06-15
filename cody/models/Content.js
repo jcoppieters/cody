@@ -47,14 +47,14 @@ Content.prototype.renderForm = function(controller) {
 };
 Content.prototype.renderImage = function(controller) {
    if (this.atom) {
-     return "<img src='/essen/data/images/" + this.atom.id + "." + this.atom.extention + "'>";
+     return "<img src='" + controller.context.dynamic + "/images/" + this.atom.id + "." + this.atom.extention + "'>";
    } else {
      return "<!-- missing atom for " + this.id + " -->";
    }
 };
 Content.prototype.renderFile = function(controller) {
-  return "<a href='/essen/data/files/" + this.atom.id + "." + this.atom.extention + "'><img class='icon' src='/cody/static/extentions/" + this.atom.extention + ".png'/></a>" +
-         "<a href='/essen/data/files/" + this.atom.id + "." + this.atom.extention + "' class='filelink'>" + this.atom.getFileName() + "</a>";
+  return "<a href='" + controller.context.dynamic + "/files/" + this.atom.id + "." + this.atom.extention + "'><img class='icon' src='" + controller.context.cstatic + "/extentions/" + this.atom.extention + ".png'/></a>" +
+         "<a href='" + controller.context.dynamic + "/files/" + this.atom.id + "." + this.atom.extention + "' class='filelink'>" + this.atom.getFileName() + "</a>";
 };
 
 

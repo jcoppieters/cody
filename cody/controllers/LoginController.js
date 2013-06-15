@@ -55,7 +55,9 @@ LoginController.prototype.doRequest = function( finish ) {
 
     // redirect internally
     var anApp = self.app;
-    var aContext = anApp.buildContext( self.loggedOutUrl, self.context.req, self.context.res );
+
+    var aPath = new cody.Path( self.app.name + "/" + self.loggedOutUrl, self.app.name, self.app.defaultlanguage);
+    var aContext = anApp.buildContext( aPath, self.context.req, self.context.res );
     anApp.handToController(aContext);    
     
   } else {
@@ -136,7 +138,8 @@ LoginController.prototype.continuRequest = function() {
     console.log("LoginController.tryLogin -> found no pending session after login -> go to 'logged-in page'");
 
     // no pending request, send to "logged in" page
-    var aContext = anApp.buildContext( self.loggedInUrl, self.context.req, self.context.res );
+    var aPath = new cody.Path( self.app.name + "/" + self.loggedInUrl, self.app.name, self.app.defaultlanguage);
+    var aContext = anApp.buildContext( aPath, self.context.req, self.context.res );
     anApp.handToController(aContext);
   }
 };

@@ -333,13 +333,14 @@ Application.prototype.renderView = function( context ) {
 
 Application.prototype.logInFirst = function(context) {
   var self = this;
-  var req = context.req;
-  
+  var session = context.req;
+
   // copy minimal version of the context to our session
-  req.session.pendingContext = context.getMini();
+  session.pendingContext = context.getMini();
   
-  // build context and make LoginController
-  var aContext = self.buildContext( context.page.language + "/login", req, context.res );
+  // build path, context and make LoginController
+  var aPath = new cody.Path( self.name + "/" + context.page.language + "/login", self.name, self.defaultlanguage);
+  var aContext = self.buildContext( aPath, context.req, context.res );
   self.handToController(aContext);
 };
 

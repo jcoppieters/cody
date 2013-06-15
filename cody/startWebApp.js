@@ -20,11 +20,14 @@ function startWebApp( server, params, done ) {
 
 
   var app = new cody.Application(config);
+
+  for (var iC in params.controllers) {
+    var C = params.controllers[iC];
+    console.log("Adding controller: " + C.name + " - " + C.controller.constructor.name);
+    app.addController(C.name, C.controller);
+  }
+
   app.init( function () {
-    for (var iC in params.controllers) {
-      var C = params.controllers[iC];
-      app.addController(C.name, C.controller);
-    }
 
     for (var iL in app.languages) {
       server.all("/" + params.name + "/" + app.languages[iL].id + "/*", function(req, res){

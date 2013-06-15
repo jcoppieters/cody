@@ -85,6 +85,7 @@ Page.prototype.setLink = function(link, app, isNew) {
     // check if this link is not already used
    if (isNew === true) {
       if (app.urls[this.language + "/" + link]) {
+        console.log("Page.setLink -> " + this.language + "/" + link + " already used");
         return false;
       }
     }
