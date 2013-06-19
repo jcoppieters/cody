@@ -29,7 +29,7 @@ sad sad sad sadsad sad sad sad </pre>
 
     <% for (var ic in page.content) { var C = page.content[ic]; %>
     <article>
-      <%- C.render() %>
+      <%- C.render(controller) %>
     </article>
     <% } %>
 

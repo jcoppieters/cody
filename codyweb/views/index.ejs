@@ -12,9 +12,34 @@
 <body class="home">
   <% include menu-top %>
 
+  <script src="<%=cstatic%>/js/lib/jquery-1.9.1.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      var images = $("#banner > section > img"), body = $("body");
+      var current = 0, max = images.size()-1;
+
+      function next() {
+        $(images[current]).hide();
+        current = (current === max) ? 0 : current+1;
+        $(images[current]).show();
+        cycle();
+      }
+      function cycle() {
+        if (body.width() > 720) { setTimeout(next, 5000); }
+      }
+      cycle();
+    });
+
+  </script>
+
   <div id="banner" class="clearfix">
     <section>
-      <img src="<%=static%>/images/computer.png">
+      <img src="<%=static%>/images/computer1.png">
+      <img src="<%=static%>/images/computer2.png" style="display: none">
+      <img src="<%=static%>/images/computer3.png" style="display: none">
+      <img src="<%=static%>/images/computer4.png" style="display: none">
+      <img src="<%=static%>/images/computer5.png" style="display: none">
+      <img src="<%=static%>/images/computer6.png" style="display: none">
       <div>
         <h2>Create your own web environment in<br>Javascript with Cody and Node.js</h2>
         <a href="<%=cstatic%>/cody.zip"><img src="<%=static%>/images/download.png" alt="Download Cody CMS" title="Download Cody"></a>
@@ -30,7 +55,7 @@
       <% for (var ic in page.children) { var CP = page.children[ic]; %>
       <article>
         <h3><%= CP.title %></h3>
-        <%- (CP.content[0]) ? CP.content[0].render() : "" %>
+        <%- (typeof CP.content[0] != "undefined") ? CP.content[0].render(controller) : "<br><br>" %>
         <a href="<%=path.prefix%>/<%=CP.url%>"><%= CP.title %></a>
       </article>
       <% } %>
@@ -43,7 +68,7 @@
 
       <% for (var ic in page.content) { var C = page.content[ic]; %>
       <article>
-        <%- C.render() %>
+        <%- C.render(controller) %>
       </article>
       <% } %>
     </section>

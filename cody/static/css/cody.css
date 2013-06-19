@@ -167,9 +167,9 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
 #block_selector { }
   #block_selector #stringlist { display: inline-block; margin: 22px 0px 0px 15px }
   #block_selector #stringlist a {  margin: 0 }
-  #block_selector label.kind { margin: 14px 8px 12px 15px; color: #4d94cc;
-                               font-weight: bolder; font-size: 13px; height: 19px; line-height: 22px;}
-  #block_selector a { margin: 22px 0px 0px 15px; color: #333334; font-weight: bolder; font-size: 13px; height: 19px; display: inline-block }
+  #block_selector div { margin: 12px }
+  #block_selector img { vertical-align: top; }
+  #block_selector a {  color: #333334; font-weight: bolder; font-size: 13px;  display: inline-block; vertical-align: top; margin: 7px 0 0 12px }
   #block_selector a:visited { color: #333334; }
   #block_selector a:hover { color: #4d94cc; }
 
@@ -204,8 +204,7 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
     #content_data section button { margin-top: -1px; height: 25px }
   #content_data > div { margin: 10px 5px 5px 8px; border: 1px solid #cfcfcf; }
   #content_data input { font-size: 13px; height: 19px; line-height: 22px }
-  #content_data label { font-size: 13px; height: 19px; line-height: 22px; margin-bottom: 4px }
-  #content_data label { color: #4d94cc; font-weight: bolder;  }
+  #content_data label { font-size: 13px; height: 19px; line-height: 22px; margin-bottom: 4px; color: #4d94cc; font-weight: bolder;  }
   #content_data label[for=title] { display: block; text-align: left; float: none; }
 
   #content_data #tabs { margin: 5px 17px 5px 14px; border-radius: 0;  }
@@ -227,23 +226,27 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
                      background-color: white  }
 
       #content_data #content h4 { margin: 10px 0 10px 3px; color: #4d94cc }
-      #content_data #content article > label.kind { margin: 14px 8px 12px 5px }
+      #content_data #content article > img { display: inline-block; box-shadow: 1px 1px 5px grey; margin: 16px 0 0 8px;  }
 	    #content_data #content article > div.actions { display: inline-block; vertical-align:top; margin-top: 14px; float: right }
 	    #content_data #content article > div.actions > span { display: inline-block; margin-left: 5px; 
 	                                                          background-image: url(ui-lightness/images/ui-icons_ef8c08_256x240.png) }
-	                                                          
-      #content_data #content article > div.inputE > ul { display: block; z-index: 999; position: relative }
+
+
+      #content_data #content article > img { vertical-align: top; box-shadow: 1px 1px 5px grey; margin: 16px 0 0 8px }
 
       #content_data #content article > div.input { display: inline-block; width: 410px }
-      #content_data #content article > div.inputE { display: inline-block; width: 340px }
-      #content_data #content article > div.inputE > span { display: inline-block; overflow: hidden; vertical-align:top; margin: 20px 0 0 5px }
-      #content_data #content article > div > h5 { display: inline-block; width: 400px; margin: 2px 0 2px 0; font-size: 12px }
-      #content_data #content article > div > img { display: inline-block; height: 50px; box-shadow: 1px 1px 5px grey; border: solid 1px grey; }
-      #content_data #content article > div > img.icon { height: 16px; margin-top: 18px }
-      #content_data #content article > div > select { display: inline-block; margin-top: 18px }
-      #content_data #content article > div.inputE > p { display: inline-block; width: 330px; overflow: hidden; height: 45px  }
-      #content_data #content article > div.input > textarea { display: inline-block; width: 400px; overflow: hidden; height: 30px; border-color: #cfcfcf }
-       
+        #content_data #content article > div.input > textarea { display: inline-block; width: 400px; overflow: hidden; height: 30px; border-color: #cfcfcf; margin-left: 8px }
+        #content_data #content article > div.input > h5 { display: inline-block; width: 400px; margin: 2px 0 2px 8px; font-size: 12px }
+        #content_data #content article > div.input > select { display: inline-block; margin: 20px 0 0 8px }
+
+      #content_data #content article > div.inputE { vertical-align:top; display: inline-block; width: 340px }
+        #content_data #content article > div.inputE > ul { display: block; z-index: 999; position: relative }
+        #content_data #content article > div.inputE > img { vertical-align: top; box-shadow: 1px 1px 5px grey; height: 50px; margin: 2px 0 0 8px; }
+        #content_data #content article > div.inputE > img.icon { box-shadow: none; height: 16px; margin: 20px 0 0 8px; }
+        #content_data #content article > div.inputE > span { margin: 22px 0 0 6px; overflow: hidden;  display: inline-block; width: 250px }
+        #content_data #content article > div.inputE > p { margin: 6px 0 0 8px; display: inline-block; width: 330px; overflow: hidden; height: 45px  }
+
+
   #content_data #seo {  }
     #content_data #seo div { margin: 10px 0 10px 4px }
     #content_data #seo label { width: 80px; vertical-align: top; display: inline-block }

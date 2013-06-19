@@ -29,7 +29,7 @@
 							<% } %>
 							<div class="slidecontent">
 								<% for (var ic in P.content) { %>
-                  <%- P.content[ic].render() %>
+                  <%- P.content[ic].render(controller) %>
                 <% } %>
 								
 								<% if (P.itemId != 120) { %>

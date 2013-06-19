@@ -37,6 +37,10 @@ Content.prototype.getAtom = function(atomId, app) {
 Content.prototype.contentLength = function() {
   return (this.data) ? this.data.length : 0;
 };
+Content.prototype.isIntro = function() {
+  return (this.intro === "Y");
+};
+
 
 
 Content.prototype.renderText = function(controller) {
@@ -60,19 +64,19 @@ Content.prototype.renderFile = function(controller) {
 
 Content.prototype.render = function(controller) {
   if (this.kind === "T") {
-    return this.renderText();
+    return this.renderText(controller);
     
   } else if (this.kind === "S") {
-    return this.renderText();
+    return this.renderText(controller);
     
   } else if (this.kind === "M") {
-    return this.renderForm();
+    return this.renderForm(controller);
     
   } else if (this.kind === "I") {
-    return this.renderImage();
+    return this.renderImage(controller);
     
   } else if (this.kind === "F") {
-    return this.renderFile();
+    return this.renderFile(controller);
   }
 };
 

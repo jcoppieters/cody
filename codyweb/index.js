@@ -5,7 +5,7 @@ var cody = require("../cody/");
 cody.startWebApp(cody.server, {
   name: "codyweb",
   db: "codyweb",
-  datapath: ".",
+  datapath: "./codyweb/data",
   version: "v0.1a1",
   controllers: [
     //{name: "MyController", controller: codyweb.MyController},

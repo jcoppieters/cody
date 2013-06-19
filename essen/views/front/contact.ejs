@@ -34,7 +34,7 @@
 
 			<div class="contactPics">
          <% for (var ic in page.content) { %>
-           <%- page.content[ic].render() %>
+           <%- page.content[ic].render(controller) %>
          <% } %>
 			</div>
 		</div>

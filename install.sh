@@ -1,3 +1,5 @@
+screen
+
 cd /usr/local/src/cody
 rm -rf jcms
 git clone http://bitbucket.org/jcoppieters/jcms

@@ -33,7 +33,7 @@
 	          <input type="hidden" name="kind_<%= c.id %>" class="kind" value="<%= c.kind %>" />
             <input type="hidden" name="sortorder_<%= c.id %>" class="sortorder" value="<%= c.sortorder %>" />
             <input type="hidden" name="intro_<%= c.id %>" class="intro" value="<%= c.intro %>" />
-		        <label class="kind"><%= c.kind.toUpperCase() %></label>
+		        <img src="<%=cstatic%>/icons/<%=c.kind.toUpperCase() %>.png">
 		        	          
 		        <% if (c.kind == "T") { %>
 		         <div class="inputE">
@@ -80,6 +80,8 @@
                     <img class="icon" src="<%=cstatic%>/extentions/file.png" />
                     <span><%= c.atom.name %></span>
                   <% } %>
+                <% } else { %>
+                  <span>- none -</span>
                 <% } %>
               </div>
               <div class="actions">

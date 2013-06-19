@@ -409,8 +409,9 @@ Page.prototype.deleteContent = function( controller, next ) {
 
 Page.prototype.fetchContent = function( app, language, itemId, next ) {
   var self = this;
-  var nr = 1;
-  
+  var nrC = 1;
+  var nrI = 1;
+
   app.connection.query(
     "select * from content where item = ? and language = ? order by intro desc, sortorder asc",
     [itemId, language],
@@ -424,8 +425,11 @@ Page.prototype.fetchContent = function( app, language, itemId, next ) {
       for (var i = 0; i < result.length; i++) {
         self.content[i] = new cody.Content(result[i], self, app);
         if (self.content[i].name === "") {
-          self.content[i].name = "Content" + nr;
-          nr++;
+          if (self.content[i].isIntro()) {
+            self.content[i].name = ("Intro"+nrI); nrI++;
+          } else {
+            self.content[i].name = ("Content"+nrC); nrC++;
+          }
         }
         console.log("  " + self.content[i].name + " = " + self.content[i].data.length + " bytes");
       }

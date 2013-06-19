@@ -116,7 +116,7 @@ function getPage(id) {
          // add date pickers
          $.datepicker.setDefaults({
             showOn: "both",
-            buttonImage: gImages + "/icon_calendar.png",
+            buttonImage: gCody + "/images/icon_calendar.png",
             buttonImageOnly: true,
             dateFormat: "dd-mm-yy"});
         

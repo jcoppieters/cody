@@ -2,7 +2,7 @@ html, body, body div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquot
 del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form,
 label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, figure, footer, header, hgroup,
 menu, nav, section, time, mark, audio, video, details, summary
-  { margin: 0; padding: 0; border: 0; font-size: 100%; vertical-align: baseline; background: transparent }
+{ margin: 0; padding: 0; border: 0; font-size: 100%; vertical-align: baseline; background: transparent }
 * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
 article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary { display:block }
 audio,canvas,video { display:inline-block; *display:inline; *zoom:1 }
@@ -98,18 +98,18 @@ a { color: #4d94cc }
    ========================================================================== */
 
 header { width: 1130px; margin: 10px auto; background-color: #white; }
- header img { margin-left: 95px; height: 60px; display: inline-block }
- header nav { float: right; margin: 0 }
- header nav a { font-size: 16px; font-weight: bold; color: #333334; text-decoration: none;
-                margin: 24px 50px 0 0; text-transform: uppercase; display: inline-block; padding-bottom: 5px  }
- header nav a.active,
- header nav a:hover { border-bottom: solid 2px #fcc14e }
+header img { margin-left: 95px; height: 60px; display: inline-block }
+header nav { float: right; margin: 0 }
+header nav a { font-size: 16px; font-weight: bold; color: #333334; text-decoration: none;
+  margin: 24px 50px 0 0; text-transform: uppercase; display: inline-block; padding-bottom: 5px  }
+header nav a.active,
+header nav a:hover { border-bottom: solid 2px #fcc14e }
 
 #banner { width: 100%; background-position: left top; background-repeat: repeat-x }
 
 footer { background-color: #333334; }
- footer section { width: 1130px; height: 170px; margin: 10px auto 0 auto; display: table; padding-top: 30px }
- footer a { text-align: center; display: inline-block; width: 33%; margin: auto; vertical-align: middle }
+footer section { width: 1130px; height: 170px; margin: 10px auto 0 auto; display: table; padding-top: 30px }
+footer a { text-align: center; display: inline-block; width: 33%; margin: auto; vertical-align: middle }
 
 @media (max-width: 1039px) {
   header img { margin-left: 60px }
@@ -130,7 +130,7 @@ footer { background-color: #333334; }
    ========================================================================== */
 
 #ribbon { height: 149px; width: 149px; overflow: hidden; padding: 0; margin: 0;
-          position: absolute; top: 84px; right: 0; z-index: 999 }
+  position: absolute; top: 84px; right: 0; z-index: 999 }
 #ribbon a {
   display: block; position: relative; left: 0; top: 0; font-size: 14px; font-weight: bolder; text-decoration: none;
   text-align: center; color: #333334; width: 240px; padding: 8px 30px; border: 1px solid #ed9d00; background-color: #fcc14e;
@@ -164,32 +164,34 @@ footer { background-color: #333334; }
 .home #content { border-top: solid 1px #9d9d9c; background-color: white }
 .home #content section { width: 1130px; margin: 10px auto 0 auto }
 .home #content article { width: 24%; display: inline-block; min-height: 100px;
-                         margin: 5px 0 30px 0; padding-right: 20px; vertical-align: top }
+                         margin: 5px 0 30px 0; padding-right: 20px; vertical-align: top; padding: 6px }
 .home #content article p { font-size: 14px; }
 
 .home #examples { border-top: solid 1px #9d9d9c }
 .home #examples section { width: 1130px; margin: 10px auto }
 
-@media (max-width: 1039px) {
+@media (max-width: 1025px) {
   .home #banner { background-size: auto 250px; margin-bottom: 15px; }
   .home #banner section { width: 100% }
-  .home #banner section > img { margin: 90px 0 0 30px; float: left; display: inline-block; width: 350px }
+  .home #banner section > img { margin: 90px 0 0 30px; float: left; display: inline-block; width: 390px }
   .home #banner section > div { width: auto;  }
-  .home #banner section > div > h2 { margin: 140px 0 93px 20px; font-size: 16px }
+  .home #banner section > div > h2 { margin: 140px 0 93px 20px; font-size: 22px }
   .home #banner section > div > a { margin-left: 45px }
 
   .home #content section { width: 100%; margin: 10px auto 0 auto }
-  .home #content article { width: 48%; margin-left: 12px }
+  .home #content article { width: 48%; margin-left: 8px }
 
   .home #examples section { width: 100%; margin: 10px auto }
 }
-@media (max-width: 699px) {
+
+@media (max-width: 830px) {
   header img { margin-left: 40px }
-  .home #banner section > div > h2 { margin: 140px 0 100px 10px; font-size: 13px }
+  .home #banner section > img { margin: 90px 0 0 30px; float: left; display: inline-block; width: 350px }
+  .home #banner section > div > h2 { margin: 140px 0 100px 10px; font-size: 18px }
   .home #banner section > div > a > img { width: 200px }
 }
 
-@media (max-width: 639px) {
+@media (max-width: 720px) {
   .home #banner section > img { display: none }
   .home #banner section > div > h2 { margin: 110px 0 120px 20px; display: block; color: white; font-size: 16px }
   .home #banner section > div > a { margin-left: 50px }
@@ -207,21 +209,21 @@ footer { background-color: #333334; }
 .page #banner { background-image: url(../images/banner.png); height: 64px  }
 
 .page #content { width: 1023px; margin: 10px auto }
-  .page #content nav { width: 250px; display: inline-block; border: 1px solid #9d9d9c; margin: 8px; background-color: white; vertical-align: top }
-  .page #content nav ul { margin: 8px 16px 16px 8px; padding: 0 }
-  .page #content nav li { margin: 8px 2px 8px 2px; padding: 10px 0 0 0; border-top: solid 1px #9d9d9c }
-  .page #content nav li:first-child { border-top: none }
-  .page #content nav a { color: #9d9d9c; text-decoration: none; font-size: 14px }
-  .page #content nav a:hover { color: #333334; border-bottom: solid 1px #333334 }
-  .page #content nav a.active { color: #f3ad25 }
+.page #content nav { width: 250px; display: inline-block; border: 1px solid #9d9d9c; margin: 8px; background-color: white; vertical-align: top }
+.page #content nav ul { margin: 8px 16px 16px 8px; padding: 0 }
+.page #content nav li { margin: 8px 2px 8px 2px; padding: 10px 0 0 0; border-top: solid 1px #9d9d9c }
+.page #content nav li:first-child { border-top: none }
+.page #content nav a { color: #9d9d9c; text-decoration: none; font-size: 14px }
+.page #content nav a:hover { color: #333334; border-bottom: solid 1px #333334 }
+.page #content nav a.active { color: #f3ad25 }
 
-  .page #content section { width: 734px; display: inline-block; border: 1px solid #9d9d9c; margin: 8px 4px 8px 8px; background-color: white; vertical-align: top }
+.page #content section { width: 734px; display: inline-block; border: 1px solid #9d9d9c; margin: 8px 4px 8px 8px; background-color: white; vertical-align: top }
 
-  .page #content h1 { text-align: left; color: #333334; margin-left: 57px }
-  .page #content article { display: inline-block; text-align: left; vertical-align: top }
-    .page #content h2 { font-size: 18px; text-align: left; color: #333334; margin-left: 57px }
-    .page #content article p { font-size: 14px; color: #333334; margin: 5px 0 30px 60px; padding-right: 20px }
-    .page #content article pre { margin-left: 60px; font-size: 12px; padding-right: 8px; border: solid 1px #9d9d9c }
+.page #content h1 { text-align: left; color: #333334; margin-left: 57px }
+.page #content article { display: inline-block; text-align: left; vertical-align: top }
+.page #content h2 { font-size: 18px; text-align: left; color: #333334; margin-left: 57px }
+.page #content article p { font-size: 14px; color: #333334; margin: 5px 0 30px 60px; padding-right: 20px }
+.page #content article pre { margin-left: 60px; font-size: 12px; padding-right: 8px; border: solid 1px #9d9d9c }
 
 
 @media (max-width: 1023px) {
@@ -250,7 +252,7 @@ footer { background-color: #333334; }
 /* =============================================================================
    Print Styles
    ========================================================================== */
- 
+
 @media print {
   * { background: transparent !important; color: black !important; box-shadow:none !important; text-shadow: none !important; filter:none !important; -ms-filter: none !important; } /* Black prints faster: h5bp.com/s */
   a, a:visited { text-decoration: underline; }

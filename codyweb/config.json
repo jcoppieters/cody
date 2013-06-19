@@ -2,7 +2,7 @@
   "dbuser": "cody",
   "dbpassword": "ydoc",
   "dbhost": "localhost",
-  "datadir": "/usr/local",
+  "datapath": "/usr/local/data/codyweb",
   "name": "codyweb",
   "db": "codyweb"
 }

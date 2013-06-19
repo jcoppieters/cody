@@ -25,7 +25,7 @@ Dynamic.prototype.serve = function () {
   var self = this;
 
   var uri = url.parse(self.request.url).pathname;
-  var filename = libpath.join(self.path, uri);
+  var filename = (uri.indexOf("/") === 0) ? uri.substring(1) : uri; //libpath.join(self.path, uri);
   
 
   // check if this file exists
