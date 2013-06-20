@@ -1,0 +1,41 @@
+- new folder in "Images" -> "Choose file" ??
+- sending mails from javascript
+- everything about forms
+  - option1: translate java version
+  - option2: try to incorporate yanic's work
+- template editor
+  - short note om bij "add content" bij elke template een beetje uitleg te geven over de template
+  - duplicate
+  - lijst van automatisch toegevoegde benoemde content items (negative atoms)
+  - gekoppelde form -> data aan pagina hangen / kunnen afbeelden
+
+
+- empty site -> my site + instructies
+- github
+  - readme
+  - repository
+- documentatie
+  - installatie
+  - starten van plain site
+    - view aanpassen
+    - eigen template maken, met extra view
+    - controller bijmaken
+- setup howest server
+- maken hosting site
+- unit testing
+  - bvb: controller.getParam, Id, Num, Int: allerlei waarden in params steken en er terug uithalen
+
+
+websites / projecten
+- BOK - fiets vereniging
+  - leden
+  - inschrijven op kalender
+  - calendar export ical file -> url om te integreren in calendar
+  - voorzien om eventueel door wissel kleuren en images nieuuwe
+    waarom direct niet multi vereniging?
+- Tom Van Cutsem
+- BZYC
+  - leden
+  - tijd, water & stroom verbruik registratie
+- Howest?
+- BOIC?
