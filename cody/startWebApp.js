@@ -2,6 +2,7 @@ console.log("loading " + module.id);
 
 var cody = require("./index.js");
 
+
 function startWebApp( server, params, done ) {
   if (typeof params.name === "undefined") {
     console.log("startWebApp - missing name from config options");
@@ -34,7 +35,6 @@ function startWebApp( server, params, done ) {
         app.servePage(req, res);
       });
     }
-
 
     server.get("/" + params.name + "/static/*", function(req, res){
       var fileserver = new cody.Static(req, res);

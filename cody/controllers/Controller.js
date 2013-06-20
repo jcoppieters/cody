@@ -11,13 +11,15 @@ var cody = require("../index.js");
 function Controller(context) {
   // only called for using my methods
   if (typeof context === "undefined") { return; }
-  console.log("Controller.constructor -> page(" + context.page.itemId + ") = " + context.page.title + ", request = " + context.request);
+  if (context.page) {
+    console.log("Controller.constructor -> page(" + context.page.itemId + ") = " + context.page.title + ", request = " + context.request);
+  }
   
   this.context = context;
   context.controller = this;
 
   this.app = context.app;
-  this.connection = this.app.getConnection();
+  this.connection = (this.app) ? this.app.getConnection() : null;
   
   // console.log(this.context);
 }
@@ -106,20 +108,37 @@ Controller.prototype.getLoginLevel = function() {
 Controller.prototype.getDate = function(paramName, defaultValue) {
   return this.context.getDate(paramName, defaultValue);
 };
+
 Controller.prototype.getParam = function(paramName, defaultValue) {
   return this.context.getParam(paramName, defaultValue);
 };
+
 Controller.prototype.getInt = function(paramName, defaultValue) {
   var x = this.context.getParam(paramName, defaultValue);
   if (typeof x !== "number") { x = parseInt(x, 10); }
   return isNaN(x) ? defaultValue : x;
 };
+
 Controller.prototype.getNum = function(paramName, defaultValue, precision) {
   var x = this.context.getParam(paramName, defaultValue);
   if (typeof x !== "number") { x = parseFloat(x); }
   if (isNaN(x)) { x = defaultValue; }
   if (typeof precision !== "undefined") { x = x.toFixed(precision); }
   return x;
+};
+
+Controller.prototype.getUNum = function(paramName, defaultValue) {
+  var anId = this.context.getParam(paramName);
+  if ((typeof anId === "undefined") || (anId === "")) {
+    return (typeof defaultValue === "undefined") ? 0 : defaultValue;
+  } else  {
+    var i = anId.indexOf("_");
+    if (i >= 0) {
+      return parseInt(anId.substring(i+1), 10);
+    } else {
+      return parseInt(anId, 10);
+    }
+  }
 };
 
 

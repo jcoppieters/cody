@@ -386,7 +386,7 @@ Page.prototype.deleteContentById = function( controller, theId, next ) {
     });  
   } else {
     console.log("Page.deleteContentById: " + theId + " not found on " + self.language + "/" + self.itemId);
-    next();
+    if (typeof next === "function") { next(); }
   }
 };
 
@@ -434,7 +434,7 @@ Page.prototype.fetchContent = function( app, language, itemId, next ) {
         console.log("  " + self.content[i].name + " = " + self.content[i].data.length + " bytes");
       }
 
-      next();
+      if (typeof next === "function") { next(); }
     });
 };
 

@@ -7,7 +7,7 @@ var cody = require("../index.js");
 
 
 function Context(path, page, app, req, res) {
-  this.version = app.version;
+  this.version = (app) ? app.version : "v0.0";
   
   this.page = page;
   this.app = app;
@@ -39,7 +39,7 @@ function Context(path, page, app, req, res) {
   this.dynamic = path.prefix + "/data";
   this.cstatic = "/cody/static";
 
-  this.fn = page.getView();
+  this.fn = (page) ? page.getView() : "index.ejs";
   
   this.session = req.session;
   this.setLogin(this.session.login);
