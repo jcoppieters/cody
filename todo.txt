@@ -1,4 +1,4 @@
-- new folder in "Images" -> "Choose file" ??
+- new folder in "Images" -> "Choose file" ?? [ fixed 21/06 ]
 - sending mails from javascript
 - everything about forms
   - option1: translate java version
@@ -6,8 +6,11 @@
 - template editor
   - short note om bij "add content" bij elke template een beetje uitleg te geven over de template
   - duplicate
-  - lijst van automatisch toegevoegde benoemde content items (negative atoms)
+  - lijst van automatisch toegevoegde benoemde content items (negative atoms met naam)
+    opgelet: PageController nakijken dat naam overgenomen wordt van gepredefinieerde atoms.
   - gekoppelde form -> data aan pagina hangen / kunnen afbeelden
+- passwords niet meer als plain text stockeren
+- in loginController std functionaliteit om nieuw password op te sturen
 
 
 - empty site -> my site + instructies

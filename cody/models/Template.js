@@ -14,8 +14,10 @@ function Template(basis, controllers) {
       this[a] = basis[a];
     }
   }
-  
-  this.findController(basis.controller, controllers);
+
+  if (typeof basis.controller === "string") {
+    this.findController(basis.controller, controllers);
+  }
 
   this.fn = this.fn || "index.ejs";
   this.allowedtemplates = this.allowedtemplates || this.id;              //TODO: not yet implemented !!
@@ -23,6 +25,7 @@ function Template(basis, controllers) {
   this.system = this.system || "N";
   this.defaultchild = this.defaultchild || this.id ;
 
+  this.content = [];
 }
 
 module.exports = Template;
@@ -55,10 +58,6 @@ Template.prototype.getView = function() {
   return this.fn;
 };
 
-Template.prototype.doDelete = function(controller, done) {
-  var self = this;
-  controller.query("delete from templates where id = ?", [self.id], done);
-};
 
 
 Template.prototype.scrapeFrom = function(controller) {
@@ -70,6 +69,12 @@ Template.prototype.scrapeFrom = function(controller) {
   this.maxnumber = controller.getParam("maxnumber", this.maxnumber || 9999);
   this.system = controller.getParam("system", this.system || "N");
   this.defaultchild = controller.getParam("defaultchild", this.defaultchild);
+};
+
+
+Template.prototype.doDelete = function(controller, done) {
+  var self = this;
+  controller.query("delete from templates where id = ?", [self.id], done);
 };
 
 
@@ -111,4 +116,71 @@ Template.prototype.doUpdate = function(controller, finish) {
         }
       });
   }
+};
+
+
+// Content Stuff //
+
+Template.prototype.fetchContent = function(app, id, finish) {
+  var self = this;
+  // apply a page method to a template...  sorry guys...
+  cody.Page.prototype.fetchContent.call(self, app, "*", -1 * id, finish);
+
+};
+
+
+Template.prototype.sortContent = function() {
+  this.content.sort( function(a, b) {
+    if (a.intro === b.intro) {
+      return (a.sortorder - b.sortorder);
+    } else if (a.intro === 'Y') {
+      return -1;
+    } else {
+      return 1;
+    }
+  });
+};
+
+Template.prototype.updateContent = function( controller, finish ) {
+  var self = this;
+
+  cody.Application.each(self.content, function(next) {
+    var aContent = this;
+    aContent.scrapeFromWithId(controller);
+    aContent.doUpdate(controller, false, next);
+
+  }, function(err){
+    self.sortContent();
+    finish();
+  });
+};
+
+
+Template.prototype.addContent = function( controller, theId, theKind, finish ) {
+  var self = this;
+  var name = "New " + cody.Content.kindName(theKind);
+  controller.query("insert into content (item,language,sortorder,intro,kind,atom,name,data) values (?, '*', 999, 'N', ?, 0, ?, '')",
+                   [-1 * theId, theKind, name], function(err) {
+    // before template content was language independent the query was:
+    //  insert into content (item,language,sortorder,intro,kind,atom,name,data) select ?, id, 999, 'N', ?, 0, 'New Block', '' from languages
+    console.log("inserted content with " + (-1 * theId) + " of kind " + theKind + ", error = ["+err+"]");
+    finish();
+  });
+};
+
+Template.prototype.copyContentFrom = function( controller, fromTemplate, finish ) {
+  var self = this;
+  controller.query("insert into content select 0,?,language,sortorder,intro,kind,atom,name,data from content a where a.item = ?",
+    [-1 * self.id, -1 * fromTemplate], finish);
+};
+
+Template.prototype.deleteAllContent = function( controller, finish ) {
+  var self = this;
+  controller.query("delete from content where item = ?", [-1 * self.id], finish);
+};
+
+
+Template.prototype.deleteContent = function( controller, theContent, finish ) {
+  var self = this;
+  controller.query("delete from content where id = ?", [theContent], finish);
 };

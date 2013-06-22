@@ -205,6 +205,8 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
   #content_data > div { margin: 10px 5px 5px 8px; border: 1px solid #cfcfcf; }
   #content_data input { font-size: 13px; height: 19px; line-height: 22px }
   #content_data label { font-size: 13px; height: 19px; line-height: 22px; margin-bottom: 4px; color: #4d94cc; font-weight: bolder;  }
+  #content_data #preview { max-width: 440px; box-shadow: 4px 4px 7px lightgrey; border: solid 1px darkgrey;
+                           -moz-box-shadow: 4px 4px 7px lightgrey; -webkit-box-shadow: 4px 4px 7px lightgrey; }
   #content_data label[for=title] { display: block; text-align: left; float: none; }
 
   #content_data #tabs { margin: 5px 17px 5px 14px; border-radius: 0;  }
@@ -226,17 +228,17 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
                      background-color: white  }
 
       #content_data #content h4 { margin: 10px 0 10px 3px; color: #4d94cc }
-      #content_data #content article > img { display: inline-block; box-shadow: 1px 1px 5px grey; margin: 16px 0 0 8px;  }
+      #content_data #content article > img { display: inline-block; box-shadow: 1px 1px 5px grey; margin: 16px 0 0 8px; vertical-align: top }
 	    #content_data #content article > div.actions { display: inline-block; vertical-align:top; margin-top: 14px; float: right }
 	    #content_data #content article > div.actions > span { display: inline-block; margin-left: 5px; 
 	                                                          background-image: url(ui-lightness/images/ui-icons_ef8c08_256x240.png) }
 
 
-      #content_data #content article > img { vertical-align: top; box-shadow: 1px 1px 5px grey; margin: 16px 0 0 8px }
 
-      #content_data #content article > div.input { display: inline-block; width: 410px }
+      #content_data #content article > div > h5 { display: inline-block; width: 340px; margin: 2px 0 2px 8px; font-size: 12px }
+
+      #content_data #content article > div.input { vertical-align:top; display: inline-block; width: 410px }
         #content_data #content article > div.input > textarea { display: inline-block; width: 400px; overflow: hidden; height: 30px; border-color: #cfcfcf; margin-left: 8px }
-        #content_data #content article > div.input > h5 { display: inline-block; width: 400px; margin: 2px 0 2px 8px; font-size: 12px }
         #content_data #content article > div.input > select { display: inline-block; margin: 20px 0 0 8px }
 
       #content_data #content article > div.inputE { vertical-align:top; display: inline-block; width: 340px }
@@ -300,8 +302,20 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
   #record #action_buttons { margin: 15px 11px 0px 11px; border-top: solid 1px #cfcfcf; padding: 11px 0 6px 0;}
 
   #record label.error { color: red; width: inherit }
-  
-  
+
+
+/* Templates
+------------------------------------------------------------------*/
+#templates fieldset { vertical-align: top; display: inline-block }
+  #templates fieldset#left { width: 470px; border-right: solid 1px #cfcfcf; margin-right: 20px; }
+  #templates fieldset#right { width: 480px }
+    #templates fieldset#right > div.actions { margin: 15px 11px 0px 0px; border-top: solid 1px #cfcfcf; padding: 11px 0px 6px 0px }
+    #templates fieldset#right > div h4 { margin: 12px 0px 6px 0 }
+    #templates fieldset#right article * { vertical-align: top }
+      #templates fieldset#right article span.mover { display: inline-block; margin: 6px 0 0 5px; background-image: url(ui-lightness/images/ui-icons_ef8c08_256x240.png) }
+      #templates fieldset#right article input { margin: 6px 12px 0 6px; width: 270px }
+      #templates fieldset#right article img { margin-top: 2px }
+
 /* login - NOT OK
 ------------------------------------------------------------------*/
 

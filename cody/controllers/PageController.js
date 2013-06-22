@@ -478,9 +478,10 @@ PageController.prototype.saveContent = function(thePage, theId, finish) {
     if (aContentId !== 0) {
       aContent = aPage.getContent(aContentId);
     } else {
-      aContent = new cody.Content({item: aPage.item.id}, aPage, self.app);
+      aContent = new cody.Content({}, self.app);
+      aContent.attachTo(aPage, aPage.item.id, aPage.language);
     }
-    aContent.scrapeFrom(self, thePage, aPage.item.id);
+    aContent.scrapeFrom(self);
 
     aContent.doUpdate(self, (aContentId === 0), function(err) {
       if (err) {

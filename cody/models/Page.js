@@ -421,9 +421,10 @@ Page.prototype.fetchContent = function( app, language, itemId, next ) {
         throw(new Error("Page.loadContent failed with sql errors")); 
       }
       self.content = [];
-
+      console.log("Page.fetchContent, found " + result.length + " content blocks");
       for (var i = 0; i < result.length; i++) {
-        self.content[i] = new cody.Content(result[i], self, app);
+        self.content[i] = new cody.Content(result[i], app);
+        self.content[i].attachTo(self, itemId, language);
         if (self.content[i].name === "") {
           if (self.content[i].isIntro()) {
             self.content[i].name = ("Intro"+nrI); nrI++;
@@ -458,10 +459,13 @@ Page.prototype.adjustContent = function( controller, finish ) {
   console.log("Page.adjustContent: add correct Content for " + self.itemId);
   
   self.deleteContent( controller, function () {
-    console.log("fetchContent for " + self.language + "/" + (-1 * self.item.templateId));
-    self.fetchContent( controller.app, self.language, -1 * self.item.templateId, function() {
+    console.log("fetchContent for */" + (-1 * self.item.templateId));
+    self.fetchContent( controller.app, "*", -1 * self.item.templateId, function() {
+      // used to be self.language instead of *
+      // but then I decided that templates were language independent
       cody.Application.each(self.content, function(next) {
         var aContent = this;
+        aContent.attachTo(self, self.itemId, self.language);
         aContent.doUpdate(controller, true, next);
         
       }, function(err){
@@ -477,7 +481,9 @@ Page.prototype.addContent = function( controller, theKind, finish ) {
   var self = this;
   console.log("Page.addContent: add " + theKind + " content for " + self.itemId);
  
-  var aContent = new cody.Content({kind: theKind}, self, controller.app);
+  var aContent = new cody.Content({kind: theKind}, controller.app);
+  aContent.attachTo(self, self.itemId, self.language);
+
   self.content.push( aContent );
   aContent.doUpdate(controller, true, function() {
     console.log("Page.addContent: added content id = " + aContent.id);

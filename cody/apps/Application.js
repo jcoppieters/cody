@@ -503,8 +503,21 @@ Application.prototype.fetchTemplates = function(done) {
     done();
   });
 };
+
+Application.prototype.templateUsed = function(templateId) {
+  var found = false;
+
+  for (var it in this.items) {
+    if (this.items[it].templateId == templateId) {
+      return true;
+    }
+  }
+  return false;
+};
+
 Application.prototype.deleteTemplate = function(templateId) {
   var self = this;
+
   var aTemplate = self.templates[templateId];
   if (typeof aTemplate !== "undefined") {
     delete self.templates[templateId];

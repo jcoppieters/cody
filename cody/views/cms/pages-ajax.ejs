@@ -22,8 +22,8 @@
       <!-- --------- -->
 		  <div id="content">
       <!-- --------- -->
+        <div>
 		    <h4>Intro</h4>
-		    <div>
 		    <% var prev = "X";
 		       for (var ic in page.content) { var c = page.content[ic];
 	           if ((prev != c.intro) && (c.intro == "N")) { prev = c.intro; %>
@@ -39,6 +39,7 @@
 		         <div class="inputE">
                <input type="hidden" name="atom_<%= c.id %>" class="atom" value="<%= c.atomId %>" />
 		           <input type="hidden" name="data_<%= c.id %>" class="textdata" value="<%= c.data %>" />
+               <h5><%= c.name %></h5>
 		           <p id="data_<%= c.id %>"></p>
 	           </div>
 	           <div class="actions">

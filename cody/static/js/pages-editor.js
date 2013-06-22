@@ -110,7 +110,7 @@ function getPage(id) {
 
          // Content //
          // make list sortable
-         $("#content > div").sortable().disableSelection();
+         $("#content > div").sortable().disableSelection(); // sortable({items: "article"}) but we doesn't work UI-wise good
          
          
          // add date pickers
@@ -139,7 +139,7 @@ function getPage(id) {
          $("input.textdata").each(function() {
            var name = $(this).attr("name");
            var txt = $($(this).val()).text();
-           $("#content_data #"+name).html(txt.substring(0,80) + "<br>...");
+           $("#content_data #"+name).html(txt.substring(0,80) + "...");
          });
       }
    }

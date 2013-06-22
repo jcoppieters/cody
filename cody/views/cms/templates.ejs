@@ -12,28 +12,69 @@
 	<script src="<%=cstatic%>/js/lib/localization/messages_<%=page.language%>.js"></script>
 
 	<script>
-	  $(document).ready( function() {
+    function doDelContent() {
+      $("#content").val( $(this).attr("rel") );
+      $("#request").val("delcontent");
+      $("#record").submit();
+      return false;
+    }
+    function doAddContent() {
+      $("#block_selector").dialog("open");
+      // ask the kind (text, form, image, file, string)
+      return false;
+    }
+    function selectedContent() {
+      $("#block_selector").dialog("close");
+
+      $("#content").val( $(this).attr("rel") );
+      $("#request").val("addcontent");
+      $("#record").submit();
+      return false;
+    }
+
+    function saveOrder() {
+      var nr = 10;
+      var inMain = false;
+      $("#right article,#right h4.main").each(function(){
+        var block = $(this);
+        var id = block.attr("id");
+        if (id) {
+          block.find(".intro").val( (inMain) ? 'N' : 'Y' );
+          block.find(".sortorder").val(nr);
+          nr = nr + 10;
+        } else if (block.hasClass("main")) {
+          inMain = true;
+        }
+      });
+    }
+
+    $(document).ready( function() {
+      function makeButton(id, icon, req) {
+        $(id).button({ icons: { primary: icon}, text: true}).click( function() {
+          if (req==="save") { saveOrder(); }
+          $("#request").val(req);
+          $("#record").submit();
+        });
+      }
 	    $("#records td.edit a").prepend("<span class='icon-pencil'></span>");
 
-      $("#doNew").button({ icons: { primary: "ui-icon-plus"}, text: true}).click( function() {
-        $("#request").val("new");
-        $("#record").submit();
-      });
-      $("#doSave").button({ icons: { primary: "ui-icon-check"}, text: true}).click( function() {
-        $("#request").val("save");
-        $("#record").submit();
-      });
-	    $("#doDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( function() {
-	      $("#request").val("delete");
-	      $("#record").submit();
-	    });
-	    $("#doCancel").button({ icons: { primary: "ui-icon-close"}, text: true}).click( function() {
-	      $("#request").val("list");
-	      $("#record").submit();
-	    });
+      makeButton("#doNew", "ui-icon-plus", "new");
+      makeButton("#doSave", "ui-icon-check", "save");
+      makeButton("#doDuplicate", "ui-icon-newwin", "duplicate");
+      makeButton("#doDelete", "ui-icon-trash", "delete");
+      makeButton("#doCancel", "ui-icon-close", "list");
 
 	    $("#record").validate();
-	  });
+
+      $("#right .doDeletor").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( doDelContent );
+
+      $("#right #doAdd").button({ icons: { primary: "ui-icon-plus"}, text: true}).click( doAddContent );
+      $("#block_selector").dialog({autoOpen: false, width: 240});
+      $("#block_selector a.makeChoice").click( selectedContent );
+
+      $("#right > div.list").sortable().disableSelection(); // sortable({items: "article"}) but we doesn't work UI-wise good
+
+    });
 	</script>
 
   <section>
@@ -46,16 +87,17 @@
 
     <% if (typeof template != "undefined") { %>
 		<form action="./templates" method="post" id="record">
-   			<input type="hidden" name="request" id="request" value="save" />
-   			<input type="hidden" name="id" value="<%- template.id %>" />
+      <input type="hidden" name="request" id="request" value="save" />
+      <input type="hidden" name="id" value="<%- template.id %>" />
+      <input type="hidden" id="content" name="content" value="X" />
 
-			<fieldset class="horizontal">
+			<fieldset id="left">
 				<div>
 					<label for="name">Name</label>
 					<input name="name" id="name" type="text" value="<%- template.name %>" class="required"/>
 				</div>
         <div>
-          <label for="system">System</label>
+          <label for="systemY">System</label>
           <input name="system" id="systemY" type="radio" value="Y" <%= checked(template.system == 'Y') %> /><label class="choice" for="systemY">Yes</label>
           <input name="system" id="systemN" type="radio" value="N" <%= checked(template.system != 'Y') %> /><label class="choice" for="systemN">No</label>
         </div>
@@ -83,10 +125,36 @@
           <input name="allowedtemplates" id="allowedtemplates" type="text" value="<%- template.allowedtemplates %>" />
         </div>
 			</fieldset>
+
+      <fieldset id="right">
+        <div class="list">
+          <h4 class="intro">Intro</h4>
+          <% var prev = "X";
+          for (var ic in template.content) { var c = template.content[ic];
+            if ((prev != c.intro) && (c.intro == "N")) { prev = c.intro; %>
+              <h4 class="main">Main</h4>
+            <% } %>
+            <article id="id_<%= c.id %>">
+              <img src="<%=cstatic%>/icons/<%= c.kind.toUpperCase() %>.png">
+              <input type="text" name="name_<%= c.id %>" class="name" value="<%= c.name %>" />
+              <input type="hidden" name="sortorder_<%= c.id %>" class="sortorder" value="<%= c.sortorder %>" />
+              <input type="hidden" name="intro_<%= c.id %>" class="intro" value="<%= c.intro %>" />
+              <input type="hidden" name="kind_<%= c.id %>" class="kind" value="<%= c.kind %>" />
+              <button class="doDeletor" rel="<%= c.id %>">Delete</button>
+              <span class="ui-icon-arrowthick-2-n-s ui-icon mover">Move</span>
+            </article>
+          <% } %>
+        </div>
+        <div class="actions">
+          <button id="doAdd">Add</button>
+        </div>
+      </fieldset>
+
 			<div id="action_buttons">
 				<button id="doSave">Save</button>
 				<% if (template.id > 0) { %>
-					<button id="doDelete">Delete</button>
+          <button id="doDuplicate">Duplicate</button>
+          <button id="doDelete">Delete</button>
 				<% } %>
 				<button id="doCancel">Cancel</button>
 		  </div>
@@ -120,5 +188,10 @@
 
     <% include footer.ejs %>
   </section>
+
+  <% if (typeof template != "undefined") { %>
+    <% include content-type.ejs %>
+  <% } %>
+
 </body>
 </html>

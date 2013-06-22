@@ -19,22 +19,24 @@
         <input type="hidden" name="caption" value="" />
       <% } else { %>
         <% if ( atom.extention != 'xxx') { %>
-        <div>
-          <label for="extention">Extention</label>
-          <input name="extention" id="extention" type="text" value="<%= atom.extention %>" size="4" />
-        </div>
+          <div>
+            <label for="extention">Extention</label>
+            <input name="extention" id="extention" type="text" value="<%= atom.extention %>" size="4" />
+          </div>
         <% } %>
         <div>
           <label for="note">Note</label>
           <textarea name="note" id="note" cols="60" rows="3"><%= atom.note %></textarea>
         </div>
-        
-        <div>
-          <label for="fileupload">Image</label>
-          <input id="fileToUpload" type="file" size="30" name="fileToUpload" class="input" onchange='$("#preview").attr("src","")'/>
-        </div>  
-        
+
         <% if (atom.extention != 'xxx') { %>
+          <div>
+            <label for="fileupload">Image</label>
+            <input id="fileToUpload" type="file" size="30" name="fileToUpload" class="input" onchange='$("#preview").attr("src","")'/>
+          </div>
+        <% } %>
+        
+        <% if ((atom.extention != 'xxx') && (atom.extention != '') && (atom.extention != '---')) { %>
 	        <div>
 	          <label for="preview">Preview</label>
 	          <img id="preview" src="<%= controller.getFilePath() %>/<%= atom.id %>.<%= atom.extention %>?now=<%= getUnique() %>" />

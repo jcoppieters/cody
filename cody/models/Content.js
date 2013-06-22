@@ -7,7 +7,7 @@ console.log("loading " + module.id);
 var cody = require("../index.js");
 
 
-function Content(basis, page, app) {
+function Content(basis, app) {
   // copy from basis
   for (var a in basis) {
     if (basis.hasOwnProperty(a)) {
@@ -20,15 +20,27 @@ function Content(basis, page, app) {
   this.kind = this.kind || "T";
   this.sortorder = this.sortorder || 10;
   this.atom = this.atom || 0;
-  
-  this.page = page;
-  this.language = page.language;
-  this.itemId = (page && page.item) ? page.item.id : 0;
-  
+
   this.getAtom(this.atom, app);
 }
 
 module.exports = Content;
+
+Content.kindName = function(theKind) {
+  return (theKind === "I") ? "Image" :
+         (theKind === "T") ? "Text" :
+         (theKind === "M") ? "Form" :
+         (theKind === "S") ? "String" :
+         (theKind === "F") ? "File" :
+         "Block";
+};
+
+Content.prototype.attachTo = function(obj, itemId, language) {
+  this.page = obj;
+  this.language = language;
+  this.itemId = itemId;
+}
+
 
 Content.prototype.getAtom = function(atomId, app) {
   this.atomId = atomId;
