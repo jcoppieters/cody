@@ -139,7 +139,7 @@ function getPage(id) {
          $("input.textdata").each(function() {
            var name = $(this).attr("name");
            var txt = $($(this).val()).text();
-           $("#content_data #"+name).html(txt.substring(0,80) + "...");
+           $("#content_data #"+name).html(txt.substring(0,80) + " ...");
          });
       }
    }
@@ -325,7 +325,7 @@ function saveEditor(theId) {
   // perhaps just calling next 3 lines is enough:
 
   var name = block.find(".textdata").val( content ).attr("name");
-  $("#content_data #"+name).html($(content).text().substring(0,80) + "<br>...");
+  $("#content_data #"+name).html($(content).text().substring(0,80) + " ...");
   return true;
 
 
@@ -352,7 +352,7 @@ function saveEditor(theId) {
         } else {
           // replace data in our form
           var name = block.find(".textdata").val( content ).attr("name");
-          $("#content_data #"+name).html($(content).text().substring(0,80) + "<br>...");
+          $("#content_data #"+name).html($(content).text().substring(0,80) + " ...");
         }
       }
    });
