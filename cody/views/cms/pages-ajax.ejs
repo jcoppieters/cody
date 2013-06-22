@@ -110,7 +110,11 @@
             <% } %>
 		      </article>
 	      <% } %>
-	      </div>
+        <% if ((prev === "X") || (prev === "Y")) { %>
+          <h4 class="main">Main</h4>
+        <% } %>
+
+        </div>
 	      
 	      <div id="contentButtons">
 	        <button id="doAddContent">Add Content</button>

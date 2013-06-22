@@ -480,8 +480,9 @@ Page.prototype.adjustContent = function( controller, finish ) {
 Page.prototype.addContent = function( controller, theKind, finish ) {
   var self = this;
   console.log("Page.addContent: add " + theKind + " content for " + self.itemId);
- 
-  var aContent = new cody.Content({kind: theKind}, controller.app);
+
+  var aName = cody.Content.kindName(theKind);
+  var aContent = new cody.Content({kind: theKind, name: aName}, controller.app);
   aContent.attachTo(self, self.itemId, self.language);
 
   self.content.push( aContent );

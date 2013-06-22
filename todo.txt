@@ -1,4 +1,4 @@
-- delete content from page fails ... ??
+- delete content from page fails ... ?? [ seems stable now 22/06, but no real cause found ]
 - new folder in "Images" -> "Choose file" ?? [ fixed 21/06 ]
 - sending mails from javascript
 - everything about forms
@@ -6,9 +6,10 @@
   - option2: try to incorporate yanic's work
 - template editor
   - short note om bij "add content" bij elke template een beetje uitleg te geven over de template
-  - duplicate [ fixed 22/06 ]
-  - lijst van automatisch toegevoegde benoemde content items (negative atoms met naam) [ fixed 22/06 ]
-    opgelet: PageController nakijken dat naam overgenomen wordt van gepredefinieerde atoms. [ fixed 22/06 ]
+    ook in add-content kiezer deze tekst tonen.
+  - duplicate [ done 22/06 ]
+  - lijst van automatisch toegevoegde benoemde content items (negative atoms met naam) [ done 22/06 ]
+    opgelet: PageController nakijken dat naam overgenomen wordt van gepredefinieerde atoms. [ done 22/06 ]
   - gekoppelde form -> data aan pagina hangen / kunnen afbeelden
 - passwords niet meer als plain text stockeren
 - in loginController std functionaliteit om nieuw password op te sturen
