@@ -1,4 +1,4 @@
-- delete content from page fails ... ?? [ seems stable now 22/06, but no real cause found ]
+- delete content from page fails ... ?? [ fixed on 23/06, a > where it should have been a >= ]
 - new folder in "Images" -> "Choose file" ?? [ fixed 21/06 ]
 - sending mails from javascript
 - everything about forms

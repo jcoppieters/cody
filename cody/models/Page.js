@@ -374,7 +374,7 @@ Page.prototype.deleteContentById = function( controller, theId, next ) {
   var self = this;
   
   var i = self.getContentIndex(theId);
-  if (i > 0) {
+  if (i >= 0) {
     controller.query("delete from content where id=?", [theId], function(err) {
       if (err) { 
         console.log(err); 
