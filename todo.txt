@@ -16,6 +16,9 @@
 - passwords niet meer als plain text stockeren
 - in loginController std functionaliteit om nieuw password op te sturen
 
+- maken dat ook /nl als /nl/ aanvaard wordt
+  evenal /
+
 
 - empty site -> my site + instructies
 - github

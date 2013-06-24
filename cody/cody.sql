@@ -224,7 +224,7 @@ CREATE TABLE `content` (
   `kind` char(1) NOT NULL DEFAULT 'T',   /* Text, forM, File, Image */
   `atom` int(11) DEFAULT '0',
   `name` varchar(32) NOT NULL DEFAULT '',
-  `data` text NOT NULL DEFAULT '',
+  `data` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY (`item`,`language`)
 ) DEFAULT CHARSET=utf8;

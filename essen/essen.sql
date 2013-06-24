@@ -65,6 +65,8 @@ INSERT INTO `templates` VALUES
 -- Dumping data for table `items`
 --
 
+UPDATE `items` set orderby = 'M' WHERE id = 1;
+
 INSERT INTO `items` VALUES
 
   (20,'Admin',9, 1,2,'M',1,'2010-01-01','2010-01-01','2100-01-01','S','Y','',''),
@@ -72,9 +74,6 @@ INSERT INTO `items` VALUES
     (22,'Admin - Patienten',20,1,22,'A',20,'2010-01-01','2010-01-01','2100-01-01','Y','Y','',''),
     (23,'Admin - Week',20,1,23,'A',30,'2010-01-01','2010-01-01','2100-01-01','Y','Y','',''),
     (24,'Admin - Contacten',20,1,24,'A',40,'2010-01-01','2010-01-01','2100-01-01','Y','Y','',''),
-
-
-UPDATE `items` set orderby = 'M' WHERE id = 1;
 
 (101,'Info',1,1,100,'M',70,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','S','N','',''),
  (113,'Globaal medische dossier',101,1,100,'A',90,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),

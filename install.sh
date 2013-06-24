@@ -18,8 +18,9 @@ mysql mysql -e 'CREATE DATABASE codyweb DEFAULT CHARACTER SET utf8'
 mysql codyweb < cody/cody.sql
 mysql codyweb < codyweb/codyweb.sql
 
-echo "current urls: http://localhost:3000/codyweb/nl & /en + /essen/nl & /en + */nl/dashboard & */en/dashboard"
+echo "current urls: http://localhost:3000/codyweb/nl/ & /en + /essen/nl/ & /en/ + */nl/dashboard & */en/dashboard"
 
 while [ 1 ]; do  echo "restart node *****************************************************************************"; node index.js; done
 
 ctl-a ctl-d
+

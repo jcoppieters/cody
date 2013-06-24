@@ -41,3 +41,9 @@ var codyweb = require("./codyweb");
 cody.server.listen(3000);
 console.log('Listening on port 3000');
 
+
+if (!process.stderr.isTTY) {
+  process.on('uncaughtException', function (err) {
+    console.error('Uncaught exception : ' + err.stack);
+  });
+}
