@@ -136,14 +136,16 @@ footer { clear: both; width: 1000px; margin: 15px auto 0 auto; }
 /* tree edit layout
 ------------------------------------------------------------------*/
 
-#left_nav { width: 345px;  display: inline-block; margin-top: 7px;}
-#right_cont { display: inline-block; width: 645px; margin-top: 7px; vertical-align: top }
+#left_nav { width: 343px;  display: inline-block; margin-top: 7px }
+#right_cont { display: inline-block; width: 645px; margin-top: 7px; vertical-align: top;
+              box-shadow: 2px 2px 5px lightgrey; -moz-box-shadow: 2px 2px 5px lightgrey; -webkit-box-shadow: 2px 2px 5px lightgrey }
 
 
 
 /* tree manager
 ------------------------------------------------------------------*/
-#tree { width: 330px; background: white; border: solid 1px #CFCFCF; margin: 0px 0 0 2px  }
+#tree { width: 322px; background: white; border: solid 1px #CFCFCF; margin: 0px 0 0 2px;
+  box-shadow: 2px 2px 5px lightgrey; -moz-box-shadow: 2px 2px 5px lightgrey; -webkit-box-shadow: 2px 2px 5px lightgrey  }
 body#images #tree, body#files #tree { margin-top: 10px }
 
 #tree.jstree li.deleted a  { color: #BBB; }

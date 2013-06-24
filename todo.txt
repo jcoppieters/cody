@@ -5,7 +5,7 @@
 - everything about forms
   - option1: translate java version
   - option2: try to incorporate yanic's work
-- template editor
+- templates
   - add "note" om bij "add content" bij elke template een beetje uitleg te geven over de template
     ook in add-content kiezer deze tekst tonen. [ done 24/06 ]
   - implement "allowedTemplates" (page controller + template editing) and MaxNumber
