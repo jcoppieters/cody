@@ -1,12 +1,14 @@
 - delete content from page fails ... ?? [ fixed on 23/06, a > where it should have been a >= ]
 - new folder in "Images" -> "Choose file" ?? [ fixed 21/06 ]
+
 - sending mails from javascript
 - everything about forms
   - option1: translate java version
   - option2: try to incorporate yanic's work
 - template editor
-  - short note om bij "add content" bij elke template een beetje uitleg te geven over de template
-    ook in add-content kiezer deze tekst tonen.
+  - add "note" om bij "add content" bij elke template een beetje uitleg te geven over de template
+    ook in add-content kiezer deze tekst tonen. [ done 24/06 ]
+  - implement "allowedTemplates" (page controller + template editing) and MaxNumber
   - duplicate [ done 22/06 ]
   - lijst van automatisch toegevoegde benoemde content items (negative atoms met naam) [ done 22/06 ]
     opgelet: PageController nakijken dat naam overgenomen wordt van gepredefinieerde atoms. [ done 22/06 ]

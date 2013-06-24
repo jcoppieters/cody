@@ -35,8 +35,8 @@ INSERT INTO `atoms` VALUES
 --
 
 INSERT INTO `templates` VALUES
- (103,'Contact',       'ContactController', 'contact.ejs','',0,'N',0),
- (101,'Home',          'ContentController', 'index.ejs','',999,'N',100);
+ (103,'Contact',       '','ContactController', 'contact.ejs','',0,'N',0),
+ (101,'Home',          '','ContentController', 'index.ejs','',999,'N',100);
 
 update templates set fn = "page.ejs" where id = 100;
 update templates set fn = "login.ejs" where id = 2;

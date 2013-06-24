@@ -108,7 +108,10 @@
         <% if (T.system === "Y") { %>
           <div>
             <img src="<%=cstatic%>/extentions/html.png">
-            <a class="makeChoice" href="#" rel="<%= T.id %>">Add a "<%= T.name %>" page  »</a>
+            <article>
+              <a class="makeChoice" href="#" rel="<%= T.id %>">Add a "<%= T.name %>" page  »</a>
+              <span><%= T.description %></span>
+            </article>
           </div>
         <% } %>
       <% } %>
@@ -118,7 +121,10 @@
       <% if (T.system === "N") { %>
         <div>
           <img src="<%=cstatic%>/extentions/html.png">
-          <a class="makeChoice" href="#" rel="<%= T.id %>">Add a "<%= T.name %>" page  »</a>
+          <article>
+            <a class="makeChoice" href="#" rel="<%= T.id %>">Add a "<%= T.name %>" page  »</a>
+            <span><%= T.description %></span>
+          </article>
         </div>
       <% } %>
     <% } %>

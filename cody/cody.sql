@@ -49,6 +49,7 @@ CREATE TABLE `templates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) DEFAULT '',
   `controller` varchar(64) DEFAULT '',
+  `description` varchar(127) DEFAULT '',
   `fn` varchar(128) DEFAULT '',
   `allowedtemplates` varchar(255) DEFAULT '',
   `maxnumber` int(11) DEFAULT '99999',
@@ -57,19 +58,21 @@ CREATE TABLE `templates` (
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
 
+alter table templates add column `description` varchar(127) DEFAULT '';
+
 INSERT INTO `templates` VALUES 
-(2,'Login',           'LoginController',     '-/login.ejs','',0,'Y',0),
-(9,'Dashboard',       'DashboardController', '-/cms/dashboard.ejs','',0,'Y',0),
+(2,'Login',           '','LoginController',     '-/login.ejs','',0,'Y',0),
+(9,'Dashboard',       '','DashboardController', '-/cms/dashboard.ejs','',0,'Y',0),
 
-(11,'CMS-Page',       'PageController',      '-/cms/pages.ejs','',0,'Y',0),
-(12,'CMS-Images',     'ImageController',     '-/cms/images.ejs','',0,'Y',0),
-(13,'CMS-Files',      'FileController',      '-/cms/files.ejs','',0,'Y',0),
-(14,'CMS-Forms',      'FormController',      '-/cms/forms.ejs','',0,'Y',0),
-(15,'CMS-Users',      'UserController',      '-/cms/users.ejs','',0,'Y',0),
-(16,'CMS-Templates',  'TemplateController',  '-/cms/templates.ejs','',0,'Y',0),
-(17,'CMS-System',     'SystemController',    '','',0,'Y',0),
+(11,'CMS-Page',       '','PageController',      '-/cms/pages.ejs','',0,'Y',0),
+(12,'CMS-Images',     '','ImageController',     '-/cms/images.ejs','',0,'Y',0),
+(13,'CMS-Files',      '','FileController',      '-/cms/files.ejs','',0,'Y',0),
+(14,'CMS-Forms',      '','FormController',      '-/cms/forms.ejs','',0,'Y',0),
+(15,'CMS-Users',      '','UserController',      '-/cms/users.ejs','',0,'Y',0),
+(16,'CMS-Templates',  '','TemplateController',  '-/cms/templates.ejs','',0,'Y',0),
+(17,'CMS-System',     '','SystemController',    '','',0,'Y',0),
 
-(100,'Content',       'ContentController',   'index.ejs','',999,'N',100);
+(100,'Content',       '','ContentController',   'index.ejs','',999,'N',100);
 
 
 --

@@ -97,6 +97,10 @@
 					<input name="name" id="name" type="text" value="<%- template.name %>" class="required"/>
 				</div>
         <div>
+          <label for="description">Description</label>
+          <textarea name="description" id="description"><%- template.description %></textarea>
+        </div>
+        <div>
           <label for="systemY">System</label>
           <input name="system" id="systemY" type="radio" value="Y" <%= checked(template.system == 'Y') %> /><label class="choice" for="systemY">Yes</label>
           <input name="system" id="systemN" type="radio" value="N" <%= checked(template.system != 'Y') %> /><label class="choice" for="systemN">No</label>

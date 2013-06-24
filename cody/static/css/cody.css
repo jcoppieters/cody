@@ -177,11 +177,13 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
   #template_selector label { margin: 0 32px 0 4px; color: #333334; font-weight: bolder; font-size: 13px }
   #template_selector h3 { margin-top: 20px }
   #template_selector h3:first-child { margin-top: 10px }
-  #template_selector > div { margin: 5px 0 5px 0 }
-  #template_selector img { padding-top: 2px }
-  #template_selector a { margin: 5px 0px 0px 10px; color: #333334; font-weight: bolder; font-size: 13px; height: 19px; display: inline-block; vertical-align:top }
-  #template_selector a:visited { color: #333334; }
-  #template_selector a:hover { color: #4d94cc; }
+  #template_selector > div { margin: 5px 0 7px 0 }
+  #template_selector img { padding-top: 2px; vertical-align: top }
+  #template_selector article { display: inline-block; width: 230px; vertical-align: top }
+    #template_selector article a { margin: 5px 0px 0px 10px; color: #333334; font-weight: bolder; font-size: 13px; height: 19px; display: inline-block; vertical-align:top }
+    #template_selector article a:visited { color: #333334; }
+    #template_selector article a:hover { color: #4d94cc; }
+    #template_selector article span { display: block; margin: 0px 0 2px 10px; padding: 0; font-size: 12px; color: #666;}
 
 #left_nav #ltabs { margin-top: 10px; padding: 0 }
     #left_nav #ltabs .ui-widget-header { border: none; background: none; background-color: #F4F4F4 }
@@ -294,6 +296,7 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
   #record label { width: 80px; vertical-align: top; display: inline-block; color: #4d94cc; 
                   font-weight: bolder; text-align: left; margin: 5px 0 0 20px }
   #record label.choice { width: inherit; margin-left: 2px; margin-right: 10px; color: inherit; font-weight: normal }
+  #record textarea { width: 300px; height: 24px; vertical-align: top; display: inline-block; border-color: #cfcfcf  }
   #record input[type=text] { width: 300px; vertical-align: top; display: inline-block }
   #record input.number { width: 20px; }
   #record input#domain { width: 100px }

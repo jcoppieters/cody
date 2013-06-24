@@ -24,6 +24,7 @@ function Template(basis, controllers) {
   this.maxnumber = (isNaN(this.maxnumber)) ? 999 : this.maxnumber;       //TODO: not yet implemented !!
   this.system = this.system || "N";
   this.defaultchild = this.defaultchild || this.id ;
+  this.description = this.description || "";
 
   this.content = [];
 }
@@ -69,6 +70,7 @@ Template.prototype.scrapeFrom = function(controller) {
   this.maxnumber = controller.getParam("maxnumber", this.maxnumber || 9999);
   this.system = controller.getParam("system", this.system || "N");
   this.defaultchild = controller.getParam("defaultchild", this.defaultchild);
+  this.description = controller.getParam("description", this.description);
 };
 
 
@@ -80,14 +82,14 @@ Template.prototype.doDelete = function(controller, done) {
 
 Template.prototype.doUpdate = function(controller, finish) {
   var self = this;
-  var values = [self.name, self.controllerName, self.fn, self.allowedtemplates,
+  var values = [self.name, self.description, self.controllerName, self.fn, self.allowedtemplates,
                 self.maxnumber, self.system, self.defaultchild];
 
   // new or existing record
   if ((typeof self.id === "undefined") || (self.id === 0)) {
 
     console.log("insert template " + this.name);
-    controller.query("insert into templates (name, controller, fn,  allowedtemplates, maxnumber, system, defaultchild) " +
+    controller.query("insert into templates (name, description, controller, fn,  allowedtemplates, maxnumber, system, defaultchild) " +
       "values (?, ?, ?,  ?, ?, ?, ?)", values,
       function(err, result) {
         if (err) {
@@ -103,7 +105,7 @@ Template.prototype.doUpdate = function(controller, finish) {
   } else {
     console.log("update template " + self.id + " - " + this.name);
     values.push(self.id);
-    controller.query("update templates set name = ?, controller = ?, fn = ?, " +
+    controller.query("update templates set name = ?, description = ?, controller = ?, fn = ?, " +
       " allowedtemplates = ?, maxnumber = ?, system = ?, defaultchild = ? " +
       "where id = ?", values,
       function(err) {
