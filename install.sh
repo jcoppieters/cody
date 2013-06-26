@@ -9,6 +9,8 @@ npm install express
 npm install mysql@2.0.0-alpha8
 npm install mime
 npm install ejs
+npm install nodemailer
+npm install nodeunit -g
 
 mysql mysql -e 'CREATE DATABASE essen DEFAULT CHARACTER SET utf8'
 mysql essen < cody/cody.sql
