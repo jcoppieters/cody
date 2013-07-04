@@ -1,23 +1,34 @@
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this essen.</p><![endif]-->
 
-<header class="content">
-	<a href="<%=path.prefix%>/<%=page.language%>/"><img src="<%=static%>/images/logo_de_essen.png"
-		width="242" height="78" alt="Huistartsenpraktijk De Essen" id="logo"></a>
-  
-	<div id="contactData">
-		<div class="contact tel">050 39 50 66</div>
-		<div class="contact address">Lagebekeweg 1, 8200 Sint-Andries</div>
-	</div>
 
-	<nav>
-		<ul id="mainNav">
+<header class="content">
+	<a id="logo" href="<%=path.prefix%>/<%=page.language%>/"><img src="<%=static%>/images/logo.png"
+		width="242" height="78" alt=""></a>
+
+  <% var pp = page.root.getContent('phone'); %>
+  <% var aa = page.root.getContent('address'); %>
+
+  <% if (pp || aa) { %>
+    <div id="contactData">
+     <% if (typeof pp !== "undefined") { %>
+      <div class="contact tel"><%= pp.render() %></div>
+     <% } %>
+     <% if (typeof aa !== "undefined") { %>
+      <div class="contact address"><%= aa.render() %></div>
+     <% } %>
+    </div>
+  <% } %>
+
+
+  <nav id="mainNav">
+		<ul id="mainMenu">
       <% for (var i in page.root.children) {  
            var p = page.root.children[i]; 
            if (p.isVisible()) { %>
-				<li class="<%= (p == page && p.itemId != 109) ? 'active' : '' %>">
-					<a href="<%=path.prefix%>/<%=p.url%>"><%= p.title %></a>
-				</li>
-      <%   } %>
+				    <li class="<%= (p == page) ? 'active' : '' %>">
+					    <a href="<%=path.prefix%>/<%=p.url%>"><%= p.title %></a>
+				    </li>
+        <% } %>
       <% } %>
 		</ul>
 	</nav>

@@ -323,12 +323,28 @@ Page.prototype.doDeactivate = function(controller, next) {
 /* Content stuff */
 
 Page.prototype.getContent = function(id) {
-  var i = this.getContentIndex(id);
+  var i = -1;
+
+  if (typeof id === "string") {
+    i = this.getContentByName(id);
+  } else {
+    i = this.getContentIndex(id);
+  }
   if (i >= 0) {
     return this.content[i];
   }
   return null;
 };
+
+Page.prototype.getContentByName = function(name) {
+  for (var ic = 0; ic < this.content.length; ic++) {
+    if (this.content[ic].name === name) {
+      return ic;
+    }
+  }
+  return -1;
+};
+
 Page.prototype.getContentIndex = function(id) {
   for (var ic = 0; ic < this.content.length; ic++) {
     if (this.content[ic].id == id) {

@@ -25,20 +25,22 @@
           <textarea name="note" id="note" cols="60" rows="3"><%= atom.note %></textarea>
         </div>
         
-        <% if ( atom.extention != 'xxx') { %>
-        <div>
+        <% if ( ( atom.extention != 'xxx') && ( atom.extention != '---')) { %>
+         <div>
           <label for="extention">Extention</label>
           <input name="extention" id="extention" type="text" value="<%= atom.extention %>" size="4" />
-        </div>
+         </div>
         <% } %>
-        
-        <div>
+
+        <% if ((atom.extention != 'xxx') && (atom.extention != '') && (atom.extention != '---')) { %>
+         <div>
           <label for="preview">Current</label>
           <a href="<%=atom.getPathName(controller)%>?u=<%=getUnique()%>">
             <img class="icon" src="<%=cstatic%>/extentions/<%=atom.extention%>.png" /></a>
           <a href="/<%=atom.getPathName(controller)%>?u=<%=getUnique()%>" class="filelink">
             <%= atom.getFileName() %></a>
-        </div>      
+         </div>
+        <% } %>
         
         
         <div>

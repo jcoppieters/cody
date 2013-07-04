@@ -18,7 +18,7 @@
         <input type="hidden" name="extention" value="" />
         <input type="hidden" name="caption" value="" />
       <% } else { %>
-        <% if ( atom.extention != 'xxx') { %>
+        <% if (( atom.extention != 'xxx') && ( atom.extention != '---')) { %>
           <div>
             <label for="extention">Extention</label>
             <input name="extention" id="extention" type="text" value="<%= atom.extention %>" size="4" />

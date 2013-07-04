@@ -386,7 +386,7 @@ function jAtomTree(theRoot, theInitialNode, theContext, theLanguage, theService,
             "file" : {
               valid_children : "none",
               creatable: false,
-              icon : { image : theImages + "/extentions/F.png" }
+              icon : { image : theImages + "/extentions/file.png" }
             },
             "folder" : {
               valid_children : [ "html", "file", "image", "folder" ],

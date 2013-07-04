@@ -169,6 +169,8 @@ footer a { text-align: center; display: inline-block; width: 33%; margin: auto; 
 
 .home #examples { border-top: solid 1px #9d9d9c }
 .home #examples section { width: 1130px; margin: 10px auto }
+.home #examples section article { margin: 15px; width: 45%; display: inline-block }
+.home #examples section img {   box-shadow: 2px 2px 5px lightgrey; -moz-box-shadow: 2px 2px 5px lightgrey; -webkit-box-shadow: 2px 2px 5px lightgrey  }
 
 @media (max-width: 1025px) {
   .home #banner { background-size: auto 250px; margin-bottom: 15px; }

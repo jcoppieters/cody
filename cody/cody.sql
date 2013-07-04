@@ -48,8 +48,8 @@ DROP TABLE IF EXISTS `templates`;
 CREATE TABLE `templates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) DEFAULT '',
-  `controller` varchar(64) DEFAULT '',
   `description` varchar(127) DEFAULT '',
+  `controller` varchar(64) DEFAULT '',
   `fn` varchar(128) DEFAULT '',
   `allowedtemplates` varchar(255) DEFAULT '',
   `maxnumber` int(11) DEFAULT '99999',
@@ -58,7 +58,7 @@ CREATE TABLE `templates` (
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
 
-alter table templates add column `description` varchar(127) DEFAULT '';
+-- alter table templates add column `description` varchar(127) DEFAULT '';
 
 INSERT INTO `templates` VALUES 
 (2,'Login',           '','LoginController',     '-/login.ejs','',0,'Y',0),

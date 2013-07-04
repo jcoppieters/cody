@@ -1,6 +1,8 @@
 - delete content from page fails ... ?? [ fixed on 23/06, a > where it should have been a >= ]
 - new folder in "Images" -> "Choose file" ?? [ fixed 21/06 ]
 
+- illegal content?
+
 - sending mails from javascript
 - everything about forms
   - option1: translate java version
@@ -20,32 +22,78 @@
   evenal /
 
 
-- empty site -> my site + instructies
 - github
   - readme
   - repository
-- documentatie
-  - installatie
-  - starten van plain site
-    - view aanpassen
-    - eigen template maken, met extra view
-    - controller bijmaken
-- setup howest server
-- maken hosting site
+
 - unit testing
   - bvb: controller.getParam, Id, Num, Int: allerlei waarden in params steken en er terug uithalen
 
 
 websites / projecten
-- BOK - fiets vereniging
-  - leden
-  - inschrijven op kalender
-  - calendar export ical file -> url om te integreren in calendar
-  - voorzien om eventueel door wissel kleuren en images nieuuwe
-    waarom direct niet multi vereniging?
-- Tom Van Cutsem
 - BZYC
   - leden
   - tijd, water & stroom verbruik registratie
 - Howest?
 - BOIC?
+
+
+Laurens:
+- installatie
+  - eerst handmatig, met documentatie (en waar nodig aanpassingen)
+    inclusief database, npm's, etc..
+  - daarna voorstel voor automatisch opzetten van een extra site
+
+- om uiteindelijk een uitbreiding te maken op de website van cody
+ inclusief registratie e.d.
+
+- daarna: uploaden van css en logo in backoffice.
+  per template?  globaal?
+
+
+Dieter:
+- Usercontroller + login.ejs uitbreiden met "Forgot password"
+ opsturen per email, maar wat? iemand een voorstel?
+  - gewoon nieuw password genereren?
+  - verplichten direct om te veranderen?
+  - link naar de site waarmee je direct nieuw pw moet kiezen?
+ voor mij mag het simpel zijn.
+
+- Content website opzetten
+ maar vooral documenteren, met screenshots en korte uitleg per operatie
+ je mag gerust wat layout/html e.d. stelen van http://soft.vub.ac.be/~tvcutsem/invokedynamic/
+ uiteindelijk zou ik willen voorstellen om Tom zijn site te hermaken / hosten in Cody.
+
+
+- Als voorbeeld vereniging site opzetten
+  - leden (besloten groep, dus er hoeft geen registratie te zijn,
+    wel een login om verder dan de eerste pagina te geraken,
+    eigen controller -> needsLogin aanpassen)
+  - uiteraard ook content, navigatie 1 niveau diep is ok
+    (huidige content hoeft niet hernomen worden - bok.coppieters.be)
+  - kalender, leden kunnen hier iets op zetten (titel, door wie, datum, uur, locatie) en aanpassen
+    hij kan doorbladerd worden per maand
+    het hoeft zeker geen echte "month view" te zijn
+    een lijst met activiteiten per maand (of zelfs per jaar is meer dan voldoende)
+  - export van die kalendar naar ical formaat zodat je je kan "subscriben" aan de kalender
+    ik denk dat outlook dit kan (of ical op Mac).
+  - voorzien om eventueel door wissel kleuren en images nieuuwe
+    waarom direct niet multi vereniging?
+
+
+- Ik zie dat die site van Tom ook commentaar toelaat
+  misschien een leuke optie / voorbeeld controller die je later kan maken
+  zodat je per pagina kan aanduiden of je commentaar toelaat...
+  (met captcha?)
+
+
+Yanic:
+- definitie van meta data object, inclusief editing features (lengte, radio/checkbox, popup, etc)
+  controller voor in back office + template + bewaren in SQL met zeker id + name.
+- gegeven de id van zo'n meta object een fieldset genereren (geen form)
+  deze kan dan in een webpagina getoond worden
+  of gebruikt worden om meta data van een pagina te editeren.
+- bij het krijgen van een meta data id + (bestaande - or lege) data + param's object
+  -> json string of object teruggeven dat kan bewaard worden
+    of fouten teruggeven indien data niet voldoet aan de meta definitie.
+

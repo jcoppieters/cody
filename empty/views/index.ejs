@@ -9,28 +9,31 @@
 
 <% include header.ejs %>
 
-<body>
+<body id="page<%= page.itemId %>">
 	<div id="wrapper">
 
-    <% include menu-top %>
+    <% include menu-top.ejs %>
 
-		<div class="content <%= (page.parent && page.parent.children.length > 0 && page.parent.itemId != 1) ? 'withNav' : '' %>"
-         role="main">
+		<div class="content <%= (page.parent && page.parent.children.length > 0 && page.parent.itemId != 1) ? 'withNav' : '' %>">
 
 			<% if (page.parent && (page.parent.itemId != 1)) { %>
-         <% include menu-left %>
+         <% include menu-left.ejs %>
       <% } %>
-			
-			<div class="main">
-			<section>
-				<h1><%= page.title %></h1>
 
-        <% for (var ic in page.content) { %>
-				  <%- page.content[ic].render() %>
-				<% } %>
-			</section>
+			<div class="main">
+        <section>
+          <h1><%= page.title %></h1>
+
+          <% for (var ic in page.content) { %>
+            <% if (page.content[ic].isIntro()) { %>
+             <%- page.content[ic].render() %>
+            <% } %>
+          <% } %>
+        </section>
 			</div>
 		</div>
+
+    <% include footer.ejs %>
 	</div>
 
 </body>
