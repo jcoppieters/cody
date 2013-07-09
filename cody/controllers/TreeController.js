@@ -264,8 +264,13 @@ TreeController.prototype.saveInfo = function( nodeId, finish ) {
           
           // move the tmp file to our own datastore 
           console.log("TreeController.saveInfo: moving file from " + F.path + " to " + newPath);
-          fs.rename(F.path, newPath, function() {
-            anObject.doUpdate(self, finish);
+          fs.rename(F.path, newPath, function(err) {
+            if (err) {
+              console.log(err);
+              this.feedBack(false, "unable to rename uploaded file to " + newPath);
+            } else {
+              anObject.doUpdate(self, finish);
+            }
           });
         } else {
           // just delete the tmp file if it's empty
