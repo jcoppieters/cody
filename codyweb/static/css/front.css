@@ -220,6 +220,7 @@ footer a { text-align: center; display: inline-block; width: 33%; margin: auto; 
 .page #content nav a.active { color: #f3ad25 }
 
 .page #content section { width: 734px; display: inline-block; border: 1px solid #9d9d9c; margin: 8px 4px 8px 8px; background-color: white; vertical-align: top }
+.page #content section.noNav { width: 1004px }
 
 .page #content h1 { text-align: left; color: #333334; margin-left: 57px }
 .page #content article { display: inline-block; text-align: left; vertical-align: top }

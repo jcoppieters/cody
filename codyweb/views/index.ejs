@@ -18,15 +18,17 @@
       var images = $("#banner > section > img"), body = $("body");
       var current = 0, max = images.size()-1;
 
-      function next() {
-        $(images[current]).hide();
-        current = (current === max) ? 0 : current+1;
-        $(images[current]).show();
-        cycle();
-      }
       function cycle() {
-        if (body.width() > 720) { setTimeout(next, 5000); }
+        if (body.width() > 720) {
+          $(images[current]).hide();
+          current = (current === max) ? 0 : current+1;
+          $(images[current]).show();
+        } else {
+          images.hide();
+        }
+        setTimeout(cycle, 5000);
       }
+
       cycle();
     });
 
@@ -52,10 +54,14 @@
     <section>
       <h1>WHY CODY?</h1>
 
-      <% for (var ic in page.children) { var CP = page.children[ic]; %>
+      <% for (var icp in page.children) { var CP = page.children[icp]; %>
       <article>
         <h3><%= CP.title %></h3>
-        <%- (typeof CP.content[0] != "undefined") ? CP.content[0].render(controller) : "<br><br>" %>
+
+        <% for (var isc in CP.content) { var SC = CP.content[isc];  if (SC.isIntro()) { %>
+          <%- SC.render(controller) %>
+        <% }} %>
+
         <a href="<%=path.prefix%>/<%=CP.url%>"><%= CP.title %></a>
       </article>
       <% } %>
