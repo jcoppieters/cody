@@ -209,6 +209,7 @@ function selectedContent() {
          alert("Data not saved!\nGot error from server: " + msg.status + ", see console.");
          console.log(msg);
        } else {
+         //TODO: if the user entered data, it will be lost... !!
          gTree.getNode(node);
        }
      }

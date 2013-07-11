@@ -78,8 +78,42 @@ p.notification { clear: both; margin: 5px 0 5px 0; padding: 10px 10px 10px 36px;
 p.success { border-color: #9adf8f; background: #d5ffce url(../images/icon_tick_circle.png); color: #556652; }
 p.error { border-color: #df8f8f; background: #ffcece url(../images/icon_cross_circle.png); color: #665252; }
 
+nav a { text-decoration: none; padding-bottom: 3px; }
+nav a:hover, nav a.active { border-bottom: solid 2px darkgrey}
+
+/* ===== header ============================================================= */
+header { margin: 15px; padding-bottom: 15px; border-bottom: solid 1px lightgrey }
+header > div, header > nav { display: inline-block; vertical-align: bottom }
+header > div { font-size: 12px; padding-left: 30px; margin-bottom: 3px  }
+
+header > nav { padding: 40px 20px 0 20px  }
+header > nav li { display: inline-block; padding: 0 10px 0 10px; border-left: solid 1px lightgrey }
+header > nav li:first-child { border-left: none }
+
+header > #lanNav { float: right; padding: 20px 20px 0 0 }
+header > #lanNav span.id { display: inline; text-transform: uppercase }
+header > #lanNav span.name { display: none }
 
 
+/* ===== content ============================================================= */
+div.content { margin: 15px;  }
+ .main { display: inline-block; width: 800px; vertical-align: top; margin: 0;
+         border-left: solid 1px lightgrey; padding-left: 10px; }
+ div.noNav { border-left: none }
+ .main h1 { margin-top: 5px }
+
+/* ===== left menu =========================================================== */
+div.content nav { display: inline-block; width: 200px; vertical-align: top; margin-top: 10px }
+div.content nav li { margin-bottom: 10px }
+
+
+/* ===== footer ============================================================= */
+
+footer { padding-top: 10px; border-top: solid 1px lightgrey; margin: 15px }
+footer span { display: block; font-size: 12px  }
+footer .first { float: left; margin-left: 0px }
+footer .third { margin: 0px auto; width: 50%; text-align: center  }
+footer .second { float: right; margin-right: 0px }
 
 
 /* =============================================================================
