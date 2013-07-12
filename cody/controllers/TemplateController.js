@@ -141,15 +141,22 @@ TemplateController.prototype.doGet = function(id, finish) {
   // get or make the template object
   if ((typeof id === "undefined") || isNaN(id) || (id === 0)) {
     aTemplate = new cody.Template({id: 0}, self.app.controllers);
+
+    // store it in the context for our view
+    self.context.template = aTemplate;
+
+    // terminate -> new template is ready for editing
+    finish();
+
   } else {
     aTemplate = self.app.getTemplate(id);
+
+    // store it in the context for our view
+    self.context.template = aTemplate;
+
+    // attach all its content objects
+    aTemplate.fetchContent(self.app, id, finish);
   }
-
-  // store it in the context for our view
-  self.context.template = aTemplate;
-
-  // attach all its content objects
-  aTemplate.fetchContent(self.app, id, finish);
 };
 
 

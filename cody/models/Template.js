@@ -90,7 +90,7 @@ Template.prototype.doUpdate = function(controller, finish) {
 
     console.log("insert template " + this.name);
     controller.query("insert into templates (name, description, controller, fn,  allowedtemplates, maxnumber, system, defaultchild) " +
-      "values (?, ?, ?,  ?, ?, ?, ?)", values,
+      "values (?, ?, ?, ?,  ?, ?, ?, ?)", values,
       function(err, result) {
         if (err) {
           console.log(err); throw(new Error("Template.doUpdate/insert failed with sql errors"));
