@@ -11,7 +11,6 @@ var cody = require('./cody');
 
 cody.server = express();
 
-
 // cookies are encrypted, so we need a pass phrase
 cody.server.use(express.bodyParser());
 cody.server.use(express.cookieParser("a secret"));
@@ -33,52 +32,13 @@ cody.server.all("/cody/*", function (req, res) {
 
 
 // startup all the web applications
-var websites = Array();
 
-websites.push({
-                    "name": "empty",
-                    "version": "v0.1a1",
-                    "config": {
-                        "dbuser": "cody",
-                        "dbpassword": "ydoc",
-                        "dbhost": "localhost",
-                        "datapath": "/usr/local/data/empty",
-                        "name": "empty",
-                        "db": "empty"
-                    },
-                    webapp: null,
-                    customcontrollers: []
-                 });
-websites.push({
-                    "name": "codyweb",
-                    "version": "v0.1a1",
-                    "config": {
-                        "dbuser": "cody",
-                        "dbpassword": "ydoc",
-                        "dbhost": "localhost",
-                        "datapath": "/usr/local/data/codyweb",
-                        "name": "codyweb",
-                        "db": "codyweb"
-                    },
-                    webapp: null,
-                    customcontrollers: []
-                 });
-websites.push({
-                    "name": "essen",
-                    "version": "v0.1a1",
-                    "config": {
-                        "dbuser": "cody",
-                        "dbpassword": "ydoc",
-                        "dbhost": "localhost",
-                        "datapath": "/usr/local/data/essen",
-                        "name": "essen",
-                        "db": "essen"
-                    },
-                    webapp: null,
-                    customcontrollers: ["AgendaController", "BookingController"]
-                 });
+var codyApp = new cody.Application({
+    "testing": false,
+    "logging": false
+});
 
-websites.forEach(function (website) {
+codyApp.bootstrapSite = function(website){
     var currentWebsite = require("./" + website.name + "/controllers/");
 
     if(website.config === undefined){
@@ -87,12 +47,14 @@ websites.forEach(function (website) {
     if(website.config.controllers === undefined){
         website.config.controllers = [];
     }
+    website.config.name=website.name; //TODO: remove duplicate field
 
     website.customcontrollers.forEach(function(customcontrollername){
-        //TODO: eval is evil
-        website.config.controllers.push({name: customcontrollername, controller: eval("currentWebsite."+customcontrollername)});
+        if(customcontrollername !== undefined && customcontrollername != ""){
+            website.config.controllers.push({name: customcontrollername,
+                                            controller: eval("currentWebsite." + customcontrollername)});
+        }
     });
-
     website.webapp = cody.startWebApp(cody.server, {
         name: website.name,
         datapath: "./" + website.name + "/data", //we might want to move this into a new variable again
@@ -101,10 +63,39 @@ websites.forEach(function (website) {
         controllers: website.config.controllers
     }, undefined, website.config);
 
+};
+
+var connection = codyApp.getConnection();
+connection.connect();
+
+//connection.query("SELECT controllername FROM websitecontrollers WHERE websiteId="+row.id, function(err, rows, fields){
+connection.query('SELECT name, version, dbuser, dbpassword, dbhost, datapath, db, customcontrollers FROM websites ORDER BY id', function(err, rows, fields) {
+    if(err) throw err;
+    rows.forEach(function(row){
+        var theWebsite = {
+            "name": row.name,
+            "version": row.version,
+            "config": {
+                "dbuser": row.dbuser,
+                "dbpassword": row.dbpassword,
+                "dbhost": row.dbhost,
+                "datapath": row.datapath,
+                "name": row.name,
+                "db": row.db
+            },
+            webapp: null,
+            customcontrollers: row.customcontrollers.split(",")  //TODO: transform into 1-n (n>=0) relationship, but this appears to be quite complex to handle
+        };
+
+        codyApp.bootstrapSite(theWebsite);
+    });
 });
+//});
+connection.end();
+
+console.log("length: " + codyApp.websites);
 
 
-//console.log(JSON.stringify(websites[2].config));
 cody.server.listen(3000);
 console.log('Listening on port 3000');
 
