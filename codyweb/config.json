@@ -1,8 +1,0 @@
-{
-  "dbuser": "cody",
-  "dbpassword": "ydoc",
-  "dbhost": "localhost",
-  "datapath": "/usr/local/data/codyweb",
-  "name": "codyweb",
-  "db": "codyweb"
-}

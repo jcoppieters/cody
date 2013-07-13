@@ -1,3 +1,5 @@
+CREATE DATABASE empty;
+USE empty;
 -- MySQL dump 10.13  Distrib 5.5.3-m3, for apple-darwin10.2.0 (i386)
 --
 -- Host: localhost    Database: empty

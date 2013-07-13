@@ -3,14 +3,16 @@ console.log("loading " + module.id);
 var cody = require("./index.js");
 
 
-function startWebApp( server, params, done ) {
+function startWebApp( server, params, done, config ) {
   if (typeof params.name === "undefined") {
     console.log("startWebApp - missing name from config options");
     return false;
   }
   console.log("\n======= starting " + params.name + " =======");
 
-  var config = require("../" + params.name + "/config.json");
+   if(config === undefined){
+    config = require("../" + params.name + "/config.json");
+   }
 
   config.db = params.db || config.db || params.name;
   config.version = params.version || config.version || "v1.0";
