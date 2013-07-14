@@ -1,6 +1,10 @@
 #!/bin/bash
 export STARTDIR=$(cd $(dirname "$0"); pwd)
 cd $STARTDIR
+#DBNAME="cust$1";
+#SITENAME="cust$1";
+DBNAME="$1"
+SITENAME="$1"
 
 if [ $# -ne 1 ]
 then
@@ -9,12 +13,10 @@ then
 #	echo "2) websitename";
 	exit 1;
 fi
-mysql -e "DELETE FROM cody.websites WHERE name='cust$1';"
+mysql -e "DELETE FROM cody.websites WHERE name='$SITENAME';"
 
 
 cd $STARTDIR
-DBNAME="cust$1";
-SITENAME="cust$1";
 
 #./del-database.sh mysqlrootpassword dbname dbuser
 ./del-database.sh ydoc $DBNAME $SITENAME

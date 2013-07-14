@@ -293,3 +293,4 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2013-07-11 17:39:23
+ALTER TABLE  `templates` ADD  `description` VARCHAR( 200 ) NOT NULL;

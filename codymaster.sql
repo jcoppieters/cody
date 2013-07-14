@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `websites` (
   `datapath` varchar(200) NOT NULL,
   `db` varchar(100) NOT NULL,
   `customcontrollers` varchar(3000) NOT NULL,
+   `active` char(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
@@ -43,7 +44,9 @@ INSERT INTO `websites` (`id`, `name`, `version`, `dbuser`, `dbpassword`, `dbhost
 (1, 'essen', 'v0.1a1', 'cody', 'ydoc', 'localhost', '/usr/local/data/essen', 'essen', 'AgendaController,BookingController'),
 (2, 'empty', 'v0.1a1', 'cody', 'ydoc', 'localhost', '/usr/local/data/empty', 'empty', ''),
 (3, 'codyweb', 'v0.1a1', 'cody', 'ydoc', 'localhost', '/usr/local/data/codyweb', 'codyweb', '');
-
+update websites set active='Y';
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+create unique index nameIndex on cody.websites(name);

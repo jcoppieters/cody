@@ -69,7 +69,7 @@ var connection = codyApp.getConnection();
 connection.connect();
 
 //connection.query("SELECT controllername FROM websitecontrollers WHERE websiteId="+row.id, function(err, rows, fields){
-connection.query('SELECT name, version, dbuser, dbpassword, dbhost, datapath, db, customcontrollers FROM websites ORDER BY id', function(err, rows, fields) {
+connection.query('SELECT name, version, dbuser, dbpassword, dbhost, datapath, db, customcontrollers FROM websites WHERE active=\'Y\' ORDER BY id', function(err, rows, fields) {
     if(err) throw err;
     rows.forEach(function(row){
         var theWebsite = {
