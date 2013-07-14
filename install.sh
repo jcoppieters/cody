@@ -11,6 +11,7 @@ npm install mime
 npm install ejs
 npm install nodemailer
 npm install nodeunit -g
+npm install forever -g
 
 mysql mysql -e 'CREATE DATABASE essen DEFAULT CHARACTER SET utf8'
 mysql essen < cody/cody.sql
@@ -26,7 +27,9 @@ mysql empty < empty/empty.sql
 
 echo "current urls: http://localhost:3000/codyweb/nl/ & /en + /essen/nl/ & /en/ + */nl/dashboard & */en/dashboard"
 
-while [ 1 ]; do  echo "restart node *****************************************************"; node index.js; done
+#while [ 1 ]; do  echo "restart node *****************************************************"; node index.js; done
+cd jcms
+forever start index.js
 
 ctl-a ctl-d
 
