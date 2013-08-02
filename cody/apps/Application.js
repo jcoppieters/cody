@@ -339,7 +339,7 @@ Application.prototype.logInFirst = function(context) {
   session.pendingContext = context.getMini();
   
   // build path, context and make LoginController
-  var aPath = new cody.Path( self.name + "/" + context.page.language + "/login", self.name, self.defaultlanguage);
+  var aPath = new cody.Path(context.page.language + "/login", self.name, self.defaultlanguage);
   var aContext = self.buildContext( aPath, context.req, context.res );
   self.handToController(aContext);
 };

@@ -2,7 +2,7 @@
 
 
 <header>
-	<a id="logo" href="<%=path.prefix%>/<%=page.language%>/"><img src="<%=static%>/images/logo.png" alt=""></a>
+	<a id="logo" href="/<%=page.language%>/"><img src="<%=static%>/images/logo.png" alt=""></a>
 
   <% var pp = page.root.getContent('phone'); %>
   <% var aa = page.root.getContent('address'); %>
@@ -25,7 +25,7 @@
            var p = page.root.children[i]; 
            if (p.isVisible()) { %>
 				    <li class="<%= (p == page) ? 'active' : '' %>">
-					    <a href="<%=path.prefix%>/<%=p.url%>" class="<%= (p == page) ? 'active' : '' %>"><%= p.title %></a>
+					    <a href="/<%=p.url%>" class="<%= (p == page) ? 'active' : '' %>"><%= p.title %></a>
 				    </li>
         <% } %>
       <% } %>
@@ -36,7 +36,7 @@
     <ul id="lanMenu">
       <% for (var i in app.languages) { var L = app.languages[i]; %>
       <li class="<%= (page.language == L.id) ? 'active' : '' %>">
-        <a href="<%=path.prefix%>/<%=L.id%>/" class="<%= (page.language == L.id) ? 'active' : '' %>"><span class="id"><%= L.id %></span><span class="name"><%= L.name %></span></a>
+        <a href="/<%=L.id%>/" class="<%= (page.language == L.id) ? 'active' : '' %>"><span class="id"><%= L.id %></span><span class="name"><%= L.name %></span></a>
       </li>
       <% } %>
     </ul>

@@ -60,7 +60,8 @@ codyApp.bootstrapSite = function(website){
         datapath: "./" + website.name + "/data", //we might want to move this into a new variable again
         // datapath: "/usr/local/data/empty",
         version: website.version,
-        controllers: website.config.controllers
+        controllers: website.config.controllers,
+        hostname: website.hostname
     }, undefined, website.config);
 
 };
@@ -69,12 +70,13 @@ var connection = codyApp.getConnection();
 connection.connect();
 
 //connection.query("SELECT controllername FROM websitecontrollers WHERE websiteId="+row.id, function(err, rows, fields){
-connection.query('SELECT name, version, dbuser, dbpassword, dbhost, datapath, db, customcontrollers FROM websites WHERE active=\'Y\' ORDER BY id', function(err, rows, fields) {
+connection.query('SELECT name, version, dbuser, dbpassword, dbhost, datapath, db, customcontrollers, hostname FROM websites WHERE active=\'Y\' ORDER BY id', function(err, rows, fields) {
     if(err) throw err;
     rows.forEach(function(row){
         var theWebsite = {
             "name": row.name,
             "version": row.version,
+            "hostname" : row.hostname,
             "config": {
                 "dbuser": row.dbuser,
                 "dbpassword": row.dbpassword,

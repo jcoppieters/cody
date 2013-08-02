@@ -22,7 +22,7 @@ $(document).ready(function() {
 
   
   $('#editContent').tinymce({
-    external_image_list_url: gPrefix + "/" + gLanguage + "/images?request=imagelist",
+    external_image_list_url: "/" + gLanguage + "/images?request=imagelist",
     script_url : gCody + '/js/tinymce/tiny_mce.js',
     
     mode: "none",         // manually attach with mceAddControl/mceRemoveControl
@@ -77,7 +77,7 @@ function getPage(id) {
    
   $.ajax({
      type: "GET", 
-     url: gPrefix + "/" + gLanguage + "/pages",
+     url: "/" + gLanguage + "/pages",
      data: "request=getnode&node=" + id,
      success: function(msg){
        if (msg.substring(0,3) == "NOK") {

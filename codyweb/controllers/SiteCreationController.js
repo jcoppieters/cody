@@ -35,8 +35,8 @@ SiteCreationController.prototype.doRequest = function( finish ) {
     }
     //TODO: move this to model
 
-    var values = [self.getParam("websitename"), "", self.getParam("websitename"), self.getParam("adminpassword"), "localhost", "/usr/local/data/"+self.getParam("websitename"), self.getParam("websitename"), 'N'];
-    self.query("insert into cody.websites (name, version, dbuser, dbpassword, dbhost, datapath, db, active) VALUES(?,?,?,?,?,?,?,?)", values, function(err, result){
+    var values = [self.getParam("websitename"), "", self.getParam("websitename"), self.getParam("adminpassword"), "localhost", "/usr/local/data/"+self.getParam("websitename"), self.getParam("websitename"), "Y", self.getParam("hostname")];
+    self.query("insert into cody.websites (name, version, dbuser, dbpassword, dbhost, datapath, db, active, hostname) VALUES(?,?,?,?,?,?,?,?,?)", values, function(err, result){
         console.log("err: " + err);
     });
 

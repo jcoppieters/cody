@@ -36,7 +36,7 @@ function Context(path, page, app, req, res) {
       
   this.min = ""; // ".min"
   this.static = path.prefix + "/static";
-  this.dynamic = path.prefix + "/data";
+  this.dynamic = "/data";
   this.cstatic = "/cody/static";
 
   this.fn = (page) ? page.getView() : "index.ejs";

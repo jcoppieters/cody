@@ -15,7 +15,7 @@
            var p = page.root.children[i]; 
            if (p.isVisible()) { %>
 				<li class="<%= (p == page && p.itemId != 109) ? 'active' : '' %>">
-					<a href="<%=path.prefix%>/<%=p.url%>"><%= p.title %></a>
+					<a href="/<%=p.url%>"><%= p.title %></a>
 				</li>
       <%   } %>
       <% } %>

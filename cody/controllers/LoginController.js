@@ -56,7 +56,7 @@ LoginController.prototype.doRequest = function( finish ) {
     // redirect internally
     var anApp = self.app;
 
-    var aPath = new cody.Path( self.app.name + "/" + self.loggedOutUrl, self.app.name, self.app.defaultlanguage);
+    var aPath = new cody.Path("/" + self.loggedOutUrl, self.app.name, self.app.defaultlanguage);
     var aContext = anApp.buildContext( aPath, self.context.req, self.context.res );
     anApp.handToController(aContext);    
     
@@ -102,7 +102,7 @@ LoginController.prototype.tryLogin = function( finish ) {
         // remember the user in the context and session
         self.setLogin(aUser);
         aUser.clearBadLogins(self, function() {
-          self.continuRequest();
+          self.continueRequest();
         });
         
       } else {
@@ -120,7 +120,7 @@ LoginController.prototype.tryLogin = function( finish ) {
 };
 
 
-LoginController.prototype.continuRequest = function() {
+LoginController.prototype.continueRequest = function() {
   var self = this;
   var anApp = self.app;
   
@@ -138,7 +138,7 @@ LoginController.prototype.continuRequest = function() {
     console.log("LoginController.tryLogin -> found no pending session after login -> go to 'logged-in page'");
 
     // no pending request, send to "logged in" page
-    var aPath = new cody.Path( self.app.name + "/" + self.loggedInUrl, self.app.name, self.app.defaultlanguage);
+    var aPath = new cody.Path(self.loggedInUrl, self.app.name, self.app.defaultlanguage);
     var aContext = anApp.buildContext( aPath, self.context.req, self.context.res );
     anApp.handToController(aContext);
   }
