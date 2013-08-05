@@ -19,7 +19,7 @@
 - in loginController std functionaliteit om nieuw password op te sturen
 
 - maken dat ook /nl als /nl/ aanvaard wordt
-  evenal /
+  evenals /
 
 
 - github
@@ -49,6 +49,8 @@ Laurens:
 
 - daarna: uploaden van css en logo in backoffice.
   per template?  globaal?
+
+- virtual host selectie -> app
 
 
 Dieter:
@@ -97,3 +99,5 @@ Yanic:
   -> json string of object teruggeven dat kan bewaard worden
     of fouten teruggeven indien data niet voldoet aan de meta definitie.
 
+Johan:
+- Website cody documentatie / intro texts / ...
