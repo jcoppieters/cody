@@ -1,12 +1,12 @@
 <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this essen.</p><![endif]-->
 
 <header>
-	<a href="<%=path.prefix%>/<%=page.language%>/"><img src="<%=static%>/images/logoMC.png" alt="Cody CMS"></a>
+	<a href="/<%=page.language%>/"><img src="<%=static%>/images/logoMC.png" alt="Cody CMS"></a>
   
 	<nav>
     <% for (var ip in page.root.children) { var p = page.root.children[ip];
          if (p.isVisible()) { %>
-           <a class="<%= (p == page) ? 'active' : '' %>" href="<%=path.prefix%>/<%=p.url%>"><%= p.title %></a>
+           <a class="<%= (p == page) ? 'active' : '' %>" href="/<%=p.url%>"><%= p.title %></a>
     <%   } %>
     <% } %>
 	</nav>

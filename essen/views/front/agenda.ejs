@@ -70,7 +70,7 @@
 												<% for (var timeList in dayList) { time = dayList[timeList][index]; %>
 
 													<td><% if (time) { %>
-															<a href="<%=path.prefix%>/nl/afspraak?request=form&amp;slot=<%=time.slot%>&amp;dr=<%=time.dr%>&amp;daynr=<%=time.daynr%>&amp;date=<%= formatDate(time.xdate) %>&amp;hour=<%=time.hour%>"
+															<a href="/nl/afspraak?request=form&amp;slot=<%=time.slot%>&amp;dr=<%=time.dr%>&amp;daynr=<%=time.daynr%>&amp;date=<%= formatDate(time.xdate) %>&amp;hour=<%=time.hour%>"
 														       rel="nofollow"><span class="time"><%= time.hour %></span><br />
 															<span class="dr"><%= time.drname %></span></a>
 														<% } %></td>
@@ -112,7 +112,7 @@
 							</div>
 
 							<div class="afspraakForm">
-								<form method="post" action="<%=path.prefix%>/<%=page.language%>/afspraak?goal=afspraak"
+								<form method="post" action="/<%=page.language%>/afspraak?goal=afspraak"
 									id="calendar" class="clearfix">
 									<input type="text" class="hidden" value="<%= formatDate(date) %>" id="currDate" name="date" />
 									<input type="hidden" value="<%=dr.name%>" id="drname" name="drname" />

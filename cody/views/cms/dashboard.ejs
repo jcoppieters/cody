@@ -21,7 +21,7 @@
 	            <% for (var j in p.children) {
 	              var sp = p.children[j];
 	              if (sp.isVisible()) { %>
-	                <li><a href="<%=path.prefix%>/<%= sp.url %>"><%= sp.title %></a></li>
+	                <li><a href="/<%= sp.url %>"><%= sp.title %></a></li>
 	              <% } %>
 	            <% } %>
 	          </ul>

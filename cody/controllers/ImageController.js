@@ -39,7 +39,7 @@ ImageController.prototype.doRequest = function( finish ) {
 
 
 ImageController.prototype.getRoot = function() {
-  return cody.Application.kImageRoot;
+      return cody.Application.kImageRoot;
 };
 ImageController.prototype.getType = function(theNode) { 
   return ((theNode.extention === "xxx") || (theNode.extention === "")) ? "folder" : "image"; 

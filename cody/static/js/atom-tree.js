@@ -40,10 +40,11 @@ function jAtomTree(theRoot, theInitialNode, theContext, theLanguage, theService,
   this.getNode = function(id) {
     var self = this;
 
+
     if (id != self.rootId) {
       $.ajax({
         type: "GET",
-        url: theContext + "/" + theLanguage + "/"+theService,
+        url: "/" + theLanguage + "/"+theService,
         data: "request=getnode&node=" + id,
         success: function(msg){
           if (msg.substring(0,3) === "NOK") {
@@ -56,6 +57,7 @@ function jAtomTree(theRoot, theInitialNode, theContext, theLanguage, theService,
             self.currentNode = id;
             self.openNode = id;
             $("#right_cont").html(msg).show();
+
 
             $("#doRealDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( function() { self.doRealDelete(); } );
             $("#doSave").button({ icons: { primary: "ui-icon-check"}, text: true}).click( function() { self.doSave(); } );

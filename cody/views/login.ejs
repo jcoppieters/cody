@@ -24,7 +24,7 @@
          
       <% } else { %>
         <h2 id="loginfirst">Alvorens naar de gevraagde pagina te gaan, moet U zich eerst aanmelden.</h2>
-        <form action="<%=path.prefix%>/<%=page.language%>/login" name="logon" id="logon" method="post" class="clearfix">
+        <form action="/<%=page.language%>/login" name="logon" id="logon" method="post" class="clearfix">
           <input type="hidden" name="request" value="login" /> 
           <fieldset class="clearfix">
             <div id="logonuser">
