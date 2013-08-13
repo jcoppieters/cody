@@ -10,35 +10,40 @@ var cody = require("../../cody/index.js");
 module.exports = SiteCreationController;
 
 function SiteCreationController(context) {
-    var self=this;
+  var self = this;
 
-    console.log("SiteCreationController.constructor -> page: ("
-        + context.page.itemId + ") " + context.page.title);
-    //self.connection = context.application.getConnection();
+  console.log("SiteCreationController.constructor -> page: ("
+      + context.page.itemId + ") " + context.page.title);
 
-
-
-    cody.Controller.call(this, context);
+  // call inherited constructor
+  cody.Controller.call(self, context);
 }
 
+// inheritance chain
 SiteCreationController.prototype = Object.create( cody.Controller.prototype );
 
 
 SiteCreationController.prototype.doRequest = function( finish ) {
 
-    var self=this;//this.loginView = "-/login.ejs";
+  var self = this;
 
-    if(self.isRequest("createsite")){
-        console.log("yes");
-    }   else{
-        console.log("no");
-    }
-    //TODO: move this to model
+  if (self.isRequest("createsite")) {
+      console.log("yes");
+  } else {
+      console.log("no");
+  }
 
-    var values = [self.getParam("websitename"), "", self.getParam("websitename"), self.getParam("adminpassword"), "localhost", "/usr/local/data/"+self.getParam("websitename"), self.getParam("websitename"), "Y", self.getParam("hostname")];
-    self.query("insert into cody.websites (name, version, dbuser, dbpassword, dbhost, datapath, db, active, hostname) VALUES(?,?,?,?,?,?,?,?,?)", values, function(err, result){
-        console.log("err: " + err);
-    });
+  //TODO: move this to model [JC: not really needed for me, if only used from within this controller]
 
-    finish();
+  var values = [self.getParam("websitename"), "", self.getParam("websitename"), self.getParam("adminpassword"), "localhost", "/usr/local/data/"+self.getParam("websitename"), self.getParam("websitename"), "Y", self.getParam("hostname")];
+
+  self.query("insert into cody.websites (name, version, dbuser, dbpassword, dbhost, datapath, db, active, hostname) VALUES(?,?,?,?,?,?,?,?,?)", values,
+    function(err, result){
+      console.log("err: " + err);
+
+      // call finish only after the query has completed [JC]
+      finish();
+
+   });
+
 };
