@@ -19,7 +19,7 @@
 	<script>
 	  var gTree;
 		$(document).ready( function() {
-		  gTree = new jAtomTree(1, "<%=shownode%>", gPrefix, gLanguage, "pages", gCody);
+		  gTree = new jAtomTree(1, "<%=shownode%>", gLanguage, "pages", gCody);
 		  gTree.getNode = getPage;
       gTree.doAdd = addPage;
 		  gTree.init();
@@ -63,7 +63,7 @@
         <div id="ltabs" class="ui-tabs ui-widget">
           <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
             <% for (var iL in app.languages) { var L = app.languages[iL]; %>
-              <li class="ui-state-default ui-corner-top <%= (page.language === L.id) ? 'ui-tabs-active ui-state-active' : '' %>" ><a href="<%=path.prefix%>/<%=L.id%>/pages" class="ui-tabs-anchor"><%=L.id.toUpperCase()%></a></li>
+              <li class="ui-state-default ui-corner-top <%= (page.language === L.id) ? 'ui-tabs-active ui-state-active' : '' %>" ><a href="/<%=L.id%>/pages" class="ui-tabs-anchor"><%=L.id.toUpperCase()%></a></li>
             <% } %>
           </ul>
 

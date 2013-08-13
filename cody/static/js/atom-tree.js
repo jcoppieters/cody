@@ -8,12 +8,11 @@
 ///////////////////////
 //tree functions    //
 ///////////////////////
-function jAtomTree(theRoot, theInitialNode, theContext, theLanguage, theService, theImages) {
+function jAtomTree(theRoot, theInitialNode, theLanguage, theService, theImages) {
     
 // theRoot: is prefilled by the calling template (0, 1, ...) -- used for "don't close root"
 // theInitialNode: select this node and open the tree up to there
 // theLanguage: current language  of the cms
-// theContext: prefix for http calls to the cms
 // theService: is prefilled by the calling template (images, files, forms, ...) */
 // theImages: location of the static images of the cms
 

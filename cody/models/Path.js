@@ -1,21 +1,18 @@
 function Path( path, name, deflanguage ) {
+  // eliminate leading "/"
   path = path.substring(1);
 
-  this.prefix = "/" + name;
   this.language = deflanguage;
   this.domain = "";
   this.request = "";
   this.id = "";
 
-  // the appname aka prefix used to be stripped here, but this has been removed as we switched to vhosting
-
   // language
-  i = path.indexOf("/");
+  var i = path.indexOf("/");
   if (i > 0 ) {
     this.language = path.substring(0, i);
-      this.language="nl";
 
-    // domain
+    // domain or page link without the language
     path = path.substring(i+1);
     i = path.indexOf("/");
     if (i <= 0) {
@@ -24,7 +21,6 @@ function Path( path, name, deflanguage ) {
       this.domain = path.substring(0, i);
 
       // subdomain or request
-
       path = path.substring(i + 1);
       i = path.indexOf("/");
       if (i <= 0) {
@@ -40,15 +36,15 @@ function Path( path, name, deflanguage ) {
     }
   }
     var debughelp = {
-        "prefix" : this.prefix,
         "language": this.language,
         "domain": this.domain,
         "request": this.request,
         "id": this.id
     };
+  console.log(debughelp);
 
-  this.link = this.prefix + "/" + this.language + "/" + this.domain;
   this.pagelink = this.language + "/" + this.domain;
+  this.link = "/" + this.pagelink;
 }
 
 module.exports = Path;

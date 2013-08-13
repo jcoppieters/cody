@@ -94,15 +94,14 @@ BookingController.prototype.sendTheMails = function( dr, title ) {
 BookingController.prototype.step1 = function( theDate, finish ) {
   var self = this;
   
-	var aDr = this.getParam("dr");
-	this.context.dayname = getDayName(this.getParam("daynr", 0));
-	this.context.datename = getDateName(theDate);
-	this.context.date = theDate;
-  
-	this.query("select id,name from users where id = ?", [aDr],
+	var aDr = self.getParam("dr");
+  self.context.dayname = getDayName(self.getParam("daynr", 0));
+  self.context.datename = getDateName(theDate);
+  self.context.date = theDate;
+
+  self.query("select id,name from users where id = ?", [aDr],
     function(err, results) {
       self.context.dr = results[0];
-    
       finish();
     });
 };

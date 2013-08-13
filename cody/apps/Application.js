@@ -83,18 +83,15 @@ Application.prototype.addController = function(name, controller) {
 Application.prototype.addControllers = function() {
   var self = this;
 
-  //TODO: do this dynamically for all templates[x].controllerName -- Tim ?
-  self.addController('Controller', cody.Controller);
-  self.addController('ContentController', cody.Controller);
-  self.addController('LoginController', cody.LoginController);
-  self.addController('UserController', cody.UserController);
-  self.addController('PageController', cody.PageController);
-  self.addController('ImageController', cody.ImageController);
-  self.addController('FileController', cody.FileController);
-  self.addController('TemplateController', cody.TemplateController);
-  self.addController('DashboardController', cody.DashboardController);
+  // add all controllers in the controller directory of cody
+  require("fs").readdirSync("./cody/controllers/").forEach(function(file) {
+    var ctl = require("../controllers/" + file);
+    self.addController(ctl.name, ctl);
+  });
 
-};
+  // add alias 'ContentController' of 'Controller'
+  self.addController("ContentController", self.controllers["controller"]);
+ };
 
 
 Application.prototype.err = function(p1, p2, res) {

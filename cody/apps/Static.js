@@ -17,9 +17,10 @@ var cache = {},
     maxCache = 1; //30
 
 
-function Static(req, res) {
+function Static(req, res, appFolder) {
   this.request = req;
   this.response = res;
+  this.appFolder = appFolder;
 
   //TODO: we need to have a cache per application
   // - the cody static cache should be high (100?)
@@ -88,7 +89,10 @@ Static.prototype.serve = function () {
 
   var uri = url.parse(self.request.url).pathname;
   var filename = libpath.join(path, uri);
-  
+  if (self.appFolder != "") {
+    filename = "./" + self.appFolder + "/" + filename;
+  }
+
   // should be moved to a SystemController
   if (filename === "static/_") {
     this.dump();
