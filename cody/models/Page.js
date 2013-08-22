@@ -434,7 +434,7 @@ Page.prototype.fetchContent = function( app, language, itemId, next ) {
     function(err, result) {
       if (err) { 
         console.log(err); 
-        throw(new Error("Page.loadContent failed with sql errors")); 
+        throw(new Error("Page.fetchContent failed with sql errors"));
       }
       self.content = [];
       console.log("Page.fetchContent, found " + result.length + " content blocks");

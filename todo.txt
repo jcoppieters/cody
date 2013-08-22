@@ -1,4 +1,4 @@
-- redirect / to /nl or /en
+- redirect / to /nl or /en [ done ]
 - delete content from page fails ... ?? [ fixed on 23/06, a > where it should have been a >= ]
 - new folder in "Images" -> "Choose file" ?? [ fixed 21/06 ]
 
@@ -12,15 +12,15 @@
   - add "note" om bij "add content" bij elke template een beetje uitleg te geven over de template
     ook in add-content kiezer deze tekst tonen. [ done 24/06 ]
   - implement "allowedTemplates" (page controller + template editing) and MaxNumber
-  - duplicate [ done 22/06 ]
+  - duplicate template [ done 22/06 ]
   - lijst van automatisch toegevoegde benoemde content items (negative atoms met naam) [ done 22/06 ]
     opgelet: PageController nakijken dat naam overgenomen wordt van gepredefinieerde atoms. [ done 22/06 ]
   - gekoppelde form -> data aan pagina hangen / kunnen afbeelden
 - passwords niet meer als plain text stockeren
 - in loginController std functionaliteit om nieuw password op te sturen
 
-- maken dat ook /nl als /nl/ aanvaard wordt
-  evenals /
+- maken dat ook /nl als /nl/ aanvaard wordt [ done ]
+  evenals /  [ done ]
 
 
 - github
@@ -37,6 +37,7 @@ websites / projecten
   - tijd, water & stroom verbruik registratie
 - Howest?
 - BOIC?
+- Dr Site omzetten van Java -> Cody
 
 
 Laurens:
@@ -45,13 +46,17 @@ Laurens:
     inclusief database, npm's, etc..
   - daarna voorstel voor automatisch opzetten van een extra site
 
+- stop/start/restart Cody
+  moet degelijk script worden om in /etc/init.d te zetten
+  voorbeelden genoeg aldaar te vinden.
+
 - om uiteindelijk een uitbreiding te maken op de website van cody
  inclusief registratie e.d.
 
 - daarna: uploaden van css en logo in backoffice.
-  per template?  globaal?
+  ook header en footer image ?
 
-- virtual host selectie -> app
+- virtual host selectie -> app [ done ]
 
 
 Dieter:
