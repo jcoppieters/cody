@@ -89,6 +89,10 @@ Content.prototype.render = function(controller) {
     
   } else if (this.kind === "F") {
     return this.renderFile(controller);
+
+  } else {
+    return controller.render(this);
+
   }
 };
 

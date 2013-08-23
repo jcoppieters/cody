@@ -95,6 +95,30 @@ Context.prototype.copyFromMini = function(mini) {
 
 
 //
+// Render content
+//
+Context.prototype.render = function(params) {
+  // supported param's, (not_)kind =, (not_)name =, intro = true/false
+
+  for (var ic in this.page.content) {
+    var C = this.page.content[ic];
+    if (params.name && (C.name != params.name))
+      continue;
+    if (params.not_name && (C.name == params.not_name))
+      continue;
+    if (params.kind && (C.kind != params.kind))
+      continue;
+    if (params.not_kind && (C.kind == params.not_kind))
+      continue;
+    if (params.intro && (C.intro != params.intro))
+      continue;
+
+    return C.render(this.controller);
+  }
+};
+
+
+//
 // login stuff
 //
 

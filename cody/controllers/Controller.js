@@ -170,6 +170,10 @@ Controller.prototype.closeConnection = function() {
 // Output & feedback utilities
 //
 
+Controller.prototype.render =  function( theContent ) {
+  return "<!-- unknown content type = " + theContent.kind + ", atomId = " + theContent.atomId + ", data = " + theContent.data + "-->";
+};
+
 Controller.prototype.gen = function( theContent, theHeader ) {
   if (typeof theHeader === "undefined") {
     this.context.res.writeHead(200, { "Content-Type": "application/json" });

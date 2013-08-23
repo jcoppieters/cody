@@ -25,7 +25,7 @@
 
           <% for (var ic in page.content) { %>
             <% if (! page.content[ic].isIntro()) { %>
-             <%- page.content[ic].render() %>
+             <%- page.content[ic].render(controller) %>
             <% } %>
           <% } %>
         </section>
