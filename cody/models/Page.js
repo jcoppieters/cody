@@ -322,6 +322,10 @@ Page.prototype.doDeactivate = function(controller, next) {
 
 /* Content stuff */
 
+Page.prototype.render = function(params) {
+  return this.content.render(params);
+}
+
 Page.prototype.getContent = function(id) {
   var i = -1;
 

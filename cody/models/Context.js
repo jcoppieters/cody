@@ -8,7 +8,7 @@ var cody = require("../index.js");
 
 function Context(path, page, app, req, res) {
   this.version = (app) ? app.version : "v0.0";
-  
+
   this.page = page;
   this.app = app;
   this.req = req;
@@ -18,29 +18,29 @@ function Context(path, page, app, req, res) {
   // copy query params and body params into this.params and .param
   this.params = {};
   for(var q in req.query) {
-    if (req.query.hasOwnProperty(q)) { 
-     this.params[q] = req.query[q];
+    if (req.query.hasOwnProperty(q)) {
+      this.params[q] = req.query[q];
     }
   }
   for(var b in req.body) {
-    if (req.body.hasOwnProperty(b)) { 
+    if (req.body.hasOwnProperty(b)) {
       this.params[b] = req.body[b];
     }
   }
   this.request = this.params.request || path.request || "";
-  
+
   this.status = "success";
   this.message = "";
-  
+
   this.dateFormat = "dd-mm-yyyy";
-      
+
   this.min = ""; // ".min"
-  this.static = "/static";
-  this.dynamic = "/data";
+  this.static = path.prefix + "/static";
+  this.dynamic = path.prefix + "/data";
   this.cstatic = "/cody/static";
 
   this.fn = (page) ? page.getView() : "index.ejs";
-  
+
   this.session = req.session;
   this.setLogin(this.session.login);
 
@@ -56,40 +56,40 @@ module.exports = Context;
 
 Context.prototype.getMini = function() {
   var mini = {};
-  
+
   mini.params = {};
-  for(var x in this.params) { 
-    if (mini.params.hasOwnProperty(x)) { 
+  for(var x in this.params) {
+    if (mini.params.hasOwnProperty(x)) {
       mini.params[x] = this.params[x];
     }
   }
   mini.params = this.params;
-  
+
   mini.path = this.path;
   mini.request = this.request;
   mini.context = this.context;
   mini.static = this.static;
   mini.dynamic = this.dynamic;
   mini.fn = this.fn;
-  
+
   return mini;
 };
 
 Context.prototype.copyFromMini = function(mini) {
   this.params = {};
-  for(var x in mini.params) { 
-    if (mini.params.hasOwnProperty(x)) { 
-      this.params[x] = mini.params[x]; 
+  for(var x in mini.params) {
+    if (mini.params.hasOwnProperty(x)) {
+      this.params[x] = mini.params[x];
     }
   }
-  
+
   this.path = mini.path;
   this.request = mini.request;
   this.context = mini.context;
   this.static = mini.static;
   this.dynamic = mini.dynamic;
   this.fn = mini.fn;
-  
+
   this.page = this.app.findPage(this.path, this.page.language);
 };
 
@@ -155,11 +155,11 @@ Context.prototype.optionList = function(theList, theId, theIdName, theNameName) 
       var S = theList[j];
       x += "<option value=\"" + S + "\"" + ((S == theId) ? "selected" : "") + ">" + S + "</option>\n";
     }
-    
+
   } else {
     var idName = theIdName || "id";
     var nameName = theNameName || "name";
-    
+
     for (var i in theList) {
       if (theList.hasOwnProperty(i)) {
         var O = theList[i];
@@ -208,6 +208,8 @@ Context.prototype.formatShortTime = function(aDate) {
   return two(aDate.getHours()) + ":" + two(aDate.getMinutes());
 };
 
+// should look at the current locale of the user page
+//  for now we depend on the dateFormat field of this context
 Context.prototype.formatDate = function(aDate) {
   if (this.dateFormat === "dd-mm-yyyy") {
     return two(aDate.getDate()) + "-" + two(aDate.getMonth()+1) + "-" + aDate.getFullYear();
@@ -220,27 +222,37 @@ Context.prototype.formatDate = function(aDate) {
   }
 };
 
-Context.prototype.getDate = function(paramName, defaultValue) {
-  // should look at the current locale of the user page
-  //  for now we depend on the dateFormat field of this context
-  
-  var x = this.req.param(paramName);
+Context.prototype.makeDate = function(value, defaultValue) {
   if (typeof x === "undefined") { return defaultValue; }
-  
+
   var parts = (x.indexOf("-") > 0) ? x.split("-") : x.split("/");
 
   if (this.dateFormat === "dd-mm-yyyy") {
-    return (parts.length < 3) ? 
+    return (parts.length < 3) ?
       defaultValue : new Date(parts[2], parts[1]-1, parts[0]);
-    
+
   } else if (this.dateFormat === "mm-dd-yyyy") {
-    return (parts.length < 3) ? 
+    return (parts.length < 3) ?
       defaultValue : new Date(parts[2], parts[0]-1, parts[1]);
-    
+
   } else { // "yyyy-mm-dd"
-   return (parts.length < 3) ? 
+    return (parts.length < 3) ?
       defaultValue : new Date(parts[0], parts[1]-1, parts[0]);
   }
-};
+}
+
+
+Controller.prototype.makeInt = function(value, defaultValue) {
+  if (typeof value !== "number") { value = parseInt(value, 10); }
+  return isNaN(value) ? defaultValue : value;
+}
+
+Controller.prototype.makeNum = function(value, defaultValue, precision) {
+  if (typeof value !== "number") { value = parseFloat(value); }
+  if (isNaN(value)) { value = defaultValue; }
+  if (typeof precision !== "undefined") { value = value.toFixed(precision); }
+  return value;
+}
+
 
 

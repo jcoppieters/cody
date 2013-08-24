@@ -14,13 +14,13 @@ function Controller(context) {
   if (context.page) {
     console.log("Controller.constructor -> page(" + context.page.itemId + ") = " + context.page.title + ", request = " + context.request);
   }
-  
+
   this.context = context;
   context.controller = this;
 
   this.app = context.app;
   this.connection = (this.app) ? this.app.getConnection() : null;
-  
+
   // console.log(this.context);
 }
 
@@ -38,7 +38,7 @@ Controller.prototype.close = function() {
 Controller.prototype.doRequest = function( finish ) {
   console.log("Controller.doRequest -> request = " + this.getRequest());
   //console.log(this.context);
-  
+
   // if you don't want any rendering to be done:
   //  pass an empty string (or set this.context.fn to empty) 
   finish();
@@ -77,17 +77,17 @@ Controller.prototype.getId = function(defaultValue) {
 //
 
 Controller.prototype.needsLogin = function() {
-	return (this.context) && (this.context.page) && (this.context.page.needsLogin());
+  return (this.context) && (this.context.page) && (this.context.page.needsLogin());
 };
 Controller.prototype.isLoggedIn = function() {
-	return (this.context) && (this.context.isLoggedIn());
+  return (this.context) && (this.context.isLoggedIn());
 };
 Controller.prototype.getLogin = function() {
   return (this.context) ? (this.context.getLogin()) : new cody.User({});
 };
 Controller.prototype.setLogin = function(theUser) {
-  if (this.context) { 
-    this.context.setLogin(theUser); 
+  if (this.context) {
+    this.context.setLogin(theUser);
   }
 };
 
@@ -105,27 +105,39 @@ Controller.prototype.getLoginLevel = function() {
 //
 // Parameter handling
 //
-Controller.prototype.getDate = function(paramName, defaultValue) {
-  return this.context.getDate(paramName, defaultValue);
-};
-
 Controller.prototype.getParam = function(paramName, defaultValue) {
   return this.context.getParam(paramName, defaultValue);
 };
 
-Controller.prototype.getInt = function(paramName, defaultValue) {
-  var x = this.context.getParam(paramName, defaultValue);
-  if (typeof x !== "number") { x = parseInt(x, 10); }
-  return isNaN(x) ? defaultValue : x;
+
+Controller.prototype.getDate = function(paramName, defaultValue) {
+  var x = this.context.getParam(paramName);
+  return this.context.makeDate(x, defaultValue);
 };
 
-Controller.prototype.getNum = function(paramName, defaultValue, precision) {
-  var x = this.context.getParam(paramName, defaultValue);
-  if (typeof x !== "number") { x = parseFloat(x); }
-  if (isNaN(x)) { x = defaultValue; }
-  if (typeof precision !== "undefined") { x = x.toFixed(precision); }
-  return x;
+Controller.prototype.makeDate = function(value, defaultValue) {
+  return this.context.makeDate(value, defaultValue);
+}
+
+
+Controller.prototype.getInt = function(paramName, defaultValue) {
+  var x = this.context.getParam(paramName);
+  return this.makeInt(x, defaultValue);
 };
+
+Controller.prototype.makeInt = function(value, defaultValue) {
+  return this.context.makeInt(value, defaultValue);
+}
+
+Controller.prototype.getNum = function(paramName, defaultValue, precision) {
+  var x = this.context.getParam(paramName);
+  return this.makeNum(x, defaultValue, precision);
+};
+
+Controller.prototype.makeNum = function(value, defaultValue, precision) {
+  return this.context.makeNum(value, defaultValue);
+}
+
 
 Controller.prototype.getUNum = function(paramName, defaultValue) {
   var anId = this.context.getParam(paramName);
@@ -148,13 +160,13 @@ Controller.prototype.getUNum = function(paramName, defaultValue) {
 
 Controller.prototype.query = function(sql, params, callback) {
   // callback = function(error, results)
-  
+
   this.connection.query(sql, params, callback);
 };
 
 Controller.prototype.closeConnection = function() {
   console.log("Controller -> connection closed");
-  
+
   if (this.connection) {
     this.app.returnConnection(this.connection);
     this.connection = null;
@@ -169,7 +181,6 @@ Controller.prototype.closeConnection = function() {
 //
 // Output & feedback utilities
 //
-
 Controller.prototype.render =  function( theContent ) {
   return "<!-- unknown content type = " + theContent.kind + ", atomId = " + theContent.atomId + ", data = " + theContent.data + "-->";
 };
@@ -180,7 +191,7 @@ Controller.prototype.gen = function( theContent, theHeader ) {
   } else {
     this.context.res.writeHead(200, theHeader);
   }
-  
+
   if (typeof theContent !== "string") {
     this.context.res.write(JSON.stringify(theContent));
   } else {
