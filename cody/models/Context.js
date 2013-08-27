@@ -242,12 +242,12 @@ Context.prototype.makeDate = function(value, defaultValue) {
 }
 
 
-Controller.prototype.makeInt = function(value, defaultValue) {
+Context.prototype.makeInt = function(value, defaultValue) {
   if (typeof value !== "number") { value = parseInt(value, 10); }
   return isNaN(value) ? defaultValue : value;
 }
 
-Controller.prototype.makeNum = function(value, defaultValue, precision) {
+Context.prototype.makeNum = function(value, defaultValue, precision) {
   if (typeof value !== "number") { value = parseFloat(value); }
   if (isNaN(value)) { value = defaultValue; }
   if (typeof precision !== "undefined") { value = value.toFixed(precision); }
