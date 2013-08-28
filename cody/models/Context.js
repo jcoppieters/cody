@@ -35,8 +35,8 @@ function Context(path, page, app, req, res) {
   this.dateFormat = "dd-mm-yyyy";
 
   this.min = ""; // ".min"
-  this.static = path.prefix + "/static";
-  this.dynamic = path.prefix + "/data";
+  this.static = "/static";
+  this.dynamic = "/data";
   this.cstatic = "/cody/static";
 
   this.fn = (page) ? page.getView() : "index.ejs";
