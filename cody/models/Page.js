@@ -101,16 +101,23 @@ Page.prototype.setLink = function(link, app, isNew) {
 
 
 Page.prototype.addRoot = function() {
+  var self = this;
+
   function goUp(aPage) {
     //console.log("goUp: " + aPage.item.id + " -> " + aPage.item.parentId);
-    if (aPage.item.parentId < 0) {
-      return aPage;
+
+    if (aPage.parent && (aPage.parent.item.parentId > 0)) {
+       goUp(aPage.parent);
     } else {
-      return goUp(aPage.parent);
+      self.top = aPage;
+      self.root = aPage.parent;
+
+      //console.log("goUp: assigned for " + self.item.id + " -> top = " +self.top.item.id
+      //  ", root: " + ((self.root) ? self.root.item.id : "no root"));
     }
   }
   //console.log("AddRoot: " + this.itemId);
-  this.root = goUp(this);
+  goUp(this);
 };
 
 
