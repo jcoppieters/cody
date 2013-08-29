@@ -193,7 +193,7 @@ Page.prototype.getURL = function(language) {
   // if the language is different from this page its language,
   //   we actually return the url of another page (with the same item)
   if (typeof language !== "undefined") {
-    return language + this.getLink();
+    return language + "/" + this.getLink();
   } else {
     return this.url;
   }
