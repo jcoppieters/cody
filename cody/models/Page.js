@@ -184,6 +184,22 @@ Page.prototype.getDisplay = function() {
   }
 };
 
+Page.prototype.getLink = function() {
+  // to be used for making URL when changing languages...  /[language]/getLink()
+  return (this.link != "") ? this.link : this.item.id;
+};
+
+Page.prototype.getURL = function(language) {
+  // if the language is different from this page its language,
+  //   we actually return the url of another page (with the same item)
+  if (typeof language !== "undefined") {
+    return language + this.getLink();
+  } else {
+    return this.url;
+  }
+};
+
+
 Page.prototype.shortString = function() {
   return  this.title + " ("+ this.item.id + "/" + this.item.parentId + "), order = " + this.item.orderby +
           ", content = " + this.nrContent() + ", size = " + this.contentLength() + " bytes";
