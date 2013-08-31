@@ -1,0 +1,65 @@
+<!doctype html>
+
+<html lang="<%=page.language%>">
+
+<% include header.ejs %>
+
+<body id="templates">
+
+<script src="<%=cstatic%>/js/lib/jquery-1.9.1<%=min%>.js"></script>
+<script src="<%=cstatic%>/js/lib/jquery-ui-1.10.1<%=min%>.js"></script>
+<script src="<%=cstatic%>/js/lib/jquery.validate<%=min%>.js"></script>
+
+<section>
+    <header>
+        <% include top.ejs %>
+        <% include navigation.ejs %>
+    </header>
+
+        <div>
+            <form action="./styles" method="post" id="record" enctype="multipart/form-data">
+                <% if (message == "logo-updated") { %>
+                <p class="notification">The logo has been updated.</p>
+                <% } %>
+
+                <% if (message == "logo-unsupported-format") { %>
+                <p class="warning">The format of the uploaded file is unsupported.</p>
+                <% } %>
+
+                <% if (message == "logo-none-selected") { %>
+                <p class="warning">No files was selected.</p>
+                <% } %>
+
+                <fieldset>
+                <h3>Logo changer</h3>
+                <input type="hidden" name="request" id="request" value="newlogo" />
+
+                <p>Please select a new logo file (PNG only for now)</p>
+                <input type="file" name="logoFile" /><br />
+                <input type="submit" value="Submit" />
+                </fieldset>
+            </form>
+        </div>
+
+    <div>
+        <h3>CSS Changer</h3>
+        <form action="./styles" method="post">
+            <% if (message == "css-updated") { %>
+            <p class="notification">The CSS has been updated.</p>
+            <% } %>
+            <% if (message == "css-update-failed") { %>
+            <p class="warning">The CSS could not be updated.</p>
+            <% } %>
+
+            <textarea rows="10" cols="195" name="css">
+<%= css %>
+            </textarea><br/>
+            <input type="hidden" name="request" id="request" value="newcss" />
+            <input type="submit" value="Submit" />
+         </form>
+    </div>
+
+
+</section>
+</body>
+</html>

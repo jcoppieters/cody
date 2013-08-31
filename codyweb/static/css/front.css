@@ -253,6 +253,19 @@ footer a { text-align: center; display: inline-block; width: 33%; margin: auto; 
 .login #banner section > h2 { float: left; display: inline-block; width: 440px }
 
 /* =============================================================================
+   Site creation styles
+   ========================================================================== */
+.sitecreation .userdetail{
+    width: 575px;
+    font-size: 25px;
+    height: 50px;
+    padding: 4px 4px 4px 10px;
+}
+.sitecreation label{
+    display: inline-block;
+    width: 600px;
+}
+/* =============================================================================
    Print Styles
    ========================================================================== */
 
@@ -270,3 +283,4 @@ footer a { text-align: center; display: inline-block; width: 33%; margin: auto; 
   p, h2, h3 { orphans: 3; widows: 3; }
   h2, h3 { page-break-after: avoid; }
 }
+

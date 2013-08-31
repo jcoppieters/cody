@@ -219,7 +219,7 @@ TreeController.prototype.getTree = function( theRoot ) {
     for (var x in aList) { var p = aList[x];
        var name = (p.isActive()) ? p.getName() : "("+p.getName()+")";
        var classes = (open ? "open " : "") +
-                     (p.isVisible() ? "" : "invisible ") + 
+                     (p.isVisible() ? "" : "invisible ") +
                      (p.isActive() ? "" : "deleted");
          aTree += "<li id=\"id_" + p.getId() + "\" class=\"" + classes + "\"" +
                " rel=\""+ self.getType(p) + "\"" +

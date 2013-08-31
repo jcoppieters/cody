@@ -196,11 +196,14 @@ Page.prototype.getAllowedGroups = function() {
 Page.prototype.hasChildren = function() {
   return (this.children.length > 0);
 };
-Page.prototype.isActive = function() { 
+Page.prototype.isActive = function() {
   return (this.active === 'Y');
 };
 Page.prototype.isVisible = function() { 
   var now = new Date();
+    var nowf=now+"";
+   var x = this.getName();
+    var y=x+"";
   return (this.active === 'Y') && (this.item.validfrom <= now) && (this.item.validto >= now);
 };
 
