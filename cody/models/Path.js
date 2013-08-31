@@ -1,6 +1,6 @@
 function Path( path, name, deflanguage ) {
   // eliminate leading "/"
-  if(path.indexOf("/") == 0){
+  if(path.indexOf("/") === 0){
     path = path.substring(1);
   }
 

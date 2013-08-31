@@ -85,7 +85,7 @@ td {font-weight: normal; vertical-align: top;}
    ========================================================================== */
 h1 { font-size: 34px; color: #9d9d9c; font-weight: bold; width: 100%; text-align: center; display: block; margin: 20px auto }
 h2 { font-size: 20px; color: white;   font-weight: normal; letter-spacing: 1px }
-h3 { font-size: 18px; color: #333334; font-weight: bold }
+h3 { font-size: 20px; color: #333334; font-weight: bold }
 h4 { font-size:1em; margin:1.33em 0 }
 h5 { font-size:.83em; margin:1.67em 0 }
 h6 { font-size:.67em; margin:2.33em 0 }
@@ -97,13 +97,19 @@ a { color: #4d94cc }
    All pages - Header & Footer
    ========================================================================== */
 
-header { width: 1130px; margin: 10px auto; background-color: #white; }
+header { width: 1130px; margin: 10px auto; }
 header img { margin-left: 95px; height: 60px; display: inline-block }
 header nav { float: right; margin: 0 }
 header nav a { font-size: 16px; font-weight: bold; color: #333334; text-decoration: none;
-  margin: 24px 50px 0 0; text-transform: uppercase; display: inline-block; padding-bottom: 5px  }
+               margin: 24px 50px 0 0; text-transform: uppercase; display: inline-block; padding-bottom: 5px  }
 header nav a.active,
 header nav a:hover { border-bottom: solid 2px #fcc14e }
+
+header aside { display: inline-block; margin-left: 50px }
+header aside a { font-size: 12px; text-transform: uppercase;
+                 font-weight: bold; color: #333334; text-decoration: none }
+header aside a.active,
+header aside a:hover { border-bottom: solid 2px #fcc14e; }
 
 #banner { width: 100%; background-position: left top; background-repeat: repeat-x }
 
@@ -122,6 +128,8 @@ footer a { text-align: center; display: inline-block; width: 33%; margin: auto; 
   header nav { float: none; margin: 5px 0 0 10px; display: inline-block }
   header nav a { margin: 12px 10px 0 0 }
   footer a { width: 95%; margin: 10px 10px 20px 10px }
+  header aside { margin-left: 10px }
+  header nav a { font-size: 14px }
 }
 
 
@@ -166,6 +174,7 @@ footer a { text-align: center; display: inline-block; width: 33%; margin: auto; 
 .home #content article { width: 24%; display: inline-block; min-height: 100px;
                          margin: 5px 0 30px 0; padding-right: 20px; vertical-align: top; padding: 6px }
 .home #content article p { font-size: 14px; }
+.home #content article a { font-size: 12px }
 
 .home #examples { border-top: solid 1px #9d9d9c }
 .home #examples section { width: 1130px; margin: 10px auto }
