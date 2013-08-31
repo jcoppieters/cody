@@ -269,11 +269,17 @@ footer a { text-align: center; display: inline-block; width: 33%; margin: auto; 
     font-size: 25px;
     height: 50px;
     padding: 4px 4px 4px 10px;
+    margin-bottom: 20px;
 }
 .sitecreation label{
     display: inline-block;
     width: 600px;
+    font-weight: bold;
 }
+.sitecreation{
+    padding-left: 60px;
+}
+.warning {padding: 5px 10px; background: #fef9f9; border: 1px solid rgb(253,190,87); color: rgb(210,133,2); text-align: left; width: 700px; }
 /* =============================================================================
    Print Styles
    ========================================================================== */

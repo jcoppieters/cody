@@ -1,0 +1,96 @@
+<!doctype html>
+
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="<%=page.language%>"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="<%=page.language%>"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="<%=page.language%>"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="<%=page.language%>">
+<!--<![endif]-->
+
+<% include header.ejs %>
+
+<body class="page" id="page<%= page.itemId %>">
+<script src="<%=cstatic%>/js/lib/jquery-1.9.1<%=min%>.js"></script>
+<script src="<%=cstatic%>/js/lib/jquery-ui-1.10.1<%=min%>.js"></script>
+<script src="<%=cstatic%>/js/lib/jquery.validate<%=min%>.js"></script>
+<script src="<%=cstatic%>/js/lib/localization/messages_<%=page.language%>.js"></script>
+<% include menu-top %>
+
+<div id="banner"></div>
+
+<div id="content">
+    <% var theChildren; %>
+    <% include menu-left %>
+
+    <section class="<%= (theChildren.length == 0) ? 'noNav' : 'withNav' %>">
+        <h1><%= page.title %></h1>
+
+        <div class="sitecreation">
+            <% if (message == "awaiting-activation") { %>
+            <p class="notification">An email containing an activation link has been sent.<br />
+                If you cannot find this e-mail, please wait an hour or two and make sure to check your spam folder.</p>
+            <% }else if(message == "activation-success") { %>
+                <p>
+                    Congratulations. Your website is now active!<br />
+                    It will soon be available at <a href="<%= params.url %>"><%= params.url %></a><br />
+                    Do not forget to configure the DNS record for this hostname.<br />
+                </p>
+
+            <% }else if(message == "duplicate-name") { %>
+            <p class="warning">Your website could not be created, because a website with this name or hostname already exists.</p><br />
+            <% }else if(message == "activation-fail") { %>
+            <p>
+                The activation code you supplied is invalid or outdated.
+            </p>
+            <% }else{ %>
+
+            <form class="sitecreationform" action="/<%=page.language%>/createsite" method="post">
+            <p>
+            Please supply the necessary details.
+            </p>
+
+            <label for="sitename">
+                Name of your site:
+            </label>
+            <input class="userdetail required" type="text" name="sitename" id="sitename" placeholder="My website"  />
+
+            <label for="hostname">
+                Hostname (address) for your website:
+            </label>
+            <p class="warning">Make sure to create a CNAME record for this hostname, pointing to s1.cody-cms.org</p>
+            <input class="userdetail required" type="text" name="hostname" id="hostname" placeholder="mynewsite.mydomain.org" />
+
+
+            <label for="email">
+                Email address:
+            </label>
+
+            <input class="userdetail required" type="email" name="email" id="email" placeholder="me@emailprovider.org" />
+
+            <label for="password">
+                Password:
+            </label>
+
+            <input class="userdetail required" type="password" name="password" id="password" placeholder="password" />
+
+            <label for="passwordconfirm">
+                Password (confirm):
+            </label>
+
+            <input class="userdetail required" type="password" name="passwordconfirm" id="passwordconfirm" placeholder="password (again)" /><br />
+
+            <input type="hidden" name="request" value="sitecreation" />
+            <input name="submit" type="submit" class="submit" value="Submit" />
+            </form>
+            <%
+            }
+            %>
+        </div>
+    </section>
+    <script>
+        $(".sitecreationform").validate();
+    </script>
+
+</div>
+</body>
+</html>

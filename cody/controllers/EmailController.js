@@ -6,19 +6,21 @@
 // this class abstracts nodemailer, just in case we would switch from nodemailer to something else
 // npm install nodemailer required
 
-nodemailer = require("nodemailer");
-EmailController = function () {
+var nodemailer = require("nodemailer");
+var cody = require("./../index.js");
+function EmailController (context) {
     console.log("EmailController construct");
+    cody.Controller.call(this, context);
 };
 
-EmailController.prototype.sendEmail = function (pFrom, pTo, pSubject, pText) {
+EmailController.sendEmail = function (pFrom, pTo, pSubject, pText) {
     console.log("Sending email from " + pFrom + " to " + pTo);
 
     var mailOptions = {
         from: pFrom, // sender address
         to: pTo, // list of receivers
         subject: pSubject, // Subject line
-        text: pText // plaintext body
+        html: pText // HTML body
     };
 
     //TODO: for production, modify this to use /usr/bin/sendmail
@@ -42,5 +44,6 @@ EmailController.prototype.sendEmail = function (pFrom, pTo, pSubject, pText) {
 
 };
 
-module.exports.EmailController = EmailController;
 
+EmailController.prototype = Object.create( cody.Controller.prototype );
+module.exports = EmailController;

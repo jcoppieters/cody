@@ -42,11 +42,12 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
-connection.query("SELECT name, version, dbuser, dbpassword, dbhost, datapath, db, hostname FROM websites WHERE active='Y' ORDER BY id", function(err, rows, fields) {
+connection.query("SELECT name, version, dbuser, dbpassword, dbhost, datapath, db, hostname FROM websites WHERE active='Y' AND ownerconfirmed='Y' ORDER BY id", function(err, rows, fields) {
     if(err) throw err;
     cody.Application.each(rows, function(next){
       var row = this;
       console.log(row);
+
       cody.startWebApp(cody.server, {
             "name": row.name,
             "version": row.version,
@@ -58,6 +59,7 @@ connection.query("SELECT name, version, dbuser, dbpassword, dbhost, datapath, db
             "db": row.db,
             "controllers": require("./" + row.name + "/controllers/")
         }, next);
+
     }, function() {
       console.log("Loaded all apps....");
       connection.end();
