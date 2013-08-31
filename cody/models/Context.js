@@ -211,7 +211,8 @@ Context.prototype.formatShortTime = function(aDate) {
 // should look at the current locale of the user page
 //  for now we depend on the dateFormat field of this context
 Context.prototype.formatDate = function(aDate) {
-    return "28-08-2013";
+
+   // return "28-08-2013";
     /*if(aDate === undefined || aDate.getDate === undefined){
         aDate = new Date(2013,8,28);
     } */
