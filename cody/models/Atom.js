@@ -103,7 +103,7 @@ Atom.prototype.getFileName = function() {
 Atom.prototype.getPathName = function(controller) {
     //return controller.app.getDataPath() + controller.getFolder() + "/" + this.id + "." + this.extention;
     //TODO: this was adapted to support vhosts, but it needs cleanup
-    return "data" + controller.getFolder() + "/" + this.id + "." + this.extention;
+    return controller.app.getDataPath() + controller.getFolder() + "/" + this.id + "." + this.extention;
 
 };
 

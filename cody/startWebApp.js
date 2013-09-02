@@ -57,7 +57,7 @@ function startWebApp(server, config, done) {
 
       // mysite.com/data/file-id.extension
       thisApp.get("/data/*", function (req, res) {
-        var fileserver = new cody.Dynamic(req, res, app.getDataPath(), config.name);
+        var fileserver = new cody.Dynamic(req, res, app.getDataPath());
         fileserver.serve();
       });
 

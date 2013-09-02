@@ -12,11 +12,10 @@ var libpath = require("path"),
     cody = require("../index.js");
  
 
-function Dynamic(req, res, path, appFolder) {
+function Dynamic(req, res, path) {
   this.request = req;
   this.response = res;
   this.path = path;
-  this.appFolder = appFolder;
 }
 
 module.exports = Dynamic;
@@ -26,7 +25,8 @@ Dynamic.prototype.serve = function () {
   var self = this;
 
   var uri = url.parse(self.request.url).pathname;
-  var filename = "./" + this.appFolder + "/" + ((uri.indexOf("/") === 0) ? uri.substring(1) : uri);
+  uri = uri.replace("data/","");
+  var filename = this.path + "/" + ((uri.indexOf("/") === 0) ? uri.substring(1) : uri);
   
 
   // check if this file exists
