@@ -17,7 +17,7 @@ $(document).ready(function() {
   $("#block_selector").dialog({autoOpen: false, width: 240});
   $("#block_selector a.makeChoice").click( selectedContent );
 
-  $("#template_selector").dialog({autoOpen: false, width: 300});
+  $("#template_selector").dialog({autoOpen: false, width: 340});
   $("#template_selector a.makeChoice").click( selectedTemplate );
 
   
@@ -198,34 +198,48 @@ function doAddContent() {
 }
 function selectedContent() {
   $("#block_selector").dialog("close");
-  var node = $("#node").val();
+
   var kind = $(this).attr("rel");
-  
+  $("#kind").val(kind);
+
+  $("#request").val("SaveX");
+  $("#onepage").submit();
+
+  return false;
+
+  /*
+   // Code below lost the content of previously created items
+   //  code above is much slower and not needed
+   //ex-TO DO: try to save entered content first !
+  var node = $("#node").val();
+
+
   $.ajax({
-    type: "POST", url: "./pages",
+  / type: "POST", url: "./pages",
     data: "request=addcontent&node="+node+"&kind=" + kind,
     success: function(msg){
        if (msg.status !== "OK") {
          alert("Data not saved!\nGot error from server: " + msg.status + ", see console.");
          console.log(msg);
        } else {
-         //TODO: if the user entered data, it will be lost... !!
+         //if the user entered data, it will be lost... !!
          gTree.getNode(node);
        }
      }
   });
   return false;
+  */
 }
 
 
 function doAtomEditor(button, type, feedback) {
   $.ajax({
     type: "GET", 
-    url: gPrefix + "/" + gLanguage + "/" + type,
+    url: "/" + gLanguage + "/" + type,
     data: "request=menu",
     success: function(msg){
       if (msg.indexOf("<") < 0) {
-        alert("Sorry, no files in your library yet.");
+        alert("Sorry, no items in your library yet.");
       }
       // find the block (<article>) that we are editing
       var article = button.parent().parent();
@@ -263,7 +277,7 @@ function doAtomEditor(button, type, feedback) {
   });
 }
 
-function doEditorI() {
+function doEditorI() { console.log("doEditorI");
   doAtomEditor($(this), "images", function(article, img, span, li) {
       // set image, name and (hidden) atom value
       img.attr("src", gDynamic + "/images/" + li.attr("rel"));

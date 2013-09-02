@@ -212,10 +212,10 @@ Context.prototype.formatShortTime = function(aDate) {
 //  for now we depend on the dateFormat field of this context
 Context.prototype.formatDate = function(aDate) {
 
-    return "28-08-2013";
-    /*if(aDate === undefined || aDate.getDate === undefined){
-        aDate = new Date(2013,8,28);
-    } */
+  if ((typeof aDate === "undefined") || (!aDate)) {
+    console.log("formatDate called without date parameter...");
+    aDate = new Date();
+  }
 
   if (this.dateFormat === "dd-mm-yyyy") {
     return two(aDate.getDate()) + "-" + two(aDate.getMonth()+1) + "-" + aDate.getFullYear();
@@ -229,9 +229,9 @@ Context.prototype.formatDate = function(aDate) {
 };
 
 Context.prototype.makeDate = function(value, defaultValue) {
-  if (typeof x === "undefined") { return defaultValue; }
+  if (typeof value === "undefined") { return defaultValue; }
 
-  var parts = (x.indexOf("-") > 0) ? x.split("-") : x.split("/");
+  var parts = (value.indexOf("-") > 0) ? value.split("-") : value.split("/");
 
   if (this.dateFormat === "dd-mm-yyyy") {
     return (parts.length < 3) ?

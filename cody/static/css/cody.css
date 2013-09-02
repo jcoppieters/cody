@@ -177,6 +177,7 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
 
 #template_selector { }
   #template_selector label { margin: 0 32px 0 4px; color: #333334; font-weight: bolder; font-size: 13px }
+  #template_selector label:last-of-type { margin-right: 0 }
   #template_selector h3 { margin-top: 20px }
   #template_selector h3:first-child { margin-top: 10px }
   #template_selector > div { margin: 5px 0 7px 0 }

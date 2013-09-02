@@ -232,10 +232,11 @@ footer a { text-align: center; display: inline-block; width: 33%; margin: auto; 
 .page #content section.noNav { width: 1004px }
 
 .page #content h1 { text-align: left; color: #333334; margin-left: 57px }
-.page #content article { display: inline-block; text-align: left; vertical-align: top }
-.page #content h2 { font-size: 18px; text-align: left; color: #333334; margin-left: 57px }
-.page #content article p { font-size: 14px; color: #333334; margin: 5px 0 30px 60px; padding-right: 20px }
-.page #content article pre { margin-left: 60px; font-size: 12px; padding-right: 8px; border: solid 1px #9d9d9c }
+.page #content article { margin: 0 0 20px 59px; display: inline-block; text-align: left; vertical-align: top }
+.page #content article.intro { width: 300px; border-top: solid 1px lightgrey; padding-top: 18px; }
+.page #content h2 { font-size: 18px; text-align: left; color: #333334 }
+.page #content article p { font-size: 14px; color: #333334; margin: 5px 0 30px 0px; padding-right: 20px }
+.page #content article pre { font-size: 12px; padding-right: 8px; border: solid 1px #9d9d9c }
 
 
 @media (max-width: 1023px) {

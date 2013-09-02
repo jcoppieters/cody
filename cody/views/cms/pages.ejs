@@ -99,33 +99,35 @@
 
   <div id="template_selector" title="Add new page">
     <h3>Show</h3>
-    <input type="radio" name="showcontent" id="showcontentY" value="Y" checked><label for="showcontentY">Content</label>
-    <input type="radio" name="showcontent" id="showcontentN" value="S"><label for="showcontentN">First subitem</label>
+    <input type="radio" name="showcontent" id="showcontentY" value="Y" checked><label for="showcontentY">Own content</label>
+    <input type="radio" name="showcontent" id="showcontentN" value="S"><label for="showcontentN">Content of first subitem</label>
     <hr>
+
+    <h3>Add a web page</h3>
+    <% for (var iT in app.templates) { var T = app.templates[iT]; %>
+      <% if (T.system === "N") { %>
+        <div>
+          <a class="makeChoice" href="#" rel="<%= T.id %>"><img src="<%=cstatic%>/extentions/html.png"></a>
+          <article>
+            <a class="makeChoice" href="#" rel="<%= T.id %>"><%= T.name %> page  »</a>
+            <span><%= T.description %></span>
+          </article>
+        </div>
+      <% } %>
+    <% } %>
+
     <% if (login.level > 50) { %>
-      <h3>System templates</h3>
+      <h3>Add a system page</h3>
       <% for (var iT in app.templates) { var T = app.templates[iT]; %>
         <% if (T.system === "Y") { %>
           <div>
-            <img src="<%=cstatic%>/extentions/html.png">
+            <a class="makeChoice" href="#" rel="<%= T.id %>"><img src="<%=cstatic%>/extentions/frm.gif"></a>
             <article>
-              <a class="makeChoice" href="#" rel="<%= T.id %>">Add a "<%= T.name %>" page  »</a>
+              <a class="makeChoice" href="#" rel="<%= T.id %>"><%= T.name %> page  »</a>
               <span><%= T.description %></span>
             </article>
           </div>
         <% } %>
-      <% } %>
-      <h3>User templates</h3>
-    <% } %>
-    <% for (var iT in app.templates) { var T = app.templates[iT]; %>
-      <% if (T.system === "N") { %>
-        <div>
-          <img src="<%=cstatic%>/extentions/html.png">
-          <article>
-            <a class="makeChoice" href="#" rel="<%= T.id %>">Add a "<%= T.name %>" page  »</a>
-            <span><%= T.description %></span>
-          </article>
-        </div>
       <% } %>
     <% } %>
   </div>

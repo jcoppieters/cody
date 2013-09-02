@@ -11,7 +11,7 @@
 	</nav>
   <aside>
     <% for (var il in app.languages) { var L = app.languages[il]; %>
-      <a class="<%= (page.language == L.id) ? 'active' : ''%>" href="/<%= page.getURL(L.id) %>"><%=L.id %></a>
+      <a class="<%= (page.language == L.id) ? 'active' : ''%>" href="/<%=L.id%>/<%= page.itemId %>"><%=L.id %></a>
     <% } %>
   </aside>
 

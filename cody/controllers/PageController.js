@@ -74,7 +74,17 @@ PageController.prototype.doRequest = function( finish ) {
       finish( { status: "OK" } );
     });
 
-    
+  } else if (self.isRequest("SaveX")) {
+    var nodeId = self.getParam("node");
+    self.saveInfo( nodeId, function() {
+      self.addContent(nodeId , self.getParam("kind"), function(newId) {
+        self.context.opennode = nodeId;
+        self.context.shownode = nodeId;
+        finish();
+      });
+    });
+
+
   } else {
     self.context.shownode = cody.TreeController.toId(this.getParam("shownode", ""));
     self.context.opennode = cody.TreeController.toId(this.getParam("opennode", ""));
