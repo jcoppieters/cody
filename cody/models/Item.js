@@ -87,7 +87,7 @@ Item.kSubItem     = 'S';
 Item.kNoSubitems  = 'D';
 Item.kLightBox    = 'L';
 
-Item.kDefaultName  = 'New Item';
+Item.kDefaultName  = 'New item';
 
 
 Item.prototype.getAllowedDomains = function() {

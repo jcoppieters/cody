@@ -78,8 +78,8 @@ PageController.prototype.doRequest = function( finish ) {
     var nodeId = self.getParam("node");
     self.saveInfo( nodeId, function() {
       self.addContent(nodeId , self.getParam("kind"), function(newId) {
-        self.context.opennode = nodeId;
-        self.context.shownode = nodeId;
+        self.context.opennode = cody.TreeController.toId(nodeId);
+        self.context.shownode = cody.TreeController.toId(nodeId);
         finish();
       });
     });
@@ -319,19 +319,34 @@ PageController.prototype.renameObject = function( title, nodeId, finish ) {
   
     try {
       aPage.doUpdate(self, function() {
-        
-       // perhaps overkill but for (sortorder == alphabetical) the order of pages can change
-       self.app.buildSitemap();
-       
-       // rename the item if it's the page of the default language (although item names are not shown)
-       if ((self.app.isDefaultLanguage(aPage.language)) || (aPage.item.name === cody.Item.kDefaultName)) {
-          aPage.item.name = title;
-          aPage.item.doUpdate(self, function() {
+
+        // change all names for pages from this item that still have the defaultName
+        //   (the item was probably just created)
+        var langs = self.app.getLanguages();
+        cody.Application.each( langs, function forEachLanguage(next) {
+          anotherPage = self.app.getPage(this.id, aPage.itemId);
+          if (anotherPage.title === cody.Item.kDefaultName) {
+            anotherPage.title = title;
+            anotherPage.doUpdate(self, next);
+          } else {
+            next();
+          }
+
+        }, function whenDone(err) {
+          // perhaps overkill but for (sortorder == alphabetical) the order of pages can change
+          self.app.buildSitemap();
+
+          // rename the item if it iss the page of the default language (although item names are not shown)
+          // it's nice for debugging the database
+          if ((self.app.isDefaultLanguage(aPage.language)) || (aPage.item.name === cody.Item.kDefaultName)) {
+            aPage.item.name = title;
+            aPage.item.doUpdate(self, function() {
+              finish( { status: "OK" } );
+            });
+          } else {
             finish( { status: "OK" } );
-          });
-        } else {
-          finish( { status: "OK" } );
-        }
+          }
+        });
       });
       
       
