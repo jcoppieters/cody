@@ -22,20 +22,21 @@
 		  gTree = new jAtomTree(1, "<%=shownode%>", gLanguage, "pages", gCody);
 		  gTree.getNode = getPage;
       gTree.doAdd = addPage;
+      gTree.initNode = initPage;
 		  gTree.init();
+
 
       // when switching languages, try to keep the same view
       $("#ltabs > ul > li > a").click( function() {
         window.location = $(this).attr("href") + "?opennode=" + gTree.getOpenNode() + "&shownode=" + gTree.getCurrentNode();
         return false;
       });
-    });
 
-    if ("<%=opennode%>" !== "0") {
-      $(window).load( function() {
-          gTree.getNode("<%=opennode%>");
-      });
-    }
+      if ("<%=opennode%>" !== "0") {
+        gTree.initNode(<%=opennode%>);
+      }
+
+    });
   </script>
 
   <section>
@@ -88,6 +89,12 @@
 	    </div>
 
 	    <div id="right_cont">
+        <% if (opennode != 0) { %>
+          <% var currPage = page; %>
+          <% page = app.getPage(currPage.language, opennode); %>
+          <% include pages-ajax.ejs %>
+          <% page = currPage; %>
+        <% } %>
 			</div>
        
 		</div>

@@ -53,18 +53,24 @@ function jAtomTree(theRoot, theInitialNode, theLanguage, theService, theImages) 
             self.warnUser("You are not allowed to edit this node, sorry.");
 
           } else {
-            self.currentNode = id;
-            self.openNode = id;
             $("#right_cont").html(msg).show();
 
-
-            $("#doRealDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( function() { self.doRealDelete(); } );
-            $("#doSave").button({ icons: { primary: "ui-icon-check"}, text: true}).click( function() { self.doSave(); } );
+            self.initNode(id);
           }
         }
       });
     }
   };
+
+  this.initNode = function(id) {
+    var self = this;
+
+    self.currentNode = id;
+    self.openNode = id;
+
+    $("#doRealDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( function() { self.doRealDelete(); } );
+    $("#doSave").button({ icons: { primary: "ui-icon-check"}, text: true}).click( function() { self.doSave(); } );
+  }
 
   this.doSave = function() {
     $("form#onepage #request").val("save");

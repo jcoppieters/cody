@@ -29,7 +29,7 @@ $(document).ready(function() {
     theme: "advanced",
     width: "998",
     height: "450",
-    plugins: "safari,table,advhr,advimage,autosave,advlink,emotions,media,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking",
+    plugins: "safari,table,advhr,advimage,advlink,emotions,media,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking",
     content_css : gStatic + "/css/front.css",
   
     // Theme options
@@ -40,7 +40,8 @@ $(document).ready(function() {
     theme_advanced_toolbar_align : "left",
     //theme_advanced_statusbar_location : "bottom",
     //theme_advanced_resizing : true,
-    theme_advanced_path : false
+    theme_advanced_path : false,
+    autosave_ask_before_unload: false
   });
 
 });
@@ -80,70 +81,77 @@ function getPage(id) {
      url: "/" + gLanguage + "/pages",
      data: "request=getnode&node=" + id,
      success: function(msg){
-       if (msg.substring(0,3) == "NOK") {
+       if (msg.substring(0,3) === "NOK") {
       	 WarnUser("Got error from server: " + msg);
               
-       } else if (msg.substring(0,3) == "NAL") {
+       } else if (msg.substring(0,3) === "NAL") {
       	 	WarnUser("You are not allowed to edit this page, sorry.");
              
        } else {
-         self.currentNode = id;
-         self.openNode = id;
-         $("#newContentForm #node").val(id);
-         
+
          $("#right_cont").html(msg).show();
-         $("#tabs").tabs().removeClass("ui-widget-content").removeClass("ui-corner-all");
-         $("#tabs ul").removeClass("ui-widget-header");
 
-         $("#right_cont #doView").button({ icons: { primary: "ui-icon-link"}, text: true}).click( doView );
-         $("#right_cont #doSave").button({ icons: { primary: "ui-icon-check"}, text: true}).click( function() { saveOrder(); self.doSave(); return false; });
-         $("#right_cont #doDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( function() { self.doRealDelete(); return false; });
-         
-         $("#right_cont #doAdjust").button({ icons: { primary: "ui-icon-close"}, text: true}).click( doAdjust );
-         $("#right_cont #doAddContent").button({ icons: { primary: "ui-icon-plus"}, text: true}).click( doAddContent );
-         
-         $("#right_cont .doEditorT").button({ icons: { primary: "ui-icon-pencil"}, text: true}).click( doEditorT );
-         $("#right_cont .doEditorI").button({ icons: { primary: "ui-icon-pencil"}, text: true}).click( doEditorI );
-         $("#right_cont .doEditorF").button({ icons: { primary: "ui-icon-pencil"}, text: true}).click( doEditorF );
-         $("#right_cont .doDeletor").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( doDeletor );
-         
-
-         // Content //
-         // make list sortable
-         $("#content > div").sortable().disableSelection(); // sortable({items: "article"}) but we doesn't work UI-wise good
-         
-         
-         // add date pickers
-         $.datepicker.setDefaults({
-            showOn: "both",
-            buttonImage: gCody + "/images/icon_calendar.png",
-            buttonImageOnly: true,
-            dateFormat: "dd-mm-yy"});
-        
-         $(".dater").datepicker();
-          
-         // validate numbers
-         $("#onepage").validate();
-          
-         $("#domains").change( function() {
-            var g = $('#alloweddomains').val();
-            if (g !== "") {
-              $('#alloweddomains').val( g + ((g.length > 0) ? ',':'') + $('#domains').val() );
-            }
-         });
-          
-         // avoid "leave page" dialog from browser
-         window.onbeforeunload = function() { };
-         
-         // put short text into the P's of the text-data content blocks
-         $("input.textdata").each(function() {
-           var name = $(this).attr("name");
-           var txt = $($(this).val()).text();
-           $("#content_data #"+name).html(txt.substring(0,80) + " ...");
-         });
+         self.initNode(id);
       }
    }
  });
+}
+
+
+function initPage(id) {
+  var self = this;
+
+  self.currentNode = id;
+  self.openNode = id;
+  $("#newContentForm #node").val(id);
+
+  $("#tabs").tabs().removeClass("ui-widget-content").removeClass("ui-corner-all");
+  $("#tabs ul").removeClass("ui-widget-header");
+
+  $("#right_cont #doView").button({ icons: { primary: "ui-icon-link"}, text: true}).click( doView );
+  $("#right_cont #doSave").button({ icons: { primary: "ui-icon-check"}, text: true}).click( function() { saveOrder(); self.doSave(); return false; });
+  $("#right_cont #doDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( function() { self.doRealDelete(); return false; });
+
+  $("#right_cont #doAdjust").button({ icons: { primary: "ui-icon-close"}, text: true}).click( doAdjust );
+  $("#right_cont #doAddContent").button({ icons: { primary: "ui-icon-plus"}, text: true}).click( doAddContent );
+
+  $("#right_cont .doEditorT").button({ icons: { primary: "ui-icon-pencil"}, text: true}).click( doEditorT );
+  $("#right_cont .doEditorI").button({ icons: { primary: "ui-icon-pencil"}, text: true}).click( doEditorI );
+  $("#right_cont .doEditorF").button({ icons: { primary: "ui-icon-pencil"}, text: true}).click( doEditorF );
+  $("#right_cont .doDeletor").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( doDeletor );
+
+
+  // Content //
+  // make list sortable
+  $("#content > div").sortable().disableSelection(); // sortable({items: "article"}) but we doesn't work UI-wise good
+
+
+  // add date pickers
+  $.datepicker.setDefaults({
+    showOn: "both",
+    buttonImage: gCody + "/images/icon_calendar.png",
+    buttonImageOnly: true,
+    dateFormat: "dd-mm-yy"});
+
+  $(".dater").datepicker();
+
+  // validate numbers
+  $("#onepage").validate();
+
+  $("#domains").change( function() {
+    var g = $('#alloweddomains').val();
+    if (g !== "") {
+      $('#alloweddomains').val( g + ((g.length > 0) ? ',':'') + $('#domains').val() );
+    }
+  });
+
+  // put short text into the P's of the text-data content blocks
+  $("input.textdata").each(function() {
+    var name = $(this).attr("name");
+    var txt = $($(this).val()).text();
+    $("#content_data #"+name).html(txt.substring(0,80) + " ...");
+  });
+
 }
 
 function doView() {
