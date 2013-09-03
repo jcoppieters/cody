@@ -247,7 +247,8 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
         #content_data #content article > div.input > select { display: inline-block; margin: 20px 0 0 8px }
 
       #content_data #content article > div.inputE { vertical-align:top; display: inline-block; width: 340px }
-        #content_data #content article > div.inputE > ul { display: block; z-index: 999; position: relative }
+        #content_data #content article > div.inputE > ul {  z-index: 999; position: relative }
+        #content_data #content article > div.inputE .ui-menu { width: 150px }
         #content_data #content article > div.inputE > img { vertical-align: top; box-shadow: 1px 1px 5px grey; height: 50px; margin: 2px 0 0 8px; }
         #content_data #content article > div.inputE > img.icon { box-shadow: none; height: 16px; margin: 20px 0 0 8px; }
         #content_data #content article > div.inputE > span { margin: 22px 0 0 6px; overflow: hidden;  display: inline-block; width: 250px }
