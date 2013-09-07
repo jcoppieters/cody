@@ -138,6 +138,10 @@ Context.prototype.getLogin = function() {
 // General utilities
 //
 
+Context.prototype.val = function(value) {
+  return (typeof value === "undefined") ? "" : value;
+};
+
 Context.prototype.getUnique = function() {
   return new Date().getTime();
 };
@@ -235,7 +239,7 @@ Context.prototype.makeDate = function(value, defaultValue) {
 
   if (this.dateFormat === "dd-mm-yyyy") {
     return (parts.length < 3) ?
-      defaultValue : new Date(parts[2], parts[1]-1, parts[0]);
+      defaultValue : new Date(parts[2], parseInt(parts[1])-1, parts[0]);
 
   } else if (this.dateFormat === "mm-dd-yyyy") {
     return (parts.length < 3) ?

@@ -18,7 +18,6 @@ function Application(config) {
   this.atoms = {};          // hashmap with (id - atom)
   this.languages = [];      // array with all languages
   this.domains = [];        // array with all (user) domains
-  this.forms = {};          //TODO: hashmap with (id - form) -- or use some stuff from Yanic
   this.controllers = {};    // hashmap with (name - constructor)
     
   this.testing = config.testing || config.testing || false;
@@ -50,6 +49,7 @@ Application.kDefaultLanguage = "en";
 // Atom roots
 Application.kImageRoot = 1;
 Application.kFileRoot = 2;
+Application.kFormRoot = 3;
 
 // Content root id's
 Application.kNoPage = -1;
@@ -70,7 +70,7 @@ Application.prototype.init = function( done ) {
   self.addControllers();
   
   // daisy chained loading of all CMS elements:
-  //   languages, templates, items, pages, forms, ...
+  //   languages, templates, atoms, items, pages with content,...
   self.fetchStructures( done );
 };
 
@@ -383,7 +383,6 @@ Application.prototype.fetchStructures = function( done ) {
     [self, Application.prototype.fetchTemplates],
     [self, Application.prototype.fetchItems],
     [self, Application.prototype.fetchPages],
-    [self, Application.prototype.fetchForms],
     [self, Application.prototype.fetchDomains]
   ], function(err){
     if (err) {
@@ -762,25 +761,6 @@ Application.prototype.dump = function() {
   console.log("----------------");
 };
 
-
-///////////
-// forms //
-///////////
-Application.prototype.getForm = function(formId) {
-  return {};
-  //TODO: read forms from the database...
-  // return this.forms[formId];
-};
-
-
-Application.prototype.fetchForms = function(done) {
-   var self = this;
-  
-   // fetch all forms
-  
-   // next step
-   done();
-};
 
 
 /////////////////////

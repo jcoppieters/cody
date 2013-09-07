@@ -42,7 +42,8 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
-connection.query("SELECT name, version, dbuser, dbpassword, dbhost, datapath, db, hostname FROM websites WHERE active='Y' AND ownerconfirmed='Y' ORDER BY id", function(err, rows, fields) {
+connection.query("SELECT name, version, dbuser, dbpassword, dbhost, datapath, db, hostname " +
+  "FROM websites WHERE active='Y' AND ownerconfirmed='Y' ORDER BY id", function(err, rows, fields) {
     if(err) throw err;
     cody.Application.each(rows, function(next){
       var row = this;

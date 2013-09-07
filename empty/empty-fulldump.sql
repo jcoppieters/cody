@@ -24,7 +24,7 @@ CREATE TABLE `atoms` (
   `updated` datetime DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Dumping data for table `atoms`
@@ -78,7 +78,7 @@ CREATE TABLE `domains` (
   `id` varchar(32) NOT NULL DEFAULT '',
   `name` varchar(32) DEFAULT '?'
 ) DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Dumping data for table `domains`
@@ -115,7 +115,7 @@ CREATE TABLE `items` (
   PRIMARY KEY (`id`),
   KEY `parent_idx` (`parent`)
 ) AUTO_INCREMENT=106 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Dumping data for table `items`
@@ -140,7 +140,7 @@ CREATE TABLE `languages` (
   `sortorder` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Dumping data for table `languages`
@@ -163,7 +163,7 @@ CREATE TABLE `levels` (
   `id` int(11) DEFAULT NULL,
   `name` varchar(32) DEFAULT NULL
 ) DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Dumping data for table `levels`
@@ -194,7 +194,7 @@ CREATE TABLE `pages` (
   `updated` datetime DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`item`,`language`)
 ) DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Dumping data for table `pages`
@@ -225,7 +225,7 @@ CREATE TABLE `templates` (
   `defaultchild` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Dumping data for table `templates`
@@ -261,7 +261,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_idx` (`username`,`active`)
 ) AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Dumping data for table `users`

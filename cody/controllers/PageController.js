@@ -422,13 +422,13 @@ PageController.prototype.deleteObject = function( nodeId, finish ) {
 };
 
 
-PageController.prototype.fetchNode = function( theNode ) {
+PageController.prototype.fetchNode = function( theNode, finish ) {
   var self = this;
   
   var aPage = self.getObject( cody.TreeController.toId(theNode) );
   if (! self.isAllowed(aPage.item)) {
     this.gen("NAL,User is not allowed to edit this page with id = " + theNode, { "Content-Type": "application/html" });
-    return false;
+    return;
   }
   
   // just switch the page in our current context and we're done ??
@@ -440,7 +440,7 @@ PageController.prototype.fetchNode = function( theNode ) {
   //  actually: "when" do I do this?
   
   console.log("PageController.FetchNode: node = " + theNode + " + language = " + aPage.language + " => " + self.context.page.item.id);
-  return true;
+  finish();
 };
 
 

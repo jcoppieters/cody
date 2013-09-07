@@ -54,7 +54,7 @@
               <img src="<%=cstatic%>/icons/M.png">
               <div class="input">
                 <select name="atom_<%= c.id %>"><option value="0">-</option>
-                  <%- optionList(app.forms, c.atom) %>
+                  <%- cody.FormController.menuList( app.atoms, c.atom) %>
                 </select>
               </div>
               <div class="actions">

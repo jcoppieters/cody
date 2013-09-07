@@ -22,7 +22,17 @@ INSERT INTO `atoms` VALUES
 
 (2,0,20,'Files','','','2012-07-09 14:18:36','2012-07-09 14:18:36'),
 
-(3,0,20,'Forms','','','2012-07-09 14:18:36','2012-07-09 14:18:36');
+(3,0,20,'Forms','','','2012-07-09 14:18:36','2012-07-09 14:18:36'),
+
+(101,0,20,'First form','','','2012-09-09 14:18:36','2012-09-09 14:18:36');
+
+drop table meta;
+create table meta (
+  id integer not null primary key auto_increment,
+  data text
+);
+insert into meta values
+ (38, '{"name":"width","options":{"convert":7,"minimum":0,"required":true,"default":0},"generator":0,"labels":{"en":"Width","nl":"Breedte"},"id":0,"value":0}');
 
 
 --

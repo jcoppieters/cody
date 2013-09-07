@@ -38,6 +38,7 @@ websites / projecten
 - Howest?
 - BOIC?
 - Dr Site omzetten van Java -> Cody
+- BOK [ Dieter ]
 
 
 Laurens:
