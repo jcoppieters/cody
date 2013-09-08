@@ -13,6 +13,8 @@ function Controller(context) {
   if (typeof context === "undefined") { return; }
   if (context.page) {
     console.log("Controller.constructor -> page(" + context.page.itemId + ") = " + context.page.title + ", request = " + context.request);
+
+    this.addParamsToContext(context);
   }
 
   this.context = context;
@@ -176,7 +178,15 @@ Controller.prototype.closeConnection = function() {
 
 // General utilities
 
-
+Controller.prototype.addParamsToContext = function( context ) {
+  //TODO: what if there are more than 1 content settings blocks attached?
+  var content = context.page.content;
+  for (var iC in content) {
+    if ((content.hasOwnProperty(iC)) && (content[iC].kind === "P")) {
+        context.settings = JSON.parse(content[iC].data);
+    }
+  }
+}
 
 //
 // Output & feedback utilities

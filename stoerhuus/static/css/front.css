@@ -74,7 +74,8 @@ td { vertical-align: top; }
    Design: Jelle Cayman
    ========================================================================== */
 
-p.notification { clear: both; margin: 5px 0 5px 0; padding: 10px 10px 10px 36px; border: 1px solid; background-position: 10px 11px !important; background-repeat: no-repeat !important; }
+p.notification { clear: both; margin: 5px 0 5px 0; padding: 10px 10px 10px 36px;
+                 border: 1px solid; background-position: 10px 11px !important; background-repeat: no-repeat !important; }
 p.success { border-color: #9adf8f; background: #d5ffce url(../images/icon_tick_circle.png); color: #556652; }
 p.error { border-color: #df8f8f; background: #ffcece url(../images/icon_cross_circle.png); color: #665252; }
 
@@ -82,7 +83,7 @@ nav a { text-decoration: none; padding-bottom: 3px; }
 nav a:hover, nav a.active { border-bottom: solid 2px darkgrey}
 
 /* ===== header ============================================================= */
-header { margin: 15px; padding-bottom: 15px; border-bottom: solid 1px lightgrey; }
+header { margin: 15px; padding-bottom: 15px; border-bottom: solid 1px lightgrey; background-image: url(../images/header.jpg); background-size: cover }
 header > div, header > nav { display: inline-block; vertical-align: bottom }
 header > div { font-size: 12px; padding-left: 30px; margin-bottom: 3px  }
 
@@ -102,16 +103,16 @@ div.content { margin: 15px;  }
  div.noNav { border-left: none }
  .main h1 { margin-top: 5px }
 
-.page #content form {margin: 0px; border: solid 1px #c0c0c0; padding: 10px; }
-.page #content form fieldset { border: none; padding: 0; margin: 0 }
-.page #content form fieldset > div { margin: 10px 0 15px 0 }
-.page #content form fieldset > div > label { display: inline-block; width:160px; text-align: right; padding: 0 13px 0 0; font-weight: bold }
-.page #content form fieldset > div > input[type=text] { width: 350px }
-.page #content form fieldset > div > input[type=text].number { width: 70px }
-.page #content form fieldset > div > div { display: inline-block; }
-.page #content form fieldset > div > div > label { display: inline-block; margin: 0 20px 0 7px }
-.page #content form fieldset > div > div > input { vertical-align: baseline; }
-.page #content form #action_buttons { border-top: solid 1px #c0c0c0; padding: 10px 0 0 160px; }
+.main form {margin: 0px; border: solid 1px #c0c0c0; padding: 10px; }
+.main form fieldset { border: none; padding: 0; margin: 0 }
+.main form fieldset > div { margin: 10px 0 15px 0 }
+.main form fieldset > div > label { display: inline-block; width:160px; text-align: right; padding: 0 13px 0 0; font-weight: bold }
+.main form fieldset > div > input[type=text] { width: 350px }
+.main form fieldset > div > input[type=text].number { width: 70px }
+.main form fieldset > div > div { display: inline-block; }
+.main form fieldset > div > div > label { display: inline-block; margin: 0 20px 0 7px }
+.main form fieldset > div > div > input { vertical-align: baseline; }
+.main form #action_buttons { border-top: solid 1px #c0c0c0; padding: 10px 0 0 160px; }
 
 
 /* ===== left menu =========================================================== */
@@ -160,3 +161,14 @@ footer .second { float: right; margin-right: 0px }
   p, h2, h3 { orphans: 3; widows: 3; }
   h2, h3 { page-break-after: avoid; }
 }
+
+/* STOERHUUS */
+body header { padding-bottom: 78px; margin-bottom: 40px; background-position-y: -13px; border: solid 1px lightgrey;
+              box-shadow: 2px 2px 5px lightgrey; -moz-box-shadow: 2px 2px 5px lightgrey; -webkit-box-shadow: 2px 2px 5px lightgrey }
+body header > div { display: block; padding: 5px 20px 0 20px }
+body header nav#mainNav { padding: 90px 0px 0 20px; float: right }
+body header nav#lanNav { display: none; text-align:right }
+body header div#contactData { color: black }
+body div.main { width: 750px }
+body a { color: black; }
+body a:hover { color: darkred; }

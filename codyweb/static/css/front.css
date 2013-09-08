@@ -238,18 +238,34 @@ footer a { text-align: center; display: inline-block; width: 33%; margin: auto; 
 .page #content article p { font-size: 14px; color: #333334; margin: 5px 0 30px 0px; padding-right: 20px }
 .page #content article pre { font-size: 12px; padding-right: 8px; border: solid 1px #9d9d9c }
 
+.page #content form {margin: 0px; border: solid 1px #c0c0c0; padding: 10px; }
+.page #content form fieldset { border: none; padding: 0; margin: 0 }
+.page #content form fieldset > div { margin: 10px 0 15px 0 }
+.page #content form fieldset > div > label { display: inline-block; width:160px; text-align: right; padding: 0 13px 0 0; font-weight: bold }
+.page #content form fieldset > div > input[type=text] { width: 350px }
+.page #content form fieldset > div > input[type=text].number { width: 70px }
+.page #content form fieldset > div > div { display: inline-block; }
+.page #content form fieldset > div > div > label { display: inline-block; margin: 0 20px 0 7px }
+.page #content form fieldset > div > div > input { vertical-align: top; }
+.page #content form #action_buttons { border-top: solid 1px #c0c0c0; padding: 10px 0 0 160px; }
 
 @media (max-width: 1023px) {
-  .page #content { width: 98%; margin: 10px auto 0 auto; display: block }
+  .page #content { width: 96%; margin: 10px auto 0 auto; display: block }
   .page #content section { width: 96%; }
-  .page #content article { width: 48%; margin-left: 12px }
-
+  .page #content section.nonav { width: 96%; }
+  .page #content h1 { margin-left: 5px }
   .page header { width: 100%; }
+  .page #content section { width: inherit; }
   .page footer section { width: 100% }
   .page header nav a { margin: 24px 15px 0 0 }
 }
 @media (max-width: 639px) {
-  .page #content article { width: 95%; margin-left: 4px }
+  .page #content { width: 98% }
+  .page #content section.noNav { width: 98%; }
+  .page #content section { width: inherit; }
+  .page #content article { margin-left: 4px; display: block }
+  .page #content form fieldset > div > label { display: block; text-align: left; padding: 0 0 5px 0 }
+
 }
 
 /* =============================================================================

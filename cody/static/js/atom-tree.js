@@ -380,6 +380,16 @@ function jAtomTree(theRoot, theInitialNode, theLanguage, theService, theImages) 
               draggable: false,
               clickable: true
             },
+            "item" : {
+              valid_children : "none",
+              creatable: false,
+              icon : { image : theImages + "/extentions/ele.gif" }
+            },
+            "form" : {
+              valid_children : "item",
+              creatable: false,
+              icon : { image : theImages + "/extentions/frm.gif" }
+            },
             "image" : {
               valid_children : "none",
               creatable: false,

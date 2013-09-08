@@ -32,7 +32,7 @@ TreeController.prototype.getRoot = function() {
   throw new Error("TreeController.getRoot should be overridden - return an id");
 };
 TreeController.prototype.getType = function(theNode) { 
-  throw new Error("TreeController.getType should be overridden - return a string (image, folder, ...)");
+  throw new Error("TreeController.getType should be overridden - return a string (image, folder, ...) to be used by the Atom tree to display the nodes");
 };
 TreeController.prototype.getObject = function(id) {
   throw new Error("TreeController.getObject should be overridden - return an Atom with the specified id");
@@ -54,6 +54,7 @@ Node.prototype.setName = function(name) {}
 Node.prototype.getName = function() {}
 Node.prototype.getId = function() {}
 
+Node.prototype.scrapeFrom = function(controller) {}
 Node.prototype.doUpdate = function(controller, finish) {}
 Node.prototype.doDelete = function(controller, finish) {}
 */
@@ -117,9 +118,9 @@ TreeController.prototype.doRequest = function( finish ) {
     
   } else if (self.isRequest("getnode")) {
     // get all info and data on this node
-    if (this.fetchNode( self.getParam("node") )) {
+    this.fetchNode( self.getParam("node"), function() {
       finish( self.context.fn.replace(".ejs", "-ajax.ejs") );
-    }
+    });
         
     
   } else if (self.isRequest("save")) {
@@ -297,7 +298,7 @@ TreeController.prototype.addObject = function( title, refNode, type, kind, finis
   
   var refNodeId = TreeController.toId(refNode);
   var orderNr, aParent;
-  var ext = (kind === "folder") ? "xxx" : "---";
+  var ext = (kind === "folder") ? "xxx" : (kind === "form") ? "" : "---";
 
   // fetch the parent and sortorder
   if (type === "inside") {
@@ -390,14 +391,14 @@ TreeController.prototype.makeSelect = function( type ) {
 };
 
 
-TreeController.prototype.fetchNode = function( nodeId ) {
+TreeController.prototype.fetchNode = function( nodeId, finish ) {
   console.log("TreeController.FetchNode: nodeId = " + nodeId);
   this.context.atom = this.getObject(TreeController.toId(nodeId));
   if (! this.context.atom) {
     this.gen("NOK,Could not find the requested atom with id = " + nodeId, { "Content-Type": "application/html" });
-    return false;
+  } else {
+    finish();
   }
-  return true;
 };
 
 TreeController.prototype.respace = function(theParent) {

@@ -1,0 +1,83 @@
+<!doctype html>
+
+<html lang="<%=page.language%>">
+
+<% include header.ejs %>
+
+<body id="forms">
+
+<script src="<%=cstatic%>/js/lib/jquery-1.9.1<%=min%>.js"></script>
+<script src="<%=cstatic%>/js/lib/jquery-ui-1.10.1<%=min%>.js"></script>
+<script src="<%=cstatic%>/js/lib/jquery.validate<%=min%>.js"></script>
+<script src="<%=cstatic%>/js/lib/localization/messages_<%=page.language%>.js"></script>
+
+<script src="<%=cstatic%>/js/lib/jquery.jstree.js"></script>
+
+<script src="<%=cstatic%>/js/atom-tree.js"></script>
+<script>
+  $(document).ready( function() {
+    var gTree = new jAtomTree(3, "<%=shownode%>", gLanguage, "forms", gCody);
+    gTree.init();
+
+    var oldInit = gTree.initNode;
+    gTree.initNode = function(id) {
+      oldInit.call(gTree, id);
+      ShowOptions( $("#generator").val() );
+    }
+
+    gTree.doAddFolder = function() {
+      var self = this;
+      var t = $("#tree").jstree("get_selected");
+      self.nextType = "form";
+      if (t) {
+        $("#tree").jstree("create", t, "inside", { attr: { rel : "form" } });
+      } else {
+        self.warnUser("Please select an item first");
+      }
+    };
+    gTree.doAddImage = function () {
+      var self = this;
+      var t = $("#tree").jstree("get_selected");
+      self.nextType = "item";
+      if (t) {
+        $("#tree").jstree("create", t, "inside", ({ attr: { rel : "item" } }));
+      } else {
+        self.WarnUser("Please select a form first");
+      }
+    };
+
+  });
+</script>
+
+
+<section>
+  <header>
+    <% include top.ejs %>
+    <% include navigation.ejs %>
+  </header>
+
+  <div>
+
+    <div id="left_nav">
+      <button id="doAddFolder">Add Form</button>
+      <button id="doAddImage">Add Item</button><br>
+      <button id="doDelete" >Delete</button>
+      <button id="doEdit" >Edit</button>
+
+      <div id="tree">
+        <ul><li id="id_<%= controller.getRoot() %>" class="open" rel="root"><a href="#"><ins>&nbsp;</ins>Forms</a>
+          <%- controller.getTree() %>
+        </li></ul>
+      </div>
+
+    </div>
+
+    <div id="right_cont">
+    </div>
+
+  </div>
+
+  <% include footer.ejs %>
+</section>
+</body>
+</html>

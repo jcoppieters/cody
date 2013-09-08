@@ -23,7 +23,8 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `websites` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
-  `version` varchar(100) NOT NULL,
+  `version` char(100) NOT NULL,
+  `defaultlanguage` varchar(2) NOT NULL,
   `dbuser` varchar(100) NOT NULL,
   `dbpassword` varchar(100) NOT NULL,
   `dbhost` varchar(100) NOT NULL,

@@ -30,6 +30,7 @@ Content.kindName = function(theKind) {
   return (theKind === "I") ? "Image" :
          (theKind === "T") ? "Text" :
          (theKind === "M") ? "Form" :
+         (theKind === "P") ? "Params" :
          (theKind === "S") ? "String" :
          (theKind === "F") ? "File" :
          "Block";
@@ -58,8 +59,23 @@ Content.prototype.isIntro = function() {
 Content.prototype.renderText = function(controller) {
   return this.data;
 };
+Content.prototype.renderParams = function(controller) {
+  // these values should already be in the current context
+  return "<!-- page params " + content.data + " -->";
+}
 Content.prototype.renderForm = function(controller) {
-  return "--todo--";
+  var elements = (this.atom) ? this.atom.getChildren() : [];
+  var arr = [];
+  for (var iE in elements) {
+    arr.push(elements[iE].note);
+  }
+  var form = new cody.Meta();
+  form.addList(arr);
+
+  var formInfo = (this.atom && this.atom.note && (this.atom.note.length > 2)) ? JSON.parse(this.atom.note) : {};
+  var X = form.html(this.language, formInfo);
+
+  return X;
 };
 Content.prototype.renderImage = function(controller) {
    if (this.atom) {
@@ -86,9 +102,12 @@ Content.prototype.render = function(controller) {
     
   } else if (this.kind === "I") {
     return this.renderImage(controller);
-    
+
   } else if (this.kind === "F") {
     return this.renderFile(controller);
+
+  } else if (this.kind === "P") {
+    return this.renderParams(controller);
 
   } else {
     return controller.render(this);

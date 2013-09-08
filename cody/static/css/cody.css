@@ -146,7 +146,7 @@ footer { clear: both; width: 1000px; margin: 15px auto 0 auto; }
 ------------------------------------------------------------------*/
 #tree { width: 322px; background: white; border: solid 1px #CFCFCF; margin: 0px 0 0 2px;
   box-shadow: 2px 2px 5px lightgrey; -moz-box-shadow: 2px 2px 5px lightgrey; -webkit-box-shadow: 2px 2px 5px lightgrey  }
-body#images #tree, body#files #tree { margin-top: 10px }
+body#images #tree, body#files #tree, body#forms #tree { margin-top: 10px }
 
 #tree.jstree li.deleted a  { color: #BBB; }
 #tree.jstree > ul { margin: 0 0 8px 5px }
@@ -265,15 +265,20 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
   #content_data #options {  }
     #content_data #options div { margin: 10px 0 10px 4px }
     #content_data #options label { margin-left: 16px; width: 80px; vertical-align: top; display: inline-block; text-align: right }
-    #content_data #options label:first-child { margin: 0; width: 110px; text-align: left }
+    #content_data #options label:first-child { margin: 0; width: 115px; text-align: left }
     #content_data #options label[for=validto] { width: 18px }
-    #content_data #options input[type=text] { width: 300px; vertical-align: top; display: inline-block; }
+    #content_data #options input[type=text] { width: 300px; vertical-align: top; display: inline-block }
+    #content_data #options textarea { border: solid 1px #c0c0c0; width: 300px;  }
     #content_data #options input[type=text].dater { width: 90px; }
     #content_data #options input[type=checkbox] { margin-top: 0px }
     #content_data #options span { font-size: 13px; margin-top: 5px; display: inline-block }
     #content_data #options label { width: 80px; vertical-align: top; display: inline-block }
     #content_data #options p { display: inline-block; }
     #content_data #options .filelink { display: inline-block; vertical-align: top; margin-top: 5px }
+    #content_data #options div.radios { margin: 0; display: inline-block }
+      #content_data #options div.radios label { width: inherit; display: inline-block; margin: 0 20px 0 0 }
+      #content_data #options div.radios input[type=radio] { margin-top: 1px; }
+      #content_data #options div label.language { color: #f3ad25 }
 
   #content_data #action_buttons { margin: 15px 17px 5px 15px }
     #content_data #action_buttons span#last_modif { margin:10px 2px 0 0 ; float: right; display: inline-block }

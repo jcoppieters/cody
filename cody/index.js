@@ -3,6 +3,7 @@ module.exports.Application = require("./apps/Application.js");
 module.exports.Atom = require("./models/Atom.js");
 module.exports.Item = require("./models/Item.js");
 module.exports.Page = require("./models/Page.js");
+module.exports.Meta = require("./models/Meta.js");
 module.exports.Content = require("./models/Content.js");
 module.exports.Template = require("./models/Template.js");
 module.exports.User = require("./models/User.js");
@@ -19,6 +20,8 @@ module.exports.TreeController = require("./controllers/TreeController.js");
 module.exports.PageController = require("./controllers/PageController.js");
 module.exports.ImageController = require("./controllers/ImageController.js");
 module.exports.FileController = require("./controllers/FileController.js");
+module.exports.FormController = require("./controllers/FormController.js");
+module.exports.StylesController = require("./controllers/StylesController.js");
 module.exports.TemplateController = require("./controllers/TemplateController.js");
 
 module.exports.Static = require("./apps/Static.js");
