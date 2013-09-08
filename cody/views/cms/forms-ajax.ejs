@@ -114,19 +114,12 @@
 
     <fieldset id="tabs">
       <div id="options" class="horizontal">
-        <div>
-          <label for="name">Name</label>
-          <input name="name" id="name" type="text" value="<%= object.name %>" size="40" />
-          <select onchange="copyColumn()" id="usercolumns"><option value="0">-- prefill with --</option>
-            <% var user = getLogin();
-            for (var iU in user) { if (typeof user[iU] !== "function") { %>
-            <option value="<%= iU %>"><%= iU %></option>
-            <% } } %>
-          </select>
-          </c:if>
-        </div>
 
         <% if (atom.extention === "") { %>
+          <div>
+            <label for="name">Name</label>
+            <input name="name" id="name" type="text" value="<%= object.name %>" size="40" />
+          </div>
           <% for (var iL in app.languages) { var L = app.languages[iL]; %>
             <div id="labeldiv-<%= L.id %>" class="labels">
               <label for="label-<%= L.id %>">Button <%= L.name %></label>
@@ -135,6 +128,17 @@
           <% } %>
 
         <% } else { %>
+
+          <div>
+            <label for="name">Name</label>
+            <input name="name" id="name" type="text" value="<%= object.name %>" size="40" />
+            <select onchange="copyColumn()" id="usercolumns"><option value="0">-- prefill with --</option>
+              <% var user = getLogin();
+              for (var iU in user) { if (typeof user[iU] !== "function") { %>
+              <option value="<%= iU %>"><%= iU %></option>
+              <% } } %>
+            </select>
+          </div>
 
           <div id="generatordiv">
             <label for="generator">Type</label>

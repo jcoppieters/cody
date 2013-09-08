@@ -457,7 +457,9 @@ Meta.prototype.html = function( lang, formInfo ) {
 
   for (var iO in this.objects) {
     var O = this.objects[iO];
-    html += Meta.Generator.generators[O.generator](lang, O);
+    if (typeof Meta.Generator.generators[O.generator] === "function") {
+      html += Meta.Generator.generators[O.generator](lang, O);
+    }
   }
 console.log(formInfo);
   var buttonName = (typeof formInfo.labels === "undefined") ? "Save" : formInfo.labels[lang];

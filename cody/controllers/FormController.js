@@ -12,11 +12,12 @@ FormController.menuList = function( atoms, current ) {
   var root = atoms[cody.Application.kFormRoot];
 
   var options = "";
+  var currId = (current) ? current.id : 0;
   var aList = root.getChildren();
   for (var x in aList) {
-    options += "<option value='" + aList[x].id + "'" + ((current.id == aList[x].id) ? " selected" : "") + ">" + aList[x].name + "</option>";
+    options += "<option value='" + aList[x].id + "'" + ((currId == aList[x].id) ? " selected" : "") + ">" + aList[x].name + "</option>";
   }
-  console.log("current = " + current.id + ", menuPopup -> " + options);
+  // console.log("current = " + currId + ", menuPopup -> " + options);
   return options;
 }
 
@@ -94,27 +95,30 @@ FormController.prototype.fetchNode = function( theNode, finish ) {
     } else {
       // an item
 
+      if (typeof obj.options === "undefined") {
+        obj.options = {};
+      }
+
       // the options below are shown in 2 fields called min/max
       if (obj.generator == cody.Meta.Generator.textareainput) {
-        obj.min = obj.options.cols;
-        obj.max = obj.options.rows;
+        obj.min = (typeof obj.options.cols === "undefined") ? "" : obj.options.cols;
+        obj.max = (typeof obj.options.rows === "undefined") ? "" : obj.options.rows;
       } else {
-        obj.min = obj.options.minimum;
-        obj.max = obj.options.maximum;
-      }
-      if (typeof obj.options === "typeof") {
-        obj.options = {};
+        obj.min = (typeof obj.options.minimum === "undefined") ? "" : obj.options.minimum;
+        obj.max = (typeof obj.options.maximum === "undefined") ? "" : obj.options.maximum;
       }
       if ((obj.generator == cody.Meta.Generator.checkboxinput) ||
           (obj.generator == cody.Meta.Generator.selectinput) ||
           (obj.generator == cody.Meta.Generator.radioinput)){
-        for (var iC in obj.options.choices) {
-          var C = obj.options.choices[iC];
-          var X = "";
-          for (var iL in C) {
-            X += iL + "|" + C[iL] + "\n";
+        if (typeof obj.options.choices !== "undefined") {
+          for (var iC in obj.options.choices) {
+            var C = obj.options.choices[iC];
+            var X = "";
+            for (var iL in C) {
+              X += iL + "|" + C[iL] + "\n";
+            }
+            obj.options.choices[iC] = X.slice(0, -1);
           }
-          obj.options.choices[iC] = X.slice(0, -1);
         }
       }
       finish();
