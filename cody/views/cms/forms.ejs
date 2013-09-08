@@ -24,6 +24,28 @@
       oldInit.call(gTree, id);
       ShowOptions( $("#generator").val() );
     }
+
+    gTree.doAddFolder = function() {
+      var self = this;
+      var t = $("#tree").jstree("get_selected");
+      self.nextType = "form";
+      if (t) {
+        $("#tree").jstree("create", t, "inside", { attr: { rel : "form" } });
+      } else {
+        self.warnUser("Please select an item first");
+      }
+    };
+    gTree.doAddImage = function () {
+      var self = this;
+      var t = $("#tree").jstree("get_selected");
+      self.nextType = "item";
+      if (t) {
+        $("#tree").jstree("create", t, "inside", ({ attr: { rel : "item" } }));
+      } else {
+        self.WarnUser("Please select a form first");
+      }
+    };
+
   });
 </script>
 

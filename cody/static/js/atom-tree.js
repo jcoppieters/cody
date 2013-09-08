@@ -386,7 +386,7 @@ function jAtomTree(theRoot, theInitialNode, theLanguage, theService, theImages) 
               icon : { image : theImages + "/extentions/ele.gif" }
             },
             "form" : {
-              valid_children : "form",
+              valid_children : "item",
               creatable: false,
               icon : { image : theImages + "/extentions/frm.gif" }
             },

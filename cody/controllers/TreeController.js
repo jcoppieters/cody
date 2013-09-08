@@ -298,7 +298,7 @@ TreeController.prototype.addObject = function( title, refNode, type, kind, finis
   
   var refNodeId = TreeController.toId(refNode);
   var orderNr, aParent;
-  var ext = (kind === "folder") ? "xxx" : "---";
+  var ext = (kind === "folder") ? "xxx" : (kind === "form") ? "" : "---";
 
   // fetch the parent and sortorder
   if (type === "inside") {

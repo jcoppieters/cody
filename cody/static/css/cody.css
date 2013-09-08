@@ -278,6 +278,7 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
     #content_data #options div.radios { margin: 0; display: inline-block }
       #content_data #options div.radios label { width: inherit; display: inline-block; margin: 0 20px 0 0 }
       #content_data #options div.radios input[type=radio] { margin-top: 1px; }
+      #content_data #options div label.language { color: #f3ad25 }
 
   #content_data #action_buttons { margin: 15px 17px 5px 15px }
     #content_data #action_buttons span#last_modif { margin:10px 2px 0 0 ; float: right; display: inline-block }

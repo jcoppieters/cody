@@ -459,7 +459,7 @@ Meta.prototype.html = function( lang, formInfo ) {
     var O = this.objects[iO];
     html += Meta.Generator.generators[O.generator](lang, O);
   }
-
+console.log(formInfo);
   var buttonName = (typeof formInfo.labels === "undefined") ? "Save" : formInfo.labels[lang];
 
   return "<form method='post' action='./'>" +

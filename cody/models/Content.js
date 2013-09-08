@@ -72,9 +72,9 @@ Content.prototype.renderForm = function(controller) {
   var form = new cody.Meta();
   form.addList(arr);
 
-  var formInfo = (this.atom && this.note && (this.atom.note.length > 2)) ? JSON.parse(this.atom.note) : {};
+  var formInfo = (this.atom && this.atom.note && (this.atom.note.length > 2)) ? JSON.parse(this.atom.note) : {};
   var X = form.html(this.language, formInfo);
-  console.log(X);
+
   return X;
 };
 Content.prototype.renderImage = function(controller) {

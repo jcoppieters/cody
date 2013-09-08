@@ -11,12 +11,13 @@ console.log("loading " + module.id);
 FormController.menuList = function( atoms, current ) {
   var root = atoms[cody.Application.kFormRoot];
 
-  var x = "";
+  var options = "";
   var aList = root.getChildren();
   for (var x in aList) {
-    x += "<option value='" + aList[x].name + "'" + ((current == aList[x].id) ? " selected" : "") + ">" + aList[x].name + "</option>";
+    options += "<option value='" + aList[x].id + "'" + ((current.id == aList[x].id) ? " selected" : "") + ">" + aList[x].name + "</option>";
   }
-  return x;
+  console.log("current = " + current.id + ", menuPopup -> " + options);
+  return options;
 }
 
 function FormController(context) {
@@ -76,20 +77,22 @@ FormController.prototype.fetchNode = function( theNode, finish ) {
 
   cody.TreeController.prototype.fetchNode.call(this, theNode, function() {
     console.log("FormController.FetchNode: node = " + theNode + " -> " + self.context.atom.name + " / " + self.context.atom.extention);
+
+    // get the definitions from the "note" field in the atoms
     var obj = { name: self.context.atom.name, options: {}, labels: self.emptyLabels(), generator: 1 };
+    try {
+      var tryObj = JSON.parse(self.context.atom.note);
+      if ((typeof tryObj !== "undefined") && (tryObj)) { obj = tryObj; }
+    } catch(e) {
+    }
+    self.context.object = obj;
 
     if (self.context.atom.extention === "") {
       // a form
       finish();
 
     } else {
-      // an item, get its definitions
-      try {
-        var tryObj = JSON.parse(self.context.atom.note);
-        if ((typeof tryObj !== "undefined") && (tryObj)) { obj = tryObj; }
-      } catch(e) {
-      }
-      self.context.object = obj;
+      // an item
 
       // the options below are shown in 2 fields called min/max
       if (obj.generator == cody.Meta.Generator.textareainput) {
@@ -132,12 +135,10 @@ FormController.prototype.saveInfo = function( nodeId, finish ) {
 
   var anObject = this.getObject(cody.TreeController.toId(nodeId));
   if (typeof anObject !== "undefined") {
-    self.context.shownode = anObject.parentId;
 
+    // read the basics for an atom and for an form/item
     anObject.scrapeFrom(this);
-    var aGenerator = parseInt(self.getParam("generator", 0));
-    var obj = { name: anObject.name, generator: aGenerator, options: {}, labels: {} };
-    obj.reader = cody.Meta.Reader.string;
+    var obj = { name: anObject.name, labels: {} };
 
     // read the labels in all languages
     for (var iL in self.app.languages) {
@@ -145,80 +146,97 @@ FormController.prototype.saveInfo = function( nodeId, finish ) {
       obj.labels[L] = this.getParam("label-"+L, "");
     }
 
-    var defV = this.getParam("default", "");
-    if (defV !== "") {
-      obj.options.default = defV;
-    }
+    if (anObject.extention === "") {
+      // form
+      self.context.shownode = anObject.id;
+      self.context.opennode = anObject.id;
 
-    if ((this.getParam("required", "N") === "Y") &&
-      (aGenerator !== cody.Meta.Generator.checkboxinput)) {
-      obj.options.required = true;
-    }
+    } else {
+      // item
+      self.context.shownode = anObject.parentId;
+      self.context.opennode = anObject.parentId;
 
-    // add validation text or number
-    var validation = this.getParam("validation", "X");
-    if ((aGenerator === cody.Meta.Generator.textinput) ||
+      var aGenerator = parseInt(self.getParam("generator", cody.Meta.Generator.textinput));
+      obj.generator = aGenerator
+      obj.options = {};
+      obj.reader = cody.Meta.Reader.string;
+
+      var defV = this.getParam("default", "");
+      if (defV !== "") {
+        obj.options.default = defV;
+      }
+
+      if ((this.getParam("required", "N") === "Y") &&
+        (aGenerator !== cody.Meta.Generator.checkboxinput)) {
+        obj.options.required = true;
+      }
+
+      // add validation text or number
+      var validation = this.getParam("validation", "X");
+      if ((aGenerator === cody.Meta.Generator.textinput) ||
         (aGenerator === cody.Meta.Generator.textarea)) {
-      if (validation === "E") {
-        obj.options.email = true;
-        obj.reader = cody.Meta.Reader.email;
-      } else if (validation === "P") {
-        obj.options.phone = true;
-        obj.reader = cody.Meta.Reader.phone;
+        if (validation === "E") {
+          obj.options.email = true;
+          obj.reader = cody.Meta.Reader.email;
+        } else if (validation === "P") {
+          obj.options.phone = true;
+          obj.reader = cody.Meta.Reader.phone;
+        }
+      } else if (aGenerator === cody.Meta.Generator.numberinput) {
+        obj.options.number = true;
+        if (validation === "I") {
+          obj.reader = cody.Meta.Reader.integer;
+        } else { // === "N"
+          obj.reader = cody.Meta.Reader.number;
+        }
       }
-    } else if (aGenerator === cody.Meta.Generator.numberinput) {
-      obj.options.number = true;
-      if (validation === "I") {
-        obj.reader = cody.Meta.Reader.integer;
-      } else { // === "N"
-        obj.reader = cody.Meta.Reader.number;
+
+      // add min/max or cols/rows
+      var aMin = self.getParam("min", "");
+      var aMax = self.getParam("max", "");
+      if (aGenerator === cody.Meta.Generator.textareainput) {
+        if (aMin !== "") { obj.options.cols = aMin; }
+        if (aMax !== "") { obj.options.rows = aMax; }
+      } else if ((aGenerator === cody.Meta.Generator.numberinput) || (aGenerator === cody.Meta.Generator.textinput)) {
+        if (aMin !== "") { obj.options.minimum = aMin; }
+        if (aMax !== "") { obj.options.maximum = aMax; }
       }
-    }
 
-    // add min/max or cols/rows
-    var aMin = self.getParam("min", "");
-    var aMax = self.getParam("max", "");
-    if (aGenerator === cody.Meta.Generator.textareainput) {
-      if (aMin !== "") { obj.options.cols = aMin; }
-      if (aMax !== "") { obj.options.rows = aMax; }
-    } else if ((aGenerator === cody.Meta.Generator.numberinput) || (aGenerator === cody.Meta.Generator.textinput)) {
-      if (aMin !== "") { obj.options.minimum = aMin; }
-      if (aMax !== "") { obj.options.maximum = aMax; }
-    }
+      // add choices in all languages
+      if (this.isMultiple(aGenerator)){
+        obj.reader = cody.Meta.Reader.multiple;
+        obj.options.choices = {};
 
-    // add choices in all languages
-    if (this.isMultiple(aGenerator)){
-      obj.reader = cody.Meta.Reader.multiple;
-      obj.options.choices = {};
+        for (var iL in self.app.languages) {
+          var L = self.app.languages[iL].id;
+          obj.options.choices[L] = {};
+          var arr = self.getParam("choice-"+L, "").replace("\r", "").split("\n");
 
-      for (var iL in self.app.languages) {
-        var L = self.app.languages[iL].id;
-        obj.options.choices[L] = {};
-        var arr = self.getParam("choice-"+L, "").replace("\r", "").split("\n");
-
-        if (arr[0].indexOf("|") > 0) {
-          // user has given keys value pairs
-          for (var i in arr) {
-            var cInx = arr[i].indexOf("|");
-            var cID = arr[i].substring(0, cInx);
-            obj.options.choices[L][cID] = arr[i].substring(cInx+1);
-          }
-        } else {
-          // no keys, only choices, we'll label them 0, 1, 2 ,...
-          for (var i in arr) {
-            obj.options.choices[L][i] = arr[i];
+          if (arr[0].indexOf("|") > 0) {
+            // user has given keys value pairs
+            for (var i in arr) {
+              var cInx = arr[i].indexOf("|");
+              var cID = arr[i].substring(0, cInx);
+              obj.options.choices[L][cID] = arr[i].substring(cInx+1);
+            }
+          } else {
+            // no keys, only choices, we'll label them 0, 1, 2 ,...
+            for (var i in arr) {
+              obj.options.choices[L][i] = arr[i];
+            }
           }
         }
       }
-    }
 
-    // Date readers
-    if (aGenerator === cody.Meta.Generator.dateinput) {
-      obj.reader = cody.Meta.Reader.date;
-    } else if (aGenerator === cody.Meta.Generator.date3input) {
-      obj.reader = cody.Meta.Reader.date3;
-    }
+      // Date readers
+      if (aGenerator === cody.Meta.Generator.dateinput) {
+        obj.reader = cody.Meta.Reader.date;
+      } else if (aGenerator === cody.Meta.Generator.date3input) {
+        obj.reader = cody.Meta.Reader.date3;
+      }
 
+    }
+    console.log("show / open -> " + self.context.shownode + " / " + self.context.opennode);
     var str = JSON.stringify(obj);
     console.log("Generated Meta: " + str);
     anObject.note = str;

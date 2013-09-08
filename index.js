@@ -52,6 +52,7 @@ connection.query("SELECT name, version, dbuser, dbpassword, dbhost, datapath, db
       cody.startWebApp(cody.server, {
             "name": row.name,
             "version": row.version,
+            "defaultlanguage": row.defaultlanguage,
             "hostnames" : row.hostname,
             "dbuser": row.dbuser,
             "dbpassword": row.dbpassword,
