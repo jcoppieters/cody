@@ -34,6 +34,10 @@ cody.server.all("/cody/*", function (req, res) {
 
 // startup all the web applications
 
+cody.bootstrap = function () {
+// startup all the web applications
+
+
 var connection = mysql.createConnection({
   host: "localhost",
   user: "cody", password: "ydoc",
@@ -77,3 +81,6 @@ if (!process.stderr.isTTY) {
         console.error('Uncaught exception : ' + err.stack);
     });
 }
+
+};
+cody.bootstrap();
