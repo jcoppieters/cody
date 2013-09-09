@@ -10,7 +10,7 @@ audio:not([controls]) { display: none; }
 
 html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
 html, button, input, select, textarea { font-family: sans-serif; color: #222; }
-body { margin: 0; background: url(../images/bg.png); font-size: 18px; line-height: 1.4; color: #7e7979; font-family: UbuntuLight, Helvetica, Arial, sans-serif; text-shadow: 0 1px 0 #fff; }
+body { margin: 0; font-size: 18px; line-height: 1.4; color: #7e7979; font-family: UbuntuLight, Helvetica, Arial, sans-serif; text-shadow: 0 1px 0 #fff; }
 
 a { color: #86ca79; }
 /* a:visited { color: #86ca79; } */
@@ -36,8 +36,10 @@ sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: b
 sup { top: -0.5em; }
 sub { bottom: -0.25em; }
 
-ul, ol { margin: 1em 0; padding: 0; }
 dd { margin: 0 0 0 40px; }
+
+ul, ol { margin: 1em 0; padding: 0; }
+li { margin-left: 1.5em }
 nav ul, nav ol { list-style: none; list-style-image: none; margin: 0; padding: 0; }
 
 img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
@@ -83,12 +85,13 @@ nav a { text-decoration: none; padding-bottom: 3px; }
 nav a:hover, nav a.active { border-bottom: solid 2px darkgrey}
 
 /* ===== header ============================================================= */
-header { margin: 15px; padding-bottom: 15px; border-bottom: solid 1px lightgrey; background-image: url(../images/header.jpg); background-size: cover }
+header { margin: 15px; padding-bottom: 15px; border-bottom: solid 1px lightgrey;
+         background-image: url(/data/images/12.jpg); background-size: cover }
 header > div, header > nav { display: inline-block; vertical-align: bottom }
 header > div { font-size: 12px; padding-left: 30px; margin-bottom: 3px  }
 
 header > nav { padding: 40px 20px 0 20px  }
-header > nav li { display: inline-block; padding: 0 10px 0 10px; border-left: solid 1px lightgrey }
+header > nav li { display: inline-block; padding: 0 10px 0 10px; border-left: solid 1px lightgrey; margin: 0 }
 header > nav li:first-child { border-left: none }
 
 header > #lanNav { float: right; padding: 20px 20px 0 0 }
@@ -102,6 +105,9 @@ div.content { margin: 15px;  }
          border-left: solid 1px lightgrey; padding-left: 10px; }
  div.noNav { border-left: none }
  .main h1 { margin-top: 5px }
+ .content li { margin-left: 21px }
+ .content .filelink { margin-left: 5px; text-decoration: none; }
+ .content a .icon { margin-bottom: 6px }
 
 .main form {margin: 0px; border: solid 1px #c0c0c0; padding: 10px; }
 .main form fieldset { border: none; padding: 0; margin: 0 }
@@ -122,7 +128,8 @@ div.content nav li { margin-bottom: 10px }
 
 /* ===== footer ============================================================= */
 
-footer { padding-top: 10px; border-top: solid 1px lightgrey; margin: 15px }
+footer { padding-top: 10px; border-top: solid 1px lightgrey; margin: 15px;
+         background-image: url(/data/images/13.jpg); background-size: cover}
 footer span { display: block; font-size: 12px  }
 footer .first { float: left; margin-left: 0px }
 footer .third { margin: 0px auto; width: 50%; text-align: center  }
@@ -163,12 +170,42 @@ footer .second { float: right; margin-right: 0px }
 }
 
 /* STOERHUUS */
-body header { padding-bottom: 78px; margin-bottom: 40px; background-position-y: -13px; border: solid 1px lightgrey;
-              box-shadow: 2px 2px 5px lightgrey; -moz-box-shadow: 2px 2px 5px lightgrey; -webkit-box-shadow: 2px 2px 5px lightgrey }
-body header > div { display: block; padding: 5px 20px 0 20px }
-body header nav#mainNav { padding: 90px 0px 0 20px; float: right }
+body header { background-image: none; }
+body header > div { padding: 5px 20px 0 20px }
+body header nav#mainNav { margin-top: -31px; padding: 0px 0px 0 20px; float: right; display: block; clear: both }
 body header nav#lanNav { display: none; text-align:right }
-body header div#contactData { color: black }
-body div.main { width: 750px }
+body header div#contactData { float: right; display: block; color: black; vertical-align: top; padding-top: 10px }
+body header .contact { font-size: 28px; color: #008000 }
+
+
+body .main { width: inherit }
+body div.withNav { width: 750px }
 body a { color: black; }
 body a:hover { color: darkred; }
+body .withNav section h1 { display: none }
+body .content nav { width: 230px; }
+body .content .main section > img { margin-top: 15px;
+    box-shadow: 2px 2px 5px lightgrey; -moz-box-shadow: 2px 2px 5px lightgrey; -webkit-box-shadow: 2px 2px 5px lightgrey }
+
+body .main .fb-like { position: absolute; top: 75px; right: 39px; }
+body .main form { border: none }
+body .main form #action_buttons { padding-left: 173px; border: none }
+
+body .intro { display: inline-block; width: 290px; margin: 15px; padding: 10px; vertical-align: top;
+  box-shadow: 2px 2px 5px lightgrey; -moz-box-shadow: 2px 2px 5px lightgrey; -webkit-box-shadow: 2px 2px 5px lightgrey }
+body .intro a { font-size: 14px; color: #008000 }
+
+body footer { padding-top: 14px; height: 19px; margin-top: 26px;
+              background-size: cover; background-position-y: -94px; ; background-repeat: no-repeat;
+              box-shadow: 2px 2px 5px lightgrey; -moz-box-shadow: 2px 2px 5px lightgrey; -webkit-box-shadow: 2px 2px 5px lightgrey }
+body footer span, body footer span.third { margin-top: -33px }
+
+@media (max-width: 900px) {
+  body header nav#mainNav { padding: 24px 0px 0 0px; float: left }
+  body header .contact { font-size: 18px; color: #008000 }
+}
+
+@media (max-width: 639px) {
+  body header .contact { font-size: 12px; color: #008000 }
+  body header img { width: 100px }
+  body .content .fb-like { display: none }

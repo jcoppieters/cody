@@ -9,8 +9,8 @@ set names utf8;
 
 -- insert into domains values ("user", "Users");
 
--- INSERT INTO `users` VALUES
--- (9,'codyweb','Cody User','ydoc','user',50,0,99,'Y','cody@cody.com','','N',0),
+INSERT INTO `users` VALUES
+ (10,'cody','Cody User','ydoc','user',50,0,99,'Y','cody@cody.com','','N',0);
 
 
 

@@ -462,7 +462,7 @@ Meta.prototype.html = function( lang, formInfo ) {
     }
   }
 console.log(formInfo);
-  var buttonName = (typeof formInfo.labels === "undefined") ? "Save" : formInfo.labels[lang];
+  var buttonName = (typeof formInfo.labels === "undefined") ? "Send" : formInfo.labels[lang];
 
   return "<form method='post' action='./'>" +
     " <fieldset>" + html + "</fieldset>" +

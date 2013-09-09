@@ -55,7 +55,6 @@ Content.prototype.isIntro = function() {
 };
 
 
-
 Content.prototype.renderText = function(controller) {
   return this.data;
 };
@@ -77,16 +76,35 @@ Content.prototype.renderForm = function(controller) {
 
   return X;
 };
+Content.prototype.renderFacebook = function(controller) {
+  var url = this.data.replace("[page]", controller.context.page.getURL(this.language));
+  if (url.indexOf("http") < 0) { url = "http://" + url; }
+
+  return '<div id="fb-root"></div>' +
+    '<script>(function(d, s, id) {' +
+    '  var js, fjs = d.getElementsByTagName(s)[0];' +
+    '  if (d.getElementById(id)) return;' +
+    '  js = d.createElement(s); js.id = id;' +
+    '  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";' +
+    '  fjs.parentNode.insertBefore(js, fjs);' +
+    ' }(document, "script", "facebook-jssdk"));</script>' +
+    '<div class="fb-like" data-href="' + url + '" data-width="450" data-layout="box_count" ' +
+    'data-show-faces="false" data-send="false"></div>';
+};
 Content.prototype.renderImage = function(controller) {
-   if (this.atom) {
-     return "<img src='" + controller.context.dynamic + "/images/" + this.atom.id + "." + this.atom.extention + "'>";
-   } else {
-     return "<!-- missing atom for " + this.id + " -->";
-   }
+  if (this.atom && (typeof this.atom != "undefined")) {
+    return "<img src='" + controller.context.dynamic + "/images/" + this.atom.id + "." + this.atom.extention + "'>";
+  } else {
+    return "<!-- missing atom for " + this.id + " -->";
+  }
 };
 Content.prototype.renderFile = function(controller) {
-  return "<a href='" + controller.context.dynamic + "/files/" + this.atom.id + "." + this.atom.extention + "'><img class='icon' src='" + controller.context.cstatic + "/extentions/" + this.atom.extention + ".png'/></a>" +
-         "<a href='" + controller.context.dynamic + "/files/" + this.atom.id + "." + this.atom.extention + "' class='filelink'>" + this.atom.getFileName() + "</a>";
+  if (this.atom && (typeof this.atom != "undefined")) {
+    return "<a href='" + controller.context.dynamic + "/files/" + this.atom.id + "." + this.atom.extention + "'><img class='icon' src='" + controller.context.cstatic + "/extentions/" + this.atom.extention + ".png'/></a>" +
+           "<a href='" + controller.context.dynamic + "/files/" + this.atom.id + "." + this.atom.extention + "' class='filelink'>" + this.atom.note + "</a>";
+  } else {
+    return "<!-- missing atom for " + this.id + " -->";
+  }
 };
 
 
@@ -96,10 +114,13 @@ Content.prototype.render = function(controller) {
     
   } else if (this.kind === "S") {
     return this.renderText(controller);
-    
+
   } else if (this.kind === "M") {
     return this.renderForm(controller);
-    
+
+  } else if (this.kind === "B") {
+    return this.renderFacebook(controller);
+
   } else if (this.kind === "I") {
     return this.renderImage(controller);
 

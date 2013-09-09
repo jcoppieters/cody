@@ -4,33 +4,34 @@
 <header>
 	<a id="logo" href="/<%=page.language%>/"><img src="<%=static%>/images/logo.png" alt=""></a>
 
-  <% var pp = page.root.getContent('phone'); %>
+
+   <% var pp = page.root.getContent('phone'); %>
   <% var aa = page.root.getContent('address'); %>
 
   <% if (pp || aa) { %>
-    <div id="contactData">
-     <% if (typeof pp !== "undefined") { %>
-      <div class="contact tel"><%= pp.render() %></div>
-     <% } %>
-     <% if (typeof aa !== "undefined") { %>
-      <div class="contact address"><%= aa.render() %></div>
-     <% } %>
-    </div>
+  <div id="contactData">
+    <% if (typeof pp !== "undefined") { %>
+    <div class="contact tel"><%= pp.render() %></div>
+    <% } %>
+    <% if (typeof aa !== "undefined") { %>
+    <div class="contact address"><%= aa.render() %></div>
+    <% } %>
+  </div>
   <% } %>
 
-
   <nav id="mainNav">
-		<ul id="mainMenu">
-      <% for (var i in page.root.children) {  
-           var p = page.root.children[i]; 
-           if (p.isVisible()) { %>
-				    <li class="<%= (p == page) ? 'active' : '' %>">
-					    <a href="/<%=p.url%>" class="<%= (p == page) ? 'active' : '' %>"><%= p.title %></a>
-				    </li>
-        <% } %>
+    <ul id="mainMenu">
+      <% for (var i in page.root.children) {
+      var p = page.root.children[i];
+      if (p.isVisible()) { %>
+      <li class="<%= (p == page.top) ? 'active' : '' %>">
+        <a href="/<%=p.url%>" class="<%= (p == page.top) ? 'active' : '' %>"><%= p.title %></a>
+      </li>
       <% } %>
-		</ul>
-	</nav>
+      <% } %>
+    </ul>
+  </nav>
+
 
   <nav id="lanNav">
     <ul id="lanMenu">

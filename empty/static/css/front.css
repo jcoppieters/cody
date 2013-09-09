@@ -10,7 +10,7 @@ audio:not([controls]) { display: none; }
 
 html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
 html, button, input, select, textarea { font-family: sans-serif; color: #222; }
-body { margin: 0; background: url(../images/bg.png); font-size: 18px; line-height: 1.4; color: #7e7979; font-family: UbuntuLight, Helvetica, Arial, sans-serif; text-shadow: 0 1px 0 #fff; }
+body { margin: 0; font-size: 18px; line-height: 1.4; color: #7e7979; font-family: UbuntuLight, Helvetica, Arial, sans-serif; text-shadow: 0 1px 0 #fff; }
 
 a { color: #86ca79; }
 /* a:visited { color: #86ca79; } */

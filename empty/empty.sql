@@ -10,7 +10,7 @@ set names utf8;
 INSERT INTO `domains` VALUES ("user", "Users");
 
 INSERT INTO `users` VALUES
- (9,'codyweb','Cody User','ydoc','user',50,0,99,'Y','cody@cody.com','','N',0);
+ (9,'cody-empty','Cody User','ydoc','user',50,0,99,'Y','cody@cody.com','','N',0);
 
 
 
@@ -26,6 +26,12 @@ INSERT INTO `atoms` VALUES
  (31,2,10,'a file','','pdf','2012-08-15 18:55:51','2012-08-15 18:55:54');
 
 
+-- Place holders for the layout elements
+insert into atoms values
+ (4, 0, 10, 'Layout', '', '', '2010-01-01', '2010-01-01'),
+ (11,4,10,'Logo','','---','2010-01-01','2010-01-01'),
+ (12,4,10,'Header','','---','2010-01-01','2010-01-01'),
+ (13,4,10,'Footer','','---','2010-01-01','2010-01-01');
 
 --
 -- Dumping data for table `items` and `pages`

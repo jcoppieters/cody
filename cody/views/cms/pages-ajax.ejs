@@ -63,22 +63,34 @@
               </div>
 
             <% } else if (c.kind == "S") { %>
-              <img src="<%=cstatic%>/icons/S.png">
-              <div class="input">
-                <input type="hidden" name="atom_<%= c.id %>" class="atom" value="<%= c.atomId %>" />
-                <h5><%= c.name %></h5>
-                <textarea name="data_<%= c.id %>" class="stringdata"><%= c.data %></textarea>
-              </div>
-              <div class="actions">
-                <button class="doDeletor">Delete</button>
-                <span class="ui-icon-arrowthick-2-n-s ui-icon">Move</span>
-              </div>
+            <img src="<%=cstatic%>/icons/S.png">
+            <div class="input">
+              <input type="hidden" name="atom_<%= c.id %>" class="atom" value="<%= c.atomId %>" />
+              <h5><%= c.name %></h5>
+              <textarea name="data_<%= c.id %>" class="stringdata"><%= c.data %></textarea>
+            </div>
+            <div class="actions">
+              <button class="doDeletor">Delete</button>
+              <span class="ui-icon-arrowthick-2-n-s ui-icon">Move</span>
+            </div>
+
+            <% } else if (c.kind == "B") { %>
+            <img src="<%=cstatic%>/icons/B.png">
+            <div class="input">
+              <input type="hidden" name="atom_<%= c.id %>" class="atom" value="<%= c.atomId %>" />
+              <h5>Facebook 'like' - URL</h5>
+              <textarea name="data_<%= c.id %>" class="stringdata"><%= c.data %></textarea>
+            </div>
+            <div class="actions">
+              <button class="doDeletor">Delete</button>
+              <span class="ui-icon-arrowthick-2-n-s ui-icon">Move</span>
+            </div>
 
             <% } else if (c.kind == "F") { %>
               <img src="<%=cstatic%>/icons/F.png">
               <div class="inputE">
                 <input type="hidden" name="atom_<%= c.id %>" class="atom" value="<%= c.atomId %>" />
-                <% if (c.atomId != 0) { %>
+                <% if ((typeof c.atom != "undefined") && (c.atomId != 0)) { %>
                   <% if ((c.atom.extention !== "") && (c.atom.extention !== "xxx")) { %>
                     <img class="icon" src="<%=cstatic%>/extentions/<%=c.atom.extention%>.png" />
                     <span><%= c.atom.name %>.<%= c.atom.extention %></span>

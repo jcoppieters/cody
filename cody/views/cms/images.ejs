@@ -38,9 +38,18 @@
 	      <button id="doEdit" >Edit</button>
 
         <div id="tree">
-          <ul><li id="id_<%= controller.getRoot() %>" class="open" rel="root"><a href="#"><ins>&nbsp;</ins>Images</a>
+          <ul>
+            <li id="id_<%= controller.getRoot() %>" class="open" rel="root"><a href="#"><ins>&nbsp;</ins>Images</a>
               <%- controller.getTree() %>
-          </li></ul>
+            </li>
+
+            <li id="id_4" class="open" rel="root"><a href="#"><ins>&nbsp;</ins>Layout</a>
+              <%- controller.getTree(4) %>
+            </li>
+
+            </li>
+          </ul>
+
         </div>
 			
 	    </div>

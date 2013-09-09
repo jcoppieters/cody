@@ -212,7 +212,9 @@ TreeController.prototype.getList = function( theRoot ) {
 // The complete tree for the admin part of the essen
 TreeController.prototype.getTree = function( theRoot ) {
   var self = this;
-  var aRoot = (typeof theRoot === "object") ? theRoot : self.getObject((typeof theRoot === "undefined") ? self.getRoot() : theRoot);
+  var aRoot = (typeof theRoot === "number") ? self.app.getAtom(theRoot) :
+              (typeof theRoot === "object") ? theRoot :
+              self.getObject((typeof theRoot === "undefined") ? self.getRoot() : theRoot);
   
   function renderTree( theNode, open, descend ) {
     var aTree = "";
@@ -325,7 +327,43 @@ TreeController.prototype.addObject = function( title, refNode, type, kind, finis
 };
 
 TreeController.prototype.moveObject = function( nodeId, refNode, type, finish ) {
-  finish( { status: "NOK" } );
+  var self = this;
+  // type = "before", "after" or "inside"
+  console.log("Received TreeController - moveObject, refnode = " + refNode +
+    ", node = " + nodeId + ", type = " + type);
+
+  var orderNr;
+  var aParent;
+
+  // fetch the parent and insertion point
+  if (type === "inside") {
+    aParent = self.app.getAtom(cody.TreeController.toId(refNode));
+    orderNr = 9999;
+  } else {
+    var refItem = self.app.getAtom(cody.TreeController.toId(refNode));
+    aParent = self.app.getAtom(refItem.parentId);
+    orderNr = refItem.sortorder + ((type === "before") ? -5 : +5);
+  }
+
+  // fetch the node to be moved
+  var anItem = self.app.getAtom(cody.TreeController.toId(nodeId));
+  var curParent = self.app.getAtom(anItem.parentId);
+
+  // position in the tree
+  anItem.parentId = aParent.id;
+  //console.log("TreeController.MovePage: old order = " + anItem.sortorder + " (of " + anItem.id + "), new order = " + orderNr);
+  anItem.sortorder = orderNr;
+
+  try {
+    self.respace(aParent, function whenDone() {
+      finish( { status: "OK" } );
+    });
+
+  } catch (e) {
+    console.log("TreeController.MoveItem: Failed to update the Item object.");
+    console.log(e);
+    finish( { status: "NOK", error: e.toString() } );
+  }
 };
 
 TreeController.prototype.renameObject = function( title, nodeId, finish ) {
@@ -401,18 +439,30 @@ TreeController.prototype.fetchNode = function( nodeId, finish ) {
   }
 };
 
-TreeController.prototype.respace = function(theParent) {
+
+TreeController.prototype.respace = function( parent, finish ) {
   var self = this;
+
+  var aList = parent.getChildren();
+
   var nr = 0;
-    var aList = theParent.getChildren();
-
-  for (var i in aList) { var node = aList[i];
+  cody.Application.each(aList, function respaceOnePage(done) {
+    var aChild = this;
     nr += 10;
-    if (node.getSortOrder() != nr) {
-      node.setSortOrder(nr);
-      node.update(self.context);
+    //console.log("TreeController.Respace: checking '" + aChild.name + "' now = " + aChild.sortorder + " to " + nr);
+    if (aChild.getSortOrder() !== nr) {
+      aChild.setSortOrder(nr);
+      aChild.doUpdate(self, function() {
+        done();
+      });
+    } else {
+      done();
     }
-  }
+
+  }, function whenDone(err) {
+    if (err) { console.log("TreeController - respace: error = " + err); }
+    if (typeof finish === "function") { finish(); }
+
+  });
+
 };
-
-

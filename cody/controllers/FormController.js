@@ -63,11 +63,16 @@ FormController.prototype.getFolder = function() {
 
 
 /* Overridden - Action functions */
-FormController.prototype.emptyLabels = function() {
+FormController.prototype.emptyLabels = function(isForm) {
   var self = this;
   var labels = {};
   for (var iL in self.app.languages) {
-    labels[self.app.languages[iL].id] = self.context.atom.name;
+    labels[self.app.languages[iL].id] = (isForm) ? "Send" : self.context.atom.name;
+  }
+  if (isForm) {
+    labels["nl"] = "Verstuur";
+    labels["fr"] = "Envoyer";
+    labels["de"] = "Versenden";
   }
   return labels;
 };
@@ -80,7 +85,7 @@ FormController.prototype.fetchNode = function( theNode, finish ) {
     console.log("FormController.FetchNode: node = " + theNode + " -> " + self.context.atom.name + " / " + self.context.atom.extention);
 
     // get the definitions from the "note" field in the atoms
-    var obj = { name: self.context.atom.name, options: {}, labels: self.emptyLabels(), generator: 1 };
+    var obj = { name: self.context.atom.name, options: {}, labels: self.emptyLabels((self.context.atom.extention === "")), generator: 1 };
     try {
       var tryObj = JSON.parse(self.context.atom.note);
       if ((typeof tryObj !== "undefined") && (tryObj)) { obj = tryObj; }

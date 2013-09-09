@@ -30,7 +30,7 @@ $(document).ready(function() {
     width: "998",
     height: "450",
     plugins: "safari,table,advhr,advimage,advlink,emotions,media,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking",
-    content_css : gStatic + "/css/front.css",
+    content_css : "/static/css/front.css",
   
     // Theme options
     theme_advanced_buttons1 : "cut,copy,paste,pastetext,pasteword,|,bold,italic,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,formatselect,|,bullist,numlist,indent,outdent,|,forecolor,fontsizeselect",
