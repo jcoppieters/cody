@@ -26,14 +26,6 @@ INSERT INTO `atoms` VALUES
 
 (101,0,20,'First form','','','2012-09-09 14:18:36','2012-09-09 14:18:36');
 
-drop table meta;
-create table meta (
-  id integer not null primary key auto_increment,
-  data text
-);
-insert into meta values
- (38, '{"name":"width","options":{"convert":7,"minimum":0,"required":true,"default":0},"generator":0,"labels":{"en":"Width","nl":"Breedte"},"id":0,"value":0}');
-
 
 --
 -- Table structure for table `domains`
@@ -82,7 +74,12 @@ INSERT INTO `templates` VALUES
 (16,'CMS-Templates',  '','TemplateController',  '-/cms/templates.ejs','',0,'Y',0),
 (17,'CMS-System',     '','SystemController',    '','',0,'Y',0),
 
-(100,'Content',       '','ContentController',   'index.ejs','',999,'N',100);
+ (100,'Content without intro',
+   'Shows all content of a page excluding the intro\'s','ContentController',   'index.ejs','',999,'N',100),
+ (101,'Full Content',
+   'Shows all content of a page','ContentController', 'page.ejs','',0,'N',0),
+ (103,'Included sub-page intros',
+   'Displays also all intro content of the pages below','ContentController', 'intros.ejs','',0,'N',0);
 
 
 --

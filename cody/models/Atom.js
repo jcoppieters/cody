@@ -31,7 +31,7 @@ Atom.addDefaults = function(basis, parent) {
   
   basis.name = basis.name || Atom.kDefaultName;
   basis.parent = basis.parent || parent.id;
-  basis.note = basis.note || parent.note;
+  basis.note = basis.note || "";
   basis.extention = basis.extention || "";
   basis.sortorder = basis.sortorder || 9999;
   basis.created = basis.created || new Date();

@@ -166,7 +166,7 @@ FormController.prototype.saveInfo = function( nodeId, finish ) {
       self.context.opennode = anObject.parentId;
 
       var aGenerator = parseInt(self.getParam("generator", cody.Meta.Generator.textinput));
-      obj.generator = aGenerator
+      obj.generator = aGenerator;
       obj.options = {};
       obj.reader = cody.Meta.Reader.string;
 

@@ -96,26 +96,38 @@ header > #lanNav span.name { display: none }
 
 
 /* ===== content ============================================================= */
-div.content { margin: 15px;  }
- .main { display: inline-block; width: 800px; vertical-align: top; margin: 0;
-         border-left: solid 1px lightgrey; padding-left: 10px; }
- div.noNav { border-left: none }
+.content { margin: 15px }
+
+div.noNav { border-left: none; min-width: 790px; width: inherit }
+.main { display: inline-block; width: 790px; vertical-align: top; margin: 0;
+        border-left: solid 1px lightgrey; padding-left: 10px; }
  .main h1 { margin-top: 5px }
 
-.page #content form {margin: 0px; border: solid 1px #c0c0c0; padding: 10px; }
-.page #content form fieldset { border: none; padding: 0; margin: 0 }
-.page #content form fieldset > div { margin: 10px 0 15px 0 }
-.page #content form fieldset > div > label { display: inline-block; width:160px; text-align: right; padding: 0 13px 0 0; font-weight: bold }
-.page #content form fieldset > div > input[type=text] { width: 350px }
-.page #content form fieldset > div > input[type=text].number { width: 70px }
-.page #content form fieldset > div > div { display: inline-block; }
-.page #content form fieldset > div > div > label { display: inline-block; margin: 0 20px 0 7px }
-.page #content form fieldset > div > div > input { vertical-align: baseline; }
-.page #content form #action_buttons { border-top: solid 1px #c0c0c0; padding: 10px 0 0 160px; }
+@media (max-width: 810px) {
+  div.noNav { border-left: none; min-width: inherit; width: inherit }
+}
+
+
+ .main form {margin: 0px; border: solid 1px #c0c0c0; padding: 10px; }
+  .main form #action_buttons { border-top: solid 1px #c0c0c0; padding: 10px 0 0 213px; }
+  .main form fieldset { border: none; padding: 0; margin: 0 }
+   .main form fieldset > div { margin: 10px 0 15px 0 }
+   .main form fieldset > div > label { display: inline-block; width:200px; text-align: right; padding: 0 13px 0 0; font-weight: bold }
+   .main form fieldset > div > input[type=text],
+   .main form fieldset > div > textarea { width: 400px }
+   .main form fieldset > div > input[type=text].number { width: 70px }
+   .main form fieldset > div > div { display: inline-block; }
+   .main form fieldset > div > div > label { display: inline-block; margin: 0 20px 0 7px }
+   .main form fieldset > div > div > input { vertical-align: baseline; }
+
+@media (max-width: 685px) {
+  .main form fieldset > div > label { text-align: left; display: block }
+  .main form #action_buttons { border-top: solid 1px #c0c0c0; padding: 10px 0 0 0; }
+}
 
 
 /* ===== left menu =========================================================== */
-div.content nav { display: inline-block; width: 200px; vertical-align: top; margin-top: 10px }
+div.content nav { display: inline-block; width: 180px; vertical-align: top; margin-top: 10px }
 div.content nav li { margin-bottom: 10px }
 
 

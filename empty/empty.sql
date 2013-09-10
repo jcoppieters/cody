@@ -12,7 +12,14 @@ INSERT INTO `domains` VALUES ("user", "Users");
 INSERT INTO `users` VALUES
  (9,'cody-empty','Cody User','ydoc','user',50,0,99,'Y','cody@cody.com','','N',0);
 
-
+delete from templates where id in (100,101,103);
+insert into templates values
+ (100,'Content without intro',
+   'Shows all content of a page excluding the intro\'s','ContentController',   'index.ejs','',999,'N',100),
+ (101,'Full Content',
+   'Shows all content of a page','ContentController', 'page.ejs','',0,'N',0),
+ (103,'Included sub-page intros',
+   'Displays also all intro content of the pages below','ContentController', 'intros.ejs','',0,'N',0);
 
 --
 -- Dumping data for table `atoms`
