@@ -98,7 +98,7 @@ User.deleteUser = function(controller, id, finish) {
       console.log("deleted user id = " + id);
     }
 
-    finish(error === null);
+    finish(typeof error === "undefined");
   });
 };
 

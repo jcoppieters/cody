@@ -19,7 +19,7 @@ function jAtomTree(theRoot, theInitialNode, theLanguage, theService, theImages) 
   if (theInitialNode == "0") { theInitialNode = theRoot; }
   this.currentNode = "id_"+theInitialNode;
   this.openNode = "0";
-  this.pleaseOpen = null;
+  this.pleaseOpen = undefined;
   this.rootId = "id_"+theRoot;
   this.nextType = "";
 
@@ -131,7 +131,7 @@ function jAtomTree(theRoot, theInitialNode, theLanguage, theService, theImages) 
     var self = this;
     var t = $("#tree").jstree("get_selected");
     if (t) {
-      $("#tree").jstree("rename", null); // renames current selection
+      $("#tree").jstree("rename", undefined); // renames current selection
     } else {
       self.warnUser("Please select an item to rename first");
     }
@@ -242,13 +242,13 @@ function jAtomTree(theRoot, theInitialNode, theLanguage, theService, theImages) 
 
       } else if (data.func === "rename_node") {
           //console.log("Tree - Before: rename_node, please-open = " + self.pleaseOpen);
-          if (self.pleaseOpen !== null) {
+          if (self.pleaseOpen !== undefined) {
             // we're only here after a create_node, set the name and open the item for editing
             $.getJSON("./"+theService, {request: 'rename', name: data.args[1], node: self.pleaseOpen},
                 function(msg){
                   if (msg.status === "OK") {
                    self.doEdit(self.pleaseOpen);
-                   self.pleaseOpen = null;
+                   self.pleaseOpen = undefined;
                  }
             });
           }

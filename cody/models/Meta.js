@@ -253,12 +253,18 @@ Meta.prototype.readValuesFrom = function( params, correct ) {
   }
 };
 Meta.prototype.saveValues = function( controller, done ) {
-  var values = this.values();
+  var self = this;
+  var values = self.values();
   var data = JSON.stringify(values);
-  if (this.objectId === 0) {
-    // insert + save id
+
+  if ((typeof this.objectId === "undefined") || (this.objectId === 0)) {
+    controller.query("insert into data (atom, data, created, modified) values (?, ?, now(), null)", [self.metaId, data], function(error, results){
+      self.objectId = result.insertId;
+      done();
+    });
+
   } else {
-    // update
+    controller.query("update data set data = ?, modified = now() where id = ", [data, self.objectId], done);
   }
   if (typeof done === "function") { done(); }
 };
@@ -461,15 +467,19 @@ Meta.prototype.html = function( lang, formInfo ) {
       html += Meta.Generator.generators[O.generator](lang, O);
     }
   }
-console.log(formInfo);
   var buttonName = (typeof formInfo.labels === "undefined") ? "Send" : formInfo.labels[lang];
 
-  return "<form method='post' action='./'>" +
+  return "<form method='post' action='/" + formInfo.url + "'>" +
+    " <input type='hidden' name='request' id='request' value=''>" +
+    " <input type='hidden' name='form-atom' id='form-atom' value='" + this.metaId + "'>" +
     " <fieldset>" + html + "</fieldset>" +
     " <div id='action_buttons'>" +
     "  <button id='submitter'>" + buttonName + "</button>" +
     " </div>" +
     "</form>";
+
+  // + script voor submitter ?
+
 };
 
 
@@ -494,6 +504,10 @@ function getClasses(object, extraClass) {
   if ((typeof extraClass !== "undefined") && (extraClass !== "")) {
     x += ((x==="") ? " class='" : " ") + extraClass;
   }
+  if (typeof object.error !== "undefined") {
+    x += (x==="") ? " class='error" : " error";
+  }
+
   // end the class string
   if (x !== "") { x += "'" }
   return x;
@@ -520,7 +534,7 @@ function getErrors(lang, object) {
   if (typeof object.error === "undefined") {
     return "";
   }
-  return "<span class='error'>" + Meta.Messages.getMessage(lang, object.error) + "</span>";
+  return "<label class='error'>" + Meta.Messages.getMessage(lang, object.error) + "</label>";
 }
 
 function validLang(lang) {

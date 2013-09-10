@@ -120,6 +120,11 @@ div.noNav { border-left: none; min-width: 790px; width: inherit }
    .main form fieldset > div > div > label { display: inline-block; margin: 0 20px 0 7px }
    .main form fieldset > div > div > input { vertical-align: baseline; }
 
+  .main form fieldset > div > label.error { text-align: left; padding: 0 0 0 213px; color: red; display: block; width: inherit }
+  .main form fieldset > div > input.error,
+  .main form fieldset > div > textarea.error { border: 1px solid red }
+
+
 @media (max-width: 685px) {
   .main form fieldset > div > label { text-align: left; display: block }
   .main form #action_buttons { border-top: solid 1px #c0c0c0; padding: 10px 0 0 0; }

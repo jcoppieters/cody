@@ -155,7 +155,7 @@ function initPage(id) {
 }
 
 function doView() {
-  window.open( gPrefix + "/" + $("#language").val() + "/" + $("#node").val(), "_blank");
+  window.open( "/" + $("#language").val() + "/" + $("#node").val(), "_blank");
   return false;
 }
 

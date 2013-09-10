@@ -8,6 +8,26 @@ var cody = require('../index.js');
 console.log("loading " + module.id);
 
 
+FormController.makeMeta = function( atom ) {
+  var elements = (atom) ? atom.getChildren() : [];
+  var arr = [];
+  for (var iE in elements) {
+    arr.push(elements[iE].note);
+  }
+  var form = new cody.Meta();
+  form.metaId = atom.id;
+  form.addList(arr);
+  return form;
+};
+
+FormController.makeFormInfo = function( atom, page ) {
+  var formInfo = (atom && atom.note && (atom.note.length > 2)) ? JSON.parse(atom.note) : {};
+  if (typeof formInfo.url === "undefined") {
+    formInfo.url = page.getURL(page.language);
+  }
+  return formInfo;
+};
+
 FormController.menuList = function( atoms, current ) {
   var root = atoms[cody.Application.kFormRoot];
 
@@ -19,7 +39,7 @@ FormController.menuList = function( atoms, current ) {
   }
   // console.log("current = " + currId + ", menuPopup -> " + options);
   return options;
-}
+};
 
 function FormController(context) {
   console.log("FormController.constructor -> page(" + context.page.itemId + ") = " + context.page.title + ", request = " + context.request);
@@ -35,16 +55,9 @@ module.exports = FormController;
 
 
 FormController.prototype.doRequest = function( finish ) {
-  var self = this;
-  
-  if (self.isRequest("xxx")) {
-    // needed ?
-    finish("");
 
-  } else {
-    cody.TreeController.prototype.doRequest.call(self, finish);
-    
-  }
+  cody.TreeController.prototype.doRequest.call(this, finish);
+
 };
 
 

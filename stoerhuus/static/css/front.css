@@ -114,6 +114,9 @@ div.content { margin: 15px;  }
 .main form fieldset { border: none; padding: 0; margin: 0 }
 .main form fieldset > div { margin: 10px 0 15px 0 }
 .main form fieldset > div > label { display: inline-block; width:200px; text-align: right; padding: 0 13px 0 0; font-weight: bold }
+.main form fieldset > div > label.error { text-align: left; padding: 0 0 0 213px; color: red; display: block; width: inherit }
+.main form fieldset > div > input.error,
+.main form fieldset > div > textarea.error { border: 1px solid red }
 .main form fieldset > div > input[type=text],
 .main form fieldset > div > textarea { width: 400px }
 .main form fieldset > div > input[type=text].number { width: 70px }
@@ -197,7 +200,7 @@ body .content .main section > img { margin-top: 15px;
 
 body .main .fb-like { position: absolute; top: 75px; right: 39px; }
 body .main form { border: none }
-body .main form #action_buttons { padding-left: 173px; border: none }
+body .main form #action_buttons { padding-left: 213px; border: none }
 
 body .intro { display: inline-block; width: 290px; margin: 15px; padding: 10px; vertical-align: top;
   box-shadow: 2px 2px 5px lightgrey; -moz-box-shadow: 2px 2px 5px lightgrey; -webkit-box-shadow: 2px 2px 5px lightgrey }

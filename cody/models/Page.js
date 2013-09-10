@@ -363,7 +363,7 @@ Page.prototype.getContent = function(id) {
   if (i >= 0) {
     return this.content[i];
   }
-  return null;
+  return undefined;
 };
 
 Page.prototype.getContentByName = function(name) {

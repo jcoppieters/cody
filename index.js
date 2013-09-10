@@ -27,7 +27,7 @@ cody.server.get("/cody/static/*", function (req, res) {
 // startup a routing for the unit tests
 cody.server.all("/cody/*", function (req, res) {
     var aPath = new cody.Path("cody/en/test", "cody", "en");
-    var aContext = new cody.Context(aPath, null, null, req, res);
+    var aContext = new cody.Context(aPath, undefined, undefined, req, res);
     res.render("../cody/views/front/index.ejs", { context: aContext });
 });
 

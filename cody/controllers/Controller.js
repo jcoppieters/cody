@@ -21,7 +21,7 @@ function Controller(context) {
   context.controller = this;
 
   this.app = context.app;
-  this.connection = (this.app) ? this.app.getConnection() : null;
+  this.connection = (this.app) ? this.app.getConnection() : undefined;
 
   // console.log(this.context);
 }
@@ -42,8 +42,12 @@ Controller.prototype.doRequest = function( finish ) {
   //console.log(this.context);
 
   // if you don't want any rendering to be done:
-  //  pass an empty string (or set this.context.fn to empty) 
-  finish();
+  //  pass an empty string (or set this.context.fn to empty)
+
+  if (! this.hasSubmittedForm(finish)) {
+
+    finish();
+  }
 };
 
 Controller.prototype.isRequest = function(theString) {
@@ -95,7 +99,7 @@ Controller.prototype.setLogin = function(theUser) {
 
 Controller.prototype.getLoginId = function() {
   var login = this.getLogin();
-  return (login) ? login.id : null;
+  return (login) ? login.id : undefined;
 };
 Controller.prototype.getLoginLevel = function() {
   var login = this.getLogin();
@@ -103,6 +107,44 @@ Controller.prototype.getLoginLevel = function() {
 };
 
 
+//
+// Form handling
+//
+Controller.prototype.hasSubmittedForm = function(finish) {
+  var self = this;
+
+  // check if a form was submitted (request = send, form-atom = atom.id)
+  var atomId = self.getParam("form-atom", 0);
+
+  if ((self.isRequest("send")) && (atomId != 0)) {
+    var anAtom = this.app.getAtom(atomId);
+    console.log("Controller.doRequest: submitted form = " + atomId + " -> " + anAtom.name);
+
+    // construct a meta data object
+    var form = cody.FormController.makeMeta(anAtom, self.page);
+
+    // have the meta object read the values from the submitted params
+    form.readValuesFrom(self.context.params, false);
+    if (form.ok) {
+      // signal if everything was ok and no form is needed again
+      self.context.submitted = true;
+
+      // save the values in a database
+      form.saveValues(self, finish);
+
+    } else {
+      // store the meta object + it's values for re-displaying
+      if (typeof self.context.errorForms === "undefined") {
+        self.context.errorForms = {};
+      }
+      // to be used instead of an empty form
+      self.context.errorForms[atomId] = form;
+      finish();
+    }
+    return true;
+  }
+  return false;
+};
 
 //
 // Parameter handling
@@ -171,7 +213,7 @@ Controller.prototype.closeConnection = function() {
 
   if (this.connection) {
     this.app.returnConnection(this.connection);
-    this.connection = null;
+    this.connection = undefined;
   }
 };
 

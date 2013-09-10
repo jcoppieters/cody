@@ -98,3 +98,7 @@ INSERT INTO `content` VALUES
  (0,1,'en',30,'N','S',0,'footer.first','left'),
  (0,1,'en',40,'N','S',0,'footer.second','right'),
  (0,1,'en',50,'N','S',0,'footer.third','middle');
+
+ INSERT INTO `content` VALUES
+ (0,1,'nl',60,'N','S',0,'Google Analytics code','UA-xxxxxxx-x'),
+ (0,1,'en',60,'N','S',0,'Google Analytics code','UA-xxxxxxx-x');

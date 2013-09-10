@@ -45,7 +45,7 @@ Content.prototype.attachTo = function(obj, itemId, language) {
 
 Content.prototype.getAtom = function(atomId, app) {
   this.atomId = atomId;
-  this.atom = (atomId > 0) ? app.getAtom(atomId) : null;
+  this.atom = (atomId > 0) ? app.getAtom(atomId) : undefined;
 };
 Content.prototype.contentLength = function() {
   return (this.data) ? this.data.length : 0;
@@ -58,24 +58,28 @@ Content.prototype.isIntro = function() {
 Content.prototype.renderText = function(controller) {
   return this.data;
 };
+
 Content.prototype.renderParams = function(controller) {
   // these values should already be in the current context
   return "<!-- page params " + content.data + " -->";
 }
+
 Content.prototype.renderForm = function(controller) {
-  var elements = (this.atom) ? this.atom.getChildren() : [];
-  var arr = [];
-  for (var iE in elements) {
-    arr.push(elements[iE].note);
+  var form;
+  if ((typeof controller.context.errorForms !== "undefined") &&
+      (typeof controller.context.errorForms[this.atomId] !== "undefined")) {
+    // check if we have a stored form, filled with values and errors...
+    form = controller.context.errorForms[this.atomId];
+
+  } else {
+    form = cody.FormController.makeMeta(this.atom);
   }
-  var form = new cody.Meta();
-  form.addList(arr);
 
-  var formInfo = (this.atom && this.atom.note && (this.atom.note.length > 2)) ? JSON.parse(this.atom.note) : {};
-  var X = form.html(this.language, formInfo);
+  var formInfo = cody.FormController.makeFormInfo(this.atom, controller.context.page);
 
-  return X;
+  return form.html(this.language, formInfo);
 };
+
 Content.prototype.renderFacebook = function(controller) {
   var url = this.data.replace("[page]", controller.context.page.getURL(this.language));
   if (url.indexOf("http") < 0) { url = "http://" + url; }
@@ -91,6 +95,7 @@ Content.prototype.renderFacebook = function(controller) {
     '<div class="fb-like" data-href="' + url + '" data-width="450" data-layout="box_count" ' +
     'data-show-faces="false" data-send="false"></div>';
 };
+
 Content.prototype.renderImage = function(controller) {
   if (this.atom && (typeof this.atom != "undefined")) {
     return "<img src='" + controller.context.dynamic + "/images/" + this.atom.id + "." + this.atom.extention + "'>";
@@ -98,6 +103,7 @@ Content.prototype.renderImage = function(controller) {
     return "<!-- missing atom for " + this.id + " -->";
   }
 };
+
 Content.prototype.renderFile = function(controller) {
   if (this.atom && (typeof this.atom != "undefined")) {
     return "<a href='" + controller.context.dynamic + "/files/" + this.atom.id + "." + this.atom.extention + "'><img class='icon' src='" + controller.context.cstatic + "/extentions/" + this.atom.extention + ".png'/></a>" +

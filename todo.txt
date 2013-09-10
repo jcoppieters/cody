@@ -1,3 +1,6 @@
+rsync -avzP  /Users/johan/Development/WebStorm/jcms/cody root@vpn.cody-cms.org:/usr/local/src/cody/jcms/cody
+
+
 - redirect / to /nl or /en [ done ]
 - delete content from page fails ... ?? [ fixed on 23/06, a > where it should have been a >= ]
 - new folder in "Images" -> "Choose file" ?? [ fixed 21/06 ]

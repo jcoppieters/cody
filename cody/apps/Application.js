@@ -135,7 +135,7 @@ Application.endOfTime = function() {
 };
 
 Application.findFirst = function(theList) {
-  var first = null;
+  var first = undefined;
   for (var f in theList) { 
     if (theList.hasOwnProperty(f)) {
       first = theList[f]; 
@@ -233,7 +233,7 @@ Application.prototype.servePage = function(req, res) {
   
    
   var aContext = self.buildContext( path, req, res );
-  if (aContext !== null) {
+  if (typeof aContext !== "undefined") {
     self.handToController(aContext);
   }
 };
@@ -247,7 +247,7 @@ Application.prototype.buildContext = function (path, req, res) {
   
   if (typeof page === "undefined") {
       self.err("servePage", "No page found for path = " + path.pagelink, res);
-      return null;
+      return undefined;
   }
 
   self.log("servePage -> page", page.language + "/" + page.itemId + " - " + page.title);
@@ -268,7 +268,7 @@ Application.prototype.handToController = function(context) {
   self.log("handToController", context.page.item.template.controllerName);
   var controller = context.page.getController(context);
   
-  if (controller === null) {
+  if (typeof controller === "undefined") {
     self.err("handToController", "No controller found for " + context.page.item.template.controllerName);
     return;
   }

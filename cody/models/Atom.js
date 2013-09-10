@@ -19,7 +19,7 @@ function Atom(basis) {
     }
   }
   this.parentId = this.parent;
-  this.parent = null;
+  this.parent = undefined;
 }
 module.exports = Atom;
 

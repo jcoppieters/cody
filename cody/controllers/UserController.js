@@ -49,7 +49,7 @@ UserController.prototype.doRequest = function( finish ) {
    finish();
   }
   
-  return null;
+  return undefined;
 };
 
 
