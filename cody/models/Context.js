@@ -98,10 +98,22 @@ Context.prototype.copyFromMini = function(mini) {
 // Render content
 //
 Context.prototype.render = function(params) {
-  // supported param's, (not_)kind =, (not_)name =, intro = true/false
+  // supported param's, (not_)kind =, (not_)name =, intro = true/false, page
+  var html = "";
+  var content = this.page.content;
 
-  for (var ic in this.page.content) {
-    var C = this.page.content[ic];
+  if (typeof params === "undefined") {
+    params = {};
+  }
+  if (typeof params.page !== "undefined") {
+    content = params.page.content;
+  }
+  if (typeof content === "undefined") {
+    return "";
+  }
+
+  for (var ic in content) {
+    var C = content[ic];
     if (params.name && (C.name != params.name))
       continue;
     if (params.not_name && (C.name == params.not_name))
@@ -113,8 +125,9 @@ Context.prototype.render = function(params) {
     if (params.intro && (C.intro != params.intro))
       continue;
 
-    return C.render(this.controller);
+    html += C.render(this.controller);
   }
+  return html;
 };
 
 
