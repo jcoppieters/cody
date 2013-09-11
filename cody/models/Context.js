@@ -200,6 +200,20 @@ Context.prototype.find = function(theList, theId, theIdName) {
 
 
 //
+// Session handlers
+//
+
+Context.prototype.fromSession = function(paramName, defaultValue) {
+  var x = this.session[paramName];
+  return (typeof x === "undefined") ? defaultValue : x;
+};
+
+Context.prototype.toSession = function(paramName, value) {
+  this.session[paramName] = value;
+};
+
+
+//
 // Param handlers
 //
 

@@ -55,9 +55,9 @@ module.exports = FormController;
 
 
 FormController.prototype.doRequest = function( finish ) {
+  var self = this;
 
-  cody.TreeController.prototype.doRequest.call(this, finish);
-
+  cody.TreeController.prototype.doRequest.call(self, finish);
 };
 
 

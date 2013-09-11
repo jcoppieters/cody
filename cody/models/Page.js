@@ -169,10 +169,14 @@ Page.prototype.sortChildren = function(order) {
 
 
 Page.prototype.getController = function(context) {
-  return this.item.template.getController(context);
+  return (typeof this.item.template === "undefined") ?
+    new Controller(context) :
+    this.item.template.getController(context);
 };
 Page.prototype.getView = function() {
-  return this.item.template.getView();
+  return (typeof this.item.template === "undefined") ?
+    "index.ejs" :
+    this.item.template.getView();
 };
 
 Page.prototype.getDisplay = function() {

@@ -4,7 +4,6 @@
 //
 console.log("loading " + module.id);
 
-var mysql = require("mysql");
 var cody = require("../index.js");
 
 

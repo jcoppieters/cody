@@ -1,0 +1,92 @@
+<script>
+                   $(document).ready(function(){
+                   <% if(typeof invoke !== 'undefined') { %>
+                       viewAppointment(<%= invoke %>);
+                   <% } %>
+
+                     $("div#exportDiv").hide();
+
+                     $("#calDateNav button#prev").button({
+                       icons: { primary: "ui-icon-arrowthick-1-w" }, text: false
+                     });
+                     $("#calDateNav button#next").button({
+                       icons: { primary: "ui-icon-arrowthick-1-e" }, text: false
+                     });
+
+                      $("#calActionNav button#newEvent").button({
+                              icons: { primary: "ui-icon-plusthick" }
+                      }).click(function(){
+                             viewNewForm();
+                      });
+
+                     $(".appointment").click(function(){
+                     console.log("click");
+                       var apId = $(this).attr("apId");
+                       viewAppointment(apId);
+                     });
+
+                       $("button#doNew").click(function(){
+                             viewNewForm();
+                       });
+                       $("button#btnDoList").click(function(){
+                           doListView(20);
+                       });
+                        $("#calActionNav button#exportCal").button({
+                                icons: { primary: "ui-icon-newwin" }
+                              }).click(function(){
+                                $("div#exportDiv").dialog({
+                                  title: "Export calendar",
+                                  width:814, height:520,
+                                  modal: true
+                                });
+                              });
+
+
+                   });
+
+                   function viewAppointment(apId){
+                    doDetailView(775,1000,"Event",apId);
+                   }
+                   function viewNewForm(){
+                    doDetailView(500,400,"Add new event");
+                   }
+                   function doDetailView(height,width,title,apId){
+                      $.ajax({
+                                 type: "GET",
+                                 url: "<%=path.prefix%>/<%=page.language%>/<%= page.itemId %>",
+                                 data: {request: "ajaxDetail", id: apId,pagename: "<%= pagename %>"},
+                                 dataType: "html",
+                                 success: function(html){
+                                   $("div#appointmentView").html(html);
+                                   $("div#appointmentView").dialog({
+                                     width: width,
+                                     height: height,
+                                     title: title
+                                   });
+                                 },
+                                 error: function(err){
+                                   console.log(err);
+                                 }
+                             });
+                   }
+
+                   function doListView(count){
+                       $.ajax({
+                         type: "GET",
+                         url: "<%=path.prefix%>/<%=page.language%>/<%= page.itemId %>",
+                         data: {request: "futureappointments", count: count},
+                         dataType: "html",
+                         success: function(html){
+                             $("div#listview").html(html);
+                             $("div#listview").dialog({
+                             width: 750,
+                             height: 400,
+                             title: "Upcoming events"
+                             });
+                         },
+                         error: function(){
+
+                          }
+                        });
+                   }
+                   </script>
