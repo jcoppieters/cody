@@ -147,6 +147,17 @@ Controller.prototype.hasSubmittedForm = function(finish) {
 };
 
 //
+// Session handling
+//
+Controller.prototype.fromSession = function(paramName, defaultValue) {
+  return this.context.fromSession(paramName, defaultValue);
+};
+
+Controller.prototype.toSession = function(paramName, value) {
+  this.context.toSession(paramName, value);
+};
+
+//
 // Parameter handling
 //
 Controller.prototype.getParam = function(paramName, defaultValue) {

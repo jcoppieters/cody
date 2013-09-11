@@ -1,0 +1,46 @@
+<!doctype html>
+
+<html lang="<%=page.language%>">
+
+<% include header.ejs %>
+
+<body id="forms">
+
+<script src="<%=cstatic%>/js/lib/jquery-1.9.1<%=min%>.js"></script>
+<script src="<%=cstatic%>/js/lib/jquery-ui-1.10.1<%=min%>.js"></script>
+
+
+<section>
+  <header>
+    <% include top.ejs %>
+    <% include navigation.ejs %>
+  </header>
+
+  <div>
+
+    <div id="left_nav">
+
+      <div id="ltabs" class="ui-tabs ui-widget">
+        <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+          <li class="ui-state-default ui-corner-top <%= (form_show === "N") ? 'ui-tabs-active ui-state-active' : '' %>" ><a href="/<%=page.language%>/data?request=list&form_show=N" class="ui-tabs-anchor">New</a></li>
+          <li class="ui-state-default ui-corner-top <%= (form_show === "T") ? 'ui-tabs-active ui-state-active' : '' %>" ><a href="/<%=page.language%>/data?request=list&form_show=T" class="ui-tabs-anchor">To Do</a></li>
+          <li class="ui-state-default ui-corner-top <%= (form_show === "D") ? 'ui-tabs-active ui-state-active' : '' %>" ><a href="/<%=page.language%>/data?request=list&form_show=D" class="ui-tabs-anchor">Done</a></li>
+        </ul>
+
+        <div id="tree" class="ui-corner-bottom">
+          lisst
+        </div>
+
+      </div>
+
+    </div>
+
+    <div id="right_cont">
+    </div>
+
+  </div>
+
+  <% include footer.ejs %>
+</section>
+</body>
+</html>

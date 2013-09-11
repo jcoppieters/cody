@@ -1,4 +1,4 @@
-rsync -avzP  /Users/johan/Development/WebStorm/jcms/cody root@vpn.cody-cms.org:/usr/local/src/cody/jcms/cody
+rsync -avzP  /Users/johan/Development/WebStorm/jcms/cody root@vpn.cody-cms.org:/usr/local/src/cody/jcms
 
 
 - redirect / to /nl or /en [ done ]

@@ -181,7 +181,9 @@
 					<input name="active" id="active" type="checkbox" value="Y" <%= checked(page.isActive()) %> />
 					<% if (login.level >= 50) { %>
 					  <label for="needslogin">Needs login</label>
-					  <input name="needslogin" id="needslogin" type="checkbox" value="Y" <%= checked(page.item.needsLogin()) %> />         
+					  <input name="needslogin" id="needslogin" type="checkbox" value="Y" <%= checked(page.item.needsLogin()) %> />
+          <% } else { %>
+            <input type="hidden" name="needslogin" id="needslogin" value="<%=page.item.needslogin%>">
 					<% } %>
 				</div>
 				<div>
@@ -202,6 +204,8 @@
 						  <%- optionList(app.templates, page.item.templateId, "id", "name") %>
 						</select>
 					</div>
+        <% } else { %>
+          <input type="hidden" name="template" id="template" value="<%=page.item.templateId%>">
         <% } %>
 
         <div>
@@ -220,18 +224,17 @@
           <% } %>
         </div>
 
-				<% if (login.level < 50) { %>
-					<input name="needslogin" id="needslogin" type="hidden" value="<%=page.item.needsLogin%>" />
-					<input name="alloweddomains" id="alloweddomains" type="hidden" value="<%=page.item.alloweddomains%>" />
+				<% if (login.level >= 50) { %>
+          <div>
+            <label for="alloweddomains">Allowed Groups</label>
+            <input name="alloweddomains" id="alloweddomains" type="text" value="<%= page.item.alloweddomains %>" class="long" />
+            <select name="domains" id="domains">
+              <option value="">add a group</option>
+              <%- optionList(app.domains, '') %>
+            </select>
+          </div>
 				<% } else { %>
-				 <div>
-					  <label for="alloweddomains">Allowed Groups</label>
-						<input name="alloweddomains" id="alloweddomains" type="text" value="<%= page.item.alloweddomains %>" class="long" />
-	          <select name="domains" id="domains">
-	            <option value="">add a group</option>
-                <%- optionList(app.domains, '') %>
-	          </select> 
-		     </div>
+          <input name="alloweddomains" id="alloweddomains" type="hidden" value="<%=page.item.alloweddomains%>" />
 		    <% } %>
 	    </div>
 		</div>	
