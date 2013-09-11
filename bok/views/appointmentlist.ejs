@@ -1,0 +1,25 @@
+<%
+  if(page.language === "en"){
+   var title = "Upcoming events";
+   var noEvents = "there are no upcoming events";
+  }else if(page.language ==="nl"){
+   var title = "Eerstkomende evenementen";
+   var noEvents = "er zijn geen evenementen in de toekomst gepland";
+  }
+%>
+<html>
+    <div class="list">
+    <h4><%= title %></h4>
+    <hr />
+    <% if(appointments.length > 0 ){ %>
+      <table id="upcoming">
+        <% for(var i = 0; i < appointments.length; i++) { var app = appointments[i]; %>
+        <tr>
+            <th><%=app.date.getDate() %>-<%= (app.date.getMonth() +1)%>-<%=app.date.getFullYear()%></th>
+            <td><%=app.title %></td>
+        </tr>
+        <% } %>
+      </table>
+      <% }else {%><h4><%=noEvents%></h4><% } %>
+    </div>
+</html>

@@ -1,0 +1,95 @@
+ <%
+ var time = dates[0].getFullYear() +"-" + (dates[0].getMonth() +1) +"-" + dates[0].getDate();
+  %>
+<!doctype html>
+
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="<%=page.language%>"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="<%=page.language%>"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="<%=page.language%>"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="<%=page.language%>">
+<!--<![endif]-->
+
+<% include header.ejs %>
+<% include calendarscript.ejs %>
+<body id="page<%= page.itemId %>">
+<% include head.ejs %>
+    <div id="wrapper">
+
+     <div class="main calendar week">
+        <section>
+           <% for (var ic in page.content) { %>
+               <% if (page.content[ic].isIntro()) { %>
+                   <%- page.content[ic].render() %>
+               <% } %>
+          <% } %>
+        <table id="tblCalendar">
+            <caption>
+                <nav id="calActionNav">
+                   <% if (isLoggedIn()){ %>
+                       <button id="newEvent" class="newEvent"></button>
+                   <% } %>
+                   <button id="exportCal" class="exportCal"></button>
+                </nav>
+                <nav id="calDateNav">
+                    <a id="prevWeek"  href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=otherweek&time=<%=time%>&action=prev"><button id="prev" class="weekNav">Previous</button></a>
+
+                    <a id="nextWeek"  href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=otherweek&time=<%=time%>&action=next"><button id="next" class="weekNav">Next</button></a>
+                </nav>
+                <nav id="calViewNav">
+                     <a href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=weekview" class="active weekname"></a>
+                     <a href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=monthview" class="monthname"></a>
+                     <a href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=yearview" class="yearname"></a>
+                </nav>
+            </caption>
+             <tr>
+                 <%
+
+                   for(var i =0; i < 7; i++){ %>
+                     <th>
+                      <p class="dayName"></p>
+                       <%= dates[i].getDate() %>/<%=dates[i].getMonth() +1%>
+                     </th>
+                   <% } %>
+             </tr>
+        <tr>
+            <% for(var d=0; d < 7; d++){ day=days[d]; %>
+            <td>
+                <% if(day.length < 1){ %>
+                <p class="noschedule"></p>
+                <% } else { %>
+                <% for(var i=0; i < day.length; i++){ app = day[i];
+                %>
+                    <div class="appointment appHolder" apId="<%=app.idappointment%>">
+                        <p><%= app.title%>
+                        <% if(app.commentcount > 0) { %> * <% } %>
+                        </p>
+                        <p><%= app.location%></p>
+                        <p><%= app.start%> - <%= app.end%></p>
+                    </div>
+
+                <%}%>
+             </td>
+            <% }} %>
+            </tr>
+        </table>
+        </section>
+     </div>
+   </div>
+
+   <div id="appointmentView"></div>
+
+
+    <% for (var ic in page.content) { %>
+      <% if (! page.content[ic].isIntro()) { %>
+        <%- page.content[ic].render() %>
+      <% } %>
+    <% } %>
+
+    <% include footer.ejs %>
+    <div id="exportDiv">
+     <p class="exportmsg"></p>
+     <p><a href="<%=path.prefix%>/data/cal.ics">Link</a></p>
+    </div>
+</body>
+</html>

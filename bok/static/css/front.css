@@ -1,0 +1,280 @@
+/* =============================================================================
+   HTML5 Boilerplate CSS: h5bp.com/css
+   ========================================================================== */
+
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section { display: block; }
+audio, canvas, video { display: inline-block; *display: inline; *zoom: 1; }
+audio:not([controls]) { display: none; }
+[hidden] { display: none; }
+
+html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+html, button, input, select, textarea { font-family: sans-serif; color: #222; }
+body { margin: 0; font-size: 18px; line-height: 1.4; /*color: #7e7979;*/color:black; font-family:UbuntuLight, Helvetica, Arial, sans-serif }
+a { color: #86ca79; }
+/* a:visited { color: #86ca79; }
+a:hover { color: #7e7979; }
+a:focus { outline: thin dotted; }
+a:hover, a:active { outline: 0; }
+*/
+
+abbr[title] { border-bottom: 1px dotted; }
+b, strong { font-weight: normal; }
+em { font-style: normal; color: #86ca79; }
+blockquote { margin: 1em 40px; }
+dfn { font-style: italic; }
+hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0; }
+ins { background: #ff9; color: #000; text-decoration: none; }
+mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+pre, code, kbd, samp { font-family: monospace, serif; _font-family: 'courier new', monospace; font-size: 1em; }
+pre { white-space: pre; white-space: pre-wrap; word-wrap: break-word; }
+q { quotes: none; }
+q:before, q:after { content: ""; content: none; }
+small { font-size: 85%; }
+
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+ul, ol { margin: 1em 0; padding: 0; }
+dd { margin: 0 0 0 40px; }
+nav ul, nav ol { list-style: none; list-style-image: none; margin: 0; padding: 0; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+
+svg:not(:root) { overflow: hidden; }
+
+figure { margin: 0; }
+
+form { margin: 0; }
+fieldset { border: 0; margin: 0; padding: 0; }
+label { cursor: pointer; }
+legend { border: 0; *margin-left: -7px; padding: 0; white-space: normal; }
+button, input, select, textarea { font-size: 100%; margin: 0; vertical-align: baseline; *vertical-align: middle; }
+button, input { line-height: normal; }
+button, input[type="button"], input[type="reset"], input[type="submit"] { cursor: pointer; -webkit-appearance: button; *overflow: visible; }
+button[disabled], input[disabled] { cursor: default; }
+input[type="checkbox"], input[type="radio"] { box-sizing: border-box; padding: 0; *width: 13px; *height: 13px; }
+input[type="search"] { -webkit-appearance: textfield; -moz-box-sizing: content-box; -webkit-box-sizing: content-box; box-sizing: content-box; }
+input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; }
+button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
+textarea { overflow: auto; vertical-align: top; resize: vertical; }
+input:valid, textarea:valid {  }
+input:invalid, textarea:invalid { background-color: #f0dddd; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+
+.chromeframe { margin: 0.2em 0; background: #ccc; color: black; padding: 0.2em 0; }
+
+
+
+/* ===== Primary Styles ========================================================
+   Author: Johan Coppieters
+   Design: Jelle Cayman
+   ========================================================================== */
+
+p.notification { clear: both; margin: 5px 0 5px 0; padding: 10px 10px 10px 36px; border: 1px solid; background-position: 10px 11px !important; background-repeat: no-repeat !important; }
+p.success { border-color: #9adf8f; background: #d5ffce url(../../../../../Google%20Drive/cody-dieter/bok/static/images/icon_tick_circle.png); color: #556652; }
+p.error { border-color: #df8f8f; background: #ffcece url(../../../../../Google%20Drive/cody-dieter/bok/static/images/icon_cross_circle.png); color: #665252; }
+
+
+
+
+
+/* =============================================================================
+   Non-Semantic Helper Classes
+   ========================================================================== */
+
+.ir { display: block; border: 0; text-indent: -999em; overflow: hidden; background-color: transparent; background-repeat: no-repeat; text-align: left; direction: ltr; *line-height: 0; }
+.ir br { display: none; }
+.hidden { display: none !important; visibility: hidden; }
+.visuallyhidden { border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; }
+.visuallyhidden.focusable:active, .visuallyhidden.focusable:focus { clip: auto; height: auto; margin: 0; overflow: visible; position: static; width: auto; }
+.invisible { visibility: hidden; }
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { *zoom: 1; }
+.clearboth{clear:both;}
+
+/* =============================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+  * { background: transparent !important; color: black !important; box-shadow:none !important; text-shadow: none !important; filter:none !important; -ms-filter: none !important; } /* Black prints faster: h5bp.com/s */
+  a, a:visited { text-decoration: underline; }
+  a[href]:after { content: " (" attr(href) ")"; }
+  abbr[title]:after { content: " (" attr(title) ")"; }
+  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }  /* Don't show links for images, or javascript/internal links */
+  pre, blockquote { border: 1px solid #999; page-break-inside: avoid; }
+  thead { display: table-header-group; } /* h5bp.com/t */
+  tr, img { page-break-inside: avoid; }
+  img { max-width: 100% !important; }
+  @page { margin: 0.5cm; }
+  p, h2, h3 { orphans: 3; widows: 3; }
+  h2, h3 { page-break-after: avoid; }
+}
+
+/*--------------------------------------------------------------
+bok website styling
+---------------------------------------------------------------*/
+body { background-color:rgb(254,186,120) }
+header { text-align:center; background-image: url("../images/header.jpg");
+        background-position: center top; background-repeat: no-repeat; overflow: hidden }
+footer { text-align:center; width: 1000px; margin:0 auto }
+#headerImage { width:100%; height:250px }
+#headerText { text-align:center; width:100% }
+
+#headerTitle{ position:relative; font-family: Arial; margin-top: 14px; font-size: 25px;
+              color: rgb(204,91,35); text-shadow: 1px 1px 0 rgb(254,186,101) }
+
+#mainMenu .active a { border-bottom: 2px solid rgb(111,38,15); padding-bottom: 2px }
+
+nav#mainNav ul { height:37px; background-color:rgb(254,181,104); width:1000px;
+                 position:relative; margin:0 auto; margin-top: 145px; opacity:0.7 }
+nav#mainNav ul li { float:left; padding-top:4px; padding-bottom:6px; text-align:center }
+nav#mainNav ul li a { text-decoration:none; color: black; text-shadow: 1px 1px 0 white }
+nav#mainNav ul li:hover { background-color: white }
+li.active { color: white }
+
+div#wrapper{ width:1000px; margin: 0 auto;}
+div.main, footer { box-shadow: 2px 2px 10px -3px rgb(111,38,15);
+                   -moz-box-shadow: 2px 2px 10px -3px rgb(111,38,15); -webkit-box-shadow: 2px 2px 10px -3px rgb(111,38,15) }
+div.main #comments,
+div.main section { padding: 8px 15px 15px 15px }
+
+div.main {  border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; background-color:rgb(255,230,205) }
+div.main section { border-bottom-left-radius: 6px }
+div.main, footer { box-shadow: 2px 2px 10px -3px rgb(111,38,15);
+                   -moz-box-shadow: 2px 2px 10px -3px rgb(111,38,15); -webkit-box-shadow: 2px 2px 10px -3px rgb(111,38,15) }
+
+div.main section#content { width: 730px; display: inline-block; border-bottom-left-radius: 6px; padding: 15px 0px 15px 8px }
+div.main section#content p { margin-right: 4px; }
+
+div.main #upcoming { width: 240px; display: inline-block; border-bottom-right-radius: 6px; vertical-align: top }
+div.main #upcoming table caption { margin: 15px 0 8px 0; border-bottom: 2px solid rgb(254,186,120); padding-bottom: 7px;}
+div.main #upcoming table th { font-size: 12px; font-weight: bold; width: 80px; vertical-align: top; text-align: left; padding-top: 6px }
+div.main #upcoming table td { font-size: 12px; font-weight: normal; vertical-align: top; padding-top: 6px }
+div.main #upcoming table td.description { font-size: 11px; font-weight: normal; border-bottom: 1px solid rgb(254,186,120); padding: 2px 0 6px 0 }
+
+footer { height: 50px; margin-top:15px; background-color:rgb(255,230,205); border-radius: 6px; margin-bottom:15px }
+footer span { display: inline-block }
+footer img { height: 25px; margin-top: -5px; margin-left: 3px }
+footer .second { padding-top: 12px; }
+
+div#createForm label { display:inline-block; width:111px;}
+input.txtInput { width:256px; }
+textarea.txtInput { width:256px; }
+
+.withNav nav { width: 19%; display: inline-block; vertical-align: top; background-color: white;}
+.withNav .main { width: 79%; display: inline-block; vertical-align: top}
+
+/*---------------------------------------------------------------
+Calendar view styling
+----------------------------------------------------------------*/
+
+
+.calendar #tblCalendar { border-collapse:collapse; clear:both; margin: 5px 0 0 0; width:980px }
+.calendar #tblCalendar th { font-size: 14px; padding: 4px 0 4px 0; border-top:1px solid black }
+.calendar #tblCalendar td { font-size: 14px; border: 1px solid black; height:90px; width:142px; padding: 1px }
+.calendar #tblCalendar td.other{ background-color: #F0F5F5;}
+.calendar #tblCalendar tr:first-child { border-left:1px solid black; border-right: 1px solid black; border-bottom:2px solid black }
+.calendar #tblCalendar div.apItem { margin:0; padding:0 }
+
+.week table#tblCalendar .appHolder {text-align:center; font-size:14px; background-color:#F0F5F5;cursor:pointer;}
+
+.year table#tblCalendar td, .year table#tblCalendar th { width:83px; height: inherit }
+.year table#tblCalendar td { border:1px solid black; text-align:center; vertical-align: middle }
+.year table#tblCalendar th:first-child{ border-right:1px solid black }
+.year table#tblCalendar td.unexists { background-color:white }
+.year table#tblCalendar p.apItem { margin:0; padding:0;}
+
+nav#calActionNav { float:left; display: inline-block; vertical-align: top; height: 25px; margin: 5px 0 0 0 }
+nav#calActionNav button { font-size: 12px; color: black }
+
+nav#calDateNav { display: inline-block; vertical-align: top; height: 25px; margin: 8px 0 0 0 }
+nav#calDateNav button { font-size: 10px; margin: 0 15px 3px 15px }
+nav#calDateNav h4 { display: inline-block; margin: 0; padding-bottom: 6px; width: 174px }
+
+nav#calViewNav { float:right; display: inline-block; vertical-align: top; height: 25px; margin: 16px 0 1px 0 }
+nav#calViewNav a { color:black; text-decoration:none; border: 1px solid black;
+                   padding: 4px 8px 4px 8px; font-size: 14px; background-color: rgb(254,186,120);
+                   border-top-left-radius: 3px; border-top-right-radius: 3px; }
+nav#calViewNav a:hover,
+nav#calViewNav a.active { background-color:rgb(255,230,205); border-bottom: none; padding-bottom: 5px }
+
+nav#calGotoNav { margin-top: 5px; }
+nav#calGotoNav button { font-size: 12px; color: black }
+
+
+#frmApdetail input[type=text] { width: 345px }
+#frmApdetail input.hour { width: 100px; }
+#frmApdetail input.date { width: 100px; }
+#frmApdetail button { float: right; margin-left: 6px }
+
+.calendar .doAppointmentView, .apItem{ cursor:pointer }
+.calendar div#exportDiv { font-family: arial, sans-serif }
+.calendar div#exportDiv button { width:776px }
+.calendar div#exportDiv h3, div#exportDiv h4 { text-align:center }
+
+.calendar form#commentForm { margin-bottom:30px;}
+.calendar div.commentHolder { background-color:white; opacity:0.8; padding:5px;}
+
+.calendar div#comments{ margin-top:30px;}
+.calendar div.evenComment { background-color:#F0F5F5 }
+.calendar div.commentTime { display:inline; color:grey;}
+
+.calendar #createAppointmentForm button { margin: 5px }
+
+
+
+.list h2{ text-align:center }
+.list table#futurelist{ border:1px solid black }
+.list table#futurelist tr:first-child{ border: 2px solid black }
+.list table#futurelist td { width:150px; font-size:14px; border-right:1px solid black; border-bottom: 1px dotted black; text-align:center; vertical-align: middle;}
+
+
+
+/*--------------------------------------------------------------------------
+                   styling of the calendar dialogs
+----------------------------------------------------------------------------*/
+div#apDetailLeft, aside#comments { font-size: 16px }
+div#apDetailLeft label{ display:block; color: #e78f08; margin-top: 12px; }
+
+form#commentForm { margin-bottom:30px;}
+div.commentHolder { font-size: 14px; background-color:white; opacity:0.8; padding: 5px 5px 33px 5px; margin: 0 5px 15px 0; box-shadow: 2px 2px 5px -1px}
+div.commentHolder button { float: right }
+
+div.evenComment { background-color:#F0F5F5;}
+div#comments { margin-top:30px;}
+div.commentTime { display:inline; color:grey; }
+
+
+aside#comments{ width:570px; height:696px; display: inline-block; vertical-align: top;
+                border-left:1px solid grey; padding-left: 15px;}
+aside#comments h3 { margin: 8px 0 5px 0; color: #e78f08 }
+div#commentsViewer{ overflow:scroll; height:485px; }
+div#apDetailLeft div { margin-top: 8px; padding-top: 8px; border-top: solid 1px lightgrey }
+div#apDetailLeft { display: inline-block; vertical-align: top }
+
+
+/*------------------------------------------------------------------
+Social tab styling
+-------------------------------------------------------------------*/
+
+div#address, div#addressAttributes{clear:both;}
+h4#doMessage{cursor:pointer;}
+aside#usrDet{margin-top:14px;}
+button#doSave{width:955px; margin: 0 auto;margin-top:20px;}
+div.userViewer {height: 520px; }
+div.userViewer label{width:100px; margin-top:20px;}
+aside#msgList{float: left; width:250px; height:750px;}
+div.accordionItem {height:650px;overflow:scroll; padding:0;}
+div.msgListItem{border-bottom: 1px solid black; cursor:pointer; padding:15px; margin-bottom: 0px;  height:155px;background-color:#F0F5F5; opacity: 0.5;}
+div.viewing{opacity:1; background-color:inherit;}
+div#msgDetail{float:right; width:687px; height:750px; overflow:scroll; border-radius: 8px; background-color:#FFFFFF; opacity: 0.7;}
+div#msgDetail h4, div#msgDetail p {padding:15px;}
+fieldset{border: 1px solid black; margin: 5px; padding:5px;}
+h2.year{text-align:center;}
+h3.userItem{text-align:center;}
+div#editProfile label {width:140px; display:inline-block}

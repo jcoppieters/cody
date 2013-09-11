@@ -1,0 +1,7 @@
+<% if(typeof message !== "undefined") { %>
+     <h4><%= message.name %><div><%= message.timestamp%></div></h4>
+     <hr />
+     <p><%= message.message %></p>
+<% }else{ %>
+    <h1>Error please try again</h1>
+<% } %>
