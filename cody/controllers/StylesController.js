@@ -84,7 +84,8 @@ StylesController.prototype.doRequest = function( finish ) {
         }
     });
 
-  cody.TreeController.prototype.doRequest.call(self, finish);
+    return null;
+  //cody.TreeController.prototype.doRequest.call(self, finish);
 };
 
 
