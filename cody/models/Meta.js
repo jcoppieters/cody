@@ -38,6 +38,19 @@ Meta.Messages.messages = {};
 module.exports = Meta;
 
 
+Meta.getData = function(result) {
+  return {
+    id: result.id,
+    atom: result.atom,
+    data: ((typeof result.data === "undefined") || (result.data.length < 2)) ? {} : JSON.parse(result.data),
+    status: result.status,
+    statusname: (result.status === "N") ? "New" : (result.status === "T") ? "To do" : "Done",
+    created: result.created,
+    modified: result.modified
+  };
+};
+
+
 /* Standard Readers
 
  Meta.Reader.number
@@ -252,36 +265,44 @@ Meta.prototype.readValuesFrom = function( params, correct ) {
     }
   }
 };
-Meta.prototype.saveValues = function( controller, done ) {
+Meta.prototype.saveValues = function( controller, status, done ) {
   var self = this;
   var values = self.values();
   var data = JSON.stringify(values);
 
   if ((typeof this.objectId === "undefined") || (this.objectId === 0)) {
-    controller.query("insert into data (atom, data, created, modified) values (?, ?, now(), null)", [self.metaId, data], function(error, results){
-      self.objectId = result.insertId;
-      done();
+    controller.query("insert into data (atom, data, created, modified, status) values (?, ?, now(), null, 'N')",
+      [self.metaId, data],
+      function(error, results){
+        self.objectId = result.insertId;
+        done();
     });
 
   } else {
-    controller.query("update data set data = ?, modified = now() where id = ", [data, self.objectId], done);
+    controller.query("update data set data = ?, modified = now(), status = ? where id = ?", [data, status, self.objectId], done);
   }
-  if (typeof done === "function") { done(); }
 };
 
 Meta.prototype.readValues = function( controller, id, done ) {
+  var self = this;
   this.objectId = id;
 
-  // select with id
-  var data = "{}";
-
-  var native = JSON.parse(data);
-  if (native.metaId == this.metaId) {
-    this.setValues( native );
-  } else {
-    console.log("*** incompatible data type ***");
-  }
-  if (typeof done === "function") { done(); }
+  controller.query("select id, atom, data, status, created, modified from data where id = ?", [id], function(error, result) {
+    if (error || (result.length != 1)) {
+      console.log("Meta.readValues -> error :" + error);
+      done(error, undefined);
+      return;
+    }
+    var data = Meta.getData(result[0]);
+    if (data.atom == self.metaId) {
+      self.setValues( data.data );
+    } else {
+      console.log("Meta.readValues -> error: *** incompatible data type ***");
+      done(new Error("Can not read incompatible data from the database"), undefined);
+      return;
+    }
+    done(undefined, data);
+  });
 };
 
 
@@ -475,6 +496,7 @@ Meta.prototype.html = function( lang, formInfo ) {
     " <fieldset>" + html + "</fieldset>" +
     " <div id='action_buttons'>" +
     "  <button id='submitter'>" + buttonName + "</button>" +
+    ((typeof formInfo.extraButtons !== "undefined") ? formInfo.extraButtons  : "") +
     " </div>" +
     "</form>";
 

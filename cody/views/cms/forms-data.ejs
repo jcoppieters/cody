@@ -1,3 +1,20 @@
 <div id="content_data">
-  form from meta.
+  <form action="./data" method="post" class="clearfix" name="formdata" id="formdata" enctype="multipart/form-data">
+    <input type="hidden" name="id" id="id" value="<%= data.id %>" />
+    <input type="hidden" name="meta" value="<%= data.atom %>" />
+    <input type="hidden" name="request" value="" />
+    <fieldset>
+      <div>
+        <label>Status</label>
+        <div>
+          <input type=radio id="new" name="status" value="N" <%= (data.status==="N") ? "Checked" : "" %>><label for="new">New</label>
+          <input type=radio id="todo" name="status" value="T" <%= (data.status==="T") ? "Checked" : "" %>><label for="todo">To Do</label>
+          <input type=radio id="done" name="status" value="D" <%= (data.status==="D") ? "Checked" : "" %>><label for="done">Done</label>
+        </div>
+      </div>
+    </fieldset>
+    <% var label = {}; label[page.language] = "Save"; %>
+    <% var CancelAndDelete = "<button id='doCancel'>Cancel</button><button id='doDelete'>Delete</button>"; %>
+    <%- meta.html( page.language, { name: "Edit", options: {}, extraButtons: CancelAndDelete, labels: label })  %>
+  </form>
 </div>

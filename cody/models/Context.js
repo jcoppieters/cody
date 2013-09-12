@@ -150,6 +150,22 @@ Context.prototype.getLogin = function() {
 //
 // General utilities
 //
+Context.prototype.getValueByIndex = function(object, index) {
+  var nr = 0;
+  for (var iO in object) {
+    if (nr === index) { return object[iO]; }
+    nr++;
+  }
+  return undefined;
+}
+Context.prototype.getKeyByIndex = function(object, index) {
+  var nr = 0;
+  for (var iO in object) {
+    if (nr === index) { return iO; }
+    nr++;
+  }
+  return undefined;
+}
 
 Context.prototype.val = function(value) {
   return (typeof value === "undefined") ? "" : value;

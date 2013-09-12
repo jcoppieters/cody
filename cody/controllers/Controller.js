@@ -130,7 +130,7 @@ Controller.prototype.hasSubmittedForm = function(finish) {
       self.context.submitted = true;
 
       // save the values in a database
-      form.saveValues(self, finish);
+      form.saveValues(self, "N", finish);
 
     } else {
       // store the meta object + it's values for re-displaying

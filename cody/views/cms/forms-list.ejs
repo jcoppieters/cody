@@ -4,11 +4,54 @@
 
 <% include header.ejs %>
 
-<body id="forms">
+<body id="data">
 
 <script src="<%=cstatic%>/js/lib/jquery-1.9.1<%=min%>.js"></script>
 <script src="<%=cstatic%>/js/lib/jquery-ui-1.10.1<%=min%>.js"></script>
+<script>
+  function warnUser(message) {
+    $('#right_cont').html("<p class='warning'>" + message + "</p>");
+  };
 
+  function initForm() {
+    $("#formdata #submitter").click(function(){
+      $("#formdata #request").val("save");
+      $("#formdata").submit();
+    });
+    $("#formdata #doCancel").click(function(){
+      $("#formdata #request").val("list");
+      $("#formdata").submit();
+    });
+    $("#formdata #doDelete").click(function(){
+      $("#formdata #request").val("delete");
+      $("#formdata").submit();
+    });
+  }
+
+$(document).ready(function(){
+    $("#tree table td").click(function(){
+      var parent = $(this).parent();
+      var id = parent.attr("data-id");
+      var meta = parent.attr("data-meta");
+      $.ajax({
+        type: "GET",
+        url: "/<%= page.getURL() %>",
+        data: {request: 'edit', id: id, meta: meta},
+        success: function(msg){
+          if (msg.substring(0,3) === "NOK") {
+            self.warnUser("Got error from server: " + msg);
+
+          } else {
+            $("#right_cont").html(msg).show();
+
+            initForm();
+          }
+        }
+      });
+    });
+  });
+
+</script>
 
 <section>
   <header>
@@ -28,7 +71,24 @@
         </ul>
 
         <div id="tree" class="ui-corner-bottom">
-          lisst
+          <table>
+            <% var curr = -1;
+               for (var i in data) { %>
+              <% if (curr != data[i].atom) {
+                  curr = data[i].atom;
+                  var thisAtom = app.getAtom(data[i].atom); %>
+                <tr><th colspan=3><%= thisAtom.name %></th></tr>
+              <% } %>
+              <tr data-meta="<%= curr %>" data-id="<%= data[i].id %>">
+                <td class="date"><%= formatDate(data[i].created) %></td>
+                <td class="status"><%= data[i].statusname %></td>
+                <td><%= (typeof data[i].data.name !== "undefined") ? data[i].data.name :
+                  (typeof data[i].data.Name !== "undefined") ? data[i].data.Name :
+                  (typeof data[i].data.naam !== "undefined") ? data[i].data.naam :
+                  (typeof data[i].data.Naam !== "undefined") ? data[i].data.Naam :
+                  (getKeyByIndex(data[i].data, 0) + ": " + getValueByIndex(data[i].data, 0))  %></td>
+            <% } %>
+          </table>
         </div>
 
       </div>

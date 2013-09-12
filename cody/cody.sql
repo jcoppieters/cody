@@ -217,6 +217,24 @@ INSERT INTO `pages` VALUES
 
 
 
+INSERT INTO `templates` VALUES
+ (18,'Admin-Forms', 'Incoming data from forms','FormDataController', '-/cms/forms-list.ejs','',0,'Y',0),
+ (19,'Admin-Comments', 'View approve, edit or trash comments','CommentController', '-/cms/comments.ejs','',0,'Y',0);
+
+INSERT INTO `items` VALUES
+  (20,'Administration', 9, 1,2,'M',10,'2010-01-01','2010-01-01','2100-01-01','S','Y','',''),
+    (21,'Admin - Forms',      20, 1,18,'A',10,'2010-01-01','2010-01-01','2100-01-01','Y','Y','',''),
+    (22,'Admin - Comments',   20, 1,19,'A',10,'2010-01-01','2010-01-01','2100-01-01','Y','Y','','');
+
+INSERT INTO `pages` VALUES
+  (20,'nl','Beheer','admin','Y','','','2010-01-01','2010-01-01'),
+	  (21,'nl','Formulieren','data','Y','','','2010-01-01','2010-01-01'),
+	  (22,'nl','Commentaar','comments','Y','','','2010-01-01','2010-01-01'),
+  (20,'en','Administration','admin','Y','','','2010-01-01','2010-01-01'),
+	  (21,'en','Forms','data','Y','','','2010-01-01','2010-01-01'),
+	  (22,'en','Comments','comments','Y','','','2010-01-01','2010-01-01');
+
+
 --
 -- Table structure for table `content`
 --

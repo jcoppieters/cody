@@ -41,6 +41,7 @@ INSERT INTO `templates` VALUES
 update templates set fn = "page.ejs" where id = 100;
 update templates set fn = "login.ejs" where id = 2;
 
+
 --
 -- Dumping data for table `items`
 --
