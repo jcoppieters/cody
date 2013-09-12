@@ -1,0 +1,8 @@
+{
+  "dbuser": "cody",
+  "dbpassword": "ydoc",
+  "dbhost": "localhost",
+  "datapath": "/usr/local/data/bok",
+  "name": "bok",
+  "db": "bok"
+}
