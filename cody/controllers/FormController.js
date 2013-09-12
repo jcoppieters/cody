@@ -94,11 +94,17 @@ FormController.prototype.emptyLabels = function(isForm) {
 FormController.prototype.fetchNode = function( theNode, finish ) {
   var self = this;
 
+
   cody.TreeController.prototype.fetchNode.call(this, theNode, function() {
+    var isForm = (self.context.atom.extention === "");
     console.log("FormController.FetchNode: node = " + theNode + " -> " + self.context.atom.name + " / " + self.context.atom.extention);
 
     // get the definitions from the "note" field in the atoms
     var obj = { name: self.context.atom.name, options: {}, labels: self.emptyLabels((self.context.atom.extention === "")), generator: 1 };
+
+    // add email alert address for forms.
+    if (isForm) { obj.alert = ""; }
+
     try {
       var tryObj = JSON.parse(self.context.atom.note);
       if ((typeof tryObj !== "undefined") && (tryObj)) { obj = tryObj; }
@@ -106,8 +112,8 @@ FormController.prototype.fetchNode = function( theNode, finish ) {
     }
     self.context.object = obj;
 
-    if (self.context.atom.extention === "") {
-      // a form
+    if (isForm) {
+      // a form, nothing more needed.
       finish();
 
     } else {
@@ -170,6 +176,7 @@ FormController.prototype.saveInfo = function( nodeId, finish ) {
 
     if (anObject.extention === "") {
       // form
+      obj.alert = self.getParam("alert", "");
       self.context.shownode = anObject.id;
       self.context.opennode = anObject.id;
 
@@ -226,7 +233,9 @@ FormController.prototype.saveInfo = function( nodeId, finish ) {
 
       // add choices in all languages
       if (this.isMultiple(aGenerator)){
-        obj.reader = cody.Meta.Reader.multiple;
+        if (aGenerator !== cody.Meta.Generator.radioinput) {
+          obj.reader = cody.Meta.Reader.multiple;
+        }
         obj.options.choices = {};
 
         for (var iL in self.app.languages) {

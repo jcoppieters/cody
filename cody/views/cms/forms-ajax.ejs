@@ -120,6 +120,10 @@
             <label for="name">Name</label>
             <input name="name" id="name" type="text" value="<%= object.name %>" size="40" />
           </div>
+          <div>
+            <label for="alert">Warn email</label>
+            <input name="alert" id="alert" type="text" value="<%= object.alert %>" size="40" />
+          </div>
           <% for (var iL in app.languages) { var L = app.languages[iL]; %>
             <div id="labeldiv-<%= L.id %>" class="labels">
               <label for="label-<%= L.id %>">Button <%= L.name %></label>

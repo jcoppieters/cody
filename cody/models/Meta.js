@@ -274,7 +274,7 @@ Meta.prototype.saveValues = function( controller, status, done ) {
     controller.query("insert into data (atom, data, created, modified, status) values (?, ?, now(), null, 'N')",
       [self.metaId, data],
       function(error, results){
-        self.objectId = result.insertId;
+        self.objectId = results.insertId;
         done();
     });
 
