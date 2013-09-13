@@ -145,7 +145,9 @@ Meta.Messages.addStdMessages();
 Meta.prototype.add = function( params ) {
   // params = {name, options, generator, labels}
   //  accept strings and objects
-  if (typeof params === "string") { params = JSON.parse(params); }
+  if ((typeof params === "string") && (params.indexOf("{") >= 0)) {
+    params = JSON.parse(params);
+  }
 
   // clone object
   var object = {};

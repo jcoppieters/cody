@@ -211,7 +211,7 @@ CalendarController.prototype.doListFuture = function(count, finish) {
   var self = this;
   count = this.makeInt(count, 10);
   self.query(CalendarController.sqlGetFutureAppointments, [count], function(err, res) {
-     if (err) {console.log(err)}
+     if (err) {console.log(err); }
      self.context.appointments = res;
      finish();
   });

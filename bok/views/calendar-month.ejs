@@ -83,20 +83,16 @@
 
      <div class="main calendar month">
         <section>
-           <% for (var ic in page.content) { %>
-               <% if (page.content[ic].isIntro()) { %>
-                   <%- page.content[ic].render() %>
-               <% } %>
-          <% } %>
+           <%- render({intro: 'Y'}) %>
 
 
-          <form id="navForm" action="<%=path.prefix%>/<%=page.language%>/<%= page.itemId %>" method="post">
+          <form id="navForm" action="/<%= page.getURL() %>" method="post">
             <input type="hidden" name="request" value="otherMonth"/>
             <input type="hidden" name="month" id="inpMonth"  value="<%= currentMonth %>"/>
             <input type="hidden" name="year" id="inpYear" value="<%= currentYear %>"/>
           </form>
 
-          <form id="viewAppointmentForm" action="<%=path.prefix%>/<%=page.language%>/<%= page.itemId %>" method="post">
+          <form id="viewAppointmentForm" action="/<%= page.getURL() %>" method="post">
             <input type="hidden" name="request" value="viewAppointment"/>
             <input type="hidden" name="id" id="appointmentID" />
           </form>
@@ -116,15 +112,16 @@
                 <button id="next">Next</button>
               </nav>
               <nav id="calViewNav">
-                <a href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=weekview" class="weekname"></a>
-                <a class="active monthname" href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=monthview"></a>
-                <a href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=yearview"class="yearname"></a>
+                <a href="/<%= page.getURL() %>?request=weekview" class="weekname"></a>
+                <a class="active monthname" href="/<%= page.getURL() %>?request=monthview"></a>
+                <a href="/<%= page.getURL() %>?request=yearview"class="yearname"></a>
               </nav>
 
             </caption>
 
             <tr>
-              <th class="sunname"></th><th class="monname"></th><th class="tuename"></th><th class="wedname"></th><th class="thurname"></th><th class="friname"></th><th class="satname"></th>
+              <th class="sunname"></th><th class="monname"></th><th class="tuename"></th><th class="wedname"></th>
+              <th class="thurname"></th><th class="friname"></th><th class="satname"></th>
             </tr>
 
             <% var index = 0;
@@ -171,17 +168,13 @@
 
    <div id="appointmentView"></div>
    <div id="exportDiv">
-    <p class="exportmsg"></p>
-    <p><a href="<%=path.prefix%>/data/cal.ics">Link</a></p>
+     <p class="exportmsg"></p>
+     <p><a href="/data/cal.ics">Link</a></p>
    </div>
 
-    <% for (var ic in page.content) { %>
-      <% if (! page.content[ic].isIntro()) { %>
-        <%- page.content[ic].render() %>
-      <% } %>
-    <% } %>
+   <%- render({intro: 'N'}) %>
 
-    <% include footer.ejs %>
+   <% include footer.ejs %>
 
 </body>
 </html>

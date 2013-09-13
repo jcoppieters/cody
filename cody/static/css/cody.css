@@ -127,7 +127,8 @@ footer { clear: both; width: 1000px; margin: 15px auto 0 auto; }
 ------------------------------------------------------------------*/
 #dashboard nav { clear: both }
   #dashboard nav > section { vertical-align: top; background-color: white; border: 1px solid #CFCFCF; 
-                             display: inline-block; width: 190px; padding: 8px ; margin: 12px 14px 5px 1px }
+                             display: inline-block; width: 190px; padding: 8px ; margin: 12px 14px 5px 1px;
+                             box-shadow: 2px 2px 5px lightgrey; -moz-box-shadow: 2px 2px 5px lightgrey; -webkit-box-shadow: 2px 2px 5px lightgrey}
   #dashboard nav > section ul { list-style-type: circle; }
   #dashboard nav > section li { margin: 8px 2px 8px 22px; font-size: 14px }
 

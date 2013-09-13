@@ -218,19 +218,21 @@ TreeController.prototype.getTree = function( theRoot ) {
   
   function renderTree( theNode, open, descend ) {
     var aTree = "";
-    var aList = theNode.getChildren(); 
-    for (var x in aList) { var p = aList[x];
-       var name = (p.isActive()) ? p.getName() : "("+p.getName()+")";
-       var classes = (open ? "open " : "") +
-                     (p.isVisible() ? "" : "invisible ") +
-                     (p.isActive() ? "" : "deleted");
-         aTree += "<li id=\"id_" + p.getId() + "\" class=\"" + classes + "\"" +
-               " rel=\""+ self.getType(p) + "\"" +
-              "><a href=\"#\">" + name + "</a>";
-         if (descend > 0) {
-           aTree += renderTree(p, false, descend-1);
-         }
-         aTree += "</li>";
+    if (typeof theNode != "undefined") {
+      var aList = theNode.getChildren();
+      for (var x in aList) { var p = aList[x];
+         var name = (p.isActive()) ? p.getName() : "("+p.getName()+")";
+         var classes = (open ? "open " : "") +
+                       (p.isVisible() ? "" : "invisible ") +
+                       (p.isActive() ? "" : "deleted");
+           aTree += "<li id=\"id_" + p.getId() + "\" class=\"" + classes + "\"" +
+                 " rel=\""+ self.getType(p) + "\"" +
+                "><a href=\"#\">" + name + "</a>";
+           if (descend > 0) {
+             aTree += renderTree(p, false, descend-1);
+           }
+           aTree += "</li>";
+      }
     }
     if (aTree.length === 0) {
        return "";

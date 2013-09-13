@@ -37,7 +37,7 @@
             console.log("click");
           $.ajax({
                method:"POST",
-               url:"<%= path.prefix %>/<%=page.language %>/<%= page.itemId %>",
+               url:"/<%=page.getURL() %>",
                dataType:"html",
                data: {request: "viewMessages"},
                success: function(html){
@@ -57,7 +57,7 @@
     function doProfileView(id){
         $.ajax({
             method:"GET",
-            url:"<%= path.prefix %>/<%=page.language %>/<%= page.itemId %>",
+            url:"/<%= page.getURL() %>",
             dataType: "html",
             data: {request: "otherUser",id: id},
             success: function(html){
@@ -89,8 +89,8 @@
           <% } %>
 
            <% if(isLoggedIn()) { %>
-                           <button id="doViewMsg">Messages</button>
-            <% } %>
+              <button id="doViewMsg">Messages</button>
+           <% } %>
 
 
 

@@ -10,7 +10,7 @@ audio:not([controls]) { display: none; }
 html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
 html, button, input, select, textarea { font-family: sans-serif; color: #222; }
 body { margin: 0; font-size: 18px; line-height: 1.4; /*color: #7e7979;*/color:black; font-family:UbuntuLight, Helvetica, Arial, sans-serif }
-a { color: #86ca79; }
+a { color: black; }
 /* a:visited { color: #86ca79; }
 a:hover { color: #7e7979; }
 a:focus { outline: thin dotted; }
@@ -137,7 +137,17 @@ nav#mainNav ul li a { text-decoration:none; color: black; text-shadow: 1px 1px 0
 nav#mainNav ul li:hover { background-color: white }
 li.active { color: white }
 
+.withNav .main { width: 791px; display: inline-block; vertical-align: top}
+.withNav nav { width: 180px; display: inline-block; vertical-align: top;
+              margin:0px 8px 8px 0; padding: 8px; background-color:rgb(255,230,205);
+              border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; box-shadow: 2px 2px 10px -3px rgb(111,38,15);
+              -moz-box-shadow: 2px 2px 10px -3px rgb(111,38,15); -webkit-box-shadow: 2px 2px 10px -3px rgb(111,38,15)}
+.withNav nav a { text-decoration: none; }
+.withNav nav .active a { font-weight: bold }
+
 div#wrapper{ width:1000px; margin: 0 auto;}
+
+#content ul { padding: inherit; margin-left: 15px }
 div.main, footer { box-shadow: 2px 2px 10px -3px rgb(111,38,15);
                    -moz-box-shadow: 2px 2px 10px -3px rgb(111,38,15); -webkit-box-shadow: 2px 2px 10px -3px rgb(111,38,15) }
 div.main #comments,
@@ -145,12 +155,13 @@ div.main section { padding: 8px 15px 15px 15px }
 
 div.main {  border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; background-color:rgb(255,230,205) }
 div.main section { border-bottom-left-radius: 6px }
-div.main, footer { box-shadow: 2px 2px 10px -3px rgb(111,38,15);
-                   -moz-box-shadow: 2px 2px 10px -3px rgb(111,38,15); -webkit-box-shadow: 2px 2px 10px -3px rgb(111,38,15) }
 
-div.main section#content { width: 730px; display: inline-block; border-bottom-left-radius: 6px; padding: 15px 0px 15px 8px }
+div.main section#content { width: 790px; display: inline-block; border-bottom-left-radius: 6px; padding: 15px 15px 15px 8px }
 div.main section#content p { margin-right: 4px; }
+div.main section#content img { box-shadow: 2px 2px 10px -3px rgb(111,38,15);
+  -moz-box-shadow: 2px 2px 10px -3px rgb(111,38,15); -webkit-box-shadow: 2px 2px 10px -3px rgb(111,38,15) }
 
+body div.upcoming section#content { width: 730px; padding-right: 8px }
 div.main #upcoming { width: 240px; display: inline-block; border-bottom-right-radius: 6px; vertical-align: top }
 div.main #upcoming table caption { margin: 15px 0 8px 0; border-bottom: 2px solid rgb(254,186,120); padding-bottom: 7px;}
 div.main #upcoming table th { font-size: 12px; font-weight: bold; width: 80px; vertical-align: top; text-align: left; padding-top: 6px }
@@ -166,8 +177,6 @@ div#createForm label { display:inline-block; width:111px;}
 input.txtInput { width:256px; }
 textarea.txtInput { width:256px; }
 
-.withNav nav { width: 19%; display: inline-block; vertical-align: top; background-color: white;}
-.withNav .main { width: 79%; display: inline-block; vertical-align: top}
 
 /*---------------------------------------------------------------
 Calendar view styling

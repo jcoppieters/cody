@@ -18,11 +18,8 @@
 
      <div class="main calendar week">
         <section>
-           <% for (var ic in page.content) { %>
-               <% if (page.content[ic].isIntro()) { %>
-                   <%- page.content[ic].render() %>
-               <% } %>
-          <% } %>
+          <%- render({intro: 'Y'}) %>
+
         <table id="tblCalendar">
             <caption>
                 <nav id="calActionNav">
@@ -32,14 +29,14 @@
                    <button id="exportCal" class="exportCal"></button>
                 </nav>
                 <nav id="calDateNav">
-                    <a id="prevWeek"  href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=otherweek&time=<%=time%>&action=prev"><button id="prev" class="weekNav">Previous</button></a>
+                    <a id="prevWeek"  href="/<%= page.getURL() %>?request=otherweek&time=<%=time%>&action=prev"><button id="prev" class="weekNav">Previous</button></a>
 
-                    <a id="nextWeek"  href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=otherweek&time=<%=time%>&action=next"><button id="next" class="weekNav">Next</button></a>
+                    <a id="nextWeek"  href="/<%= page.getURL() %>?request=otherweek&time=<%=time%>&action=next"><button id="next" class="weekNav">Next</button></a>
                 </nav>
                 <nav id="calViewNav">
-                     <a href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=weekview" class="active weekname"></a>
-                     <a href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=monthview" class="monthname"></a>
-                     <a href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=yearview" class="yearname"></a>
+                     <a href="/<%= page.getURL() %>?request=weekview" class="active weekname"></a>
+                     <a href="/<%= page.getURL() %>?request=monthview" class="monthname"></a>
+                     <a href="/<%= page.getURL() %>?request=yearview" class="yearname"></a>
                 </nav>
             </caption>
              <tr>
@@ -80,11 +77,7 @@
    <div id="appointmentView"></div>
 
 
-    <% for (var ic in page.content) { %>
-      <% if (! page.content[ic].isIntro()) { %>
-        <%- page.content[ic].render() %>
-      <% } %>
-    <% } %>
+    <%- render({intro: 'N'}) %>
 
     <% include footer.ejs %>
     <div id="exportDiv">

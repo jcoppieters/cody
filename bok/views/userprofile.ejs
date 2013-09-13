@@ -43,7 +43,7 @@
     </div>
 
     <div id="editProfile">
-        <form id="frmEditProfile" method="post" action="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>" >
+        <form id="frmEditProfile" method="post" action="/<%= page.getURL() %>" >
             <input type="hidden" name="request" value="doUpdate" />
             <input type="hidden" name="id" value="<%= viewId %>" />
 
@@ -105,7 +105,7 @@
     </div>
 
     <div class="msgSender" uId="<%= viewId %>" >
-       <form id="frmSendMessage" method="post" action="<%=path.prefix %>/<%=page.language%>/<%= page.itemId %>">
+       <form id="frmSendMessage" method="post" action="/<%= page.getURL() %>">
          <input type="hidden" name="request" value="sendMsg"/>
          <input type="hidden" name="toId" value="<%= viewId %>" />
          <textarea name="message"></textarea>

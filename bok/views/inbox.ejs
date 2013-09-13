@@ -19,7 +19,7 @@
     function doMsgDetail(id,incoming){
         $.ajax({
             method:"POST",
-            url: "<%= path.prefix%>/<%=page.language%>/<%=page.itemId%>",
+            url: "/<%= page.getURL() %>",
             data: {request:"viewSingleMessage",msgId: id,in: incoming},
             dataType: "html",
             success: function(html){

@@ -44,7 +44,7 @@
 
 
 <div id="apDetailLeft">
-<form id="frmApdetail" method="post" action="<%=path.prefix %>/<%= page.language %>/<%= page.item.id %>">
+<form id="frmApdetail" method="post" action="/<%= page.getURL() %>">
   <input type="hidden" name="request" />
   <input type="hidden" name="pagename" value="<%=pagename %>" />
   <input type="hidden" id="appointmentId" name="id" value="<%=  appointment.idappointment == undefined ? "": appointment.idappointment %>" />

@@ -73,7 +73,7 @@
                    function doListView(count){
                        $.ajax({
                          type: "GET",
-                         url: "<%=path.prefix%>/<%=page.language%>/<%= page.itemId %>",
+                         url: "/<%= page.getURL() %>",
                          data: {request: "futureappointments", count: count},
                          dataType: "html",
                          success: function(html){
