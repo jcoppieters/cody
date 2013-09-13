@@ -1,112 +1,11 @@
-<script>
-  function ShowOptions(theType) {
-    theType = parseInt(theType);
-    /*
-     cody.Meta.Generator.textinput
-     cody.Meta.Generator.textareainput
-     cody.Meta.Generator.numberinput
-     cody.Meta.Generator.dateinput
-     cody.Meta.Generator.date3input
-     cody.Meta.Generator.selectinput
-     cody.Meta.Generator.radioinput
-     cody.Meta.Generator.checkboxinput
-     cody.Meta.Generator.submitbutton
-     */
-    if (theType === <%=cody.Meta.Generator.textinput%>) { // text input
-      $('#mindiv').show();
-      $('#mindiv label').html("Minimum chars");
-      $('#maxdiv').show();
-      $('#maxdiv label').html("Maximum chars");
-      $('#requireddiv').show();
-      $('#textvalidationdiv').show();
-      $('#numbervalidationdiv').hide();
-      $('div.choices').hide();
-
-    } else if (theType === <%=cody.Meta.Generator.textareainput%>) { // text area
-      $('#mindiv').show();
-      $('#mindiv label').html("Nr of chars");
-      $('#maxdiv').show();
-      $('#maxdiv label').html("Nr of lines");
-      $('#requireddiv').show();
-      $('#textvalidationdiv').show();
-      $('#numbervalidationdiv').hide();
-      $('div.choices').hide();
-
-    } else if (theType === <%=cody.Meta.Generator.numberinput%>) { // number text input
-      $('#mindiv').show();
-      $('#mindiv label').html("Minimum");
-      $('#maxdiv').show();
-      $('#maxdiv label').html("Maximum");
-      $('#requireddiv').show();
-      $('#textvalidationdiv').hide();
-      $('#numbervalidationdiv').show();
-      $('div.choices').hide();
-
-    } else if (theType === <%=cody.Meta.Generator.dateinput%>) { // date input
-      $('#mindiv').hide();
-      $('#maxdiv').hide();
-      $('#requireddiv').show();
-      $('#textvalidationdiv').hide();
-      $('#numbervalidationdiv').hide();
-      $('div.choices').hide();
-
-    } else if (theType === <%=cody.Meta.Generator.date3input%>) { // 3 date part input
-      $('#mindiv').hide();
-      $('#maxdiv').hide();
-      $('#requireddiv').show();
-      $('#textvalidationdiv').hide();
-      $('#numbervalidationdiv').hide();
-      $('div.choices').hide();
-
-    } else if (theType === <%=cody.Meta.Generator.selectinput%>) { // popup menu
-      $('#mindiv').hide();
-      $('#maxdiv').hide();
-      $('#requireddiv').show();
-      $('#textvalidationdiv').hide();
-      $('#numbervalidationdiv').hide();
-      $('div.choices').show();
-
-    } else if (theType === <%=cody.Meta.Generator.radioinput%>) { // radio buttons
-      $('#mindiv').hide();
-      $('#maxdiv').hide();
-      $('#requireddiv').show();
-      $('#textvalidationdiv').hide();
-      $('#numbervalidationdiv').hide();
-      $('div.choices').show();
-
-    } else if (theType === <%=cody.Meta.Generator.checkboxinput%>) { // check boxes
-      $('#mindiv').hide();
-      $('#maxdiv').hide();
-      $('#requireddiv').hide();
-      $('#textvalidationdiv').hide();
-      $('#numbervalidationdiv').hide();
-      $('div.choices').show();
-
-
-    } else if (theType === <%=cody.Meta.Generator.submitbutton%>) { // Post or submit button
-      $('#mindiv').hide();
-      $('#maxdiv').hide();
-      $('#requireddiv').hide();
-      $('#textvalidationdiv').hide();
-      $('#numbervalidationdiv').hide();
-      $('div.choices').hide();
-    }
-
-    return true;
-  }
-  function copyColumn() {
-    $("#name").val($("#usercolumns").val());
-    $("#usercolumns").val(0);
-  }
-
-</script>
-
 
 <div id="content_data">
   <form action="./forms" method="post" class="clearfix" name="onepage" id="onepage" enctype="multipart/form-data">
-    <input type="hidden" name="request" id="request" value="save" />
-    <input type="hidden" name="node" value="<%= atom.id %>" />
-    <input type="hidden" name="extention" value="<%= atom.extention %>" />
+    <input type="hidden" name="request" id="request" value="" />
+
+    <!-- debugging atom.note -> JSON =
+     <%- atom.note %>
+     -->
 
     <fieldset id="tabs">
       <div id="options" class="horizontal">

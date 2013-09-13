@@ -1,0 +1,105 @@
+<!doctype html>
+
+<html lang="<%=page.language%>">
+
+<% include header.ejs %>
+
+<body id="data">
+
+<script src="<%=cstatic%>/js/lib/jquery-1.9.1<%=min%>.js"></script>
+<script src="<%=cstatic%>/js/lib/jquery-ui-1.10.1<%=min%>.js"></script>
+<script>
+  function warnUser(message) {
+    $('#right_cont').html("<p class='warning'>" + message + "</p>");
+  };
+
+  function initForm() {
+    $("#formdata #submitter")
+        .button({ icons: { primary: "ui-icon-check"}, text: true})
+        .click(function(){
+          $("#formdata #request").val("save");
+          $("#formdata").submit();
+        });
+    $("#formdata #doCancel")
+        .button({ icons: { primary: "ui-icon-close"}, text: true})
+        .click(function(){
+          $("#formdata #request").val("list");
+          $("#formdata").submit();
+        });
+
+    $("#formdata #doDelete")
+        .button({ icons: { primary: "ui-icon-trash"}, text: true})
+        .click(function(){
+          $("#formdata #request").val("delete");
+          $("#formdata").submit();
+        });
+  }
+
+  $(document).ready(function(){
+    $("#tree table td").click(function(){
+      var parent = $(this).parent();
+      var id = parent.attr("rel");
+      $.ajax({
+        type: "GET",
+        url: "/<%= page.getURL() %>",
+        data: {request: 'edit', id: id, meta: meta},
+        success: function(msg){
+          if (msg.substring(0,3) === "NOK") {
+            self.warnUser("Got error from server: " + msg);
+
+          } else {
+            $("#right_cont").html(msg).show();
+
+            initForm();
+          }
+        }
+      });
+    });
+  });
+
+</script>
+
+<section>
+  <header>
+    <% include top.ejs %>
+    <% include navigation.ejs %>
+  </header>
+
+  <div>
+
+    <div id="left_nav">
+
+      <!-- voorlopig, moet uit controller komen -->
+      <% var form_show = "W"; %>
+
+      <div id="ltabs" class="ui-tabs ui-widget">
+        <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+          <li class="ui-state-default ui-corner-top <%= (form_show === "W") ? 'ui-tabs-active ui-state-active' : '' %>" ><a href="/<%=page.language%>/comments?request=list&form_show=N" class="ui-tabs-anchor">Waiting</a></li>
+          <li class="ui-state-default ui-corner-top <%= (form_show === "A") ? 'ui-tabs-active ui-state-active' : '' %>" ><a href="/<%=page.language%>/comments?request=list&form_show=T" class="ui-tabs-anchor">Approved</a></li>
+          <li class="ui-state-default ui-corner-top <%= (form_show === "R") ? 'ui-tabs-active ui-state-active' : '' %>" ><a href="/<%=page.language%>/comments?request=list&form_show=D" class="ui-tabs-anchor">Rejected</a></li>
+        </ul>
+
+        <div id="tree" class="ui-corner-bottom">
+          <table>
+            <tr><th colspan=2>Title</th></tr>
+            <tr>
+              <!-- demo, moet uit de context komen uiteraard -->
+              <td><%= formatDate( new Date() ) %></td>
+              <td>Naam</td>
+            </tr>
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div id="right_cont">
+    </div>
+
+  </div>
+
+  <% include footer.ejs %>
+</section>
+</body>
+</html>

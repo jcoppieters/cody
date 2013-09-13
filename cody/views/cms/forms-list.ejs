@@ -14,15 +14,23 @@
   };
 
   function initForm() {
-    $("#formdata #submitter").click(function(){
+    $("#formdata #submitter")
+        .button({ icons: { primary: "ui-icon-check"}, text: true})
+        .click(function(){
       $("#formdata #request").val("save");
       $("#formdata").submit();
     });
-    $("#formdata #doCancel").click(function(){
+
+    $("#formdata #doCancel")
+        .button({ icons: { primary: "ui-icon-close"}, text: true})
+        .click(function(){
       $("#formdata #request").val("list");
       $("#formdata").submit();
     });
-    $("#formdata #doDelete").click(function(){
+
+    $("#formdata #doDelete")
+        .button({ icons: { primary: "ui-icon-trash"}, text: true})
+        .click(function(){
       $("#formdata #request").val("delete");
       $("#formdata").submit();
     });

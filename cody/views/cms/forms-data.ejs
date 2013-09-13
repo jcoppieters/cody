@@ -12,6 +12,15 @@
           <input type=radio id="done" name="status" value="D" <%= (data.status==="D") ? "Checked" : "" %>><label for="done">Done</label>
         </div>
       </div>
+      <div id="info">
+        <label>Info</label>
+        <div>
+          <strong>Created: </strong><%= formatDate(data.created) %> <%= formatTime(data.created) %>
+          <% if ((typeof data.modified !== "undefined") && (data.modified)) { %>
+            - <strong>Modified: </strong><%= formatDate(data.modified) %> <%= formatTime(data.modified) %>
+          <% } %>
+        </div>
+      </div>
     </fieldset>
     <% var label = {}; label[page.language] = "Save"; %>
     <% var CancelAndDelete = "<button id='doCancel'>Cancel</button><button id='doDelete'>Delete</button>"; %>
