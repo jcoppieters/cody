@@ -23,6 +23,7 @@ module.exports.ImageController = require("./controllers/ImageController.js");
 module.exports.FileController = require("./controllers/FileController.js");
 module.exports.FormController = require("./controllers/FormController.js");
 module.exports.StylesController = require("./controllers/StylesController.js");
+module.exports.SystemController = require("./controllers/SystemController.js");
 module.exports.TemplateController = require("./controllers/TemplateController.js");
 
 module.exports.Static = require("./apps/Static.js");

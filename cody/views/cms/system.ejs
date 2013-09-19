@@ -1,0 +1,34 @@
+<!doctype html>
+
+<html lang="<%=page.language%>">
+
+<% include header.ejs %>
+
+<body id="templates">
+
+<script src="<%=cstatic%>/js/lib/jquery-1.9.1<%=min%>.js"></script>
+<script src="<%=cstatic%>/js/lib/jquery-ui-1.10.1<%=min%>.js"></script>
+<script src="<%=cstatic%>/js/lib/jquery.validate<%=min%>.js"></script>
+
+<section>
+    <header>
+        <% include top.ejs %>
+        <% include navigation.ejs %>
+    </header>
+
+    <div>
+        <form method="post">
+        <p>Hier kunt u de nodige parameters aanpassen.</p>
+
+        <p class="warning">Let op: wanneer u de hostname aanpast, zal u uw site pas terug kunnen bereiken nadat u een DNS-record met de nieuwe naam heeft aangemaakt.<br />Uit veiligheid kunt u ook meerdere namen opgeven, gescheiden door komma's. Bijvoorbeeld "oudenaam.org,nieuwenaam.org".</p>
+
+        </p>
+        <p><label for="hostname">Hostname:<br /><input type="text" id="hostname" name="hostname" value="<%=config.hostname %>" size="50" /></label></p>
+        <p><label for="owneremail">E-mailadres eigenaar:<br /><input type="email" id="owneremail" name="owneremail" value="<%=config.owneremail %>" size="50" disabled="disabled" /></label></p>
+            <input type="submit" name="request" value="OK" />
+        </form>
+    </div>
+
+</section>
+</body>
+</html>

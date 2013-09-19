@@ -45,6 +45,12 @@ websites / projecten
 
 
 Laurens:
+- de server parameters (uit cody.websites) editeerbaar maken in de backoffice
+  wel de naam read-only houden.
+
+- gezien het toch in dit genre is, maar wel meer "cody": mogelijkheid tot talen bijmaken / weglaten
+  opgelet, je moet dan ook pages en content bijmaken / verwijderen... eigenlijk alle tabellen met language in.
+
 - installatie
   - eerst handmatig, met documentatie (en waar nodig aanpassingen)
     inclusief database, npm's, etc..
