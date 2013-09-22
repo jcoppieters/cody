@@ -248,9 +248,10 @@ footer a { text-align: center; display: inline-block; width: 33%; margin: auto; 
 .page #content form fieldset > div > div > label { display: inline-block; margin: 0 20px 0 7px }
 .page #content form fieldset > div > div > input { vertical-align: top; }
 .page #content form #action_buttons { border-top: solid 1px #c0c0c0; padding: 10px 0 0 160px; }
-.main form fieldset > div > label.error { text-align: left; padding: 0 0 0 213px; color: red; display: block; width: inherit }
-.main form fieldset > div > input.error,
-.main form fieldset > div > textarea.error { border: 1px solid red }
+
+.page #content form fieldset > div > label.error { text-align: left; padding: 4px 0 0 160px; color: red; display: block; width: inherit }
+.page #content form fieldset > div > input.error,
+.page #content form fieldset > div > textarea.error { border: 1px solid red }
 
 @media (max-width: 1023px) {
   .page #content { width: 96%; margin: 10px auto 0 auto; display: block }

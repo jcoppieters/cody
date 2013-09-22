@@ -22,9 +22,12 @@
     <h1><%= page.title %></h1>
 
     <% for (var ic in page.content) { var C = page.content[ic]; %>
-    <article>
-      <%- C.render(controller) %>
-    </article>
+      <% if (((typeof submitted !== "undefined") && (C.isIntro())) ||
+             ((typeof submitted === "undefined") && (! C.isIntro()))) { %>
+        <article>
+          <%- C.render(controller) %>
+        </article>
+      <% } %>
     <% } %>
 
   </section>
