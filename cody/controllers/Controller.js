@@ -218,6 +218,9 @@ Controller.prototype.query = function(sql, params, callback) {
 
   this.connection.query(sql, params, callback);
 };
+Controller.prototype.escape = function(v){
+    return this.connection.escape(v);
+}
 
 Controller.prototype.closeConnection = function() {
   console.log("Controller -> connection closed");
