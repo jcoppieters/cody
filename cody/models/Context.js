@@ -140,7 +140,7 @@ Context.prototype.setLogin = function(login) {
   this.login = new cody.User(login);
 };
 Context.prototype.isLoggedIn = function() {
-  return (this.login) && (this.login.active === "Y");
+  return (this.login) && (typeof this.login !== "undefined") && (this.login.active === "Y");
 };
 Context.prototype.getLogin = function() {
   return this.login || new cody.User({});
