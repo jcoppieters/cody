@@ -89,7 +89,7 @@ LoginController.prototype.tryLogin = function( finish ) {
   
   cody.User.getUser(self, aUserName, this.getParam("password"), function (aUser) {
     
-    console.log("login rec: " + aUser.id + " - " + aUser.badlogins + " - " + aUser.maxbadlogins);
+    console.log("login rec: " + aUserName + " - " + aUser.id + " - " + aUser.badlogins + " - " + aUser.maxbadlogins);
     if (aUser && (aUser.badlogins >= aUser.maxbadlogins)) {
       aUser.active = false;
       locked = true;

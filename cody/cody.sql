@@ -301,9 +301,9 @@ CREATE TABLE `users` (
 
 
 INSERT INTO `users` VALUES 
-(1,'rsuper','rWorks Super','akitest','rWorks',99,0,99,'Y','johan577@mac.com','','N',0),
-(2,'radmin','rWorks Admin','akitest','rWorks',50,0,99,'Y','johan577@mac.com','','N',0),
-(3,'rtest','rWorks Test','akitest','rWorks',2,0,99,'Y','johan577@mac.com','','N',0),
+(1,'rsuper','rWorks Super',password('akitest'),'rWorks',99,0,99,'Y','johan577@mac.com','','N',0),
+(2,'radmin','rWorks Admin',password('akitest'),'rWorks',50,0,99,'Y','johan577@mac.com','','N',0),
+(3,'rtest','rWorks Test',password('akitest'),'rWorks',2,0,99,'Y','johan577@mac.com','','N',0),
 
-(11,'user','Mr. User Vaneigens','user','users',50,0,99,'Y','user@cody-cms.be','','N',10);
+(11,'user','Mr. User Vaneigens',password('user'),'users',50,0,99,'Y','user@cody-cms.be','','N',10);
 

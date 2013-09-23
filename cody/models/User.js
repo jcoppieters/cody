@@ -31,7 +31,7 @@ module.exports = User;
 // Class stuff
 //
 
-User.sqlGetUserByPw = "select * from users where username = ? and password = ?";  // password = password(?) ...
+User.sqlGetUserByPw = "select * from users where username = ? and password = password(?)";  // password = password(?) ...
 User.sqlGetUserById = "select * from users where id = ?";
 User.sqlDeleteUser = "delete from users where id = ?";
 User.sqlGetUserList = "select * from users where level <= ? order by name";
@@ -133,7 +133,7 @@ User.prototype.isActive = function() {
 
 User.prototype.scrapeFrom = function(controller) {
   this.username = controller.getParam("username", this.username);
-  this.password = controller.getParam("password", this.password);
+  this.password = controller.getParam("password", "");
   this.name = controller.getParam("name", this.name);
   this.domain = controller.getParam("domain", this.domain);
   this.level = controller.getInt("level", this.level);
@@ -169,16 +169,17 @@ User.prototype.clearBadLogins = function(controller, finish) {
 
 User.prototype.doUpdate = function(controller, finish) {
   var self = this;
-  var values = [self.username, self.name, self.password, self.domain, self.level, 
-                self.badlogins, self.maxbadlogins, self.active, self.email, self.note, self.nomail, self.sortorder];
+  var values = [self.username, self.name, self.domain, self.level, self.badlogins,
+                self.maxbadlogins, self.active, self.email, self.note, self.nomail, self.sortorder];
   
   // new or existing record
   if ((typeof self.id === "undefined") || (self.id === 0)) {
-    
+
     console.log("insert user " + this.username);
-    controller.query("insert into users (username, name, password, domain, level, " +
-                     " badlogins, maxbadlogins, active, email, note, nomail, sortorder) " +
-                     "values (?, ?, ?, ?, ?,  ?, ?, ?, ?, ?, ?, ?)", values,
+    values.push(self.password);
+    controller.query("insert into users (username, name, domain, level, badlogins, maxbadlogins, " +
+                     "active, email, note, nomail, sortorder, password) " +
+                     "values (?, ?, ?, ?,  ?, ?, ?, ?, ?, ?, ?, password(?))", values,
         function(err, result) {
           if (err) { 
             console.log(err); throw(new Error("User.doUpdate/insert failed with sql errors")); 
@@ -192,15 +193,27 @@ User.prototype.doUpdate = function(controller, finish) {
   } else {
     console.log("update user " + self.id + " - " + this.username);
     values.push(self.id);
-    controller.query("update users set username = ?, name = ?, password = ?, domain = ?, level = ?, " +
+    controller.query("update users set username = ?, name = ?, domain = ?, level = ?, " +
                      " badlogins = ?, maxbadlogins = ?, active = ?, email = ?, note = ?, nomail = ?, sortorder = ? " +
                      "where id = ?", values,
       function(err) {
         if (err) { 
-          console.log(err); throw(new Error("User.doUpdate/update failed with sql errors")); 
+          console.log(err); throw(new Error("User.doUpdate/update failed with sql errors"));
         } else {
           console.log("updated user: " + self.id);
-          if (typeof finish === "function") { finish(); }
+          if (self.password != "") {
+            controller.query("update users set password = password(?) where id = ?", [self.password, self.id], function() {
+              if (err) {
+                console.log(err); throw(new Error("User.doUpdate/update PW failed with sql errors"));
+              }
+              console.log("updated password of " + self.id);
+              if (typeof finish === "function") {
+                finish();
+              }
+            });
+          } else if (typeof finish === "function") {
+            finish();
+          }
         }
     });
   }

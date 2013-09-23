@@ -63,7 +63,8 @@
 				</div>
 				<div>
 					<label for="password">Password</label>
-					<input name="password" id="password" type="text" value="<%- user.password %>" class="required" />
+					<input name="password" id="password" type="text" value="" <% if (typeof user.username === "undefined") { %> class="required" <% } %> />
+          <span>Leave empty if you don't want to change your password.</span>
 				</div>
 				<div>
 					<label for="domain">Group</label>
@@ -121,14 +122,13 @@
 									
 			<table id="records"> 
 			   <tr> 
-				 <th>Naam</th><th>Login</th><th>Password</th><th>Domain</th><th>Level</th><th>Login</th><th>Email</th> 
+				 <th>Naam</th><th>Login</th><th>Domain</th><th>Level</th><th>Login</th><th>Email</th>
 			   </tr> 
 				
 			  <% for (var i=0; i < users.length; i++) { var u = users[i]; %>			  
 					<tr>
-						<td class="edit"><a href="./users/edit/<%= u.id %>"><%= (u.name==='') ? '--' : u.name %></a></td>
-						<td><%= u.username %></td> 
-						<td><%= u.password %></td> 
+						<td class="edit"><a href="/<%=page.url%>/edit/<%= u.id %>"><%= (u.name==='') ? '--' : u.name %></a></td>
+						<td><%= u.username %></td>
 						<td><%= u.domain %></td> 
 						<td>
 						  <%= find(levels, u.level).name %>

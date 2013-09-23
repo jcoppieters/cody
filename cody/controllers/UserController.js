@@ -40,6 +40,7 @@ UserController.prototype.doRequest = function( finish ) {
     });
     
   } else if (this.isRequest("edit")) {
+    console.log("****" + this.getId());
     self.doGet( this.getId(), finish);
     
   } else if (this.isRequest("new")) {
