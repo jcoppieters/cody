@@ -9,7 +9,7 @@
 
 <% include header.ejs %>
 
-
+  <% include calendarscript.ejs %>
   <script>
      $(document).ready(function(){
        $("div#exportDiv").hide();
@@ -18,6 +18,59 @@
        $(".apForm").hide();
 
        $(".datePicker").datepicker({dateFormat:"yy-mm-dd"});
+       doButtons();
+
+       $("#calDateNav button").click(function(){
+                var inpmonth = parseInt($("#inpMonth").val());
+                var year = parseInt($("#inpYear").val());
+                var month;
+                if($(this).attr("id") == "next") {
+                    month =  inpmonth == 11 ? 0 : (parseInt(inpmonth) +1);
+                    year = inpmonth == 11? (year +1) : year;
+                } else {
+                    month =  inpmonth == 0 ? 11 : (parseInt((inpmonth))-1);
+                    year = inpmonth == 0? (year -1) : year;
+                }
+                $("#inpMonth").val(month);
+                $("#inpYear").val(year);
+                $("form#navForm").submit();
+              });
+                 $("td.calItem").click(function(){
+                          var index = $(this).attr("index");
+                          var day; var month; var year;
+                          if(index < <%=startIndex%>){
+                          //previous month
+                            day = <%=((daysInLastMonth +1 ) - (startIndex - index))%>;
+                            month = <%= currentMonth === 0 ? 11 : currentMonth -1%>;
+                            year = <%= currentMonth === 0 ? (currentYear -1) : currentYear %>;
+                          }else if(index > <%=endIndex%>){
+                          //next month
+                            day = <%=index - endIndex%>;
+                            month = <%= currentMonth === 11 ? 0: (currentMonth +1)  %>;
+                            year = <%= currentMonth === 11 ? (currentYear +1): currentYear %>
+                          }else {
+                          //this month
+                            day = index - <%= startIndex %> +1;
+                            month = <%= currentMonth %>
+                            year = <%= currentYear %>
+                          }
+                          var date = new Date(year,month,day);
+                          viewNewFormOnDate(date);
+                       });
+
+      });
+
+     function doButtons(){
+
+       $("#calGotoNav button#goto").button({
+                        icons: { primary: "ui-icon-calendar" }
+                      }).click(function(){
+                          var month = $("#gotoMonth").val();
+                          var year = $("#gotoYear").val();
+                          $("#inpMonth").val(month);
+                          $("#inpYear").val(year);
+                          $("form#navForm").submit();
+                      });
 
        $("#calActionNav button#newEvent").button({
          icons: { primary: "ui-icon-plusthick" }
@@ -41,41 +94,10 @@
        $("#calDateNav button#next").button({
          icons: { primary: "ui-icon-arrowthick-1-e" }, text: false
        });
-       $("#calDateNav button").click(function(){
-         var inpmonth = parseInt($("#inpMonth").val());
-         var year = parseInt($("#inpYear").val());
-         var month;
-             if($(this).attr("id") == "next") {
-                month =  inpmonth == 11 ? 0 : (parseInt(inpmonth) +1);
-                year = inpmonth == 11? (year +1) : year;
-             } else {
-                month =  inpmonth == 0 ? 11 : (parseInt((inpmonth))-1);
-                year = inpmonth == 0? (year -1) : year;
-             }
-             $("#inpMonth").val(month);
-             $("#inpYear").val(year);
-             $("form#navForm").submit();
-         });
-
-         $("#calGotoNav button#goto").button({
-           icons: { primary: "ui-icon-calendar" }
-         }).click(function(){
-             var month = $("#gotoMonth").val();
-             var year = $("#gotoYear").val();
-             $("#inpMonth").val(month);
-             $("#inpYear").val(year);
-             $("form#navForm").submit();
-         });
-     });
-
-     function clearAllInput(){
-       $(".txtInput").each(function(){
-          $(this).val("");
-       });
      }
 
   </script>
-  <% include calendarscript.ejs %>
+
 
 <body id="page<%= page.itemId %>">
 <% include head.ejs %>
@@ -83,16 +105,20 @@
 
      <div class="main calendar month">
         <section>
-           <%- render({intro: 'Y'}) %>
+           <% for (var ic in page.content) { %>
+               <% if (page.content[ic].isIntro()) { %>
+                   <%- page.content[ic].render() %>
+               <% } %>
+          <% } %>
 
 
-          <form id="navForm" action="/<%= page.getURL() %>" method="post">
+          <form id="navForm" action="<%=path.prefix%>/<%=page.language%>/<%= page.itemId %>" method="post">
             <input type="hidden" name="request" value="otherMonth"/>
             <input type="hidden" name="month" id="inpMonth"  value="<%= currentMonth %>"/>
             <input type="hidden" name="year" id="inpYear" value="<%= currentYear %>"/>
           </form>
 
-          <form id="viewAppointmentForm" action="/<%= page.getURL() %>" method="post">
+          <form id="viewAppointmentForm" action="<%=path.prefix%>/<%=page.language%>/<%= page.itemId %>" method="post">
             <input type="hidden" name="request" value="viewAppointment"/>
             <input type="hidden" name="id" id="appointmentID" />
           </form>
@@ -112,23 +138,22 @@
                 <button id="next">Next</button>
               </nav>
               <nav id="calViewNav">
-                <a href="/<%= page.getURL() %>?request=weekview" class="weekname"></a>
-                <a class="active monthname" href="/<%= page.getURL() %>?request=monthview"></a>
-                <a href="/<%= page.getURL() %>?request=yearview"class="yearname"></a>
+                <a href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=weekview" class="weekname"></a>
+                <a class="active monthname" href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=monthview"></a>
+                <a href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=yearview"class="yearname"></a>
               </nav>
 
             </caption>
 
             <tr>
-              <th class="sunname"></th><th class="monname"></th><th class="tuename"></th><th class="wedname"></th>
-              <th class="thurname"></th><th class="friname"></th><th class="satname"></th>
+              <th class="sunname"></th><th class="monname"></th><th class="tuename"></th><th class="wedname"></th><th class="thurname"></th><th class="friname"></th><th class="satname"></th>
             </tr>
 
             <% var index = 0;
             for(var w = 0; w < 5; w++) { %>
             <tr>
               <% for(var d = 0; d < 7; d++){%>
-                 <td class="<% if(index < startIndex || index > endIndex){ %> other <%}%>">
+                 <td index="<%= index %>" class="calItem <% if(index < startIndex || index > endIndex){ %> other <%}%>">
                      <!-- insert number of day -->
                      <% if(index < startIndex) { %> <%= ((daysInLastMonth +1 ) - (startIndex - index))  %> <% }
                      else if (index > endIndex) { %> <%= (index - endIndex) %> <% }
@@ -147,9 +172,8 @@
 
           <nav id="calGotoNav">
             <select id="gotoMonth">
-               <% curMonth = new Date().getMonth(); %>
                <% for(var i = 0; i < 12; i++) { %>
-                  <option <% if(i === curMonth) { %> selected="selected" <%}%> value="<%= (i) %>" class="locMonth"></option>
+                  <option <% if(i === currentMonth) { %> selected="selected" <%}%> value="<%= (i) %>" class="locMonth"></option>
                <% } %>
             </select>
             <select id="gotoYear">
@@ -168,13 +192,17 @@
 
    <div id="appointmentView"></div>
    <div id="exportDiv">
-     <p class="exportmsg"></p>
-     <p><a href="/data/cal.ics">Link</a></p>
+    <p class="exportmsg"></p>
+    <p><a href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>/ics">Link</a></p>
    </div>
 
-   <%- render({intro: 'N'}) %>
+    <% for (var ic in page.content) { %>
+      <% if (! page.content[ic].isIntro()) { %>
+        <%- page.content[ic].render() %>
+      <% } %>
+    <% } %>
 
-   <% include footer.ejs %>
+    <% include footer.ejs %>
 
 </body>
 </html>
