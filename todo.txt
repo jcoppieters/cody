@@ -5,12 +5,8 @@ rsync -avzP  /Users/johan/Development/WebStorm/jcms/cody root@vpn.cody-cms.org:/
 - delete content from page fails ... ?? [ fixed on 23/06, a > where it should have been a >= ]
 - new folder in "Images" -> "Choose file" ?? [ fixed 21/06 ]
 
-- illegal content?
-
 - sending mails from javascript
-- everything about forms
-  - option1: translate java version
-  - option2: try to incorporate yanic's work
+
 - templates
   - add "note" om bij "add content" bij elke template een beetje uitleg te geven over de template
     ook in add-content kiezer deze tekst tonen. [ done 24/06 ]
@@ -105,7 +101,7 @@ Dieter:
   (met captcha?)
 
 
-Yanic:
+Yanic: [ done door Johan: 15/09/2013 ]
 - definitie van meta data object, inclusief editing features (lengte, radio/checkbox, popup, etc)
   controller voor in back office + template + bewaren in SQL met zeker id + name.
 - gegeven de id van zo'n meta object een fieldset genereren (geen form)

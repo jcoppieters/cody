@@ -336,7 +336,7 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
 
 nav h1#logintitle { color: white }
 #login h1 { width: 505px; margin: 0; padding: 170px 295px 10px 0; color: #fff; text-align: right; font-size: 24px; }
-  #logon { width: 255px; padding: 7px 295px 30px 50px; text-align: right; }
+  #logon { width: 300px; padding: 7px 295px 30px 50px; text-align: right; }
     #logon fieldset { float: none;  width: 255px; }
       #logon fieldset div { padding-bottom: 5px; }
     #logon .action_buttons { margin-left: 120px; text-align: left }

@@ -16,9 +16,9 @@ function LoginController(context) {
 	this.loginView = "-/login.ejs";
 		
 	// URL used when user logs in and no specific page/action was requested before
-	this.loggedInUrl = (context.language || "nl") + "/dashboard";
+	this.loggedInUrl = "/" + (context.language || "en") + "/dashboard";
 	// URL used when the user request a log out.
-	this.loggedOutUrl = "/" + (context.language || "nl");
+	this.loggedOutUrl = "/" + (context.language || "en");
 		
 	// use this view for the admin operations
 	this.adminView = "-/cms/users.ejs";

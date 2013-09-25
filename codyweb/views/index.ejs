@@ -43,7 +43,7 @@
       <img src="<%=static%>/images/computer5.png" style="display: none">
       <img src="<%=static%>/images/computer6.png" style="display: none">
       <div>
-        <h2>Create your own web environment in<br>Javascript with Cody and Node.js</h2>
+        <h2><%- render({name: 'banner'}) %></h2>
         <a href="<%=cstatic%>/cody.zip"><img src="<%=static%>/images/download.png" alt="Download Cody CMS" title="Download Cody"></a>
       </div>
     </section>
@@ -52,7 +52,7 @@
 
   <div id="content">
     <section>
-      <h1>WHY CODY?</h1>
+      <h1><%- render({name: 'why'}) %></h1>
 
       <% for (var icp in page.children) { var CP = page.children[icp]; %>
       <article>
@@ -72,11 +72,11 @@
     <section>
       <h1>SOME EXAMPLES</h1>
 
-      <% for (var pc in page.content) { var C = page.content[pc]; %>
+      <% for (var pc in page.content) { var C = page.content[pc]; if (! C.isIntro() ) { %>
       <article>
         <%- C.render(controller) %>
       </article>
-      <% } %>
+      <% } } %>
     </section>
   </div>
 

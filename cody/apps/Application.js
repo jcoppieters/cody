@@ -287,8 +287,8 @@ Application.prototype.handToController = function(context) {
   }
   
   controller.doRequest( function(fn, header) {
-    // calback function should always be called by doRequest
-    //  render with given or the template in the context (controller may have changed it)
+    // callback function should always be called by doRequest
+    //  render with the specified or the template in the context (controller may have changed it)
     //  if no render template present ( == "") either
     //    -- assume the controller performed res.writeHead() / .write() / .end() -- ajax req?
     //    -- another controller has taken over
@@ -587,20 +587,16 @@ Application.prototype.findPage = function(path) {
   var self = this;
 
   // hash based on only language/domain
-  var aPage = self.urls[path.pagelink];
+
+  // if only language is specified (can be the defaultlanguage), serve the welcome/home page
+  var aPage = self.urls[path.pagelink + ((path.domain === "") ? "welcome" : "")];
   
   // if page not found -> serve the language/notfound page
   if (typeof aPage === "undefined") {
     console.log("Application.findPage - not found -> " + path.pagelink + ", trying -> " + path.language + "/notfound");
     aPage = self.urls[path.language + "/notfound"];
   }
-  
-  // if no notfound-page -> try to serve the home page
-  if (typeof aPage === "undefined") {
-    aPage = self.urls[path.language + "/welcome"];
-    console.log("Application.findPage - " + path.language + "/welcome");
-  }
-  
+
   if (typeof aPage !== "undefined") {
     aPage = aPage.getDisplay();
   }

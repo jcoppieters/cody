@@ -37,16 +37,11 @@ function Path( path, name, deflanguage ) {
       }
     }
   }
-    var debughelp = {
-        "language": this.language,
-        "domain": this.domain,
-        "request": this.request,
-        "id": this.id
-    };
-  console.log(debughelp);
 
   this.pagelink = this.language + "/" + this.domain;
   this.link = "/" + this.pagelink;
+
+  // console.log(this);
 }
 
 module.exports = Path;

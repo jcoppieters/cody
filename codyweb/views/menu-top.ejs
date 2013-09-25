@@ -2,6 +2,11 @@
 
 <header>
 	<a href="/<%=page.language%>/"><img src="<%=static%>/images/logoMC.png" alt="Cody CMS"></a>
+  <aside>
+    <% for (var il in app.languages) { var L = app.languages[il]; %>
+    <a class="<%= (page.language == L.id) ? 'active' : ''%>" href="/<%=L.id%>/<%= page.itemId %>"><%=L.id %></a>
+    <% } %>
+  </aside>
 	<nav>
     <% for (var ip in page.root.children) { var p = page.root.children[ip];
          if (p.isVisible()) { %>
@@ -9,11 +14,6 @@
     <%   } %>
     <% } %>
 	</nav>
-  <aside>
-    <% for (var il in app.languages) { var L = app.languages[il]; %>
-      <a class="<%= (page.language == L.id) ? 'active' : ''%>" href="/<%=L.id%>/<%= page.itemId %>"><%=L.id %></a>
-    <% } %>
-  </aside>
 
 </header>
 

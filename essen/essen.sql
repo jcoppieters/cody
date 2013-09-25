@@ -1,250 +1,27 @@
-set names utf8;
+-- MySQL dump 10.13  Distrib 5.5.31, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: essen
+-- ------------------------------------------------------
+-- Server version	5.5.31-0+wheezy1
 
-
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-
---
--- Dumping data for table `users`
---
-
-insert into domains values ("dr", "Dokters");
-
-INSERT INTO `users` VALUES
-
-(9,'secretariaat','Secretariaat','sab','essen',50,0,99,'Y','secretariaat@de-essen.be','','N',0),
-
-(10,'sabine','Dr. Sabine Fevery','tests','dr',50,0,99,'Y','sabine@de-essen.be','','N',30),
-(20,'hilde','Dr. Hilde Tack','testh','dr',50,0,99,'Y','hilde@de-essen.be','','N',10),
-(30,'lies','Dr. Lies Gheyle','l577','dr',50,0,99,'Y','lies@de-essen.be','','N',20),
-(40,'liesd','Dr. Lies Delameillieure','testld','dr',50,0,99,'Y','lies.delameillieure@de-essen.be','','N',40);
-
-
-
---
--- Dumping data for table `atoms`
---
-
-INSERT INTO `atoms` VALUES 
-
-(29,1,30,'Algemeen','','','2012-08-15 18:55:51','2012-08-15 18:55:54'),
-(30,29,10,'Attest','Attest','jpg','2012-08-15 18:55:56','2012-08-15 18:56:13'),
-(31,29,20,'Een es','','jpg','2012-08-15 18:58:26','2012-08-15 18:58:40'),
-(32,29,20,'De 3 Essen','','jpg','2012-08-15 18:59:58','2012-08-15 19:00:18'),
-(33,29,20,'Essenblad','','jpg','2012-08-15 19:16:11','2012-08-15 19:16:23'),
-
-(24,1,20,'Secretariaat','','','2012-08-15 01:38:10','2012-08-15 01:38:15'),
-(28,24,20,'Nele','','png','2012-08-15 18:51:47','2012-09-04 21:49:29'),
-(27,24,10,'Sabine','','png','2012-08-15 18:51:17','2012-09-04 21:49:18'),
-(34,24,30,'Praktijk','De Praktijk','jpg','2012-08-15 20:51:13','2012-08-15 22:52:11'),
-(35,24,30,'Kaartje','','JPG','2012-08-15 20:57:34','2012-08-15 22:57:44');
-
-INSERT INTO `atoms` VALUES
- (40,2,10,'PDFs','','','2012-08-15 18:55:51','2012-08-15 18:55:54'),
- (41,40,10,'a file','','pdf','2012-08-15 18:55:51','2012-08-15 18:55:54');
-
---
--- Dumping data for table `templates`
---
-
-UPDATE `templates` set fn = 'front/index.ejs' where id = 100;
-
-INSERT INTO `templates` VALUES
- (101,'Afspraak maken','BookingController', 'front/agenda.ejs','',0,'N',0),
- (102,'Artsen',        'ContentController', 'front/artsen.ejs','',0,'N',0),
- (103,'Contact',       'ContactController', 'front/contact.ejs','',0,'N',0);
-
-
-INSERT INTO `templates` VALUES
- (21,'Admin-Agenda',   'AgendaController',  'BO/agenda.ejs','',0,'Y',0),
- (23,'Admin-Week',     'SlotController',    'BO/week.ejs','',0,'Y',0),
- (22,'Admin-Patients', 'PatientController', 'BO/patients.ejs','Y',0,'',0),
- (24,'Admin-Contacts', 'ContactController', 'BO/contacts.ejs','Y',0,'',0);
-
-
---
--- Dumping data for table `items`
---
-
-UPDATE `items` set orderby = 'M' WHERE id = 1;
-
-INSERT INTO `items` VALUES
-
-  (20,'Admin',9, 1,2,'M',1,'2010-01-01','2010-01-01','2100-01-01','S','Y','',''),
-    (21,'Admin - Agenda',20,1,21,'A',10,'2010-01-01','2010-01-01','2100-01-01','Y','Y','',''),
-    (22,'Admin - Patienten',20,1,22,'A',20,'2010-01-01','2010-01-01','2100-01-01','Y','Y','',''),
-    (23,'Admin - Week',20,1,23,'A',30,'2010-01-01','2010-01-01','2100-01-01','Y','Y','',''),
-    (24,'Admin - Contacten',20,1,24,'A',40,'2010-01-01','2010-01-01','2100-01-01','Y','Y','',''),
-
-(101,'Info',1,1,100,'M',70,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','S','N','',''),
- (113,'Globaal medische dossier',101,1,100,'A',90,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),
- (114,'Groepspraktijk',101,1,100,'A',100,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),
- (122,'GMD Plus',101,1,100,'M',110,'2012-08-15','2012-08-15 19:11:00','2199-01-01 00:00:00','Y','N','',''),
- (123,'Betekenis De Essen',101,1,100,'M',120,'2012-08-15','2012-08-15 19:15:00','2199-01-01 00:00:00','Y','N','',''),
- (115,'Visie',101,1,100,'A',70,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),
- (116,'Waarvoor kan U bij ons terecht',101,1,100,'A',80,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),
-
-(102,'Maak een afspraak',1,1,101,'M',50,'2010-01-01','2013-03-12 00:00:00','2100-01-01 00:00:00','Y','N','',''),
-(103,'Consultaties',1,1,100,'M',40,'2010-01-01','2013-05-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),
-(104,'Verlof',1,1,100,'M',80,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),
-(106,'Contacten',1,1,103,'M',30,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),
-
-(109,'De Essen',1,1,102,'M',10,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),
- (120,'Prikbord',109,1,100,'M',10,'2012-08-14','2012-08-14 11:18:00','2199-01-01 00:00:00','Y','N','',''),
- (121,'Dr. Lies Delameillieure',109,1,102,'M',50,'2012-08-14','2012-08-14 00:00:00','2199-01-01 00:00:00','Y','N','',''),
- (117,'Dr. Sabine Fevery',109,1,100,'A',20,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),
- (118,'Dr. Hilde Tack',109,1,100,'A',40,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),
- (119,'Dr. Lies Gheyle',109,1,100,'A',30,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),
-
-(124,'Praktisch',1,1,100,'M',60,'2012-08-15','2012-08-15 19:20:00','2199-01-01 00:00:00','S','N','',''),
- (107,'Huisbezoeken',124,1,100,'M',40,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),
- (108,'Dringende oproepen',124,1,100,'M',10,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),
- (111,'Annulering van afspraken',124,1,100,'A',30,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),
- (112,'Attesten',124,1,100,'A',20,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','','');
-
-
-
-
-
-INSERT INTO `pages` VALUES
-
-  (20,'nl','Beheer - Praktijk','admin','Y','','','2010-01-01','2010-01-01'),
-    (21,'nl','Agenda','agenda','Y','','','2010-01-01','2010-01-01'),
-    (22,'nl','Patienten','patients','Y','','','2010-01-01','2010-01-01'),
-    (23,'nl','Weekschema','week','Y','','','2010-01-01','2010-01-01'),
-    (24,'nl','Contacten','drs','Y','','','2010-01-01','2012-08-15 21:20:27'),
-
-
-(101,'nl','Info','info','Y','','','2010-01-01 00:00:00','2012-08-28 09:39:37'),
-(111,'nl','Annulering van afspraken','annulatie','Y','','','2010-01-01 00:00:00','2012-08-15 22:37:43'),
-(112,'nl','Attesten','attesten','Y','','','2010-01-01 00:00:00','2012-08-15 22:35:50'),
-(113,'nl','Globaal medische dossier','gmd','Y','','','2010-01-01 00:00:00','2012-08-15 22:37:57'),
-(114,'nl','Groepspraktijk','groepspraktijk','Y','','','2010-01-01 00:00:00','2012-08-15 22:38:05'),
-(115,'nl','Visie','visie','N','','','2010-01-01 00:00:00','2013-03-15 15:45:35'),
-(116,'nl','Waarvoor kan U bij ons terecht','waarvoor','Y','','','2010-01-01 00:00:00','2012-08-19 17:40:58'),
-(102,'nl','Maak een afspraak','afspraak','Y','','','2010-01-01 00:00:00','2013-04-26 18:03:26'),
-(103,'nl','Consultaties','consultaties','Y','','','2010-01-01 00:00:00','2013-03-17 11:28:01'),
-(104,'nl','Verlof','verlof',NULL,'','','2010-01-01 00:00:00','2013-04-17 12:08:12'),
-(121,'nl','Dr. Lies Delameillieure','delameillieure','Y','','','2012-08-14 12:06:50','2013-03-19 13:12:55'),
-(106,'nl','Contacten','contact','Y','','','2010-01-01 00:00:00','2013-03-17 11:18:53'),
-(107,'nl','Huisbezoeken','huisbezoeken','Y','','','2010-01-01 00:00:00','2012-08-15 22:35:41'),
-(108,'nl','Dringende oproepen','dringend','Y','','','2010-01-01 00:00:00','2012-08-15 22:35:20'),
-(109,'nl','De Essen','huisartsen','Y','','','2010-01-01 00:00:00','2013-04-26 17:11:41'),
-(117,'nl','Dr. Sabine Fevery','fevery','Y','','','2010-01-01 00:00:00','2012-08-15 22:32:41'),
-(118,'nl','Dr. Hilde Tack','tack','Y','','','2010-01-01 00:00:00','2013-03-19 13:25:05'),
-(119,'nl','Dr. Lies Gheyle','gheyle','Y','','','2010-01-01 00:00:00','2012-08-15 22:32:53'),
-(124,'nl','Praktisch','praktisch','Y','','','2012-08-15 19:20:17','2012-08-28 09:39:32'),
-(120,'nl','Prikbord','prikbord','Y','','','2012-08-14 11:18:37','2012-08-15 22:32:32'),
-(122,'nl','GMD Plus','gmdplus','Y','','','2012-08-15 19:11:52','2012-08-28 09:05:12'),
-(123,'nl','Betekenis De Essen','deessen','Y','','','2012-08-15 19:15:18','2012-08-15 22:37:52');
-
-INSERT INTO `pages` VALUES
-  (20,'en','Managment','admin','Y','','','2010-01-01','2010-01-01'),
-    (21,'en','Agenda','agenda','Y','','','2010-01-01','2010-01-01'),
-    (22,'en','Patients','patients','Y','','','2010-01-01','2010-01-01'),
-    (23,'en','Week scheme','week','Y','','','2010-01-01','2010-01-01'),
-    (24,'en','Contacts','drs','Y','','','2010-01-01','2012-08-15 21:20:27'),
-
-(101,'en','Info','info','Y','','','2010-01-01 00:00:00','2012-08-28 09:39:37'),
-(111,'en','Canceling appointments','annulatie','Y','','','2010-01-01 00:00:00','2012-08-15 22:37:43'),
-(112,'en','Attestations','attesten','Y','','','2010-01-01 00:00:00','2012-08-15 22:35:50'),
-(113,'en','Global Medical Dossier','gmd','Y','','','2010-01-01 00:00:00','2012-08-15 22:37:57'),
-(114,'en','Group practice','groepspraktijk','Y','','','2010-01-01 00:00:00','2012-08-15 22:38:05'),
-(115,'en','Vision','visie','N','','','2010-01-01 00:00:00','2013-03-15 15:45:35'),
-(116,'en','Why visit us','waarvoor','Y','','','2010-01-01 00:00:00','2012-08-19 17:40:58'),
-(102,'en','Make an appointment','afspraak','Y','','','2010-01-01 00:00:00','2013-04-26 18:03:26'),
-(103,'en','Consultations','consultaties','Y','','','2010-01-01 00:00:00','2013-03-17 11:28:01'),
-(104,'en','Holidays','verlof',NULL,'','','2010-01-01 00:00:00','2013-04-17 12:08:12'),
-(121,'en','Dr. Lies Delameillieure','delameillieure','Y','','','2012-08-14 12:06:50','2013-03-19 13:12:55'),
-(106,'en','Contacts','contact','Y','','','2010-01-01 00:00:00','2013-03-17 11:18:53'),
-(107,'en','House calls','huisbezoeken','Y','','','2010-01-01 00:00:00','2012-08-15 22:35:41'),
-(108,'en','Emergencies','dringend','Y','','','2010-01-01 00:00:00','2012-08-15 22:35:20'),
-(109,'en','De Essen','huisartsen','Y','','','2010-01-01 00:00:00','2013-04-26 17:11:41'),
-(117,'en','Dr. Sabine Fevery','fevery','Y','','','2010-01-01 00:00:00','2012-08-15 22:32:41'),
-(118,'en','Dr. Hilde Tack','tack','Y','','','2010-01-01 00:00:00','2013-03-19 13:25:05'),
-(119,'en','Dr. Lies Gheyle','gheyle','Y','','','2010-01-01 00:00:00','2012-08-15 22:32:53'),
-(124,'en','Practical','praktisch','Y','','','2012-08-15 19:20:17','2012-08-28 09:39:32'),
-(120,'en','Board','prikbord','Y','','','2012-08-14 11:18:37','2012-08-15 22:32:32'),
-(122,'en','GMD Plus','gmdplus','Y','','','2012-08-15 19:11:52','2012-08-28 09:05:12'),
-(123,'en','Meaning of De Essen','deessen','Y','','','2012-08-15 19:15:18','2012-08-15 22:37:52');
-
-
-update pages set link = 'welcome'
- where item = 1 and language = "nl";
-
- 
---
--- Dumping data for table `content`
---
-
-INSERT INTO `content` VALUES 
-(0,106,'nl',10,'N','T',0,'','<div class=\"gebouw\"><img title=\"Praktijk\" src=\"../data/images/34.jpg\" alt=\"De Praktijk\" width=\"556\" height=\"286\" /></div>\n<p>Het secretariaat is bereikbaar<br /> van <strong>maandag - vrijdag</strong><br /> van <strong>8:00 - 12:00</strong> en van <strong>16:00 - 19:00</strong></p>\n<div class=\"persoon\"><img title=\"Sabine\" src=\"../data/images/27.png\" alt=\"Sabine\" width=\"180\" height=\"238\" /><br />\n<p>Sabine</p>\n</div>\n<div class=\"persoon\"><img title=\"Nele\" src=\"../data/images/28.jpg\" alt=\"Nele\" width=\"176\" height=\"238\" /><br />\n<p>Nele</p>\n</div>\n<p>Gelieve zoveel mogelijk te bellen tijdens de aanwezigheid van onze secretaresse. Zij beantwoordt onze telefoon tijdens de raadplegingen en de huisbezoeken. Zij tracht u zo goed mogelijk van dienst te zijn. Indien ons advies nodig is, wordt u doorgeschakeld.</p>\n<div class=\"gebouw\"><img title=\"Kaartje\" src=\"../data/images/35.JPG\" alt=\"\" width=\"556\" /></div>\n<p><a href=\"privacy\">Privacy verklaring</a> - <a href=\"disclaimer\">Disclaimer</a></p>'),
-(0,120,'nl',10,'N','T',0,'','<h1>Nieuwe<br />collega-arts<br />vanaf 01/09/2012</h1>\n<p>Dr. Lies Delameillieure is afgestudeerd als basisarts en vervolledigt haar opleiding tot huisarts bij ons.&nbsp;Wij zijn ervan overtuigd dat zij een meerwaarde betekent zowel op medisch als organisatorisch vlak en hopen daarom ook te kunnen rekenen op uw enthousiasme.</p>'),
-(0,118,'nl',10,'N','T',0,'','<h1>Dokter<br />Hilde Tack</h1>\n<p class=\"aanwezig\">is aanwezig</p>\n<p><strong>ochtend</strong> (08:30 - 12:00)<br /> maandag, vrijdag</p>\n<p><strong>middag</strong> (14:00 - 16:00)<br />maandag, vrijdag</p>\n<p><strong>avond</strong> (17:00 - 19:00)<br />dinsdag, donderdag</p>'),
-(0,119,'nl',10,'N','T',0,'','<h1>Dokter<br />Lies Gheyle</h1>\n<p class=\"aanwezig\">is aanwezig</p>\n<p><strong>ochtend</strong> (08:30 - 12:00)<br /> maandag, dinsdag, donderdag</p>\n<p><strong>middag</strong> (14:00 - 16:00)<br /> dinsdag</p>\n<p><strong>avond</strong> (17:00 - 19:00)<br /> maandag, woensdag, vrijdag</p>'),
-(0,117,'nl',10,'N','T',0,'','<h1>Dokter<br />Sabine Fevery</h1>\n<p class=\"aanwezig\">is aanwezig</p>\n<p><strong>ochtend</strong> (08:30 - 12:00)<br />dinsdag, woensdag, vrijdag</p>\n<p><strong>middag</strong> (14:00 - 16:00)<br /><br /></p>\n<p><strong>avond</strong> (17:00 - 19:00)<br /> maandag, donderdag<img title=\"- nog maar eentje\" src=\"../data/images/48.png\" alt=\"- nog maar eentje\" width=\"24\" height=\"23\" /></p>'),
-(0,121,'nl',10,'N','T',0,'','<h1>Dokter<br />Lies Delameillieure</h1>\n<p class=\"aanwezig\">is aanwezig</p>\n<p><strong>ochtend</strong> (08:30 - 12:00)<br />woensdag, donderdag</p>\n<p><strong>middag</strong> (14:00 - 16:00)<br />maandag, woensdag, donderdag</p>\n<p><strong>avond</strong> (17:00 - 19:00)<br />dinsdag, vrijdag</p>'),
-(0,103,'nl',10,'N','T',0,'','<p>U kan elke werkdag &eacute;&eacute;n van de artsen bereiken van 08:00 tot 21:00 (vrijdagavond tot 19:00).<br /> Voor dringende zaken na 21u raden wij u aan de wachtdienst te contacteren.</p>\n<p><a class=\"maakAfspraak button icons\" href=\"afspraak\">Kilk hier voor een afspraak</a></p>\n<p>Het secretariaat is bereikbaar van <strong>maandag - vrijdag</strong> van <strong>08:00 - 12:00</strong> en van <strong>16:00 - 19:00</strong></p>\n<table class=\"bezoekmoment\">\n<tbody>\n<tr><th>&nbsp;</th><th>Ochtend<br /><span>08:00 - 12:00</span></th><th>Middag<br /><span>14:00 - 16:00</span></th><th>Avond<br /><span>16:00 - 18:00</span></th></tr>\n<tr class=\"even\">\n<td class=\"day\">Maandag</td>\n<td><span class=\"dr\">dr. Lies Gheyle</span><span class=\"dr\">dr. Hilde Tack</span></td>\n<td><span class=\"dr\">dr. Lies Delameillieure</span><span class=\"dr\">dr. Hilde Tack</span></td>\n<td><span class=\"dr\">dr. Sabine Fevery</span><span class=\"dr\">dr. Lies Gheyle</span></td>\n</tr>\n<tr>\n<td class=\"day\">Dinsdag</td>\n<td><span class=\"dr\">dr. Lies Gheyle</span><span class=\"dr\">dr. Sabine Fevery</span></td>\n<td><span class=\"dr\">dr. Lies Gheyle</span></td>\n<td><span class=\"dr\">dr. Lies Delameillieure</span><span class=\"dr\">dr. Hilde Tack</span></td>\n</tr>\n<tr class=\"even\">\n<td class=\"day\">Woensdag</td>\n<td><span class=\"dr\">dr. Sabine Fevery</span><span class=\"dr\">dr. Lies Delameillieure</span></td>\n<td><span class=\"dr\">dr. Lies Delameillieure</span></td>\n<td><span class=\"dr\">dr. Lies Gheyle</span></td>\n</tr>\n<tr>\n<td class=\"day\">Donderdag</td>\n<td><span class=\"dr\">dr. Lies Gheyle</span><span class=\"dr\">dr. Lies Delameillieure</span></td>\n<td><span class=\"dr\">dr. Lies Delameillieure</span></td>\n<td><span class=\"dr\">dr. Sabine Fevery</span><span class=\"dr\">dr. Hilde Tack</span></td>\n</tr>\n<tr class=\"even\">\n<td class=\"day\">Vrijdag</td>\n<td><span class=\"dr\">dr. Sabine Fevery</span><span class=\"dr\">dr. Hilde Tack</span></td>\n<td><span class=\"dr\">dr. Hilde Tack</span></td>\n<td><span class=\"dr\">dr. Lies Gheyle</span><span class=\"dr\">dr. Lies Delameillieure</span></td>\n</tr>\n</tbody>\n</table>'),
-(0,111,'nl',10,'N','T',0,'','<p>Indien u wegens een (on)voorziene omstandigheid toch niet kan verschijnen op uw afspraak, appreci&euml;ren wij het ten zeerste dit tijdig te annuleren.</p>\n<p>Afspraken die niet tijdig geannuleerd worden zonder een aanvaardbare reden worden vanaf 01/04/2011 aangerekend zonder tussenkomst van de mutualiteiten.</p>'),
-(0,112,'nl',10,'N','T',0,'','<p><img style=\"float: right; margin: 5px;\" title=\"Attest\" src=\"../data/images/30.jpg\" alt=\"Attest\" width=\"154\" height=\"215\" />Voor al uw attesten en formulieren vragen wij om langs te komen op consultatie. Wij kunnen enkel bepaalde zaken attesteren na u gezien te hebben.</p>\n<p>Als arts mogen wij enkel attesten schrijven die stroken met de waarheid. Valse attesten zullen u steeds geweigerd worden.</p>\n<p>Gelieve uw medicatievoorschriften zoveel mogelijk tijdens de consultatie te vragen. Uw chronische medicatie kan verlengd worden voor&nbsp;een periode van&nbsp;3 maand.&nbsp;Uitzonderingen hierop zijn: de anticonceptiepil (12 maand) en schildkliermedicatie (6 maand).&nbsp;</p>'),
-(0,113,'nl',10,'N','T',0,'','<p>In uw globaal medisch dossier houden wij al uw medische gegevens bij die van belang zijn voor uw gezondheid. Dit is&nbsp;belangrijk om u de meest optimale zorg aan te bieden.&nbsp;</p>\n<p>Als u een globaal medisch dossier afsluit bij uw huisartsenpraktijk, krijgt u 30% meer terugbetaald van het ziekenfonds voor consultaties bij uw huisarts.</p>\n<p>Het globaal medisch dossier kan aangevraagd worden aan ons secretariaat. Het enige wat hiervoor nodig is, is een kleefbriefje van uw ziekenfonds.</p>\n<p>Het globaal medisch dossier wordt jaarlijks vernieuwd.</p>'),
-(0,114,'nl',10,'N','T',0,'','<p><img style=\"float: right; margin: 5px;\" title=\"Een es\" src=\"../data/images/31.jpg\" alt=\"Een es\" width=\"132\" height=\"180\" />Wij zijn 4 huisartsen die intensief samenwerken in &eacute;&eacute;n huisartsenpraktijk. Door een goed dossiersysteem en onze wekelijkse overlegmomenten, zorgen wij ervoor dat u bij alle 4 de artsen even goed terecht kan. Het blijft uiteraard uw keuze bij welke arts(en)&nbsp;u consulteert.</p>\n<p>Het is onze overtuiging dat samenwerken nuttig is. Hierdoor kunnen wij u een goede beschikbaarheid bieden, kunnen wij overleggen en vaak deelnemen aan bijscholingen. Dit zorgt ervoor dat we u de meest optimale zorg kunnen aanbieden.</p>\n<p>Door samen te werken in &eacute;&eacute;n praktijk, krijgen wij als arts tevens de mogelijkheid om tijd vrij te maken voor een eigen sociaal en familiaal leven.</p>'),
-(0,115,'nl',10,'N','T',0,'','<p>De huisartsenpraktijk \'De Essen\' is een jonge en dynamische groepspraktijk waar de zorg voor onze pati&euml;nten centraal staat.&nbsp;Wij&nbsp;willen&nbsp;deze zorg bieden,&nbsp;als team, zoveel&nbsp;als mogelijk wetenschappelijk onderbouwd,&nbsp;met respect&nbsp;voor&nbsp;uw en onze visie.&nbsp;<br />&nbsp;</p>\n<p>Om deze zorg mogelijk te maken,&nbsp;wensen wij een paar afspraken met u te maken. Deze zijn te vinden op onze website.&nbsp;<br />&nbsp;</p>\n<p>Wij hopen zo op een fijne samenwerking en bedanken u voor het vertrouwen dat u stelt in onze praktijk.</p>'),
-(0,116,'nl',10,'N','T',0,'','<ul class=\"simple\">\n<li>diagnose en behandeling van uw klachten</li>\n<li>bloedafname</li>\n<li>medicatievoorschriften</li>\n<li>afname van EKG (hartonderzoek)</li>\n<li>preoperatief onderzoek</li>\n<li>algemeen onderzoek aangevraagd door uw verzekeringsmakelaar</li>\n<li>gynaecologisch onderzoek&nbsp;(uitstrijkje)&nbsp;en borstonderzoek</li>\n<li>pilvoorschrift</li>\n<li>zwangerschapsdiagnose en opvolging, in samenwerking met uw gynaecoloog</li>\n<li>vaccinatie (ook van baby\'s en kinderen)</li>\n<li>gipsen van breuken</li>\n<li>hechten van een snijwonde</li>\n<li>bevriezen (cryotherapie) van verschillende huidletsels waaronder wratten</li>\n<li>een ondersteunend gesprek</li>\n<li>psychologische begeleiding</li>\n<li>medische en mentale begeleiding tijdens het levenseinde, in samenwerking met palliatief netwerk</li>\n<li>reisadvies</li>\n<li>advies i.v.m. allerlei gezondheidsproblemen</li>\n<li>bijhouden van je medisch dossier</li>\n<li>samenwerking met andere hulpverleners: kinesist, osteopaat, verpleegkundige, psycholoog,...</li>\n<li>eventuele verwijzing naar een specialist</li>\n</ul>'),
-(0,122,'nl',10,'N','T',0,'','<p>Vanaf 01/04/2011 kan u bij uw huisarts terecht voor een gratis preventief onderzoek, het GMD plus. Dit geldt voor alle personen tussen de 45 en 75 jaar die een GMD afgesloten hebben bij de huisarts.</p>\n<p>Deze consultatie wordt enkel in de voormiddag of namiddag aangeboden. Voor de consultatie wordt gevraagd aan de pati&euml;nt een vragenlijst in te vullen en die ingevuld mee te nemen op de dag van consultatie.</p>\n<p>Tijdens het gratis preventieve consult worden geen andere zaken besproken of medicatie voorgeschreven.</p>'),
-(0,123,'nl',10,'N','T',0,'','<p><img style=\"float: right; margin: 5px;\" title=\"Essenblad\" src=\"../data/images/33.jpg\" alt=\"\" width=\"299\" height=\"200\" /><strong>Karakter</strong></p>\n<p>De es heeft een bijzonder bekoorlijk karakter en is daardoor zeer geliefd. Fair Play staat hoog in zijn vaandel. De es bezit veel zelfdiscipline en is erg ambitieus. Kleurloze meelopers zijn onder essen niet te vinden en zij tarten het lot graag. Hij wil graag goed overkomen en etaleren dat hij veel kennis heeft van alles wat het leven te bieden heeft. Of dat nu wel of niet het geval is, de es weet altijd de schijn op te houden. <br /> Op grond van zijn levendige karakter, optimisme en verlangen doet hij steeds wat hij voor juist houdt en van kritiek trekt hij zich niets aan. Als de es een doel heeft, stopt hij niet voordat dit is bereikt. Hij kan rustig op bepaalde kansen wachten en wanneer een kans zich voordoet, grijpt hij die met beide handen aan en weet hij zijn mogelijkheden optimaal te benutten. Het lijkt wel of de es zelfs de moeilijkste doelen spelenderwijs bereikt. <br /> Door drukte in zijn omgeving kan hij af en toe een beetje in de war zijn, waardoor hij soms zeer ego&iuml;stisch is en zich kan opdringen aan de omgeving. Zelfzuchtig is hij echter niet, want hij is ook bereid anderen te helpen. Bovendien is hij behalve een wijze en intelligente boom, ook best een lieve en goedige boom.</p>\n<p>In de liefde is de es trouw en voorzichtig, vaak wint het verstand het van zijn gevoel. Een es hecht veel waarde aan vertrouwen, vrienden kunnen dan ook op hem bouwen. Bevriend raken met de es is echter niet zo gemakkelijk. Hij zal niet direct laten merken dat hij je heeft opgemerkt, laat staan dat je gemakkelijk contact met hem kunt krijgen. Je moet er wel wat voor doen. Ten eerste moet je laten merken dat je respect hebt voor zijn veelheid aan ervaringen, voor zijn levenswijsheid en dat je zijn goede raad hoog acht. Je moet begrip tonen voor het feit dat hij zo groot is, dat is hij namelijk niet zonder reden: op die manier ziet en hoort hij zoveel, dat hij altijd op de hoogte is van de laatste nieuwtjes. Daardoor is hij ondanks zijn ogenschijnlijke ongenaakbaarheid geliefd bij iedereen die op de hoogte wil blijven van de actuele zaken. <br /> Je moet zijn raad echter wel met een korreltje zout nemen, want hij heeft de neiging de zaken enigszins te verdraaien naar zijn eigen inzicht, zodat de waarheid wel eens in het gedrang kan komen. Ten tweede moet je er rekening mee houden dat als hij eenmaal zijn aandacht op je heeft gevestigd er een communicatie tot stand is gekomen, dat deze dan ook onvoorwaardelijk is. Er is op dat moment geen ruimte voor de mening of invloed van derden. Hij is er dan alleen maar voor jou en jij moet je dan ook volledig op hem richten.</p>\n<p>&nbsp;</p>\n<p><strong>Eigenschappen <br /></strong> Ambitieus, intelligent, wijs, stralend, hulpvaardig, traditioneel, melancholisch, controlerend, zoekend naar het ongewone, ego&iuml;stisch, trouw, trots, optimistisch en voorzichtig in de liefde</p>\n<p>&nbsp;</p>\n<p><strong>Mythes <br /></strong> Fraxinus betekent speer of lans, exelcior betekent zoveel als &lsquo;boven de anderen uit stekend&rsquo;. <br /> De es was lang geleden voor de bewoners van Noord-Europa de belangrijkste boom. Ze zagen in hem de drager van de wereld. De wereld-es had zijn wortels in de onderwereld, zijn stam in de mensenwereld en zijn kroon in de hemel waar de goden woonden. Het was een symbool voor onsterfelijkheid en levenskracht. In allerlei legenden en godsdiensten wordt de es ge&euml;erd als heilige boom, beschermer des goden en als beschermheilige van de oogst en omdat essenhout zo flexibel en Voor de Germanen was de es de boom van het leven, de wereld van de es verdorde nooit. De goden bezochten de nornen, drie Germaanse schikgodinnen die het lot bepaalden, onder de wereld-es, als zij iets wilden weten over de toekomst. Veel van onze voorouders stonden te luisteren naar het geritsel van de bladeren van deze boom in de hoop zo iets van hun toekomst op te vangen.</p>\n<p>Volgens de Noorse, Germaanse en Griekse mythologie is de man uit een es ontstaan. Stoere Vikingen werden ook wel Esmensen genoemd en de Germaanse oppergod Wodan (ook wel Odin of Ygg genaamd) sneed een speer uit deze boom. Nemesis, de Griekse godin der wake, droeg een staf van essenhout en de lansen van Griekse helden uit de Illias en de Odyssee waren eveneens van essenhout. Achilles doodde Hetor tijdens het gevecht om Troje met een speer van dit hout. <br /> Gebruik <br /> De Vikingen geloofden in de toverkracht van de es en zij maakten speerschachten, mesheften en boten van essenhout, omdat het hen bijzondere macht zou verlenen en tegen het kwaad zou beschermen. Het zaad van de es zou bovendien bij mannen lustopwekkend werken. Kelten dronken en aten het liefst uit een essenhouten beker en schaal. Dit gaf kracht en genas. Heksen gebruikten essenhout om hun bezemsteel van te maken. <br /> De Romein Plinius schrijft dat de es slangen afschrikt. Als je een slang laat kiezen door essenhout te schuiven of door vuur, zal ze eerder door het vuur kruipen dan in essenloof. Daarom hingen bezorgde moeders hun baby&rsquo;s in hangmatjes tussen essen, zo durfde geen enkel gevaarlijk dier zich te tonen.</p>\n<p>De es is een grote en sterke boom waarvan het hout zo vreselijk hard en tegelijkertijd toch buigzaam is. Essenhout werd behalve voor het maken van allerlei technische voorwerpen, zoals disselbomen, wielen en scheepsmasten, ook gebruikt voor wapens als speren en pijlen. In de oudheid werd het hout in woningen gebruikt. Tegenwoordig wordt essenhout vooral gebruikt voor het maken van meubels, gymnastiek- en sportwerktuigen (ski&rsquo;s) en koetswerk.</p>\n<p>&nbsp;</p>\n<p><strong>Genezing</strong> <br /> De dru&iuml;den sneden toverstafjes, zogenaamde runren, uit de es. <br /> Een amulet van essenhout bezat een bijzondere beschermende werking tegen vervloekingen en kwade bedoelingen van heksen. <br /> De Kelten geloofden dat de es verbitterde en ontgoochelde mensen uit de kring van doemdenken kon verlossen. Elke dag een wandeling naar de es, er even tegenaan leunen terwijl je je kommer en kwel vertelde, gaf je energie en levenskracht. <br /> Hippocrates raadde essenbladerenthee aan tegen reuma, jicht en koorts</p>\n<p>&nbsp;</p>\n<p><em>Bron: Mari&euml;lle Lapidaire; boomkompas.blogspot.com</em></p>'),
-(0,108,'nl',10,'N','T',0,'','<p>U kan elke werkdag &eacute;&eacute;n van de artsen bereiken van 8u tot 21u (de vrijdagavond tot 19u). Voor dringende zaken na 21u raden wij u aan de wachtdienst te contacteren.</p>\n<p>Tijdens het weekend en op feestdagen kan u terecht bij de wachtdienst:</p>\n<p>- Regio Groot Brugge:&nbsp;<strong>078/15.15.90</strong></p>\n<p><strong>-</strong>&nbsp;Regio Varsenare, Jabbeke, Snellegem, Stalhille en Zerkegem:&nbsp;<strong>050/39.72.62</strong></p>'),
-(0,104,'nl',10,'N','T',0,'','<p>Wij hebben als huisarts ook nood aan vakantie en vrije tijd. Daarnaast kunnen wij ook afwezig zijn voor het volgen van bepaalde opleidingen.</p>\n<p>De&nbsp;afwezigheid van een&nbsp;arts&nbsp;wordt een tijd op voorhand aangekondigd op deze website en in de wachtzaal. De consultaties worden dan overgenomen door de overblijvende artsen.<strong><br /></strong></p>\n<p><strong>Dr. Tack zal afwezig zijn op:</strong><br />- 01/10/12 t/m 15/10/12</p>\n<p><strong>Dr. Gheyle zal afwezig zijn op:</strong><br />- 29/10/12 t/m 19/11/12</p>\n<p><strong>Dr. Fevery zal afwezig zijn op:</strong><br />- 07/09/12 t/m 23/09/12</p>'),
-(0,107,'nl',10,'N','T',0,'','<p>In onze praktijk&nbsp;beschikken&nbsp;wij over de ideale omstandigheden om u te onderzoeken en te behandelen (aanwezigheid van medische materiaal en volledige dossiergegevens).</p>\n<p>Daarom vragen wij om zoveel&nbsp;als mogelijk&nbsp;bij ons op consultatie te komen.</p>\n<p>Indien dit wegens omstandigheden niet mogelijk is, kan u steeds een huisbezoek aanvragen.&nbsp;Gelieve dit bij voorkeur te doen tussen 08u00 en 10u30.</p>\n<p>Voor de huisbezoeken hebben wij een beurtrolsysteem. Wij kunnen u niet steeds garanderen dat uw huisarts naar keuze kan langskomen voor huisbezoeken die op de dag zelf worden aangevraagd. Dit kan enkel gegarandeerd worden voor huisbezoeken die op voorhand gepland worden.</p>\n<hr />\n<p>Voor nieuwe pati&euml;nten (aansluiting in praktijk na 1 januari 2009) kunnen wij enkel nog huisbezoeken doen in de regio\'s St-Andries, St-Michiels en Varsenare.</p>');
-
-INSERT INTO `content` VALUES
-(0,106,'en',10,'N','T',0,'','<div class=\"gebouw\"><img title=\"Praktijk\" src=\"../data/images/34.jpg\" alt=\"De Praktijk\" width=\"556\" height=\"286\" /></div>\n<p>Het secretariaat is bereikbaar<br /> van <strong>maandag - vrijdag</strong><br /> van <strong>8:00 - 12:00</strong> en van <strong>16:00 - 19:00</strong></p>\n<div class=\"persoon\"><img title=\"Sabine\" src=\"../data/images/27.png\" alt=\"Sabine\" width=\"180\" height=\"238\" /><br />\n<p>Sabine</p>\n</div>\n<div class=\"persoon\"><img title=\"Nele\" src=\"../data/images/28.jpg\" alt=\"Nele\" width=\"176\" height=\"238\" /><br />\n<p>Nele</p>\n</div>\n<p>Gelieve zoveel mogelijk te bellen tijdens de aanwezigheid van onze secretaresse. Zij beantwoordt onze telefoon tijdens de raadplegingen en de huisbezoeken. Zij tracht u zo goed mogelijk van dienst te zijn. Indien ons advies nodig is, wordt u doorgeschakeld.</p>\n<div class=\"gebouw\"><img title=\"Kaartje\" src=\"../data/images/35.JPG\" alt=\"\" width=\"556\" /></div>\n<p><a href=\"privacy\">Privacy verklaring</a> - <a href=\"disclaimer\">Disclaimer</a></p>'),
-(0,120,'en',10,'N','T',0,'','<h1>Nieuwe<br />collega-arts<br />vanaf 01/09/2012</h1>\n<p>Dr. Lies Delameillieure is afgestudeerd als basisarts en vervolledigt haar opleiding tot huisarts bij ons.&nbsp;Wij zijn ervan overtuigd dat zij een meerwaarde betekent zowel op medisch als organisatorisch vlak en hopen daarom ook te kunnen rekenen op uw enthousiasme.</p>'),
-(0,118,'en',10,'N','T',0,'','<h1>Dokter<br />Hilde Tack</h1>\n<p class=\"aanwezig\">is aanwezig</p>\n<p><strong>ochtend</strong> (08:30 - 12:00)<br /> maandag, vrijdag</p>\n<p><strong>middag</strong> (14:00 - 16:00)<br />maandag, vrijdag</p>\n<p><strong>avond</strong> (17:00 - 19:00)<br />dinsdag, donderdag</p>'),
-(0,119,'en',10,'N','T',0,'','<h1>Dokter<br />Lies Gheyle</h1>\n<p class=\"aanwezig\">is aanwezig</p>\n<p><strong>ochtend</strong> (08:30 - 12:00)<br /> maandag, dinsdag, donderdag</p>\n<p><strong>middag</strong> (14:00 - 16:00)<br /> dinsdag</p>\n<p><strong>avond</strong> (17:00 - 19:00)<br /> maandag, woensdag, vrijdag</p>'),
-(0,117,'en',10,'N','T',0,'','<h1>Dokter<br />Sabine Fevery</h1>\n<p class=\"aanwezig\">is aanwezig</p>\n<p><strong>ochtend</strong> (08:30 - 12:00)<br />dinsdag, woensdag, vrijdag</p>\n<p><strong>middag</strong> (14:00 - 16:00)<br /><br /></p>\n<p><strong>avond</strong> (17:00 - 19:00)<br /> maandag, donderdag<img title=\"- nog maar eentje\" src=\"../data/images/48.png\" alt=\"- nog maar eentje\" width=\"24\" height=\"23\" /></p>'),
-(0,121,'en',10,'N','T',0,'','<h1>Dokter<br />Lies Delameillieure</h1>\n<p class=\"aanwezig\">is aanwezig</p>\n<p><strong>ochtend</strong> (08:30 - 12:00)<br />woensdag, donderdag</p>\n<p><strong>middag</strong> (14:00 - 16:00)<br />maandag, woensdag, donderdag</p>\n<p><strong>avond</strong> (17:00 - 19:00)<br />dinsdag, vrijdag</p>'),
-(0,103,'en',10,'N','T',0,'','<p>U kan elke werkdag &eacute;&eacute;n van de artsen bereiken van 08:00 tot 21:00 (vrijdagavond tot 19:00).<br /> Voor dringende zaken na 21u raden wij u aan de wachtdienst te contacteren.</p>\n<p><a class=\"maakAfspraak button icons\" href=\"afspraak\">Kilk hier voor een afspraak</a></p>\n<p>Het secretariaat is bereikbaar van <strong>maandag - vrijdag</strong> van <strong>08:00 - 12:00</strong> en van <strong>16:00 - 19:00</strong></p>\n<table class=\"bezoekmoment\">\n<tbody>\n<tr><th>&nbsp;</th><th>Ochtend<br /><span>08:00 - 12:00</span></th><th>Middag<br /><span>14:00 - 16:00</span></th><th>Avond<br /><span>16:00 - 18:00</span></th></tr>\n<tr class=\"even\">\n<td class=\"day\">Maandag</td>\n<td><span class=\"dr\">dr. Lies Gheyle</span><span class=\"dr\">dr. Hilde Tack</span></td>\n<td><span class=\"dr\">dr. Lies Delameillieure</span><span class=\"dr\">dr. Hilde Tack</span></td>\n<td><span class=\"dr\">dr. Sabine Fevery</span><span class=\"dr\">dr. Lies Gheyle</span></td>\n</tr>\n<tr>\n<td class=\"day\">Dinsdag</td>\n<td><span class=\"dr\">dr. Lies Gheyle</span><span class=\"dr\">dr. Sabine Fevery</span></td>\n<td><span class=\"dr\">dr. Lies Gheyle</span></td>\n<td><span class=\"dr\">dr. Lies Delameillieure</span><span class=\"dr\">dr. Hilde Tack</span></td>\n</tr>\n<tr class=\"even\">\n<td class=\"day\">Woensdag</td>\n<td><span class=\"dr\">dr. Sabine Fevery</span><span class=\"dr\">dr. Lies Delameillieure</span></td>\n<td><span class=\"dr\">dr. Lies Delameillieure</span></td>\n<td><span class=\"dr\">dr. Lies Gheyle</span></td>\n</tr>\n<tr>\n<td class=\"day\">Donderdag</td>\n<td><span class=\"dr\">dr. Lies Gheyle</span><span class=\"dr\">dr. Lies Delameillieure</span></td>\n<td><span class=\"dr\">dr. Lies Delameillieure</span></td>\n<td><span class=\"dr\">dr. Sabine Fevery</span><span class=\"dr\">dr. Hilde Tack</span></td>\n</tr>\n<tr class=\"even\">\n<td class=\"day\">Vrijdag</td>\n<td><span class=\"dr\">dr. Sabine Fevery</span><span class=\"dr\">dr. Hilde Tack</span></td>\n<td><span class=\"dr\">dr. Hilde Tack</span></td>\n<td><span class=\"dr\">dr. Lies Gheyle</span><span class=\"dr\">dr. Lies Delameillieure</span></td>\n</tr>\n</tbody>\n</table>'),
-(0,111,'en',10,'N','T',0,'','<p>Indien u wegens een (on)voorziene omstandigheid toch niet kan verschijnen op uw afspraak, appreci&euml;ren wij het ten zeerste dit tijdig te annuleren.</p>\n<p>Afspraken die niet tijdig geannuleerd worden zonder een aanvaardbare reden worden vanaf 01/04/2011 aangerekend zonder tussenkomst van de mutualiteiten.</p>'),
-(0,112,'en',10,'N','T',0,'','<p><img style=\"float: right; margin: 5px;\" title=\"Attest\" src=\"../data/images/30.jpg\" alt=\"Attest\" width=\"154\" height=\"215\" />Voor al uw attesten en formulieren vragen wij om langs te komen op consultatie. Wij kunnen enkel bepaalde zaken attesteren na u gezien te hebben.</p>\n<p>Als arts mogen wij enkel attesten schrijven die stroken met de waarheid. Valse attesten zullen u steeds geweigerd worden.</p>\n<p>Gelieve uw medicatievoorschriften zoveel mogelijk tijdens de consultatie te vragen. Uw chronische medicatie kan verlengd worden voor&nbsp;een periode van&nbsp;3 maand.&nbsp;Uitzonderingen hierop zijn: de anticonceptiepil (12 maand) en schildkliermedicatie (6 maand).&nbsp;</p>'),
-(0,113,'en',10,'N','T',0,'','<p>In uw globaal medisch dossier houden wij al uw medische gegevens bij die van belang zijn voor uw gezondheid. Dit is&nbsp;belangrijk om u de meest optimale zorg aan te bieden.&nbsp;</p>\n<p>Als u een globaal medisch dossier afsluit bij uw huisartsenpraktijk, krijgt u 30% meer terugbetaald van het ziekenfonds voor consultaties bij uw huisarts.</p>\n<p>Het globaal medisch dossier kan aangevraagd worden aan ons secretariaat. Het enige wat hiervoor nodig is, is een kleefbriefje van uw ziekenfonds.</p>\n<p>Het globaal medisch dossier wordt jaarlijks vernieuwd.</p>'),
-(0,114,'en',10,'N','T',0,'','<p><img style=\"float: right; margin: 5px;\" title=\"Een es\" src=\"../data/images/31.jpg\" alt=\"Een es\" width=\"132\" height=\"180\" />Wij zijn 4 huisartsen die intensief samenwerken in &eacute;&eacute;n huisartsenpraktijk. Door een goed dossiersysteem en onze wekelijkse overlegmomenten, zorgen wij ervoor dat u bij alle 4 de artsen even goed terecht kan. Het blijft uiteraard uw keuze bij welke arts(en)&nbsp;u consulteert.</p>\n<p>Het is onze overtuiging dat samenwerken nuttig is. Hierdoor kunnen wij u een goede beschikbaarheid bieden, kunnen wij overleggen en vaak deelnemen aan bijscholingen. Dit zorgt ervoor dat we u de meest optimale zorg kunnen aanbieden.</p>\n<p>Door samen te werken in &eacute;&eacute;n praktijk, krijgen wij als arts tevens de mogelijkheid om tijd vrij te maken voor een eigen sociaal en familiaal leven.</p>'),
-(0,115,'en',10,'N','T',0,'','<p>De huisartsenpraktijk \'De Essen\' is een jonge en dynamische groepspraktijk waar de zorg voor onze pati&euml;nten centraal staat.&nbsp;Wij&nbsp;willen&nbsp;deze zorg bieden,&nbsp;als team, zoveel&nbsp;als mogelijk wetenschappelijk onderbouwd,&nbsp;met respect&nbsp;voor&nbsp;uw en onze visie.&nbsp;<br />&nbsp;</p>\n<p>Om deze zorg mogelijk te maken,&nbsp;wensen wij een paar afspraken met u te maken. Deze zijn te vinden op onze website.&nbsp;<br />&nbsp;</p>\n<p>Wij hopen zo op een fijne samenwerking en bedanken u voor het vertrouwen dat u stelt in onze praktijk.</p>'),
-(0,116,'en',10,'N','T',0,'','<ul class=\"simple\">\n<li>diagnose en behandeling van uw klachten</li>\n<li>bloedafname</li>\n<li>medicatievoorschriften</li>\n<li>afname van EKG (hartonderzoek)</li>\n<li>preoperatief onderzoek</li>\n<li>algemeen onderzoek aangevraagd door uw verzekeringsmakelaar</li>\n<li>gynaecologisch onderzoek&nbsp;(uitstrijkje)&nbsp;en borstonderzoek</li>\n<li>pilvoorschrift</li>\n<li>zwangerschapsdiagnose en opvolging, in samenwerking met uw gynaecoloog</li>\n<li>vaccinatie (ook van baby\'s en kinderen)</li>\n<li>gipsen van breuken</li>\n<li>hechten van een snijwonde</li>\n<li>bevriezen (cryotherapie) van verschillende huidletsels waaronder wratten</li>\n<li>een ondersteunend gesprek</li>\n<li>psychologische begeleiding</li>\n<li>medische en mentale begeleiding tijdens het levenseinde, in samenwerking met palliatief netwerk</li>\n<li>reisadvies</li>\n<li>advies i.v.m. allerlei gezondheidsproblemen</li>\n<li>bijhouden van je medisch dossier</li>\n<li>samenwerking met andere hulpverleners: kinesist, osteopaat, verpleegkundige, psycholoog,...</li>\n<li>eventuele verwijzing naar een specialist</li>\n</ul>'),
-(0,122,'en',10,'N','T',0,'','<p>Vanaf 01/04/2011 kan u bij uw huisarts terecht voor een gratis preventief onderzoek, het GMD plus. Dit geldt voor alle personen tussen de 45 en 75 jaar die een GMD afgesloten hebben bij de huisarts.</p>\n<p>Deze consultatie wordt enkel in de voormiddag of namiddag aangeboden. Voor de consultatie wordt gevraagd aan de pati&euml;nt een vrageenijst in te vullen en die ingevuld mee te nemen op de dag van consultatie.</p>\n<p>Tijdens het gratis preventieve consult worden geen andere zaken besproken of medicatie voorgeschreven.</p>'),
-(0,123,'en',10,'N','T',0,'','<p><img style=\"float: right; margin: 5px;\" title=\"Essenblad\" src=\"../data/images/33.jpg\" alt=\"\" width=\"299\" height=\"200\" /><strong>Karakter</strong></p>\n<p>De es heeft een bijzonder bekoorlijk karakter en is daardoor zeer geliefd. Fair Play staat hoog in zijn vaandel. De es bezit veel zelfdiscipline en is erg ambitieus. Kleurloze meelopers zijn onder essen niet te vinden en zij tarten het lot graag. Hij wil graag goed overkomen en etaleren dat hij veel kennis heeft van alles wat het leven te bieden heeft. Of dat nu wel of niet het geval is, de es weet altijd de schijn op te houden. <br /> Op grond van zijn levendige karakter, optimisme en verlangen doet hij steeds wat hij voor juist houdt en van kritiek trekt hij zich niets aan. Als de es een doel heeft, stopt hij niet voordat dit is bereikt. Hij kan rustig op bepaalde kansen wachten en wanneer een kans zich voordoet, grijpt hij die met beide handen aan en weet hij zijn mogelijkheden optimaal te benutten. Het lijkt wel of de es zelfs de moeilijkste doelen spelenderwijs bereikt. <br /> Door drukte in zijn omgeving kan hij af en toe een beetje in de war zijn, waardoor hij soms zeer ego&iuml;stisch is en zich kan opdringen aan de omgeving. Zelfzuchtig is hij echter niet, want hij is ook bereid anderen te helpen. Bovendien is hij behalve een wijze en intelligente boom, ook best een lieve en goedige boom.</p>\n<p>In de liefde is de es trouw en voorzichtig, vaak wint het verstand het van zijn gevoel. Een es hecht veel waarde aan vertrouwen, vrienden kunnen dan ook op hem bouwen. Bevriend raken met de es is echter niet zo gemakkelijk. Hij zal niet direct laten merken dat hij je heeft opgemerkt, laat staan dat je gemakkelijk contact met hem kunt krijgen. Je moet er wel wat voor doen. Ten eerste moet je laten merken dat je respect hebt voor zijn veelheid aan ervaringen, voor zijn levenswijsheid en dat je zijn goede raad hoog acht. Je moet begrip tonen voor het feit dat hij zo groot is, dat is hij namelijk niet zonder reden: op die manier ziet en hoort hij zoveel, dat hij altijd op de hoogte is van de laatste nieuwtjes. Daardoor is hij ondanks zijn ogenschijijke ongenaakbaarheid geliefd bij iedereen die op de hoogte wil blijven van de actuele zaken. <br /> Je moet zijn raad echter wel met een korreltje zout nemen, want hij heeft de neiging de zaken enigszins te verdraaien naar zijn eigen inzicht, zodat de waarheid wel eens in het gedrang kan komen. Ten tweede moet je er rekening mee houden dat als hij eenmaal zijn aandacht op je heeft gevestigd er een communicatie tot stand is gekomen, dat deze dan ook onvoorwaardelijk is. Er is op dat moment geen ruimte voor de mening of invloed van derden. Hij is er dan alleen maar voor jou en jij moet je dan ook volledig op hem richten.</p>\n<p>&nbsp;</p>\n<p><strong>Eigenschappen <br /></strong> Ambitieus, intelligent, wijs, stralend, hulpvaardig, traditioneel, melancholisch, controlerend, zoekend naar het ongewone, ego&iuml;stisch, trouw, trots, optimistisch en voorzichtig in de liefde</p>\n<p>&nbsp;</p>\n<p><strong>Mythes <br /></strong> Fraxinus betekent speer of lans, exelcior betekent zoveel als &lsquo;boven de anderen uit stekend&rsquo;. <br /> De es was lang geleden voor de bewoners van Noord-Europa de belangrijkste boom. Ze zagen in hem de drager van de wereld. De wereld-es had zijn wortels in de onderwereld, zijn stam in de mensenwereld en zijn kroon in de hemel waar de goden woonden. Het was een symbool voor onsterfelijkheid en levenskracht. In allerlei legenden en godsdiensten wordt de es ge&euml;erd als heilige boom, beschermer des goden en als beschermheilige van de oogst en omdat essenhout zo flexibel en Voor de Germanen was de es de boom van het leven, de wereld van de es verdorde nooit. De goden bezochten de nornen, drie Germaanse schikgodinnen die het lot bepaalden, onder de wereld-es, als zij iets wilden weten over de toekomst. Veel van onze voorouders stonden te luisteren naar het geritsel van de bladeren van deze boom in de hoop zo iets van hun toekomst op te vangen.</p>\n<p>Volgens de Noorse, Germaanse en Griekse mythologie is de man uit een es ontstaan. Stoere Vikingen werden ook wel Esmensen genoemd en de Germaanse oppergod Wodan (ook wel Odin of Ygg genaamd) sneed een speer uit deze boom. Nemesis, de Griekse godin der wake, droeg een staf van essenhout en de lansen van Griekse helden uit de Illias en de Odyssee waren eveneens van essenhout. Achilles doodde Hetor tijdens het gevecht om Troje met een speer van dit hout. <br /> Gebruik <br /> De Vikingen geloofden in de toverkracht van de es en zij maakten speerschachten, mesheften en boten van essenhout, omdat het hen bijzondere macht zou verlenen en tegen het kwaad zou beschermen. Het zaad van de es zou bovendien bij mannen lustopwekkend werken. Kelten dronken en aten het liefst uit een essenhouten beker en schaal. Dit gaf kracht en genas. Heksen gebruikten essenhout om hun bezemsteel van te maken. <br /> De Romein Plinius schrijft dat de es slangen afschrikt. Als je een slang laat kiezen door essenhout te schuiven of door vuur, zal ze eerder door het vuur kruipen dan in essenloof. Daarom hingen bezorgde moeders hun baby&rsquo;s in hangmatjes tussen essen, zo durfde geen enkel gevaarlijk dier zich te tonen.</p>\n<p>De es is een grote en sterke boom waarvan het hout zo vreselijk hard en tegelijkertijd toch buigzaam is. Essenhout werd behalve voor het maken van allerlei technische voorwerpen, zoals disselbomen, wielen en scheepsmasten, ook gebruikt voor wapens als speren en pijlen. In de oudheid werd het hout in woningen gebruikt. Tegenwoordig wordt essenhout vooral gebruikt voor het maken van meubels, gymnastiek- en sportwerktuigen (ski&rsquo;s) en koetswerk.</p>\n<p>&nbsp;</p>\n<p><strong>Genezing</strong> <br /> De dru&iuml;den sneden toverstafjes, zogenaamde runren, uit de es. <br /> Een amulet van essenhout bezat een bijzondere beschermende werking tegen vervloekingen en kwade bedoelingen van heksen. <br /> De Kelten geloofden dat de es verbitterde en ontgoochelde mensen uit de kring van doemdenken kon verlossen. Elke dag een wandeling naar de es, er even tegenaan leunen terwijl je je kommer en kwel vertelde, gaf je energie en levenskracht. <br /> Hippocrates raadde essenbladerenthee aan tegen reuma, jicht en koorts</p>\n<p>&nbsp;</p>\n<p><em>Bron: Mari&euml;lle Lapidaire; boomkompas.blogspot.com</em></p>'),
-(0,108,'en',10,'N','T',0,'','<p>U kan elke werkdag &eacute;&eacute;n van de artsen bereiken van 8u tot 21u (de vrijdagavond tot 19u). Voor dringende zaken na 21u raden wij u aan de wachtdienst te contacteren.</p>\n<p>Tijdens het weekend en op feestdagen kan u terecht bij de wachtdienst:</p>\n<p>- Regio Groot Brugge:&nbsp;<strong>078/15.15.90</strong></p>\n<p><strong>-</strong>&nbsp;Regio Varsenare, Jabbeke, Snellegem, Stalhille en Zerkegem:&nbsp;<strong>050/39.72.62</strong></p>'),
-(0,104,'en',10,'N','T',0,'','<p>Wij hebben als huisarts ook nood aan vakantie en vrije tijd. Daarnaast kunnen wij ook afwezig zijn voor het volgen van bepaalde opleidingen.</p>\n<p>De&nbsp;afwezigheid van een&nbsp;arts&nbsp;wordt een tijd op voorhand aangekondigd op deze website en in de wachtzaal. De consultaties worden dan overgenomen door de overblijvende artsen.<strong><br /></strong></p>\n<p><strong>Dr. Tack zal afwezig zijn op:</strong><br />- 01/10/12 t/m 15/10/12</p>\n<p><strong>Dr. Gheyle zal afwezig zijn op:</strong><br />- 29/10/12 t/m 19/11/12</p>\n<p><strong>Dr. Fevery zal afwezig zijn op:</strong><br />- 07/09/12 t/m 23/09/12</p>'),
-(0,107,'en',10,'N','T',0,'','<p>In onze praktijk&nbsp;beschikken&nbsp;wij over de ideale omstandigheden om u te onderzoeken en te behandelen (aanwezigheid van medische materiaal en volledige dossiergegevens).</p>\n<p>Daarom vragen wij om zoveel&nbsp;als mogelijk&nbsp;bij ons op consultatie te komen.</p>\n<p>Indien dit wegens omstandigheden niet mogelijk is, kan u steeds een huisbezoek aanvragen.&nbsp;Gelieve dit bij voorkeur te doen tussen 08u00 en 10u30.</p>\n<p>Voor de huisbezoeken hebben wij een beurtrolsysteem. Wij kunnen u niet steeds garanderen dat uw huisarts naar keuze kan langskomen voor huisbezoeken die op de dag zelf worden aangevraagd. Dit kan enkel gegarandeerd worden voor huisbezoeken die op voorhand gepland worden.</p>\n<hr />\n<p>Voor nieuwe pati&euml;nten (aansluiting in praktijk na 1 januari 2009) kunnen wij enkel nog huisbezoeken doen in de regio\'s St-Andries, St-Michiels en Varsenare.</p>');
-
-
-
-INSERT INTO `content` VALUES 
-(0,99,'nl',10,'Y','S',0,'From Email','secretariaat@de-essen.be'),
-(0,99,'nl',20,'Y','S',0,'From Name','Secretariaat Huisartsenpraktijk De Essen'),
-(0,99,'nl',30,'Y','S',0,'To Email','secretariaat@de-essen.be'),
-(0,99,'nl',40,'Y','S',0,'To Name','Website De-Essen.be'),
-(0,99,'nl',50,'Y','S',0,'Address','Lagebekeweg 1, 8200 Sint-Andries'),
-(0,99,'nl',60,'Y','S',0,'Signed','Website De-Essen.be'),
-(0,99,'nl',70,'Y','S',0,'Secretary','Dames'),
-(0,99,'nl',80,'Y','S',0,'Mail Title','Afspraak De Essen');
-
-
-
-INSERT INTO `content` VALUES
-(0,99,'en',10,'Y','S',0,'From Email','secretariaat@de-essen.be'),
-(0,99,'en',20,'Y','S',0,'From Name','Secretariaat Huisartsenpraktijk De Essen'),
-(0,99,'en',30,'Y','S',0,'To Email','secretariaat@de-essen.be'),
-(0,99,'en',40,'Y','S',0,'To Name','Website De-Essen.be'),
-(0,99,'en',50,'Y','S',0,'Address','Lagebekeweg 1, 8200 Sint-Andries'),
-(0,99,'en',60,'Y','S',0,'Signed','Website De-Essen.be'),
-(0,99,'en',70,'Y','S',0,'Secretary','Dames'),
-(0,99,'en',80,'Y','S',0,'Mail Title','Appointment De Essen');
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
 -- Table structure for table `afspraken`
 --
 
 DROP TABLE IF EXISTS `afspraken`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `afspraken` (
   `hour` int(11) NOT NULL DEFAULT '0',
   `min` int(11) NOT NULL DEFAULT '0',
@@ -259,42 +36,26 @@ CREATE TABLE `afspraken` (
   `email` varchar(127) NOT NULL DEFAULT '',
   `datum` date NOT NULL DEFAULT '0000-00-00',
   PRIMARY KEY (`id`)
-) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27006 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `afspraken`
 --
 
-INSERT INTO `afspraken` VALUES 
-(13,45,'faika gsk 0497/059206','',26853,20,0,77,'N','130','131','2013-01-11'),
-(14,0,'john tytgat-hypocalpharma-0473241755','',27005,20,0,77,'N','140','141','2013-01-11'),
-(13,45,'faika gsk 0497/059206','',21715,30,0,77,'N','130','131','2013-01-11'),
-(14,0,'john tytgat-hypocalpharma-0473241755','',21870,30,0,77,'N','140','141','2013-01-11'),
-(13,45,'faika gsk 0497/059206','',21716,10,0,77,'N','130','131','2013-01-11'),
-(14,0,'john tytgat-hypocalpharma-0473241755','',21871,10,0,77,'N','140','141','2013-01-11'),
-(13,45,'quintaels-lanssens stefanie-0499187865','',21882,20,0,77,'N','130','131','2013-01-18'),
-(14,0,'iprad-taillieu caroline-0479982059','',21975,20,0,77,'N','140','141','2013-01-18'),
-(13,45,'quintaels-lanssens stefanie-0499187865','',21978,30,0,77,'N','130','131','2013-01-18'),
-(14,0,'iprad-taillieu caroline-0479982059','',21976,30,0,77,'N','140','141','2013-01-18'),
-(13,45,'quintaels-lanssens stefanie-0499187865','',21979,10,0,77,'N','130','131','2013-01-18'),
-(14,0,'iprad-taillieu caroline-0479982059','',21977,10,0,77,'N','140','141','2013-01-18'),
-(13,45,'Bristol / 0475/775199','',21999,20,0,77,'N','130','131','2013-01-25'),
-(14,0,'Quintels-Wannes Blondelle-0474934624','',22139,20,0,77,'N','140','141','2013-01-25'),
-(13,45,'Charlotte Fonteyne-Bayer-0486863958','',26106,30,0,77,'N','130','131','2013-06-07'),
-(14,0,'servier / katljn bronselaer 0475/955635','',26312,30,0,77,'N','140','141','2013-06-07'),
-(13,45,'Charlotte Fonteyne-Bayer-0486863958','',26107,10,0,77,'N','130','131','2013-06-07'),
-(14,0,'servier / katljn bronselaer 0475/955635','',26313,10,0,77,'N','140','141','2013-06-07'),
-(13,45,'jef 3DDD 0496/105174','',26317,20,0,77,'N','130','131','2013-06-14'),
-(13,45,'jef 3DDD 0496/105174','',26315,30,0,77,'N','130','131','2013-06-14'),
-(13,45,'jef 3DDD 0496/105174','',26316,10,0,77,'N','130','131','2013-06-14');
-
-
+LOCK TABLES `afspraken` WRITE;
+/*!40000 ALTER TABLE `afspraken` DISABLE KEYS */;
+INSERT INTO `afspraken` VALUES (13,45,'faika gsk 0497/059206','',21715,30,0,77,'N','130','131','2013-01-11'),(13,45,'faika gsk 0497/059206','',21716,10,0,77,'N','130','131','2013-01-11'),(14,0,'john tytgat-hypocalpharma-0473241755','',21870,30,0,77,'N','140','141','2013-01-11'),(14,0,'john tytgat-hypocalpharma-0473241755','',21871,10,0,77,'N','140','141','2013-01-11'),(13,45,'quintaels-lanssens stefanie-0499187865','',21882,20,0,77,'N','130','131','2013-01-18'),(14,0,'iprad-taillieu caroline-0479982059','',21975,20,0,77,'N','140','141','2013-01-18'),(14,0,'iprad-taillieu caroline-0479982059','',21976,30,0,77,'N','140','141','2013-01-18'),(14,0,'iprad-taillieu caroline-0479982059','',21977,10,0,77,'N','140','141','2013-01-18'),(13,45,'quintaels-lanssens stefanie-0499187865','',21978,30,0,77,'N','130','131','2013-01-18'),(13,45,'quintaels-lanssens stefanie-0499187865','',21979,10,0,77,'N','130','131','2013-01-18'),(13,45,'Bristol / 0475/775199','',21999,20,0,77,'N','130','131','2013-01-25'),(14,0,'Quintels-Wannes Blondelle-0474934624','',22139,20,0,77,'N','140','141','2013-01-25'),(13,45,'Charlotte Fonteyne-Bayer-0486863958','',26106,30,0,77,'N','130','131','2013-06-07'),(13,45,'Charlotte Fonteyne-Bayer-0486863958','',26107,10,0,77,'N','130','131','2013-06-07'),(14,0,'servier / katljn bronselaer 0475/955635','',26312,30,0,77,'N','140','141','2013-06-07'),(14,0,'servier / katljn bronselaer 0475/955635','',26313,10,0,77,'N','140','141','2013-06-07'),(13,45,'jef 3DDD 0496/105174','',26315,30,0,77,'N','130','131','2013-06-14'),(13,45,'jef 3DDD 0496/105174','',26316,10,0,77,'N','130','131','2013-06-14'),(13,45,'jef 3DDD 0496/105174','',26317,20,0,77,'N','130','131','2013-06-14'),(13,45,'faika gsk 0497/059206','',26853,20,0,77,'N','130','131','2013-01-11'),(14,0,'john tytgat-hypocalpharma-0473241755','',27005,20,0,77,'N','140','141','2013-01-11');
+/*!40000 ALTER TABLE `afspraken` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `apps`
 --
 
 DROP TABLE IF EXISTS `apps`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `apps` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `slot` int(11) NOT NULL DEFAULT '0',
@@ -305,72 +66,56 @@ CREATE TABLE `apps` (
   `patient` int(11) DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `slots_idx` (`slot`,`appoint`)
-) AUTO_INCREMENT=28302 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28045 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `apps`
 --
 
-INSERT INTO `apps` VALUES 
+LOCK TABLES `apps` WRITE;
+/*!40000 ALTER TABLE `apps` DISABLE KEYS */;
+INSERT INTO `apps` VALUES (27984,471,'2012-09-19','A','dewitte andy','',0),(27985,895,'2012-09-20','W','Ann-Sophie Segaert','Doktersattest (werken in onderwijs) + wratjes + wss hoofdvalling (0494 45 24 05, annsophie.segaert@hotmail.com)',0),(27986,838,'2012-09-19','A','neen: stop!','',0),(27987,472,'2012-09-19','W','Mechelaere Arnout','Vermoeden van water achter zijn trommelvlies.  (050/38.79.16, arnout_mechelaere@hotmail.com)',0),(27988,473,'2012-09-19','W','vangaever cato','koorts 38,7 waterpokken? oortjes? (0484776308, emmavandamme@gmail.com)',0),(27989,870,'2012-09-19','A','joos christiane + Emmelman Kasper','',0),(27990,601,'2012-09-21','W','Bart Sanders','check up wonde, part 28 (0479472956, bart.sanders@depatiovzw.be)',0),(27992,40,'2012-09-24','A','vandenbroucke nadine','',0),(27993,584,'2012-09-28','A','keersebilck nathalie','',0),(27994,441,'2012-09-25','A','tel. timmermans mimi','',0),(27995,870,'2012-10-03','A','Vanbesien Corine','',0),(27996,108,'2012-10-03','W','Staelens Sabine',' (0475 605 498, staelens.sabine@pandora.be)',0),(27997,973,'2012-09-21','W','mahieu erwin','resultaten ct scan lage rug ( dinsdag 18 sept om 8u15) (0479 21 73 59, erwin.mahieu@skynet.be)',0),(27999,475,'2012-09-19','A','Robin Inkelberghe','',0),(28000,388,'2012-09-24','A','Van Oostende Anne Marie','',0),(28001,474,'2012-09-19','A','Matton Mieke','',0),(28002,874,'2012-09-19','W','Soulliaert','soetkin (050 38 11 73, rony.soulliaert@skynet.be)',0),(28003,476,'2012-09-19','A','Neirinck Astrid','',0),(28004,599,'2012-10-12','A','nenn','',0),(28005,107,'2012-10-17','A','Tolpe Lucienne','nuchter + griepvaccin',0),(28006,579,'2012-09-21','A','Tant Linda','',0),(28007,894,'2012-09-20','A','Vandaele Christian','co inr',0),(28008,731,'2012-11-26','A','Henneman Sandra','nuchtere bla',0),(28009,969,'2012-09-21','A','Brants Agnes','',0),(28010,971,'2012-09-28','W','Haentjens Annelies','Invullen papieren aanvraag verzekering overlijdensdekking + bloed- en urineonderzoek (0476/441241, annelies@hotelterbrughe.com)',0),(28012,771,'2012-09-24','A','Paesbrugghe Janne','',0),(28013,875,'2012-09-19','A','Elise Thijs','vlek op borst is groter geworden',0),(28014,896,'2012-09-20','A','Moulaert Adelin','',0),(28015,897,'2012-09-20','A','Caelenbergh Ludwine','',0),(28016,901,'2012-09-20','A','stop!','',0),(28017,1273,'2012-09-28','A','Frih Amor','',0),(28018,876,'2012-09-19','A','Hannes en Luc Meuleman','Fien nu ook ziek',0),(28019,877,'2012-09-19','A','Stalpaert Kimberly','',0),(28020,878,'2012-09-19','A','19u10 Vaniseghem Bartel','',0),(28021,731,'2012-10-01','A','Carine Vanhoornweder','',0),(28022,370,'2012-09-24','W','Decrock luc','Dikte op rug???? (050312046, WIES.VANMAELE@TELENET.BE)',0),(28023,898,'2012-09-20','W',' Christophe Rocher Zoë Rocher',' ons jongste dochter heeftvoordurent diarree sinds zaterdag,  (0498928890, rocher.ryde@telenet.be)',0),(28024,762,'2012-09-24','W','Stijn Lievens','Voorschrift bloeddrukverlagers (050/714100, stijn.lievens@gmail.com)',0),(28025,599,'2012-09-21','W','Vermeire Marleen',' (0477/62.46.91, marleen.vermeire@howest.be)',0),(28026,766,'2012-09-24','W','de bleeckere maud','wratjes (0478/983344, de_bleeckere.desmedt@telenet.be)',0),(28027,554,'2012-09-20','A','bijscholing','',0),(28028,553,'2012-09-20','A','bijscholing','',0),(28029,585,'2012-09-21','W','Jeroen Boeyden',' (050 333 100, jeroen.boeyden@telenet.be)',0),(28030,899,'2012-09-20','A','Brusselle Jenny','',0),(28031,900,'2012-09-20','A','Graeschepe Christof','',0),(28032,1216,'2012-09-20','A','Clemmens Els','',0),(28033,576,'2012-09-21','A','devisch daniel','',0),(28034,580,'2012-09-21','A','kim mees','',0),(28043,370,'2012-10-01','A','NEEN','',0),(28044,368,'2012-10-01','A','START VERLOF HILDE','',0);
+/*!40000 ALTER TABLE `apps` ENABLE KEYS */;
+UNLOCK TABLES;
 
-(27984,471,'2012-09-19','A','dewitte andy','',0),
-(27985,895,'2012-09-20','W','Ann-Sophie Segaert','Doktersattest (werken in onderwijs) + wratjes + wss hoofdvalling (0494 45 24 05, annsophie.segaert@hotmail.com)',0),
-(27986,838,'2012-09-19','A','neen: stop!','',0),
-(27987,472,'2012-09-19','W','Mechelaere Arnout','Vermoeden van water achter zijn trommelvlies.  (050/38.79.16, arnout_mechelaere@hotmail.com)',0),
-(27988,473,'2012-09-19','W','vangaever cato','koorts 38,7 waterpokken? oortjes? (0484776308, emmavandamme@gmail.com)',0),
-(27989,870,'2012-09-19','A','joos christiane + Emmelman Kasper','',0),
-(27990,601,'2012-09-21','W','Bart Sanders','check up wonde, part 28 (0479472956, bart.sanders@depatiovzw.be)',0),
-(27992,40,'2012-09-24','A','vandenbroucke nadine','',0),
-(27993,584,'2012-09-28','A','keersebilck nathalie','',0),
-(27994,441,'2012-09-25','A','tel. timmermans mimi','',0),
-(27995,870,'2012-10-03','A','Vanbesien Corine','',0),
-(27996,108,'2012-10-03','W','Staelens Sabine',' (0475 605 498, staelens.sabine@pandora.be)',0),
-(27997,973,'2012-09-21','W','mahieu erwin','resultaten ct scan lage rug ( dinsdag 18 sept om 8u15) (0479 21 73 59, erwin.mahieu@skynet.be)',0),
-(28043,370,'2012-10-01','A','NEEN','',0),
-(28044,368,'2012-10-01','A','START VERLOF HILDE','',0),
-(27999,475,'2012-09-19','A','Robin Inkelberghe','',0),
-(28000,388,'2012-09-24','A','Van Oostende Anne Marie','',0),
-(28001,474,'2012-09-19','A','Matton Mieke','',0),
-(28002,874,'2012-09-19','W','Soulliaert','soetkin (050 38 11 73, rony.soulliaert@skynet.be)',0),
-(28003,476,'2012-09-19','A','Neirinck Astrid','',0),
-(28004,599,'2012-10-12','A','nenn','',0),
-(28005,107,'2012-10-17','A','Tolpe Lucienne','nuchter + griepvaccin',0),
-(28006,579,'2012-09-21','A','Tant Linda','',0),
-(28007,894,'2012-09-20','A','Vandaele Christian','co inr',0),
-(28008,731,'2012-11-26','A','Henneman Sandra','nuchtere bla',0),
-(28009,969,'2012-09-21','A','Brants Agnes','',0),
-(28010,971,'2012-09-28','W','Haentjens Annelies','Invullen papieren aanvraag verzekering overlijdensdekking + bloed- en urineonderzoek (0476/441241, annelies@hotelterbrughe.com)',0),
-(28012,771,'2012-09-24','A','Paesbrugghe Janne','',0),
-(28013,875,'2012-09-19','A','Elise Thijs','vlek op borst is groter geworden',0),
-(28014,896,'2012-09-20','A','Moulaert Adelin','',0),
-(28015,897,'2012-09-20','A','Caelenbergh Ludwine','',0),
-(28016,901,'2012-09-20','A','stop!','',0),
-(28017,1273,'2012-09-28','A','Frih Amor','',0),
-(28018,876,'2012-09-19','A','Hannes en Luc Meuleman','Fien nu ook ziek',0),
-(28019,877,'2012-09-19','A','Stalpaert Kimberly','',0),
-(28020,878,'2012-09-19','A','19u10 Vaniseghem Bartel','',0),
-(28021,731,'2012-10-01','A','Carine Vanhoornweder','',0),
-(28022,370,'2012-09-24','W','Decrock luc','Dikte op rug???? (050312046, WIES.VANMAELE@TELENET.BE)',0),
-(28023,898,'2012-09-20','W',' Christophe Rocher Zoë Rocher',' ons jongste dochter heeftvoordurent diarree sinds zaterdag,  (0498928890, rocher.ryde@telenet.be)',0),
-(28024,762,'2012-09-24','W','Stijn Lievens','Voorschrift bloeddrukverlagers (050/714100, stijn.lievens@gmail.com)',0),
-(28025,599,'2012-09-21','W','Vermeire Marleen',' (0477/62.46.91, marleen.vermeire@howest.be)',0),
-(28026,766,'2012-09-24','W','de bleeckere maud','wratjes (0478/983344, de_bleeckere.desmedt@telenet.be)',0),
-(28027,554,'2012-09-20','A','bijscholing','',0),
-(28028,553,'2012-09-20','A','bijscholing','',0),
-(28029,585,'2012-09-21','W','Jeroen Boeyden',' (050 333 100, jeroen.boeyden@telenet.be)',0),
-(28031,900,'2012-09-20','A','Graeschepe Christof','',0),
-(28032,1216,'2012-09-20','A','Clemmens Els','',0),
-(28030,899,'2012-09-20','A','Brusselle Jenny','',0),
-(28033,576,'2012-09-21','A','devisch daniel','',0),
-(28034,580,'2012-09-21','A','kim mees','',0);
+--
+-- Table structure for table `atoms`
+--
 
+DROP TABLE IF EXISTS `atoms`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `atoms` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent` int(11) NOT NULL DEFAULT '0',
+  `sortorder` int(11) DEFAULT '0',
+  `name` varchar(64) NOT NULL DEFAULT '',
+  `note` varchar(255) DEFAULT NULL,
+  `extention` varchar(3) DEFAULT '',
+  `created` datetime DEFAULT '0000-00-00 00:00:00',
+  `updated` datetime DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `atoms`
+--
+
+LOCK TABLES `atoms` WRITE;
+/*!40000 ALTER TABLE `atoms` DISABLE KEYS */;
+INSERT INTO `atoms` VALUES (1,0,10,'Images','','','2012-07-09 14:18:36','2012-07-09 14:18:36'),(2,0,20,'Files','','','2012-07-09 14:18:36','2012-07-09 14:18:36'),(3,0,20,'Forms','','','2012-07-09 14:18:36','2012-07-09 14:18:36'),(24,1,20,'Secretariaat','','','2012-08-15 01:38:10','2012-08-15 01:38:15'),(27,24,10,'Sabine','','png','2012-08-15 18:51:17','2012-09-04 21:49:18'),(28,24,20,'Nele','','png','2012-08-15 18:51:47','2012-09-04 21:49:29'),(29,1,30,'Algemeen','','','2012-08-15 18:55:51','2012-08-15 18:55:54'),(30,29,10,'Attest','Attest','jpg','2012-08-15 18:55:56','2012-08-15 18:56:13'),(31,29,20,'Een es','','jpg','2012-08-15 18:58:26','2012-08-15 18:58:40'),(32,29,20,'De 3 Essen','','jpg','2012-08-15 18:59:58','2012-08-15 19:00:18'),(33,29,20,'Essenblad','','jpg','2012-08-15 19:16:11','2012-08-15 19:16:23'),(34,24,30,'Praktijk','De Praktijk','jpg','2012-08-15 20:51:13','2012-08-15 22:52:11'),(35,24,30,'Kaartje','','JPG','2012-08-15 20:57:34','2012-08-15 22:57:44'),(40,2,10,'PDFs','','','2012-08-15 18:55:51','2012-08-15 18:55:54'),(41,40,10,'a file','','pdf','2012-08-15 18:55:51','2012-08-15 18:55:54');
+/*!40000 ALTER TABLE `atoms` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `contacts`
 --
 
 DROP TABLE IF EXISTS `contacts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `contacts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(127) NOT NULL DEFAULT '',
@@ -383,26 +128,282 @@ CREATE TABLE `contacts` (
   `riziv` varchar(127) NOT NULL DEFAULT '',
   `note` varchar(127) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `contacts`
 --
 
-INSERT INTO `contacts` VALUES (1,'ADRIAENS Véronique','Dudzeelsesteenweg 156','8000 BRUGGE','050 33 50 33','050 33 84 70','0496 52 29 65','oreva@skynet.be','1/33293/82/004',''),
-(2,'ALBERS Filip','W. Van Saeftingestraat 8','8380 ZEEBRUGGE (BRUGGE)','050 55 12 77','050 67 80 78','0474 53 24 83','filipal8@telenet.be','1/35942/52/004',''),
-(3,'Albrecht Jan','J de Troozlaan 80','8370 BLANKENBERGE','050 42 88 88','050 42 88 88','idem','','1/34411/31/004',''),
-(4,'ALLOO William','Edward De Denestraat 2','8310 ASSEBROEK','050 35 88 66','GEEN','0475  26 55 84','william.alloo@skynet.be','1/33076/08/004',''),
-(5,'AMPE Jan','Vossensteert 180','8310 ASSEBROEK','050 35 33 55','050 67 50 09','0475 68 98 68','jan.ampe@telenet.be','1/33353/22/004',''),
-(6,'Arnout Hugo','Beukenweg 9','8210 LOPPEM','050 82 37 72','050 84 95 88','Nihil','','1/33117/64/004',''),
-(7,'Baeyens Vincent','Kragenhoek 2','8300 KNOKKE-HEIST','050 62 69 59','050 67 57 61','0475 69 72 56','dr.baeyens@pi.be','1/35064/57/004','');
+LOCK TABLES `contacts` WRITE;
+/*!40000 ALTER TABLE `contacts` DISABLE KEYS */;
+INSERT INTO `contacts` VALUES (1,'ADRIAENS Véronique','Dudzeelsesteenweg 156','8000 BRUGGE','050 33 50 33','050 33 84 70','0496 52 29 65','oreva@skynet.be','1/33293/82/004',''),(2,'ALBERS Filip','W. Van Saeftingestraat 8','8380 ZEEBRUGGE (BRUGGE)','050 55 12 77','050 67 80 78','0474 53 24 83','filipal8@telenet.be','1/35942/52/004',''),(3,'Albrecht Jan','J de Troozlaan 80','8370 BLANKENBERGE','050 42 88 88','050 42 88 88','idem','','1/34411/31/004',''),(4,'ALLOO William','Edward De Denestraat 2','8310 ASSEBROEK','050 35 88 66','GEEN','0475  26 55 84','william.alloo@skynet.be','1/33076/08/004',''),(5,'AMPE Jan','Vossensteert 180','8310 ASSEBROEK','050 35 33 55','050 67 50 09','0475 68 98 68','jan.ampe@telenet.be','1/33353/22/004',''),(6,'Arnout Hugo','Beukenweg 9','8210 LOPPEM','050 82 37 72','050 84 95 88','Nihil','','1/33117/64/004',''),(7,'Baeyens Vincent','Kragenhoek 2','8300 KNOKKE-HEIST','050 62 69 59','050 67 57 61','0475 69 72 56','dr.baeyens@pi.be','1/35064/57/004','');
+/*!40000 ALTER TABLE `contacts` ENABLE KEYS */;
+UNLOCK TABLES;
 
+--
+-- Table structure for table `content`
+--
+
+DROP TABLE IF EXISTS `content`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `content` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `item` int(11) NOT NULL DEFAULT '0',
+  `language` varchar(2) NOT NULL DEFAULT 'nl',
+  `sortorder` int(11) DEFAULT '0',
+  `intro` char(1) NOT NULL DEFAULT 'N',
+  `kind` char(1) NOT NULL DEFAULT 'T',
+  `atom` int(11) DEFAULT '0',
+  `name` varchar(32) NOT NULL DEFAULT '',
+  `data` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `item` (`item`,`language`)
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `content`
+--
+
+LOCK TABLES `content` WRITE;
+/*!40000 ALTER TABLE `content` DISABLE KEYS */;
+INSERT INTO `content` VALUES (1,97,'nl',10,'N','T',0,'','<p><span>Cody draagt zorg voor uw privacy. Lees deze Privacyverklaring om meer te weten te komen over de manier waarop persoonsgegevens worden ingezameld en verwerkt op deze website. In dit geval handelt Cody Howest daarbij steeds in overeenstemming met de bepalingen van de Belgische privacywet (Wet van 8 december 1992 tot bescherming van de persoonlijke levenssfeer ten opzichte van de verwerking van persoonsgegevens). De persoonlijke gegevens beperken zich enkel tot uw e-mailadres.</span></p>\n<p><span><strong>Verantwoordelijke</strong></span></p>\n<p><span>De verantwoordelijke voor de verwerking is Cody Howest; Rijselstraat 5, 8000 Brugge.</span></p>\n<p><span><strong>Kennisname</strong></span></p>\n<p><span>U kan van deze persoonsgegevens kennis nemen door een aanvraag te richten aan Cody Howest</span><span>(brief, fax of e-mail) en ze, indien nodig, doen verbeteren of verwijderen. Indien u niet gecontacteerd wenst te worden in het kader van email marketing, zullen uw gegevens op uw verzoek kosteloos uit de betrokken lijsten worden</span></p>\n<p><span><strong>Cookies</strong></span></p>\n<p><span>Wij gebruiken cookies om uw toekomstig bezoek aan onze site vlotter te laten verlopen. Een cookie is een klein stukje tekst dat op uw harde schijf wordt geplaatst. Cookies worden veel gebruikt om een hoger functionaliteit, en dus betere dienst, aan de bezoekers te kunnen aanbieden. [U kan het gebruik van cookies uitschakelen, al leidt dit er wel toe dat effecten opsommen die ten gevolge van het uitschakelen van cookies worden veroorzaakt.]</span></p>\n<p><span><strong>Veiligheid</strong></span></p>\n<p><span>Cody Howest verbindt zich ertoe om al de gepaste technische en organisatorische maatregelen te treffen om uw persoonsgegevens te beschermen tegen vernietiging, verlies, onbedoelde wijziging, beschadiging of openbaarmaking.</span></p>\n<p><span><strong>Toestemming</strong></span></p>\n<p><span>Door u akkoord te verklaren met deze voorwaarden en condities geeft u ook uw toestemming voor de verwerking van uw persoonsgegevens voor de doeleinden zoals hierboven beschreven.</span></p>'),(2,98,'nl',10,'N','T',0,'','<p><span>Door gebruik te maken van deze website verklaart u zich akkoord met onderstaande voorwaarden en condities.</span></p>\n<p><span><strong>1. Website</strong></span></p>\n<p>De eigenaar van deze website is&nbsp;<br /> Cody Howest,<br /> Rijselstraat 5<br /> 8000, Brugge,&nbsp;<br /> Belgi&euml;<br /> Tel: 32(0)50 xx,&nbsp;<br /> E-mail: info@howest.be&nbsp;<br />ON: xx</p>\n<p><span>Als u niet akkoord gaat met onderstaande voorwaarden wordt u verzocht de website te verlaten. Cody behoudt zich het recht voor deze voorwaarden periodisch aan te passen waarna de leden op de hoogte zullen worden gebracht van deze wijzigingen. Wanneer u na deze kennisgeving de website blijft gebruiken verklaart u zich akkoord met de doorgevoerde wijzigingen. Cody Howest&nbsp; kan eventueel andere diensten aanbieden aan de gebruikers van deze site. In dat geval zullen de geldende voorwaarden apart worden medegedeeld.</span></p>\n<p><span><strong>2. Toegankelijkheid</strong></span></p>\n<p><span>Cody Howest&nbsp; probeert zo goed als mogelijk de website 24 uur per dag toegankelijk te houden, nochtans kan het gebeuren dat de website ontoegankelijk is voor een korte periode omwille van onderhoudswerken, aanpassingen of technische redenen.</span></p>\n<p><span><strong>3. Verantwoordelijkheid</strong></span></p>\n<p><span>Cody Howest weerlegt elke verantwoordelijkheid met betrekking tot deze website en de aangeboden informatie. Cody Howest&nbsp; verzekert niet dat de informatie op deze website correct, compleet of actueel is. Alle informatie, producten en diensten op deze website kunnen fouten bevatten. De gebruiker wordt verzocht hiermee rekening te houden.</span></p>\n<div><span><br /></span></div>'),(3,97,'en',10,'N','T',0,'','<p><span>Cody draagt zorg voor uw privacy. Lees deze Privacyverklaring om meer te weten te komen over de manier waarop persoonsgegevens worden ingezameld en verwerkt op deze website. In dit geval handelt Cody Howest daarbij steeds in overeenstemming met de bepalingen van de Belgische privacywet (Wet van 8 december 1992 tot bescherming van de persoonlijke levenssfeer ten opzichte van de verwerking van persoonsgegevens). De persoonlijke gegevens beperken zich enkel tot uw e-mailadres.</span></p>\n<p><span><strong>Verantwoordelijke</strong></span></p>\n<p><span>De verantwoordelijke voor de verwerking is Cody Howest; Rijselstraat 5, 8000 Brugge.</span></p>\n<p><span><strong>Kennisname</strong></span></p>\n<p><span>U kan van deze persoonsgegevens kennis nemen door een aanvraag te richten aan Cody Howest</span><span>(brief, fax of e-mail) en ze, indien nodig, doen verbeteren of verwijderen. Indien u niet gecontacteerd wenst te worden in het kader van email marketing, zullen uw gegevens op uw verzoek kosteloos uit de betrokken lijsten worden</span></p>\n<p><span><strong>Cookies</strong></span></p>\n<p><span>Wij gebruiken cookies om uw toekomstig bezoek aan onze site vlotter te laten verlopen. Een cookie is een klein stukje tekst dat op uw harde schijf wordt geplaatst. Cookies worden veel gebruikt om een hoger functionaliteit, en dus betere dienst, aan de bezoekers te kunnen aanbieden. [U kan het gebruik van cookies uitschakelen, al leidt dit er wel toe dat effecten opsommen die ten gevolge van het uitschakelen van cookies worden veroorzaakt.]</span></p>\n<p><span><strong>Veiligheid</strong></span></p>\n<p><span>Cody Howest verbindt zich ertoe om al de gepaste technische en organisatorische maatregelen te treffen om uw persoonsgegevens te beschermen tegen vernietiging, verlies, onbedoelde wijziging, beschadiging of openbaarmaking.</span></p>\n<p><span><strong>Toestemming</strong></span></p>\n<p><span>Door u akkoord te verklaren met deze voorwaarden en condities geeft u ook uw toestemming voor de verwerking van uw persoonsgegevens voor de doeleinden zoals hierboven beschreven.</span></p>'),(4,98,'en',10,'N','T',0,'','<p><span>Door gebruik te maken van deze website verklaart u zich akkoord met onderstaande voorwaarden en condities.</span></p>\n<p><span><strong>1. Website</strong></span></p>\n<p>De eigenaar van deze website is&nbsp;<br /> Cody Howest,<br /> Rijselstraat 5<br /> 8000, Brugge,&nbsp;<br /> Belgi&euml;<br /> Tel: 32(0)50 xx,&nbsp;<br /> E-mail: info@howest.be&nbsp;<br />ON: xx</p>\n<p><span>Als u niet akkoord gaat met onderstaande voorwaarden wordt u verzocht de website te verlaten. Cody behoudt zich het recht voor deze voorwaarden periodisch aan te passen waarna de leden op de hoogte zullen worden gebracht van deze wijzigingen. Wanneer u na deze kennisgeving de website blijft gebruiken verklaart u zich akkoord met de doorgevoerde wijzigingen. Cody Howest&nbsp; kan eventueel andere diensten aanbieden aan de gebruikers van deze site. In dat geval zullen de geldende voorwaarden apart worden medegedeeld.</span></p>\n<p><span><strong>2. Toegankelijkheid</strong></span></p>\n<p><span>Cody Howest&nbsp; probeert zo goed als mogelijk de website 24 uur per dag toegankelijk te houden, nochtans kan het gebeuren dat de website ontoegankelijk is voor een korte periode omwille van onderhoudswerken, aanpassingen of technische redenen.</span></p>\n<p><span><strong>3. Verantwoordelijkheid</strong></span></p>\n<p><span>Cody Howest weerlegt elke verantwoordelijkheid met betrekking tot deze website en de aangeboden informatie. Cody Howest&nbsp; verzekert niet dat de informatie op deze website correct, compleet of actueel is. Alle informatie, producten en diensten op deze website kunnen fouten bevatten. De gebruiker wordt verzocht hiermee rekening te houden.</span></p>\n<div><span><br /></span></div>'),(5,106,'nl',10,'N','T',0,'','<div class=\"gebouw\"><img title=\"Praktijk\" src=\"../data/images/34.jpg\" alt=\"De Praktijk\" width=\"556\" height=\"286\" /></div>\n<p>Het secretariaat is bereikbaar<br /> van <strong>maandag - vrijdag</strong><br /> van <strong>8:00 - 12:00</strong> en van <strong>16:00 - 19:00</strong></p>\n<div class=\"persoon\"><img title=\"Sabine\" src=\"../data/images/27.png\" alt=\"Sabine\" width=\"180\" height=\"238\" /><br />\n<p>Sabine</p>\n</div>\n<div class=\"persoon\"><img title=\"Nele\" src=\"../data/images/28.jpg\" alt=\"Nele\" width=\"176\" height=\"238\" /><br />\n<p>Nele</p>\n</div>\n<p>Gelieve zoveel mogelijk te bellen tijdens de aanwezigheid van onze secretaresse. Zij beantwoordt onze telefoon tijdens de raadplegingen en de huisbezoeken. Zij tracht u zo goed mogelijk van dienst te zijn. Indien ons advies nodig is, wordt u doorgeschakeld.</p>\n<div class=\"gebouw\"><img title=\"Kaartje\" src=\"../data/images/35.JPG\" alt=\"\" width=\"556\" /></div>\n<p><a href=\"privacy\">Privacy verklaring</a> - <a href=\"disclaimer\">Disclaimer</a></p>'),(6,120,'nl',10,'N','T',0,'','<h1>Nieuwe<br />collega-arts<br />vanaf 01/09/2012</h1>\n<p>Dr. Lies Delameillieure is afgestudeerd als basisarts en vervolledigt haar opleiding tot huisarts bij ons.&nbsp;Wij zijn ervan overtuigd dat zij een meerwaarde betekent zowel op medisch als organisatorisch vlak en hopen daarom ook te kunnen rekenen op uw enthousiasme.</p>'),(7,118,'nl',10,'N','T',0,'','<h1>Dokter<br />Hilde Tack</h1>\n<p class=\"aanwezig\">is aanwezig</p>\n<p><strong>ochtend</strong> (08:30 - 12:00)<br /> maandag, vrijdag</p>\n<p><strong>middag</strong> (14:00 - 16:00)<br />maandag, vrijdag</p>\n<p><strong>avond</strong> (17:00 - 19:00)<br />dinsdag, donderdag</p>'),(8,119,'nl',10,'N','T',0,'','<h1>Dokter<br />Lies Gheyle</h1>\n<p class=\"aanwezig\">is aanwezig</p>\n<p><strong>ochtend</strong> (08:30 - 12:00)<br /> maandag, dinsdag, donderdag</p>\n<p><strong>middag</strong> (14:00 - 16:00)<br /> dinsdag</p>\n<p><strong>avond</strong> (17:00 - 19:00)<br /> maandag, woensdag, vrijdag</p>'),(9,117,'nl',10,'N','T',0,'','<h1>Dokter<br />Sabine Fevery</h1>\n<p class=\"aanwezig\">is aanwezig</p>\n<p><strong>ochtend</strong> (08:30 - 12:00)<br />dinsdag, woensdag, vrijdag</p>\n<p><strong>middag</strong> (14:00 - 16:00)<br /><br /></p>\n<p><strong>avond</strong> (17:00 - 19:00)<br /> maandag, donderdag<img title=\"- nog maar eentje\" src=\"../data/images/48.png\" alt=\"- nog maar eentje\" width=\"24\" height=\"23\" /></p>'),(10,121,'nl',10,'N','T',0,'','<h1>Dokter<br />Lies Delameillieure</h1>\n<p class=\"aanwezig\">is aanwezig</p>\n<p><strong>ochtend</strong> (08:30 - 12:00)<br />woensdag, donderdag</p>\n<p><strong>middag</strong> (14:00 - 16:00)<br />maandag, woensdag, donderdag</p>\n<p><strong>avond</strong> (17:00 - 19:00)<br />dinsdag, vrijdag</p>'),(11,103,'nl',10,'N','T',0,'','<p>U kan elke werkdag &eacute;&eacute;n van de artsen bereiken van 08:00 tot 21:00 (vrijdagavond tot 19:00).<br /> Voor dringende zaken na 21u raden wij u aan de wachtdienst te contacteren.</p>\n<p><a class=\"maakAfspraak button icons\" href=\"afspraak\">Kilk hier voor een afspraak</a></p>\n<p>Het secretariaat is bereikbaar van <strong>maandag - vrijdag</strong> van <strong>08:00 - 12:00</strong> en van <strong>16:00 - 19:00</strong></p>\n<table class=\"bezoekmoment\">\n<tbody>\n<tr><th>&nbsp;</th><th>Ochtend<br /><span>08:00 - 12:00</span></th><th>Middag<br /><span>14:00 - 16:00</span></th><th>Avond<br /><span>16:00 - 18:00</span></th></tr>\n<tr class=\"even\">\n<td class=\"day\">Maandag</td>\n<td><span class=\"dr\">dr. Lies Gheyle</span><span class=\"dr\">dr. Hilde Tack</span></td>\n<td><span class=\"dr\">dr. Lies Delameillieure</span><span class=\"dr\">dr. Hilde Tack</span></td>\n<td><span class=\"dr\">dr. Sabine Fevery</span><span class=\"dr\">dr. Lies Gheyle</span></td>\n</tr>\n<tr>\n<td class=\"day\">Dinsdag</td>\n<td><span class=\"dr\">dr. Lies Gheyle</span><span class=\"dr\">dr. Sabine Fevery</span></td>\n<td><span class=\"dr\">dr. Lies Gheyle</span></td>\n<td><span class=\"dr\">dr. Lies Delameillieure</span><span class=\"dr\">dr. Hilde Tack</span></td>\n</tr>\n<tr class=\"even\">\n<td class=\"day\">Woensdag</td>\n<td><span class=\"dr\">dr. Sabine Fevery</span><span class=\"dr\">dr. Lies Delameillieure</span></td>\n<td><span class=\"dr\">dr. Lies Delameillieure</span></td>\n<td><span class=\"dr\">dr. Lies Gheyle</span></td>\n</tr>\n<tr>\n<td class=\"day\">Donderdag</td>\n<td><span class=\"dr\">dr. Lies Gheyle</span><span class=\"dr\">dr. Lies Delameillieure</span></td>\n<td><span class=\"dr\">dr. Lies Delameillieure</span></td>\n<td><span class=\"dr\">dr. Sabine Fevery</span><span class=\"dr\">dr. Hilde Tack</span></td>\n</tr>\n<tr class=\"even\">\n<td class=\"day\">Vrijdag</td>\n<td><span class=\"dr\">dr. Sabine Fevery</span><span class=\"dr\">dr. Hilde Tack</span></td>\n<td><span class=\"dr\">dr. Hilde Tack</span></td>\n<td><span class=\"dr\">dr. Lies Gheyle</span><span class=\"dr\">dr. Lies Delameillieure</span></td>\n</tr>\n</tbody>\n</table>'),(12,111,'nl',10,'N','T',0,'','<p>Indien u wegens een (on)voorziene omstandigheid toch niet kan verschijnen op uw afspraak, appreci&euml;ren wij het ten zeerste dit tijdig te annuleren.</p>\n<p>Afspraken die niet tijdig geannuleerd worden zonder een aanvaardbare reden worden vanaf 01/04/2011 aangerekend zonder tussenkomst van de mutualiteiten.</p>'),(13,112,'nl',10,'N','T',0,'','<p><img style=\"float: right; margin: 5px;\" title=\"Attest\" src=\"../data/images/30.jpg\" alt=\"Attest\" width=\"154\" height=\"215\" />Voor al uw attesten en formulieren vragen wij om langs te komen op consultatie. Wij kunnen enkel bepaalde zaken attesteren na u gezien te hebben.</p>\n<p>Als arts mogen wij enkel attesten schrijven die stroken met de waarheid. Valse attesten zullen u steeds geweigerd worden.</p>\n<p>Gelieve uw medicatievoorschriften zoveel mogelijk tijdens de consultatie te vragen. Uw chronische medicatie kan verlengd worden voor&nbsp;een periode van&nbsp;3 maand.&nbsp;Uitzonderingen hierop zijn: de anticonceptiepil (12 maand) en schildkliermedicatie (6 maand).&nbsp;</p>'),(14,113,'nl',10,'N','T',0,'','<p>In uw globaal medisch dossier houden wij al uw medische gegevens bij die van belang zijn voor uw gezondheid. Dit is&nbsp;belangrijk om u de meest optimale zorg aan te bieden.&nbsp;</p>\n<p>Als u een globaal medisch dossier afsluit bij uw huisartsenpraktijk, krijgt u 30% meer terugbetaald van het ziekenfonds voor consultaties bij uw huisarts.</p>\n<p>Het globaal medisch dossier kan aangevraagd worden aan ons secretariaat. Het enige wat hiervoor nodig is, is een kleefbriefje van uw ziekenfonds.</p>\n<p>Het globaal medisch dossier wordt jaarlijks vernieuwd.</p>'),(15,114,'nl',10,'N','T',0,'','<p><img style=\"float: right; margin: 5px;\" title=\"Een es\" src=\"../data/images/31.jpg\" alt=\"Een es\" width=\"132\" height=\"180\" />Wij zijn 4 huisartsen die intensief samenwerken in &eacute;&eacute;n huisartsenpraktijk. Door een goed dossiersysteem en onze wekelijkse overlegmomenten, zorgen wij ervoor dat u bij alle 4 de artsen even goed terecht kan. Het blijft uiteraard uw keuze bij welke arts(en)&nbsp;u consulteert.</p>\n<p>Het is onze overtuiging dat samenwerken nuttig is. Hierdoor kunnen wij u een goede beschikbaarheid bieden, kunnen wij overleggen en vaak deelnemen aan bijscholingen. Dit zorgt ervoor dat we u de meest optimale zorg kunnen aanbieden.</p>\n<p>Door samen te werken in &eacute;&eacute;n praktijk, krijgen wij als arts tevens de mogelijkheid om tijd vrij te maken voor een eigen sociaal en familiaal leven.</p>'),(16,115,'nl',10,'N','T',0,'','<p>De huisartsenpraktijk \'De Essen\' is een jonge en dynamische groepspraktijk waar de zorg voor onze pati&euml;nten centraal staat.&nbsp;Wij&nbsp;willen&nbsp;deze zorg bieden,&nbsp;als team, zoveel&nbsp;als mogelijk wetenschappelijk onderbouwd,&nbsp;met respect&nbsp;voor&nbsp;uw en onze visie.&nbsp;<br />&nbsp;</p>\n<p>Om deze zorg mogelijk te maken,&nbsp;wensen wij een paar afspraken met u te maken. Deze zijn te vinden op onze website.&nbsp;<br />&nbsp;</p>\n<p>Wij hopen zo op een fijne samenwerking en bedanken u voor het vertrouwen dat u stelt in onze praktijk.</p>'),(17,116,'nl',10,'N','T',0,'','<ul class=\"simple\">\n<li>diagnose en behandeling van uw klachten</li>\n<li>bloedafname</li>\n<li>medicatievoorschriften</li>\n<li>afname van EKG (hartonderzoek)</li>\n<li>preoperatief onderzoek</li>\n<li>algemeen onderzoek aangevraagd door uw verzekeringsmakelaar</li>\n<li>gynaecologisch onderzoek&nbsp;(uitstrijkje)&nbsp;en borstonderzoek</li>\n<li>pilvoorschrift</li>\n<li>zwangerschapsdiagnose en opvolging, in samenwerking met uw gynaecoloog</li>\n<li>vaccinatie (ook van baby\'s en kinderen)</li>\n<li>gipsen van breuken</li>\n<li>hechten van een snijwonde</li>\n<li>bevriezen (cryotherapie) van verschillende huidletsels waaronder wratten</li>\n<li>een ondersteunend gesprek</li>\n<li>psychologische begeleiding</li>\n<li>medische en mentale begeleiding tijdens het levenseinde, in samenwerking met palliatief netwerk</li>\n<li>reisadvies</li>\n<li>advies i.v.m. allerlei gezondheidsproblemen</li>\n<li>bijhouden van je medisch dossier</li>\n<li>samenwerking met andere hulpverleners: kinesist, osteopaat, verpleegkundige, psycholoog,...</li>\n<li>eventuele verwijzing naar een specialist</li>\n</ul>'),(18,122,'nl',10,'N','T',0,'','<p>Vanaf 01/04/2011 kan u bij uw huisarts terecht voor een gratis preventief onderzoek, het GMD plus. Dit geldt voor alle personen tussen de 45 en 75 jaar die een GMD afgesloten hebben bij de huisarts.</p>\n<p>Deze consultatie wordt enkel in de voormiddag of namiddag aangeboden. Voor de consultatie wordt gevraagd aan de pati&euml;nt een vragenlijst in te vullen en die ingevuld mee te nemen op de dag van consultatie.</p>\n<p>Tijdens het gratis preventieve consult worden geen andere zaken besproken of medicatie voorgeschreven.</p>'),(19,123,'nl',10,'N','T',0,'','<p><img style=\"float: right; margin: 5px;\" title=\"Essenblad\" src=\"../data/images/33.jpg\" alt=\"\" width=\"299\" height=\"200\" /><strong>Karakter</strong></p>\n<p>De es heeft een bijzonder bekoorlijk karakter en is daardoor zeer geliefd. Fair Play staat hoog in zijn vaandel. De es bezit veel zelfdiscipline en is erg ambitieus. Kleurloze meelopers zijn onder essen niet te vinden en zij tarten het lot graag. Hij wil graag goed overkomen en etaleren dat hij veel kennis heeft van alles wat het leven te bieden heeft. Of dat nu wel of niet het geval is, de es weet altijd de schijn op te houden. <br /> Op grond van zijn levendige karakter, optimisme en verlangen doet hij steeds wat hij voor juist houdt en van kritiek trekt hij zich niets aan. Als de es een doel heeft, stopt hij niet voordat dit is bereikt. Hij kan rustig op bepaalde kansen wachten en wanneer een kans zich voordoet, grijpt hij die met beide handen aan en weet hij zijn mogelijkheden optimaal te benutten. Het lijkt wel of de es zelfs de moeilijkste doelen spelenderwijs bereikt. <br /> Door drukte in zijn omgeving kan hij af en toe een beetje in de war zijn, waardoor hij soms zeer ego&iuml;stisch is en zich kan opdringen aan de omgeving. Zelfzuchtig is hij echter niet, want hij is ook bereid anderen te helpen. Bovendien is hij behalve een wijze en intelligente boom, ook best een lieve en goedige boom.</p>\n<p>In de liefde is de es trouw en voorzichtig, vaak wint het verstand het van zijn gevoel. Een es hecht veel waarde aan vertrouwen, vrienden kunnen dan ook op hem bouwen. Bevriend raken met de es is echter niet zo gemakkelijk. Hij zal niet direct laten merken dat hij je heeft opgemerkt, laat staan dat je gemakkelijk contact met hem kunt krijgen. Je moet er wel wat voor doen. Ten eerste moet je laten merken dat je respect hebt voor zijn veelheid aan ervaringen, voor zijn levenswijsheid en dat je zijn goede raad hoog acht. Je moet begrip tonen voor het feit dat hij zo groot is, dat is hij namelijk niet zonder reden: op die manier ziet en hoort hij zoveel, dat hij altijd op de hoogte is van de laatste nieuwtjes. Daardoor is hij ondanks zijn ogenschijnlijke ongenaakbaarheid geliefd bij iedereen die op de hoogte wil blijven van de actuele zaken. <br /> Je moet zijn raad echter wel met een korreltje zout nemen, want hij heeft de neiging de zaken enigszins te verdraaien naar zijn eigen inzicht, zodat de waarheid wel eens in het gedrang kan komen. Ten tweede moet je er rekening mee houden dat als hij eenmaal zijn aandacht op je heeft gevestigd er een communicatie tot stand is gekomen, dat deze dan ook onvoorwaardelijk is. Er is op dat moment geen ruimte voor de mening of invloed van derden. Hij is er dan alleen maar voor jou en jij moet je dan ook volledig op hem richten.</p>\n<p>&nbsp;</p>\n<p><strong>Eigenschappen <br /></strong> Ambitieus, intelligent, wijs, stralend, hulpvaardig, traditioneel, melancholisch, controlerend, zoekend naar het ongewone, ego&iuml;stisch, trouw, trots, optimistisch en voorzichtig in de liefde</p>\n<p>&nbsp;</p>\n<p><strong>Mythes <br /></strong> Fraxinus betekent speer of lans, exelcior betekent zoveel als &lsquo;boven de anderen uit stekend&rsquo;. <br /> De es was lang geleden voor de bewoners van Noord-Europa de belangrijkste boom. Ze zagen in hem de drager van de wereld. De wereld-es had zijn wortels in de onderwereld, zijn stam in de mensenwereld en zijn kroon in de hemel waar de goden woonden. Het was een symbool voor onsterfelijkheid en levenskracht. In allerlei legenden en godsdiensten wordt de es ge&euml;erd als heilige boom, beschermer des goden en als beschermheilige van de oogst en omdat essenhout zo flexibel en Voor de Germanen was de es de boom van het leven, de wereld van de es verdorde nooit. De goden bezochten de nornen, drie Germaanse schikgodinnen die het lot bepaalden, onder de wereld-es, als zij iets wilden weten over de toekomst. Veel van onze voorouders stonden te luisteren naar het geritsel van de bladeren van deze boom in de hoop zo iets van hun toekomst op te vangen.</p>\n<p>Volgens de Noorse, Germaanse en Griekse mythologie is de man uit een es ontstaan. Stoere Vikingen werden ook wel Esmensen genoemd en de Germaanse oppergod Wodan (ook wel Odin of Ygg genaamd) sneed een speer uit deze boom. Nemesis, de Griekse godin der wake, droeg een staf van essenhout en de lansen van Griekse helden uit de Illias en de Odyssee waren eveneens van essenhout. Achilles doodde Hetor tijdens het gevecht om Troje met een speer van dit hout. <br /> Gebruik <br /> De Vikingen geloofden in de toverkracht van de es en zij maakten speerschachten, mesheften en boten van essenhout, omdat het hen bijzondere macht zou verlenen en tegen het kwaad zou beschermen. Het zaad van de es zou bovendien bij mannen lustopwekkend werken. Kelten dronken en aten het liefst uit een essenhouten beker en schaal. Dit gaf kracht en genas. Heksen gebruikten essenhout om hun bezemsteel van te maken. <br /> De Romein Plinius schrijft dat de es slangen afschrikt. Als je een slang laat kiezen door essenhout te schuiven of door vuur, zal ze eerder door het vuur kruipen dan in essenloof. Daarom hingen bezorgde moeders hun baby&rsquo;s in hangmatjes tussen essen, zo durfde geen enkel gevaarlijk dier zich te tonen.</p>\n<p>De es is een grote en sterke boom waarvan het hout zo vreselijk hard en tegelijkertijd toch buigzaam is. Essenhout werd behalve voor het maken van allerlei technische voorwerpen, zoals disselbomen, wielen en scheepsmasten, ook gebruikt voor wapens als speren en pijlen. In de oudheid werd het hout in woningen gebruikt. Tegenwoordig wordt essenhout vooral gebruikt voor het maken van meubels, gymnastiek- en sportwerktuigen (ski&rsquo;s) en koetswerk.</p>\n<p>&nbsp;</p>\n<p><strong>Genezing</strong> <br /> De dru&iuml;den sneden toverstafjes, zogenaamde runren, uit de es. <br /> Een amulet van essenhout bezat een bijzondere beschermende werking tegen vervloekingen en kwade bedoelingen van heksen. <br /> De Kelten geloofden dat de es verbitterde en ontgoochelde mensen uit de kring van doemdenken kon verlossen. Elke dag een wandeling naar de es, er even tegenaan leunen terwijl je je kommer en kwel vertelde, gaf je energie en levenskracht. <br /> Hippocrates raadde essenbladerenthee aan tegen reuma, jicht en koorts</p>\n<p>&nbsp;</p>\n<p><em>Bron: Mari&euml;lle Lapidaire; boomkompas.blogspot.com</em></p>'),(20,108,'nl',10,'N','T',0,'','<p>U kan elke werkdag &eacute;&eacute;n van de artsen bereiken van 8u tot 21u (de vrijdagavond tot 19u). Voor dringende zaken na 21u raden wij u aan de wachtdienst te contacteren.</p>\n<p>Tijdens het weekend en op feestdagen kan u terecht bij de wachtdienst:</p>\n<p>- Regio Groot Brugge:&nbsp;<strong>078/15.15.90</strong></p>\n<p><strong>-</strong>&nbsp;Regio Varsenare, Jabbeke, Snellegem, Stalhille en Zerkegem:&nbsp;<strong>050/39.72.62</strong></p>'),(21,104,'nl',10,'N','T',0,'','<p>Wij hebben als huisarts ook nood aan vakantie en vrije tijd. Daarnaast kunnen wij ook afwezig zijn voor het volgen van bepaalde opleidingen.</p>\n<p>De&nbsp;afwezigheid van een&nbsp;arts&nbsp;wordt een tijd op voorhand aangekondigd op deze website en in de wachtzaal. De consultaties worden dan overgenomen door de overblijvende artsen.<strong><br /></strong></p>\n<p><strong>Dr. Tack zal afwezig zijn op:</strong><br />- 01/10/12 t/m 15/10/12</p>\n<p><strong>Dr. Gheyle zal afwezig zijn op:</strong><br />- 29/10/12 t/m 19/11/12</p>\n<p><strong>Dr. Fevery zal afwezig zijn op:</strong><br />- 07/09/12 t/m 23/09/12</p>'),(22,107,'nl',10,'N','T',0,'','<p>In onze praktijk&nbsp;beschikken&nbsp;wij over de ideale omstandigheden om u te onderzoeken en te behandelen (aanwezigheid van medische materiaal en volledige dossiergegevens).</p>\n<p>Daarom vragen wij om zoveel&nbsp;als mogelijk&nbsp;bij ons op consultatie te komen.</p>\n<p>Indien dit wegens omstandigheden niet mogelijk is, kan u steeds een huisbezoek aanvragen.&nbsp;Gelieve dit bij voorkeur te doen tussen 08u00 en 10u30.</p>\n<p>Voor de huisbezoeken hebben wij een beurtrolsysteem. Wij kunnen u niet steeds garanderen dat uw huisarts naar keuze kan langskomen voor huisbezoeken die op de dag zelf worden aangevraagd. Dit kan enkel gegarandeerd worden voor huisbezoeken die op voorhand gepland worden.</p>\n<hr />\n<p>Voor nieuwe pati&euml;nten (aansluiting in praktijk na 1 januari 2009) kunnen wij enkel nog huisbezoeken doen in de regio\'s St-Andries, St-Michiels en Varsenare.</p>'),(23,106,'en',10,'N','T',0,'','<div class=\"gebouw\"><img title=\"Praktijk\" src=\"../data/images/34.jpg\" alt=\"De Praktijk\" width=\"556\" height=\"286\" /></div>\n<p>Het secretariaat is bereikbaar<br /> van <strong>maandag - vrijdag</strong><br /> van <strong>8:00 - 12:00</strong> en van <strong>16:00 - 19:00</strong></p>\n<div class=\"persoon\"><img title=\"Sabine\" src=\"../data/images/27.png\" alt=\"Sabine\" width=\"180\" height=\"238\" /><br />\n<p>Sabine</p>\n</div>\n<div class=\"persoon\"><img title=\"Nele\" src=\"../data/images/28.jpg\" alt=\"Nele\" width=\"176\" height=\"238\" /><br />\n<p>Nele</p>\n</div>\n<p>Gelieve zoveel mogelijk te bellen tijdens de aanwezigheid van onze secretaresse. Zij beantwoordt onze telefoon tijdens de raadplegingen en de huisbezoeken. Zij tracht u zo goed mogelijk van dienst te zijn. Indien ons advies nodig is, wordt u doorgeschakeld.</p>\n<div class=\"gebouw\"><img title=\"Kaartje\" src=\"../data/images/35.JPG\" alt=\"\" width=\"556\" /></div>\n<p><a href=\"privacy\">Privacy verklaring</a> - <a href=\"disclaimer\">Disclaimer</a></p>'),(24,120,'en',10,'N','T',0,'','<h1>Nieuwe<br />collega-arts<br />vanaf 01/09/2012</h1>\n<p>Dr. Lies Delameillieure is afgestudeerd als basisarts en vervolledigt haar opleiding tot huisarts bij ons.&nbsp;Wij zijn ervan overtuigd dat zij een meerwaarde betekent zowel op medisch als organisatorisch vlak en hopen daarom ook te kunnen rekenen op uw enthousiasme.</p>'),(25,118,'en',10,'N','T',0,'','<h1>Dokter<br />Hilde Tack</h1>\n<p class=\"aanwezig\">is aanwezig</p>\n<p><strong>ochtend</strong> (08:30 - 12:00)<br /> maandag, vrijdag</p>\n<p><strong>middag</strong> (14:00 - 16:00)<br />maandag, vrijdag</p>\n<p><strong>avond</strong> (17:00 - 19:00)<br />dinsdag, donderdag</p>'),(26,119,'en',10,'N','T',0,'','<h1>Dokter<br />Lies Gheyle</h1>\n<p class=\"aanwezig\">is aanwezig</p>\n<p><strong>ochtend</strong> (08:30 - 12:00)<br /> maandag, dinsdag, donderdag</p>\n<p><strong>middag</strong> (14:00 - 16:00)<br /> dinsdag</p>\n<p><strong>avond</strong> (17:00 - 19:00)<br /> maandag, woensdag, vrijdag</p>'),(27,117,'en',10,'N','T',0,'','<h1>Dokter<br />Sabine Fevery</h1>\n<p class=\"aanwezig\">is aanwezig</p>\n<p><strong>ochtend</strong> (08:30 - 12:00)<br />dinsdag, woensdag, vrijdag</p>\n<p><strong>middag</strong> (14:00 - 16:00)<br /><br /></p>\n<p><strong>avond</strong> (17:00 - 19:00)<br /> maandag, donderdag<img title=\"- nog maar eentje\" src=\"../data/images/48.png\" alt=\"- nog maar eentje\" width=\"24\" height=\"23\" /></p>'),(28,121,'en',10,'N','T',0,'','<h1>Dokter<br />Lies Delameillieure</h1>\n<p class=\"aanwezig\">is aanwezig</p>\n<p><strong>ochtend</strong> (08:30 - 12:00)<br />woensdag, donderdag</p>\n<p><strong>middag</strong> (14:00 - 16:00)<br />maandag, woensdag, donderdag</p>\n<p><strong>avond</strong> (17:00 - 19:00)<br />dinsdag, vrijdag</p>'),(29,103,'en',10,'N','T',0,'','<p>U kan elke werkdag &eacute;&eacute;n van de artsen bereiken van 08:00 tot 21:00 (vrijdagavond tot 19:00).<br /> Voor dringende zaken na 21u raden wij u aan de wachtdienst te contacteren.</p>\n<p><a class=\"maakAfspraak button icons\" href=\"afspraak\">Kilk hier voor een afspraak</a></p>\n<p>Het secretariaat is bereikbaar van <strong>maandag - vrijdag</strong> van <strong>08:00 - 12:00</strong> en van <strong>16:00 - 19:00</strong></p>\n<table class=\"bezoekmoment\">\n<tbody>\n<tr><th>&nbsp;</th><th>Ochtend<br /><span>08:00 - 12:00</span></th><th>Middag<br /><span>14:00 - 16:00</span></th><th>Avond<br /><span>16:00 - 18:00</span></th></tr>\n<tr class=\"even\">\n<td class=\"day\">Maandag</td>\n<td><span class=\"dr\">dr. Lies Gheyle</span><span class=\"dr\">dr. Hilde Tack</span></td>\n<td><span class=\"dr\">dr. Lies Delameillieure</span><span class=\"dr\">dr. Hilde Tack</span></td>\n<td><span class=\"dr\">dr. Sabine Fevery</span><span class=\"dr\">dr. Lies Gheyle</span></td>\n</tr>\n<tr>\n<td class=\"day\">Dinsdag</td>\n<td><span class=\"dr\">dr. Lies Gheyle</span><span class=\"dr\">dr. Sabine Fevery</span></td>\n<td><span class=\"dr\">dr. Lies Gheyle</span></td>\n<td><span class=\"dr\">dr. Lies Delameillieure</span><span class=\"dr\">dr. Hilde Tack</span></td>\n</tr>\n<tr class=\"even\">\n<td class=\"day\">Woensdag</td>\n<td><span class=\"dr\">dr. Sabine Fevery</span><span class=\"dr\">dr. Lies Delameillieure</span></td>\n<td><span class=\"dr\">dr. Lies Delameillieure</span></td>\n<td><span class=\"dr\">dr. Lies Gheyle</span></td>\n</tr>\n<tr>\n<td class=\"day\">Donderdag</td>\n<td><span class=\"dr\">dr. Lies Gheyle</span><span class=\"dr\">dr. Lies Delameillieure</span></td>\n<td><span class=\"dr\">dr. Lies Delameillieure</span></td>\n<td><span class=\"dr\">dr. Sabine Fevery</span><span class=\"dr\">dr. Hilde Tack</span></td>\n</tr>\n<tr class=\"even\">\n<td class=\"day\">Vrijdag</td>\n<td><span class=\"dr\">dr. Sabine Fevery</span><span class=\"dr\">dr. Hilde Tack</span></td>\n<td><span class=\"dr\">dr. Hilde Tack</span></td>\n<td><span class=\"dr\">dr. Lies Gheyle</span><span class=\"dr\">dr. Lies Delameillieure</span></td>\n</tr>\n</tbody>\n</table>'),(30,111,'en',10,'N','T',0,'','<p>Indien u wegens een (on)voorziene omstandigheid toch niet kan verschijnen op uw afspraak, appreci&euml;ren wij het ten zeerste dit tijdig te annuleren.</p>\n<p>Afspraken die niet tijdig geannuleerd worden zonder een aanvaardbare reden worden vanaf 01/04/2011 aangerekend zonder tussenkomst van de mutualiteiten.</p>'),(31,112,'en',10,'N','T',0,'','<p><img style=\"float: right; margin: 5px;\" title=\"Attest\" src=\"../data/images/30.jpg\" alt=\"Attest\" width=\"154\" height=\"215\" />Voor al uw attesten en formulieren vragen wij om langs te komen op consultatie. Wij kunnen enkel bepaalde zaken attesteren na u gezien te hebben.</p>\n<p>Als arts mogen wij enkel attesten schrijven die stroken met de waarheid. Valse attesten zullen u steeds geweigerd worden.</p>\n<p>Gelieve uw medicatievoorschriften zoveel mogelijk tijdens de consultatie te vragen. Uw chronische medicatie kan verlengd worden voor&nbsp;een periode van&nbsp;3 maand.&nbsp;Uitzonderingen hierop zijn: de anticonceptiepil (12 maand) en schildkliermedicatie (6 maand).&nbsp;</p>'),(32,113,'en',10,'N','T',0,'','<p>In uw globaal medisch dossier houden wij al uw medische gegevens bij die van belang zijn voor uw gezondheid. Dit is&nbsp;belangrijk om u de meest optimale zorg aan te bieden.&nbsp;</p>\n<p>Als u een globaal medisch dossier afsluit bij uw huisartsenpraktijk, krijgt u 30% meer terugbetaald van het ziekenfonds voor consultaties bij uw huisarts.</p>\n<p>Het globaal medisch dossier kan aangevraagd worden aan ons secretariaat. Het enige wat hiervoor nodig is, is een kleefbriefje van uw ziekenfonds.</p>\n<p>Het globaal medisch dossier wordt jaarlijks vernieuwd.</p>'),(33,114,'en',10,'N','T',0,'','<p><img style=\"float: right; margin: 5px;\" title=\"Een es\" src=\"../data/images/31.jpg\" alt=\"Een es\" width=\"132\" height=\"180\" />Wij zijn 4 huisartsen die intensief samenwerken in &eacute;&eacute;n huisartsenpraktijk. Door een goed dossiersysteem en onze wekelijkse overlegmomenten, zorgen wij ervoor dat u bij alle 4 de artsen even goed terecht kan. Het blijft uiteraard uw keuze bij welke arts(en)&nbsp;u consulteert.</p>\n<p>Het is onze overtuiging dat samenwerken nuttig is. Hierdoor kunnen wij u een goede beschikbaarheid bieden, kunnen wij overleggen en vaak deelnemen aan bijscholingen. Dit zorgt ervoor dat we u de meest optimale zorg kunnen aanbieden.</p>\n<p>Door samen te werken in &eacute;&eacute;n praktijk, krijgen wij als arts tevens de mogelijkheid om tijd vrij te maken voor een eigen sociaal en familiaal leven.</p>'),(34,115,'en',10,'N','T',0,'','<p>De huisartsenpraktijk \'De Essen\' is een jonge en dynamische groepspraktijk waar de zorg voor onze pati&euml;nten centraal staat.&nbsp;Wij&nbsp;willen&nbsp;deze zorg bieden,&nbsp;als team, zoveel&nbsp;als mogelijk wetenschappelijk onderbouwd,&nbsp;met respect&nbsp;voor&nbsp;uw en onze visie.&nbsp;<br />&nbsp;</p>\n<p>Om deze zorg mogelijk te maken,&nbsp;wensen wij een paar afspraken met u te maken. Deze zijn te vinden op onze website.&nbsp;<br />&nbsp;</p>\n<p>Wij hopen zo op een fijne samenwerking en bedanken u voor het vertrouwen dat u stelt in onze praktijk.</p>'),(35,116,'en',10,'N','T',0,'','<ul class=\"simple\">\n<li>diagnose en behandeling van uw klachten</li>\n<li>bloedafname</li>\n<li>medicatievoorschriften</li>\n<li>afname van EKG (hartonderzoek)</li>\n<li>preoperatief onderzoek</li>\n<li>algemeen onderzoek aangevraagd door uw verzekeringsmakelaar</li>\n<li>gynaecologisch onderzoek&nbsp;(uitstrijkje)&nbsp;en borstonderzoek</li>\n<li>pilvoorschrift</li>\n<li>zwangerschapsdiagnose en opvolging, in samenwerking met uw gynaecoloog</li>\n<li>vaccinatie (ook van baby\'s en kinderen)</li>\n<li>gipsen van breuken</li>\n<li>hechten van een snijwonde</li>\n<li>bevriezen (cryotherapie) van verschillende huidletsels waaronder wratten</li>\n<li>een ondersteunend gesprek</li>\n<li>psychologische begeleiding</li>\n<li>medische en mentale begeleiding tijdens het levenseinde, in samenwerking met palliatief netwerk</li>\n<li>reisadvies</li>\n<li>advies i.v.m. allerlei gezondheidsproblemen</li>\n<li>bijhouden van je medisch dossier</li>\n<li>samenwerking met andere hulpverleners: kinesist, osteopaat, verpleegkundige, psycholoog,...</li>\n<li>eventuele verwijzing naar een specialist</li>\n</ul>'),(36,122,'en',10,'N','T',0,'','<p>Vanaf 01/04/2011 kan u bij uw huisarts terecht voor een gratis preventief onderzoek, het GMD plus. Dit geldt voor alle personen tussen de 45 en 75 jaar die een GMD afgesloten hebben bij de huisarts.</p>\n<p>Deze consultatie wordt enkel in de voormiddag of namiddag aangeboden. Voor de consultatie wordt gevraagd aan de pati&euml;nt een vrageenijst in te vullen en die ingevuld mee te nemen op de dag van consultatie.</p>\n<p>Tijdens het gratis preventieve consult worden geen andere zaken besproken of medicatie voorgeschreven.</p>'),(37,123,'en',10,'N','T',0,'','<p><img style=\"float: right; margin: 5px;\" title=\"Essenblad\" src=\"../data/images/33.jpg\" alt=\"\" width=\"299\" height=\"200\" /><strong>Karakter</strong></p>\n<p>De es heeft een bijzonder bekoorlijk karakter en is daardoor zeer geliefd. Fair Play staat hoog in zijn vaandel. De es bezit veel zelfdiscipline en is erg ambitieus. Kleurloze meelopers zijn onder essen niet te vinden en zij tarten het lot graag. Hij wil graag goed overkomen en etaleren dat hij veel kennis heeft van alles wat het leven te bieden heeft. Of dat nu wel of niet het geval is, de es weet altijd de schijn op te houden. <br /> Op grond van zijn levendige karakter, optimisme en verlangen doet hij steeds wat hij voor juist houdt en van kritiek trekt hij zich niets aan. Als de es een doel heeft, stopt hij niet voordat dit is bereikt. Hij kan rustig op bepaalde kansen wachten en wanneer een kans zich voordoet, grijpt hij die met beide handen aan en weet hij zijn mogelijkheden optimaal te benutten. Het lijkt wel of de es zelfs de moeilijkste doelen spelenderwijs bereikt. <br /> Door drukte in zijn omgeving kan hij af en toe een beetje in de war zijn, waardoor hij soms zeer ego&iuml;stisch is en zich kan opdringen aan de omgeving. Zelfzuchtig is hij echter niet, want hij is ook bereid anderen te helpen. Bovendien is hij behalve een wijze en intelligente boom, ook best een lieve en goedige boom.</p>\n<p>In de liefde is de es trouw en voorzichtig, vaak wint het verstand het van zijn gevoel. Een es hecht veel waarde aan vertrouwen, vrienden kunnen dan ook op hem bouwen. Bevriend raken met de es is echter niet zo gemakkelijk. Hij zal niet direct laten merken dat hij je heeft opgemerkt, laat staan dat je gemakkelijk contact met hem kunt krijgen. Je moet er wel wat voor doen. Ten eerste moet je laten merken dat je respect hebt voor zijn veelheid aan ervaringen, voor zijn levenswijsheid en dat je zijn goede raad hoog acht. Je moet begrip tonen voor het feit dat hij zo groot is, dat is hij namelijk niet zonder reden: op die manier ziet en hoort hij zoveel, dat hij altijd op de hoogte is van de laatste nieuwtjes. Daardoor is hij ondanks zijn ogenschijijke ongenaakbaarheid geliefd bij iedereen die op de hoogte wil blijven van de actuele zaken. <br /> Je moet zijn raad echter wel met een korreltje zout nemen, want hij heeft de neiging de zaken enigszins te verdraaien naar zijn eigen inzicht, zodat de waarheid wel eens in het gedrang kan komen. Ten tweede moet je er rekening mee houden dat als hij eenmaal zijn aandacht op je heeft gevestigd er een communicatie tot stand is gekomen, dat deze dan ook onvoorwaardelijk is. Er is op dat moment geen ruimte voor de mening of invloed van derden. Hij is er dan alleen maar voor jou en jij moet je dan ook volledig op hem richten.</p>\n<p>&nbsp;</p>\n<p><strong>Eigenschappen <br /></strong> Ambitieus, intelligent, wijs, stralend, hulpvaardig, traditioneel, melancholisch, controlerend, zoekend naar het ongewone, ego&iuml;stisch, trouw, trots, optimistisch en voorzichtig in de liefde</p>\n<p>&nbsp;</p>\n<p><strong>Mythes <br /></strong> Fraxinus betekent speer of lans, exelcior betekent zoveel als &lsquo;boven de anderen uit stekend&rsquo;. <br /> De es was lang geleden voor de bewoners van Noord-Europa de belangrijkste boom. Ze zagen in hem de drager van de wereld. De wereld-es had zijn wortels in de onderwereld, zijn stam in de mensenwereld en zijn kroon in de hemel waar de goden woonden. Het was een symbool voor onsterfelijkheid en levenskracht. In allerlei legenden en godsdiensten wordt de es ge&euml;erd als heilige boom, beschermer des goden en als beschermheilige van de oogst en omdat essenhout zo flexibel en Voor de Germanen was de es de boom van het leven, de wereld van de es verdorde nooit. De goden bezochten de nornen, drie Germaanse schikgodinnen die het lot bepaalden, onder de wereld-es, als zij iets wilden weten over de toekomst. Veel van onze voorouders stonden te luisteren naar het geritsel van de bladeren van deze boom in de hoop zo iets van hun toekomst op te vangen.</p>\n<p>Volgens de Noorse, Germaanse en Griekse mythologie is de man uit een es ontstaan. Stoere Vikingen werden ook wel Esmensen genoemd en de Germaanse oppergod Wodan (ook wel Odin of Ygg genaamd) sneed een speer uit deze boom. Nemesis, de Griekse godin der wake, droeg een staf van essenhout en de lansen van Griekse helden uit de Illias en de Odyssee waren eveneens van essenhout. Achilles doodde Hetor tijdens het gevecht om Troje met een speer van dit hout. <br /> Gebruik <br /> De Vikingen geloofden in de toverkracht van de es en zij maakten speerschachten, mesheften en boten van essenhout, omdat het hen bijzondere macht zou verlenen en tegen het kwaad zou beschermen. Het zaad van de es zou bovendien bij mannen lustopwekkend werken. Kelten dronken en aten het liefst uit een essenhouten beker en schaal. Dit gaf kracht en genas. Heksen gebruikten essenhout om hun bezemsteel van te maken. <br /> De Romein Plinius schrijft dat de es slangen afschrikt. Als je een slang laat kiezen door essenhout te schuiven of door vuur, zal ze eerder door het vuur kruipen dan in essenloof. Daarom hingen bezorgde moeders hun baby&rsquo;s in hangmatjes tussen essen, zo durfde geen enkel gevaarlijk dier zich te tonen.</p>\n<p>De es is een grote en sterke boom waarvan het hout zo vreselijk hard en tegelijkertijd toch buigzaam is. Essenhout werd behalve voor het maken van allerlei technische voorwerpen, zoals disselbomen, wielen en scheepsmasten, ook gebruikt voor wapens als speren en pijlen. In de oudheid werd het hout in woningen gebruikt. Tegenwoordig wordt essenhout vooral gebruikt voor het maken van meubels, gymnastiek- en sportwerktuigen (ski&rsquo;s) en koetswerk.</p>\n<p>&nbsp;</p>\n<p><strong>Genezing</strong> <br /> De dru&iuml;den sneden toverstafjes, zogenaamde runren, uit de es. <br /> Een amulet van essenhout bezat een bijzondere beschermende werking tegen vervloekingen en kwade bedoelingen van heksen. <br /> De Kelten geloofden dat de es verbitterde en ontgoochelde mensen uit de kring van doemdenken kon verlossen. Elke dag een wandeling naar de es, er even tegenaan leunen terwijl je je kommer en kwel vertelde, gaf je energie en levenskracht. <br /> Hippocrates raadde essenbladerenthee aan tegen reuma, jicht en koorts</p>\n<p>&nbsp;</p>\n<p><em>Bron: Mari&euml;lle Lapidaire; boomkompas.blogspot.com</em></p>'),(38,108,'en',10,'N','T',0,'','<p>U kan elke werkdag &eacute;&eacute;n van de artsen bereiken van 8u tot 21u (de vrijdagavond tot 19u). Voor dringende zaken na 21u raden wij u aan de wachtdienst te contacteren.</p>\n<p>Tijdens het weekend en op feestdagen kan u terecht bij de wachtdienst:</p>\n<p>- Regio Groot Brugge:&nbsp;<strong>078/15.15.90</strong></p>\n<p><strong>-</strong>&nbsp;Regio Varsenare, Jabbeke, Snellegem, Stalhille en Zerkegem:&nbsp;<strong>050/39.72.62</strong></p>'),(39,104,'en',10,'N','T',0,'','<p>Wij hebben als huisarts ook nood aan vakantie en vrije tijd. Daarnaast kunnen wij ook afwezig zijn voor het volgen van bepaalde opleidingen.</p>\n<p>De&nbsp;afwezigheid van een&nbsp;arts&nbsp;wordt een tijd op voorhand aangekondigd op deze website en in de wachtzaal. De consultaties worden dan overgenomen door de overblijvende artsen.<strong><br /></strong></p>\n<p><strong>Dr. Tack zal afwezig zijn op:</strong><br />- 01/10/12 t/m 15/10/12</p>\n<p><strong>Dr. Gheyle zal afwezig zijn op:</strong><br />- 29/10/12 t/m 19/11/12</p>\n<p><strong>Dr. Fevery zal afwezig zijn op:</strong><br />- 07/09/12 t/m 23/09/12</p>'),(40,107,'en',10,'N','T',0,'','<p>In onze praktijk&nbsp;beschikken&nbsp;wij over de ideale omstandigheden om u te onderzoeken en te behandelen (aanwezigheid van medische materiaal en volledige dossiergegevens).</p>\n<p>Daarom vragen wij om zoveel&nbsp;als mogelijk&nbsp;bij ons op consultatie te komen.</p>\n<p>Indien dit wegens omstandigheden niet mogelijk is, kan u steeds een huisbezoek aanvragen.&nbsp;Gelieve dit bij voorkeur te doen tussen 08u00 en 10u30.</p>\n<p>Voor de huisbezoeken hebben wij een beurtrolsysteem. Wij kunnen u niet steeds garanderen dat uw huisarts naar keuze kan langskomen voor huisbezoeken die op de dag zelf worden aangevraagd. Dit kan enkel gegarandeerd worden voor huisbezoeken die op voorhand gepland worden.</p>\n<hr />\n<p>Voor nieuwe pati&euml;nten (aansluiting in praktijk na 1 januari 2009) kunnen wij enkel nog huisbezoeken doen in de regio\'s St-Andries, St-Michiels en Varsenare.</p>'),(41,99,'nl',10,'Y','S',0,'From Email','secretariaat@de-essen.be'),(42,99,'nl',20,'Y','S',0,'From Name','Secretariaat Huisartsenpraktijk De Essen'),(43,99,'nl',30,'Y','S',0,'To Email','secretariaat@de-essen.be'),(44,99,'nl',40,'Y','S',0,'To Name','Website De-Essen.be'),(45,99,'nl',50,'Y','S',0,'Address','Lagebekeweg 1, 8200 Sint-Andries'),(46,99,'nl',60,'Y','S',0,'Signed','Website De-Essen.be'),(47,99,'nl',70,'Y','S',0,'Secretary','Dames'),(48,99,'nl',80,'Y','S',0,'Mail Title','Afspraak De Essen'),(49,99,'en',10,'Y','S',0,'From Email','secretariaat@de-essen.be'),(50,99,'en',20,'Y','S',0,'From Name','Secretariaat Huisartsenpraktijk De Essen'),(51,99,'en',30,'Y','S',0,'To Email','secretariaat@de-essen.be'),(52,99,'en',40,'Y','S',0,'To Name','Website De-Essen.be'),(53,99,'en',50,'Y','S',0,'Address','Lagebekeweg 1, 8200 Sint-Andries'),(54,99,'en',60,'Y','S',0,'Signed','Website De-Essen.be'),(55,99,'en',70,'Y','S',0,'Secretary','Dames'),(56,99,'en',80,'Y','S',0,'Mail Title','Appointment De Essen');
+/*!40000 ALTER TABLE `content` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `data`
+--
+
+DROP TABLE IF EXISTS `data`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `data` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `atom` int(11) NOT NULL DEFAULT '0',
+  `data` text,
+  `status` char(1) NOT NULL DEFAULT 'S',
+  `created` datetime NOT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `data`
+--
+
+LOCK TABLES `data` WRITE;
+/*!40000 ALTER TABLE `data` DISABLE KEYS */;
+/*!40000 ALTER TABLE `data` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `domains`
+--
+
+DROP TABLE IF EXISTS `domains`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `domains` (
+  `id` varchar(32) NOT NULL DEFAULT '',
+  `name` varchar(32) DEFAULT '?'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `domains`
+--
+
+LOCK TABLES `domains` WRITE;
+/*!40000 ALTER TABLE `domains` DISABLE KEYS */;
+INSERT INTO `domains` VALUES ('admin','Admin'),('cms','CMS Users'),('user','Users'),('dr','Dokters');
+/*!40000 ALTER TABLE `domains` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `items`
+--
+
+DROP TABLE IF EXISTS `items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL DEFAULT '',
+  `parent` int(11) NOT NULL DEFAULT '0',
+  `user` int(11) DEFAULT '0',
+  `template` int(11) NOT NULL DEFAULT '1',
+  `orderby` char(1) DEFAULT 'A',
+  `sortorder` int(11) DEFAULT '0',
+  `dated` date DEFAULT '0000-00-00',
+  `validfrom` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `validto` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `showcontent` char(1) DEFAULT 'Y',
+  `needslogin` char(1) DEFAULT 'N',
+  `defaultrequest` varchar(32) DEFAULT '',
+  `alloweddomains` varchar(128) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `parent_idx` (`parent`)
+) ENGINE=InnoDB AUTO_INCREMENT=125 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `items`
+--
+
+LOCK TABLES `items` WRITE;
+/*!40000 ALTER TABLE `items` DISABLE KEYS */;
+INSERT INTO `items` VALUES (1,'Website',-1,1,100,'M',100,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','S',NULL,'list',''),(2,'Login',3,1,2,'A',99,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),(3,'Pages',-1,1,100,'M',0,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),(4,'Footer',-1,1,100,'M',0,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),(9,'Dashboard',-1,1,9,'M',0,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),(10,'CMS',9,1,2,'M',10,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','S','Y','',''),(11,'CMS - Page',10,1,11,'A',10,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),(12,'CMS - Images',10,1,12,'A',20,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),(13,'CMS - Files',10,1,13,'A',30,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),(14,'CMS - Forms',10,1,14,'A',40,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),(15,'CMS - Users',10,1,15,'A',50,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','list',''),(16,'CMS - Templates',10,1,16,'A',60,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','list',''),(17,'CMS - System',10,1,17,'A',70,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),(20,'Admin',9,1,2,'M',1,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','S','Y','',''),(21,'Admin - Agenda',20,1,21,'A',10,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),(22,'Admin - Patienten',20,1,22,'A',20,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),(23,'Admin - Week',20,1,23,'A',30,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),(24,'Admin - Contacten',20,1,24,'A',40,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),(97,'Privacy Verklaring',4,1,100,'A',0,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),(98,'Disclaimer',4,1,100,'A',0,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),(99,'Global',3,1,100,'A',0,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),(101,'Info',1,1,100,'M',40,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','S','N','',''),(102,'Maak een afspraak',1,1,101,'M',50,'2010-01-01','2013-03-12 00:00:00','2100-01-01 00:00:00','Y','N','',''),(103,'Consultaties',1,1,100,'M',20,'2010-01-01','2013-05-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),(104,'Verlof',1,1,100,'M',70,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),(106,'Contacten',1,1,103,'M',30,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),(107,'Huisbezoeken',124,1,100,'M',40,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),(108,'Dringende oproepen',124,1,100,'M',10,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),(109,'De Essen',1,1,102,'M',10,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),(111,'Annulering van afspraken',124,1,100,'A',30,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),(112,'Attesten',124,1,100,'A',20,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),(113,'Globaal medische dossier',101,1,100,'A',90,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),(114,'Groepspraktijk',101,1,100,'A',100,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),(115,'Visie',101,1,100,'A',70,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),(116,'Waarvoor kan U bij ons terecht',101,1,100,'A',80,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),(117,'Dr. Sabine Fevery',109,1,100,'A',20,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),(118,'Dr. Hilde Tack',109,1,100,'A',40,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),(119,'Dr. Lies Gheyle',109,1,100,'A',30,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),(120,'Prikbord',109,1,100,'M',10,'2012-08-14','2012-08-14 11:18:00','2199-01-01 00:00:00','Y','N','',''),(121,'Dr. Lies Delameillieure',109,1,102,'M',50,'2012-08-14','2012-08-14 00:00:00','2199-01-01 00:00:00','Y','N','',''),(122,'GMD Plus',101,1,100,'M',110,'2012-08-15','2012-08-15 19:11:00','2199-01-01 00:00:00','Y','N','',''),(123,'Betekenis De Essen',101,1,100,'M',120,'2012-08-15','2012-08-15 19:15:00','2199-01-01 00:00:00','Y','N','',''),(124,'Praktisch',1,1,100,'M',60,'2012-08-15','2012-08-15 19:20:00','2199-01-01 00:00:00','S','N','','');
+/*!40000 ALTER TABLE `items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `languages`
+--
+
+DROP TABLE IF EXISTS `languages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `languages` (
+  `id` varchar(4) NOT NULL DEFAULT '',
+  `name` varchar(32) DEFAULT '',
+  `sortorder` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `languages`
+--
+
+LOCK TABLES `languages` WRITE;
+/*!40000 ALTER TABLE `languages` DISABLE KEYS */;
+INSERT INTO `languages` VALUES ('en','English',1),('nl','Nederlands',2);
+/*!40000 ALTER TABLE `languages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `levels`
+--
+
+DROP TABLE IF EXISTS `levels`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `levels` (
+  `id` int(11) DEFAULT NULL,
+  `name` varchar(32) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `levels`
+--
+
+LOCK TABLES `levels` WRITE;
+/*!40000 ALTER TABLE `levels` DISABLE KEYS */;
+INSERT INTO `levels` VALUES (2,'user'),(50,'admin'),(99,'super');
+/*!40000 ALTER TABLE `levels` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pages`
+--
+
+DROP TABLE IF EXISTS `pages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pages` (
+  `item` int(11) NOT NULL DEFAULT '0',
+  `language` varchar(2) NOT NULL DEFAULT '',
+  `title` varchar(255) DEFAULT NULL,
+  `link` varchar(255) DEFAULT NULL,
+  `active` char(1) DEFAULT 'Y',
+  `keywords` varchar(255) DEFAULT '',
+  `description` varchar(255) DEFAULT '',
+  `created` datetime DEFAULT '0000-00-00 00:00:00',
+  `updated` datetime DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`item`,`language`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pages`
+--
+
+LOCK TABLES `pages` WRITE;
+/*!40000 ALTER TABLE `pages` DISABLE KEYS */;
+INSERT INTO `pages` VALUES (1,'en','Website','welcome','Y','','','2010-01-01 00:00:00','2013-01-23 10:40:29'),(1,'nl','Website','welcome','Y','','','2010-01-01 00:00:00','2013-06-15 12:28:38'),(2,'en','Login','login','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(2,'nl','Login','login','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(3,'en','Pages','','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(3,'nl','Pages','','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(4,'en','Footer','','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(4,'nl','Footer','','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(9,'en','Dashboard','dashboard','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(9,'nl','Dashboard','dashboard','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(10,'en','Website CMS','cms','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(10,'nl','Website CMS','cms','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(11,'en','Structure','pages','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(11,'nl','Structuur','pages','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(12,'en','Images','images','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(12,'nl','Beelden','images','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(13,'en','Files','files','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(13,'nl','Bestanden','files','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(14,'en','Forms','forms','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(14,'nl','Formulieren','forms','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(15,'en','Users','users','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(15,'nl','Gebruikers','users','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(16,'en','Templates','templates','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(16,'nl','Sjablonen','templates','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(17,'en','System','system','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(17,'nl','Systeem','system','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(20,'en','Managment','admin','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(20,'nl','Beheer - Praktijk','admin','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(21,'en','Agenda','agenda','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(21,'nl','Agenda','agenda','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(22,'en','Patients','patients','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(22,'nl','Patienten','patients','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(23,'en','Week scheme','week','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(23,'nl','Weekschema','week','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(24,'en','Contacts','drs','Y','','','2010-01-01 00:00:00','2012-08-15 21:20:27'),(24,'nl','Contacten','drs','Y','','','2010-01-01 00:00:00','2012-08-15 21:20:27'),(97,'en','Privacy','privacy','Y','','','2010-01-01 00:00:00','2013-03-19 09:30:30'),(97,'nl','Privacy Verklaring','privacy','Y','','','2010-01-01 00:00:00','2013-03-19 09:30:30'),(98,'en','Disclaimer','disclaimer','Y','','','2010-01-01 00:00:00','2012-08-20 17:09:50'),(98,'nl','Disclaimer','disclaimer','Y','','','2010-01-01 00:00:00','2012-08-20 17:09:50'),(99,'en','Global','global','Y','','','2010-01-01 00:00:00','2012-08-15 22:02:59'),(99,'nl','Global','global','Y','','','2010-01-01 00:00:00','2012-08-15 22:02:59'),(101,'en','Info','info','Y','','','2010-01-01 00:00:00','2012-08-28 09:39:37'),(101,'nl','Info','info','Y','','','2010-01-01 00:00:00','2012-08-28 09:39:37'),(102,'en','Make an appointment','afspraak','Y','','','2010-01-01 00:00:00','2013-04-26 18:03:26'),(102,'nl','Maak een afspraak','afspraak','Y','','','2010-01-01 00:00:00','2013-04-26 18:03:26'),(103,'en','Consultations','consultaties','Y','','','2010-01-01 00:00:00','2013-03-17 11:28:01'),(103,'nl','Consultaties','consultaties','Y','','','2010-01-01 00:00:00','2013-03-17 11:28:01'),(104,'en','Holidays','verlof',NULL,'','','2010-01-01 00:00:00','2013-04-17 12:08:12'),(104,'nl','Verlof','verlof',NULL,'','','2010-01-01 00:00:00','2013-04-17 12:08:12'),(106,'en','Contacts','contact','Y','','','2010-01-01 00:00:00','2013-03-17 11:18:53'),(106,'nl','Contacten','contact','Y','','','2010-01-01 00:00:00','2013-03-17 11:18:53'),(107,'en','House calls','huisbezoeken','Y','','','2010-01-01 00:00:00','2012-08-15 22:35:41'),(107,'nl','Huisbezoeken','huisbezoeken','Y','','','2010-01-01 00:00:00','2012-08-15 22:35:41'),(108,'en','Emergencies','dringend','Y','','','2010-01-01 00:00:00','2012-08-15 22:35:20'),(108,'nl','Dringende oproepen','dringend','Y','','','2010-01-01 00:00:00','2012-08-15 22:35:20'),(109,'en','De Essen','huisartsen','Y','','','2010-01-01 00:00:00','2013-04-26 17:11:41'),(109,'nl','De Essen','huisartsen','Y','','','2010-01-01 00:00:00','2013-04-26 17:11:41'),(111,'en','Canceling appointments','annulatie','Y','','','2010-01-01 00:00:00','2012-08-15 22:37:43'),(111,'nl','Annulering van afspraken','annulatie','Y','','','2010-01-01 00:00:00','2012-08-15 22:37:43'),(112,'en','Attestations','attesten','Y','','','2010-01-01 00:00:00','2012-08-15 22:35:50'),(112,'nl','Attesten','attesten','Y','','','2010-01-01 00:00:00','2012-08-15 22:35:50'),(113,'en','Global Medical Dossier','gmd','Y','','','2010-01-01 00:00:00','2012-08-15 22:37:57'),(113,'nl','Globaal medische dossier','gmd','Y','','','2010-01-01 00:00:00','2012-08-15 22:37:57'),(114,'en','Group practice','groepspraktijk','Y','','','2010-01-01 00:00:00','2012-08-15 22:38:05'),(114,'nl','Groepspraktijk','groepspraktijk','Y','','','2010-01-01 00:00:00','2012-08-15 22:38:05'),(115,'en','Vision','visie','N','','','2010-01-01 00:00:00','2013-03-15 15:45:35'),(115,'nl','Visie','visie','N','','','2010-01-01 00:00:00','2013-03-15 15:45:35'),(116,'en','Why visit us','waarvoor','Y','','','2010-01-01 00:00:00','2012-08-19 17:40:58'),(116,'nl','Waarvoor kan U bij ons terecht','waarvoor','Y','','','2010-01-01 00:00:00','2012-08-19 17:40:58'),(117,'en','Dr. Sabine Fevery','fevery','Y','','','2010-01-01 00:00:00','2012-08-15 22:32:41'),(117,'nl','Dr. Sabine Fevery','fevery','Y','','','2010-01-01 00:00:00','2012-08-15 22:32:41'),(118,'en','Dr. Hilde Tack','tack','Y','','','2010-01-01 00:00:00','2013-03-19 13:25:05'),(118,'nl','Dr. Hilde Tack','tack','Y','','','2010-01-01 00:00:00','2013-03-19 13:25:05'),(119,'en','Dr. Lies Gheyle','gheyle','Y','','','2010-01-01 00:00:00','2012-08-15 22:32:53'),(119,'nl','Dr. Lies Gheyle','gheyle','Y','','','2010-01-01 00:00:00','2012-08-15 22:32:53'),(120,'en','Board','prikbord','Y','','','2012-08-14 11:18:37','2012-08-15 22:32:32'),(120,'nl','Prikbord','prikbord','Y','','','2012-08-14 11:18:37','2012-08-15 22:32:32'),(121,'en','Dr. Lies Delameillieure','delameillieure','Y','','','2012-08-14 12:06:50','2013-03-19 13:12:55'),(121,'nl','Dr. Lies Delameillieure','delameillieure','Y','','','2012-08-14 12:06:50','2013-03-19 13:12:55'),(122,'en','GMD Plus','gmdplus','Y','','','2012-08-15 19:11:52','2012-08-28 09:05:12'),(122,'nl','GMD Plus','gmdplus','Y','','','2012-08-15 19:11:52','2012-08-28 09:05:12'),(123,'en','Meaning of De Essen','deessen','Y','','','2012-08-15 19:15:18','2012-08-15 22:37:52'),(123,'nl','Betekenis De Essen','deessen','Y','','','2012-08-15 19:15:18','2012-08-15 22:37:52'),(124,'en','Practical','praktisch','Y','','','2012-08-15 19:20:17','2012-08-28 09:39:32'),(124,'nl','Praktisch','praktisch','Y','','','2012-08-15 19:20:17','2012-08-28 09:39:32');
+/*!40000 ALTER TABLE `pages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `slots`
+--
+
+DROP TABLE IF EXISTS `slots`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `slots` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `dr` int(11) NOT NULL DEFAULT '0',
+  `hour` char(5) NOT NULL DEFAULT '',
+  `daynr` int(11) NOT NULL DEFAULT '0',
+  `type` char(1) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `dr_idx` (`dr`)
+) ENGINE=InnoDB AUTO_INCREMENT=1366 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `slots`
+--
+
+LOCK TABLES `slots` WRITE;
+/*!40000 ALTER TABLE `slots` DISABLE KEYS */;
+INSERT INTO `slots` VALUES (1,10,'08:00',0,''),(2,10,'08:15',0,''),(3,10,'08:30',0,''),(4,10,'08:45',0,''),(5,10,'09:00',0,''),(6,10,'09:30',0,''),(7,10,'09:15',0,''),(8,10,'09:45',0,''),(9,10,'10:00',0,''),(10,10,'10:15',0,''),(11,10,'10:30',0,''),(12,10,'10:45',0,''),(13,10,'11:00',0,''),(14,10,'11:15',0,''),(15,10,'11:30',0,''),(16,10,'11:45',0,''),(17,10,'12:00',0,''),(18,10,'12:15',0,''),(19,10,'12:30',0,''),(20,10,'12:45',0,''),(21,10,'13:00',0,''),(22,10,'13:15',0,''),(23,10,'13:30',0,''),(24,10,'13:45',0,''),(25,10,'14:00',0,''),(26,10,'14:15',0,''),(27,10,'14:30',0,''),(28,10,'14:45',0,''),(29,10,'15:00',0,''),(30,10,'15:15',0,''),(31,10,'15:30',0,''),(32,10,'15:45',0,''),(33,10,'16:00',0,''),(34,10,'16:15',0,''),(35,10,'16:30',0,''),(36,10,'16:45',0,'A'),(37,10,'17:00',0,'W'),(38,10,'17:15',0,'W'),(39,10,'17:30',0,'A'),(40,10,'17:45',0,'A'),(41,10,'18:00',0,'A'),(42,10,'18:15',0,'A'),(43,10,'18:30',0,'A'),(44,10,'18:45',0,'A'),(45,10,'19:00',0,'A'),(46,10,'19:15',0,''),(47,10,'19:30',0,''),(48,10,'19:45',0,''),(49,10,'20:00',0,''),(50,10,'20:15',0,''),(51,10,'20:30',0,''),(52,10,'20:45',0,''),(53,10,'08:00',1,''),(54,10,'08:15',1,''),(55,10,'08:30',1,'W'),(56,10,'08:45',1,'W'),(57,10,'09:00',1,'W'),(58,10,'09:30',1,'A'),(59,10,'09:15',1,'A'),(60,10,'09:45',1,'W'),(61,10,'10:00',1,'W'),(62,10,'10:15',1,'A'),(63,10,'10:30',1,''),(64,10,'10:45',1,'A'),(65,10,'11:00',1,'A'),(66,10,'11:15',1,'C'),(67,10,'11:30',1,'C'),(68,10,'11:45',1,'C'),(69,10,'12:00',1,'C'),(70,10,'12:15',1,'C'),(71,10,'12:30',1,''),(72,10,'12:45',1,''),(73,10,'13:00',1,''),(74,10,'13:15',1,''),(75,10,'13:30',1,''),(76,10,'13:45',1,''),(77,10,'14:00',1,''),(78,10,'14:15',1,''),(79,10,'14:30',1,''),(80,10,'14:45',1,''),(81,10,'15:00',1,''),(82,10,'15:15',1,''),(83,10,'15:30',1,''),(84,10,'15:45',1,''),(85,10,'16:00',1,''),(86,10,'16:15',1,''),(87,10,'16:30',1,''),(88,10,'16:45',1,''),(89,10,'17:00',1,''),(90,10,'17:15',1,''),(91,10,'17:30',1,''),(92,10,'17:45',1,''),(93,10,'18:00',1,''),(94,10,'18:15',1,''),(95,10,'18:30',1,''),(96,10,'18:45',1,''),(97,10,'19:00',1,''),(98,10,'19:15',1,''),(99,10,'19:30',1,''),(100,10,'19:45',1,''),(101,10,'20:00',1,''),(102,10,'20:15',1,''),(103,10,'20:30',1,''),(104,10,'20:45',1,''),(105,10,'08:00',2,''),(106,10,'08:15',2,''),(107,10,'08:30',2,'W'),(108,10,'08:45',2,'W'),(109,10,'09:00',2,'A'),(110,10,'09:30',2,'A'),(111,10,'09:15',2,'W'),(112,10,'09:45',2,'W'),(113,10,'10:00',2,'W'),(114,10,'10:15',2,'A'),(115,10,'10:30',2,''),(116,10,'10:45',2,'W'),(117,10,'11:00',2,'A'),(118,10,'11:15',2,'C'),(119,10,'11:30',2,'C'),(120,10,'11:45',2,'C'),(121,10,'12:00',2,'C'),(122,10,'12:15',2,''),(123,10,'12:30',2,''),(124,10,'12:45',2,''),(125,10,'13:00',2,''),(126,10,'13:15',2,''),(127,10,'13:30',2,''),(128,10,'13:45',2,''),(129,10,'14:00',2,''),(130,10,'14:15',2,''),(131,10,'14:30',2,''),(132,10,'14:45',2,''),(133,10,'15:00',2,''),(134,10,'15:15',2,''),(135,10,'15:30',2,''),(136,10,'15:45',2,''),(137,10,'16:00',2,''),(138,10,'16:15',2,''),(139,10,'16:30',2,''),(140,10,'16:45',2,''),(141,10,'17:00',2,''),(142,10,'17:15',2,''),(143,10,'17:30',2,''),(144,10,'17:45',2,''),(145,10,'18:00',2,''),(146,10,'18:15',2,''),(147,10,'18:30',2,''),(148,10,'18:45',2,''),(149,10,'19:00',2,''),(150,10,'19:15',2,''),(151,10,'19:30',2,''),(152,10,'19:45',2,''),(153,10,'20:00',2,''),(154,10,'20:15',2,''),(155,10,'20:30',2,''),(156,10,'20:45',2,''),(157,10,'08:00',3,''),(158,10,'08:15',3,''),(159,10,'08:30',3,''),(160,10,'08:45',3,''),(161,10,'09:00',3,''),(162,10,'09:30',3,''),(163,10,'09:15',3,''),(164,10,'09:45',3,''),(165,10,'10:00',3,''),(166,10,'10:15',3,''),(167,10,'10:30',3,''),(168,10,'10:45',3,''),(169,10,'11:00',3,''),(170,10,'11:15',3,''),(171,10,'11:30',3,''),(172,10,'11:45',3,''),(173,10,'12:00',3,''),(174,10,'12:15',3,''),(175,10,'12:30',3,''),(176,10,'12:45',3,''),(177,10,'13:00',3,''),(178,10,'13:15',3,''),(179,10,'13:30',3,''),(180,10,'13:45',3,''),(181,10,'14:00',3,''),(182,10,'14:15',3,''),(183,10,'14:30',3,''),(184,10,'14:45',3,''),(185,10,'15:00',3,''),(186,10,'15:15',3,''),(187,10,'15:30',3,''),(188,10,'15:45',3,''),(189,10,'16:00',3,''),(190,10,'16:15',3,''),(191,10,'16:30',3,''),(192,10,'16:45',3,'A'),(193,10,'17:00',3,'W'),(194,10,'17:15',3,'W'),(195,10,'17:30',3,'A'),(196,10,'17:45',3,'A'),(197,10,'18:00',3,'A'),(198,10,'18:15',3,'A'),(199,10,'18:30',3,'A'),(200,10,'18:45',3,'A'),(201,10,'19:00',3,'A'),(202,10,'19:15',3,''),(203,10,'19:30',3,''),(204,10,'19:45',3,''),(205,10,'20:00',3,''),(206,10,'20:15',3,''),(207,10,'20:30',3,''),(208,10,'20:45',3,''),(209,10,'08:00',4,''),(210,10,'08:15',4,''),(211,10,'08:30',4,'A'),(212,10,'08:45',4,'A'),(213,10,'09:00',4,'W'),(214,10,'09:30',4,'A'),(215,10,'09:15',4,'A'),(216,10,'09:45',4,'W'),(217,10,'10:00',4,'W'),(218,10,'10:15',4,'A'),(219,10,'10:30',4,''),(220,10,'10:45',4,'W'),(221,10,'11:00',4,'A'),(222,10,'11:15',4,'C'),(223,10,'11:30',4,'C'),(224,10,'11:45',4,'C'),(225,10,'12:00',4,'C'),(226,10,'12:15',4,'C'),(227,10,'12:30',4,''),(228,10,'12:45',4,''),(229,10,'13:00',4,''),(230,10,'13:15',4,''),(231,10,'13:30',4,''),(232,10,'13:45',4,''),(233,10,'14:00',4,''),(234,10,'14:15',4,''),(235,10,'14:30',4,''),(236,10,'14:45',4,''),(237,10,'15:00',4,''),(238,10,'15:15',4,''),(239,10,'15:30',4,''),(240,10,'15:45',4,''),(241,10,'16:00',4,''),(242,10,'16:15',4,''),(243,10,'16:30',4,''),(244,10,'16:45',4,''),(245,10,'17:00',4,''),(246,10,'17:15',4,''),(247,10,'17:30',4,''),(248,10,'17:45',4,''),(249,10,'18:00',4,''),(250,10,'18:15',4,''),(251,10,'18:30',4,''),(252,10,'18:45',4,''),(253,10,'19:00',4,''),(254,10,'19:15',4,''),(255,10,'19:30',4,''),(256,10,'19:45',4,''),(257,10,'20:00',4,''),(258,10,'20:15',4,''),(259,10,'20:30',4,''),(260,10,'20:45',4,''),(261,10,'08:00',5,''),(262,10,'08:15',5,''),(263,10,'08:30',5,''),(264,10,'08:45',5,''),(265,10,'09:00',5,''),(266,10,'09:30',5,''),(267,10,'09:15',5,''),(268,10,'09:45',5,''),(269,10,'10:00',5,''),(270,10,'10:15',5,''),(271,10,'10:30',5,''),(272,10,'10:45',5,''),(273,10,'11:00',5,''),(274,10,'11:15',5,''),(275,10,'11:30',5,''),(276,10,'11:45',5,''),(277,10,'12:00',5,''),(278,10,'12:15',5,''),(279,10,'12:30',5,''),(280,10,'12:45',5,''),(281,10,'13:00',5,''),(282,10,'13:15',5,''),(283,10,'13:30',5,''),(284,10,'13:45',5,''),(285,10,'14:00',5,''),(286,10,'14:15',5,''),(287,10,'14:30',5,''),(288,10,'14:45',5,''),(289,10,'15:00',5,''),(290,10,'15:15',5,''),(291,10,'15:30',5,''),(292,10,'15:45',5,''),(293,10,'16:00',5,''),(294,10,'16:15',5,''),(295,10,'16:30',5,''),(296,10,'16:45',5,''),(297,10,'17:00',5,''),(298,10,'17:15',5,''),(299,10,'17:30',5,''),(300,10,'17:45',5,''),(301,10,'18:00',5,''),(302,10,'18:15',5,''),(303,10,'18:30',5,''),(304,10,'18:45',5,''),(305,10,'19:00',5,''),(306,10,'19:15',5,''),(307,10,'19:30',5,''),(308,10,'19:45',5,''),(309,10,'20:00',5,''),(310,10,'20:15',5,''),(311,10,'20:30',5,''),(312,10,'20:45',5,''),(313,10,'08:00',6,''),(314,10,'08:15',6,''),(315,10,'08:30',6,''),(316,10,'08:45',6,''),(317,10,'09:00',6,''),(318,10,'09:30',6,''),(319,10,'09:15',6,''),(320,10,'09:45',6,''),(321,10,'10:00',6,''),(322,10,'10:15',6,''),(323,10,'10:30',6,''),(324,10,'10:45',6,''),(325,10,'11:00',6,''),(326,10,'11:15',6,''),(327,10,'11:30',6,''),(328,10,'11:45',6,''),(329,10,'12:00',6,''),(330,10,'12:15',6,''),(331,10,'12:30',6,''),(332,10,'12:45',6,''),(333,10,'13:00',6,''),(334,10,'13:15',6,''),(335,10,'13:30',6,''),(336,10,'13:45',6,''),(337,10,'14:00',6,''),(338,10,'14:15',6,''),(339,10,'14:30',6,''),(340,10,'14:45',6,''),(341,10,'15:00',6,''),(342,10,'15:15',6,''),(343,10,'15:30',6,''),(344,10,'15:45',6,''),(345,10,'16:00',6,''),(346,10,'16:15',6,''),(347,10,'16:30',6,''),(348,10,'16:45',6,''),(349,10,'17:00',6,''),(350,10,'17:15',6,''),(351,10,'17:30',6,''),(352,10,'17:45',6,''),(353,10,'18:00',6,''),(354,10,'18:15',6,''),(355,10,'18:30',6,''),(356,10,'18:45',6,''),(357,10,'19:00',6,''),(358,10,'19:15',6,''),(359,10,'19:30',6,''),(360,10,'19:45',6,''),(361,10,'20:00',6,''),(362,10,'20:15',6,''),(363,10,'20:30',6,''),(364,10,'20:45',6,''),(365,20,'08:00',0,''),(366,20,'08:15',0,''),(367,20,'08:30',0,'A'),(368,20,'08:45',0,'A'),(369,20,'09:00',0,'A'),(370,20,'09:30',0,'W'),(371,20,'09:15',0,'A'),(372,20,'09:45',0,'A'),(373,20,'10:00',0,'A'),(374,20,'10:15',0,'A'),(375,20,'10:30',0,'W'),(376,20,'10:45',0,'A'),(377,20,'11:00',0,'W'),(378,20,'11:15',0,'A'),(379,20,'11:30',0,'A'),(380,20,'11:45',0,'W'),(381,20,'12:00',0,''),(382,20,'12:15',0,''),(383,20,'12:30',0,''),(384,20,'12:45',0,''),(385,20,'13:00',0,''),(386,20,'13:15',0,''),(387,20,'13:30',0,''),(388,20,'13:45',0,'A'),(389,20,'14:00',0,'W'),(390,20,'14:15',0,'A'),(391,20,'14:30',0,'W'),(392,20,'14:45',0,'A'),(393,20,'15:00',0,''),(394,20,'15:15',0,''),(395,20,'15:30',0,''),(396,20,'15:45',0,''),(397,20,'16:00',0,''),(398,20,'16:15',0,''),(399,20,'16:30',0,''),(400,20,'16:45',0,''),(401,20,'17:00',0,''),(402,20,'17:15',0,''),(403,20,'17:30',0,''),(404,20,'17:45',0,''),(405,20,'18:00',0,''),(406,20,'18:15',0,''),(407,20,'18:30',0,''),(408,20,'18:45',0,''),(409,20,'19:00',0,''),(410,20,'19:15',0,''),(411,20,'19:30',0,''),(412,20,'19:45',0,''),(413,20,'20:00',0,''),(414,20,'20:15',0,''),(415,20,'20:30',0,''),(416,20,'20:45',0,''),(417,20,'08:00',1,''),(418,20,'08:15',1,''),(419,20,'08:30',1,''),(420,20,'08:45',1,''),(421,20,'09:00',1,''),(422,20,'09:30',1,''),(423,20,'09:15',1,''),(424,20,'09:45',1,''),(425,20,'10:00',1,''),(426,20,'10:15',1,''),(427,20,'10:30',1,''),(428,20,'10:45',1,''),(429,20,'11:00',1,''),(430,20,'11:15',1,''),(431,20,'11:30',1,''),(432,20,'11:45',1,''),(433,20,'12:00',1,''),(434,20,'12:15',1,''),(435,20,'12:30',1,''),(436,20,'12:45',1,''),(437,20,'13:00',1,''),(438,20,'13:15',1,''),(439,20,'13:30',1,''),(440,20,'13:45',1,''),(441,20,'14:00',1,''),(442,20,'14:15',1,''),(443,20,'14:30',1,''),(444,20,'14:45',1,''),(445,20,'15:00',1,''),(446,20,'15:15',1,''),(447,20,'15:30',1,''),(448,20,'15:45',1,''),(449,20,'16:00',1,'C'),(450,20,'16:15',1,'C'),(451,20,'16:30',1,'C'),(452,20,'16:45',1,'C'),(453,20,'17:00',1,'W'),(454,20,'17:15',1,'W'),(455,20,'17:30',1,'A'),(456,20,'17:45',1,'A'),(457,20,'18:00',1,'W'),(458,20,'18:15',1,'A'),(459,20,'18:30',1,'W'),(460,20,'18:45',1,'A'),(461,20,'19:00',1,'A'),(462,20,'19:15',1,''),(463,20,'19:30',1,''),(464,20,'19:45',1,''),(465,20,'20:00',1,''),(466,20,'20:15',1,''),(467,20,'20:30',1,''),(468,20,'20:45',1,''),(469,20,'08:00',2,''),(470,20,'08:15',2,''),(471,20,'08:30',2,''),(472,20,'08:45',2,''),(473,20,'09:00',2,''),(474,20,'09:30',2,''),(475,20,'09:15',2,''),(476,20,'09:45',2,''),(477,20,'10:00',2,''),(478,20,'10:15',2,''),(479,20,'10:30',2,''),(480,20,'10:45',2,''),(481,20,'11:00',2,''),(482,20,'11:15',2,''),(483,20,'11:30',2,''),(484,20,'11:45',2,''),(485,20,'12:00',2,''),(486,20,'12:15',2,''),(487,20,'12:30',2,''),(488,20,'12:45',2,''),(489,20,'13:00',2,''),(490,20,'13:15',2,''),(491,20,'13:30',2,''),(492,20,'13:45',2,''),(493,20,'14:00',2,''),(494,20,'14:15',2,''),(495,20,'14:30',2,''),(496,20,'14:45',2,''),(497,20,'15:00',2,''),(498,20,'15:15',2,''),(499,20,'15:30',2,''),(500,20,'15:45',2,''),(501,20,'16:00',2,''),(502,20,'16:15',2,''),(503,20,'16:30',2,''),(504,20,'16:45',2,''),(505,20,'17:00',2,''),(506,20,'17:15',2,''),(507,20,'17:30',2,''),(508,20,'17:45',2,''),(509,20,'18:00',2,''),(510,20,'18:15',2,''),(511,20,'18:30',2,''),(512,20,'18:45',2,''),(513,20,'19:00',2,''),(514,20,'19:15',2,''),(515,20,'19:30',2,''),(516,20,'19:45',2,''),(517,20,'20:00',2,''),(518,20,'20:15',2,''),(519,20,'20:30',2,''),(520,20,'20:45',2,''),(521,20,'08:00',3,''),(522,20,'08:15',3,''),(523,20,'08:30',3,''),(524,20,'08:45',3,''),(525,20,'09:00',3,''),(526,20,'09:30',3,''),(527,20,'09:15',3,''),(528,20,'09:45',3,''),(529,20,'10:00',3,''),(530,20,'10:15',3,''),(531,20,'10:30',3,''),(532,20,'10:45',3,''),(533,20,'11:00',3,''),(534,20,'11:15',3,''),(535,20,'11:30',3,''),(536,20,'11:45',3,''),(537,20,'12:00',3,''),(538,20,'12:15',3,''),(539,20,'12:30',3,''),(540,20,'12:45',3,''),(541,20,'13:00',3,''),(542,20,'13:15',3,''),(543,20,'13:30',3,''),(544,20,'13:45',3,''),(545,20,'14:00',3,''),(546,20,'14:15',3,''),(547,20,'14:30',3,''),(548,20,'14:45',3,''),(549,20,'15:00',3,''),(550,20,'15:15',3,''),(551,20,'15:30',3,''),(552,20,'15:45',3,''),(553,20,'16:00',3,'C'),(554,20,'16:15',3,'C'),(555,20,'16:30',3,'W'),(556,20,'16:45',3,'C'),(557,20,'17:00',3,'W'),(558,20,'17:15',3,'W'),(559,20,'17:30',3,'A'),(560,20,'17:45',3,'A'),(561,20,'18:00',3,'A'),(562,20,'18:15',3,'A'),(563,20,'18:30',3,'W'),(564,20,'18:45',3,'A'),(565,20,'19:00',3,'A'),(566,20,'19:15',3,''),(567,20,'19:30',3,''),(568,20,'19:45',3,''),(569,20,'20:00',3,''),(570,20,'20:15',3,''),(571,20,'20:30',3,''),(572,20,'20:45',3,''),(573,20,'08:00',4,''),(574,20,'08:15',4,''),(575,20,'08:30',4,''),(576,20,'08:45',4,''),(577,20,'09:00',4,'W'),(578,20,'09:30',4,'W'),(579,20,'09:15',4,'A'),(580,20,'09:45',4,'A'),(581,20,'10:00',4,'W'),(582,20,'10:15',4,'A'),(583,20,'10:30',4,'W'),(584,20,'10:45',4,'A'),(585,20,'11:00',4,'W'),(586,20,'11:15',4,'C'),(587,20,'11:30',4,'C'),(588,20,'11:45',4,'C'),(589,20,'12:00',4,'C'),(590,20,'12:15',4,''),(591,20,'12:30',4,''),(592,20,'12:45',4,''),(593,20,'13:00',4,''),(594,20,'13:15',4,''),(595,20,'13:30',4,''),(596,20,'13:45',4,''),(597,20,'14:00',4,''),(598,20,'14:15',4,''),(599,20,'14:30',4,'W'),(600,20,'14:45',4,'A'),(601,20,'15:00',4,'W'),(602,20,'15:15',4,'A'),(603,20,'15:30',4,'A'),(604,20,'15:45',4,'A'),(605,20,'16:00',4,'C'),(606,20,'16:15',4,'C'),(607,20,'16:30',4,''),(608,20,'16:45',4,''),(609,20,'17:00',4,''),(610,20,'17:15',4,''),(611,20,'17:30',4,''),(612,20,'17:45',4,''),(613,20,'18:00',4,''),(614,20,'18:15',4,''),(615,20,'18:30',4,''),(616,20,'18:45',4,''),(617,20,'19:00',4,''),(618,20,'19:15',4,''),(619,20,'19:30',4,''),(620,20,'19:45',4,''),(621,20,'20:00',4,''),(622,20,'20:15',4,''),(623,20,'20:30',4,''),(624,20,'20:45',4,''),(625,20,'08:00',5,''),(626,20,'08:15',5,''),(627,20,'08:30',5,''),(628,20,'08:45',5,''),(629,20,'09:00',5,''),(630,20,'09:30',5,''),(631,20,'09:15',5,''),(632,20,'09:45',5,''),(633,20,'10:00',5,''),(634,20,'10:15',5,''),(635,20,'10:30',5,''),(636,20,'10:45',5,''),(637,20,'11:00',5,''),(638,20,'11:15',5,''),(639,20,'11:30',5,''),(640,20,'11:45',5,''),(641,20,'12:00',5,''),(642,20,'12:15',5,''),(643,20,'12:30',5,''),(644,20,'12:45',5,''),(645,20,'13:00',5,''),(646,20,'13:15',5,''),(647,20,'13:30',5,''),(648,20,'13:45',5,''),(649,20,'14:00',5,''),(650,20,'14:15',5,''),(651,20,'14:30',5,''),(652,20,'14:45',5,''),(653,20,'15:00',5,''),(654,20,'15:15',5,''),(655,20,'15:30',5,''),(656,20,'15:45',5,''),(657,20,'16:00',5,''),(658,20,'16:15',5,''),(659,20,'16:30',5,''),(660,20,'16:45',5,''),(661,20,'17:00',5,''),(662,20,'17:15',5,''),(663,20,'17:30',5,''),(664,20,'17:45',5,''),(665,20,'18:00',5,''),(666,20,'18:15',5,''),(667,20,'18:30',5,''),(668,20,'18:45',5,''),(669,20,'19:00',5,''),(670,20,'19:15',5,''),(671,20,'19:30',5,''),(672,20,'19:45',5,''),(673,20,'20:00',5,''),(674,20,'20:15',5,''),(675,20,'20:30',5,''),(676,20,'20:45',5,''),(677,20,'08:00',6,''),(678,20,'08:15',6,''),(679,20,'08:30',6,''),(680,20,'08:45',6,''),(681,20,'09:00',6,''),(682,20,'09:30',6,''),(683,20,'09:15',6,''),(684,20,'09:45',6,''),(685,20,'10:00',6,''),(686,20,'10:15',6,''),(687,20,'10:30',6,''),(688,20,'10:45',6,''),(689,20,'11:00',6,''),(690,20,'11:15',6,''),(691,20,'11:30',6,''),(692,20,'11:45',6,''),(693,20,'12:00',6,''),(694,20,'12:15',6,''),(695,20,'12:30',6,''),(696,20,'12:45',6,''),(697,20,'13:00',6,''),(698,20,'13:15',6,''),(699,20,'13:30',6,''),(700,20,'13:45',6,''),(701,20,'14:00',6,''),(702,20,'14:15',6,''),(703,20,'14:30',6,''),(704,20,'14:45',6,''),(705,20,'15:00',6,''),(706,20,'15:15',6,''),(707,20,'15:30',6,''),(708,20,'15:45',6,''),(709,20,'16:00',6,''),(710,20,'16:15',6,''),(711,20,'16:30',6,''),(712,20,'16:45',6,''),(713,20,'17:00',6,''),(714,20,'17:15',6,''),(715,20,'17:30',6,''),(716,20,'17:45',6,''),(717,20,'18:00',6,''),(718,20,'18:15',6,''),(719,20,'18:30',6,''),(720,20,'18:45',6,''),(721,20,'19:00',6,''),(722,20,'19:15',6,''),(723,20,'19:30',6,''),(724,20,'19:45',6,''),(725,20,'20:00',6,''),(726,20,'20:15',6,''),(727,20,'20:30',6,''),(728,20,'20:45',6,''),(729,30,'08:00',0,''),(730,30,'08:15',0,''),(731,30,'08:30',0,'A'),(732,30,'08:45',0,'W'),(733,30,'09:00',0,'A'),(734,30,'09:30',0,'W'),(735,30,'09:15',0,'A'),(736,30,'09:45',0,'A'),(737,30,'10:00',0,'W'),(738,30,'10:15',0,'W'),(739,30,'10:30',0,'W'),(740,30,'10:45',0,'A'),(741,30,'11:00',0,'A'),(742,30,'11:15',0,'C'),(743,30,'11:30',0,'C'),(744,30,'11:45',0,'C'),(745,30,'12:00',0,''),(746,30,'12:15',0,''),(747,30,'12:30',0,''),(748,30,'12:45',0,''),(749,30,'13:00',0,''),(750,30,'13:15',0,''),(751,30,'13:30',0,''),(752,30,'13:45',0,''),(753,30,'14:00',0,''),(754,30,'14:15',0,''),(755,30,'14:30',0,''),(756,30,'14:45',0,''),(757,30,'15:00',0,''),(758,30,'15:15',0,''),(759,30,'15:30',0,''),(760,30,'15:45',0,''),(761,30,'16:00',0,'C'),(762,30,'16:15',0,'W'),(763,30,'16:30',0,'A'),(764,30,'16:45',0,'A'),(765,30,'17:00',0,'W'),(766,30,'17:15',0,'W'),(767,30,'17:30',0,'A'),(768,30,'17:45',0,'A'),(769,30,'18:00',0,'W'),(770,30,'18:15',0,'A'),(771,30,'18:30',0,'W'),(772,30,'18:45',0,'A'),(773,30,'19:00',0,'C'),(774,30,'19:15',0,''),(775,30,'19:30',0,''),(776,30,'19:45',0,''),(777,30,'20:00',0,''),(778,30,'20:15',0,''),(779,30,'20:30',0,''),(780,30,'20:45',0,''),(781,30,'08:00',1,''),(782,30,'08:15',1,''),(783,30,'08:30',1,'A'),(784,30,'08:45',1,'A'),(785,30,'09:00',1,'W'),(786,30,'09:30',1,'W'),(787,30,'09:15',1,'A'),(788,30,'09:45',1,'A'),(789,30,'10:00',1,'W'),(790,30,'10:15',1,'A'),(791,30,'10:30',1,'W'),(792,30,'10:45',1,'A'),(793,30,'11:00',1,'A'),(794,30,'11:15',1,'C'),(795,30,'11:30',1,'C'),(796,30,'11:45',1,'C'),(797,30,'12:00',1,'C'),(798,30,'12:15',1,''),(799,30,'12:30',1,''),(800,30,'12:45',1,''),(801,30,'13:00',1,''),(802,30,'13:15',1,''),(803,30,'13:30',1,''),(804,30,'13:45',1,''),(805,30,'14:00',1,'W'),(806,30,'14:15',1,'W'),(807,30,'14:30',1,'A'),(808,30,'14:45',1,'A'),(809,30,'15:00',1,'A'),(810,30,'15:15',1,'A'),(811,30,'15:30',1,''),(812,30,'15:45',1,''),(813,30,'16:00',1,''),(814,30,'16:15',1,''),(815,30,'16:30',1,''),(816,30,'16:45',1,''),(817,30,'17:00',1,''),(818,30,'17:15',1,''),(819,30,'17:30',1,''),(820,30,'17:45',1,''),(821,30,'18:00',1,''),(822,30,'18:15',1,''),(823,30,'18:30',1,''),(824,30,'18:45',1,''),(825,30,'19:00',1,''),(826,30,'19:15',1,''),(827,30,'19:30',1,''),(828,30,'19:45',1,''),(829,30,'20:00',1,''),(830,30,'20:15',1,''),(831,30,'20:30',1,''),(832,30,'20:45',1,''),(833,30,'08:00',2,''),(834,30,'08:15',2,''),(835,30,'08:30',2,''),(836,30,'08:45',2,''),(837,30,'09:00',2,''),(838,30,'09:30',2,''),(839,30,'09:15',2,''),(840,30,'09:45',2,''),(841,30,'10:00',2,''),(842,30,'10:15',2,''),(843,30,'10:30',2,''),(844,30,'10:45',2,''),(845,30,'11:00',2,''),(846,30,'11:15',2,''),(847,30,'11:30',2,''),(848,30,'11:45',2,''),(849,30,'12:00',2,''),(850,30,'12:15',2,''),(851,30,'12:30',2,''),(852,30,'12:45',2,''),(853,30,'13:00',2,''),(854,30,'13:15',2,''),(855,30,'13:30',2,''),(856,30,'13:45',2,''),(857,30,'14:00',2,''),(858,30,'14:15',2,''),(859,30,'14:30',2,''),(860,30,'14:45',2,''),(861,30,'15:00',2,''),(862,30,'15:15',2,''),(863,30,'15:30',2,''),(864,30,'15:45',2,''),(865,30,'16:00',2,'C'),(866,30,'16:15',2,'A'),(867,30,'16:30',2,'W'),(868,30,'16:45',2,'A'),(869,30,'17:00',2,'W'),(870,30,'17:15',2,'A'),(871,30,'17:30',2,'W'),(872,30,'17:45',2,'A'),(873,30,'18:00',2,'W'),(874,30,'18:15',2,'A'),(875,30,'18:30',2,'A'),(876,30,'18:45',2,'C'),(877,30,'19:00',2,'C'),(878,30,'19:15',2,''),(879,30,'19:30',2,''),(880,30,'19:45',2,''),(881,30,'20:00',2,''),(882,30,'20:15',2,''),(883,30,'20:30',2,''),(884,30,'20:45',2,''),(885,30,'08:00',3,''),(886,30,'08:15',3,''),(887,30,'08:30',3,'W'),(888,30,'08:45',3,'A'),(889,30,'09:00',3,'W'),(890,30,'09:30',3,'A'),(891,30,'09:15',3,'W'),(892,30,'09:45',3,'W'),(893,30,'10:00',3,'A'),(894,30,'10:15',3,'W'),(895,30,'10:30',3,'A'),(896,30,'10:45',3,'A'),(897,30,'11:00',3,'A'),(898,30,'11:15',3,'A'),(899,30,'11:30',3,'A'),(900,30,'11:45',3,'A'),(901,30,'12:00',3,''),(902,30,'12:15',3,''),(903,30,'12:30',3,''),(904,30,'12:45',3,''),(905,30,'13:00',3,''),(906,30,'13:15',3,''),(907,30,'13:30',3,''),(908,30,'13:45',3,''),(909,30,'14:00',3,''),(910,30,'14:15',3,''),(911,30,'14:30',3,''),(912,30,'14:45',3,''),(913,30,'15:00',3,''),(914,30,'15:15',3,''),(915,30,'15:30',3,''),(916,30,'15:45',3,''),(917,30,'16:00',3,''),(918,30,'16:15',3,''),(919,30,'16:30',3,''),(920,30,'16:45',3,''),(921,30,'17:00',3,''),(922,30,'17:15',3,''),(923,30,'17:30',3,''),(924,30,'17:45',3,''),(925,30,'18:00',3,''),(926,30,'18:15',3,''),(927,30,'18:30',3,''),(928,30,'18:45',3,''),(929,30,'19:00',3,''),(930,30,'19:15',3,''),(931,30,'19:30',3,''),(932,30,'19:45',3,''),(933,30,'20:00',3,''),(934,30,'20:15',3,''),(935,30,'20:30',3,''),(936,30,'20:45',3,''),(937,30,'08:00',4,''),(938,30,'08:15',4,''),(939,30,'08:30',4,''),(940,30,'08:45',4,''),(941,30,'09:00',4,''),(942,30,'09:30',4,''),(943,30,'09:15',4,''),(944,30,'09:45',4,''),(945,30,'10:00',4,''),(946,30,'10:15',4,''),(947,30,'10:30',4,''),(948,30,'10:45',4,''),(949,30,'11:00',4,''),(950,30,'11:15',4,''),(951,30,'11:30',4,''),(952,30,'11:45',4,''),(953,30,'12:00',4,''),(954,30,'12:15',4,''),(955,30,'12:30',4,''),(956,30,'12:45',4,''),(957,30,'13:00',4,''),(958,30,'13:15',4,''),(959,30,'13:30',4,''),(960,30,'13:45',4,''),(961,30,'14:00',4,''),(962,30,'14:15',4,''),(963,30,'14:30',4,''),(964,30,'14:45',4,''),(965,30,'15:00',4,''),(966,30,'15:15',4,''),(967,30,'15:30',4,''),(968,30,'15:45',4,''),(969,30,'16:00',4,'C'),(970,30,'16:15',4,'A'),(971,30,'16:30',4,'W'),(972,30,'16:45',4,'A'),(973,30,'17:00',4,'W'),(974,30,'17:15',4,'W'),(975,30,'17:30',4,'A'),(976,30,'17:45',4,'A'),(977,30,'18:00',4,'A'),(978,30,'18:15',4,'W'),(979,30,'18:30',4,'A'),(980,30,'18:45',4,'C'),(981,30,'19:00',4,'C'),(982,30,'19:15',4,''),(983,30,'19:30',4,''),(984,30,'19:45',4,''),(985,30,'20:00',4,''),(986,30,'20:15',4,''),(987,30,'20:30',4,''),(988,30,'20:45',4,''),(989,30,'08:00',5,''),(990,30,'08:15',5,''),(991,30,'08:30',5,''),(992,30,'08:45',5,''),(993,30,'09:00',5,''),(994,30,'09:30',5,''),(995,30,'09:15',5,''),(996,30,'09:45',5,''),(997,30,'10:00',5,''),(998,30,'10:15',5,''),(999,30,'10:30',5,''),(1000,30,'10:45',5,''),(1001,30,'11:00',5,''),(1002,30,'11:15',5,''),(1003,30,'11:30',5,''),(1004,30,'11:45',5,''),(1005,30,'12:00',5,''),(1006,30,'12:15',5,''),(1007,30,'12:30',5,''),(1008,30,'12:45',5,''),(1009,30,'13:00',5,''),(1010,30,'13:15',5,''),(1011,30,'13:30',5,''),(1012,30,'13:45',5,''),(1013,30,'14:00',5,''),(1014,30,'14:15',5,''),(1015,30,'14:30',5,''),(1016,30,'14:45',5,''),(1017,30,'15:00',5,''),(1018,30,'15:15',5,''),(1019,30,'15:30',5,''),(1020,30,'15:45',5,''),(1021,30,'16:00',5,''),(1022,30,'16:15',5,''),(1023,30,'16:30',5,''),(1024,30,'16:45',5,''),(1025,30,'17:00',5,''),(1026,30,'17:15',5,''),(1027,30,'17:30',5,''),(1028,30,'17:45',5,''),(1029,30,'18:00',5,''),(1030,30,'18:15',5,''),(1031,30,'18:30',5,''),(1032,30,'18:45',5,''),(1033,30,'19:00',5,''),(1034,30,'19:15',5,''),(1035,30,'19:30',5,''),(1036,30,'19:45',5,''),(1037,30,'20:00',5,''),(1038,30,'20:15',5,''),(1039,30,'20:30',5,''),(1040,30,'20:45',5,''),(1041,30,'08:00',6,''),(1042,30,'08:15',6,''),(1043,30,'08:30',6,''),(1044,30,'08:45',6,''),(1045,30,'09:00',6,''),(1046,30,'09:30',6,''),(1047,30,'09:15',6,''),(1048,30,'09:45',6,''),(1049,30,'10:00',6,''),(1050,30,'10:15',6,''),(1051,30,'10:30',6,''),(1052,30,'10:45',6,''),(1053,30,'11:00',6,''),(1054,30,'11:15',6,''),(1055,30,'11:30',6,''),(1056,30,'11:45',6,''),(1057,30,'12:00',6,''),(1058,30,'12:15',6,''),(1059,30,'12:30',6,''),(1060,30,'12:45',6,''),(1061,30,'13:00',6,''),(1062,30,'13:15',6,''),(1063,30,'13:30',6,''),(1064,30,'13:45',6,''),(1065,30,'14:00',6,''),(1066,30,'14:15',6,''),(1067,30,'14:30',6,''),(1068,30,'14:45',6,''),(1069,30,'15:00',6,''),(1070,30,'15:15',6,''),(1071,30,'15:30',6,''),(1072,30,'15:45',6,''),(1073,30,'16:00',6,''),(1074,30,'16:15',6,''),(1075,30,'16:30',6,''),(1076,30,'16:45',6,''),(1077,30,'17:00',6,''),(1078,30,'17:15',6,''),(1079,30,'17:30',6,''),(1080,30,'17:45',6,''),(1081,30,'18:00',6,''),(1082,30,'18:15',6,''),(1083,30,'18:30',6,''),(1084,30,'18:45',6,''),(1085,30,'19:00',6,''),(1086,30,'19:15',6,''),(1087,30,'19:30',6,''),(1088,30,'19:45',6,''),(1089,30,'20:00',6,''),(1090,30,'20:15',6,''),(1091,30,'20:30',6,''),(1092,30,'20:45',6,''),(1093,40,'08:00',0,''),(1094,40,'08:20',0,''),(1095,40,'08:40',0,''),(1096,40,'09:00',0,''),(1097,40,'09:20',0,''),(1098,40,'09:40',0,''),(1099,40,'10:00',0,''),(1100,40,'10:20',0,''),(1101,40,'10:40',0,''),(1102,40,'11:00',0,''),(1103,40,'11:20',0,''),(1104,40,'11:40',0,''),(1105,40,'12:00',0,''),(1106,40,'12:20',0,''),(1107,40,'12:40',0,''),(1108,40,'13:00',0,''),(1109,40,'13:20',0,''),(1110,40,'13:40',0,''),(1111,40,'14:00',0,'A'),(1112,40,'14:20',0,'A'),(1113,40,'14:40',0,'A'),(1114,40,'15:00',0,'A'),(1115,40,'15:20',0,'A'),(1116,40,'15:40',0,'A'),(1117,40,'16:00',0,'A'),(1118,40,'16:20',0,''),(1119,40,'16:40',0,''),(1120,40,'17:00',0,''),(1121,40,'17:20',0,''),(1122,40,'17:40',0,''),(1123,40,'18:00',0,''),(1124,40,'18:20',0,''),(1125,40,'18:40',0,''),(1126,40,'19:00',0,''),(1127,40,'19:20',0,''),(1128,40,'19:40',0,''),(1129,40,'20:00',0,''),(1130,40,'20:20',0,''),(1131,40,'20:40',0,''),(1132,40,'08:00',1,''),(1133,40,'08:20',1,''),(1134,40,'08:40',1,''),(1135,40,'09:00',1,''),(1136,40,'09:20',1,''),(1137,40,'09:40',1,''),(1138,40,'10:00',1,''),(1139,40,'10:20',1,''),(1140,40,'10:40',1,''),(1141,40,'11:00',1,''),(1142,40,'11:20',1,''),(1143,40,'11:40',1,''),(1144,40,'12:00',1,''),(1145,40,'12:20',1,''),(1146,40,'12:40',1,''),(1147,40,'13:00',1,''),(1148,40,'13:20',1,''),(1149,40,'13:40',1,''),(1150,40,'14:00',1,''),(1151,40,'14:20',1,''),(1152,40,'14:40',1,''),(1153,40,'15:00',1,''),(1154,40,'15:20',1,''),(1155,40,'15:40',1,''),(1156,40,'16:00',1,'A'),(1157,40,'16:20',1,'A'),(1158,40,'16:40',1,'A'),(1159,40,'17:00',1,'A'),(1160,40,'17:20',1,'A'),(1161,40,'17:40',1,'A'),(1162,40,'18:00',1,'A'),(1163,40,'18:20',1,'A'),(1164,40,'18:40',1,'A'),(1165,40,'19:00',1,'A'),(1166,40,'19:20',1,'A'),(1167,40,'19:40',1,''),(1168,40,'20:00',1,''),(1169,40,'20:20',1,''),(1170,40,'20:40',1,''),(1171,40,'08:00',2,''),(1172,40,'08:20',2,''),(1173,40,'08:40',2,'A'),(1174,40,'09:00',2,'A'),(1175,40,'09:20',2,'A'),(1176,40,'09:40',2,'A'),(1177,40,'10:00',2,'A'),(1178,40,'10:20',2,'A'),(1179,40,'10:40',2,'A'),(1180,40,'11:00',2,'A'),(1181,40,'11:20',2,'A'),(1182,40,'11:40',2,'A'),(1183,40,'12:00',2,''),(1184,40,'12:20',2,''),(1185,40,'12:40',2,''),(1186,40,'13:00',2,''),(1187,40,'13:20',2,''),(1188,40,'13:40',2,''),(1189,40,'14:00',2,'A'),(1190,40,'14:20',2,'A'),(1191,40,'14:40',2,'A'),(1192,40,'15:00',2,'A'),(1193,40,'15:20',2,'A'),(1194,40,'15:40',2,'A'),(1195,40,'16:00',2,'A'),(1196,40,'16:20',2,''),(1197,40,'16:40',2,''),(1198,40,'17:00',2,''),(1199,40,'17:20',2,''),(1200,40,'17:40',2,''),(1201,40,'18:00',2,''),(1202,40,'18:20',2,''),(1203,40,'18:40',2,''),(1204,40,'19:00',2,''),(1205,40,'19:20',2,''),(1206,40,'19:40',2,''),(1207,40,'20:00',2,''),(1208,40,'20:20',2,''),(1209,40,'20:40',2,''),(1210,40,'08:00',3,''),(1211,40,'08:20',3,''),(1212,40,'08:40',3,'A'),(1213,40,'09:00',3,'A'),(1214,40,'09:20',3,'A'),(1215,40,'09:40',3,'A'),(1216,40,'10:00',3,'A'),(1217,40,'10:20',3,'A'),(1218,40,'10:40',3,'A'),(1219,40,'11:00',3,'A'),(1220,40,'11:20',3,'A'),(1221,40,'11:40',3,'A'),(1222,40,'12:00',3,''),(1223,40,'12:20',3,''),(1224,40,'12:40',3,''),(1225,40,'13:00',3,''),(1226,40,'13:20',3,''),(1227,40,'13:40',3,''),(1228,40,'14:00',3,'A'),(1229,40,'14:20',3,'A'),(1230,40,'14:40',3,'A'),(1231,40,'15:00',3,'A'),(1232,40,'15:20',3,'A'),(1233,40,'15:40',3,'A'),(1234,40,'16:00',3,'A'),(1235,40,'16:20',3,''),(1236,40,'16:40',3,''),(1237,40,'17:00',3,''),(1238,40,'17:20',3,''),(1239,40,'17:40',3,''),(1240,40,'18:00',3,''),(1241,40,'18:20',3,''),(1242,40,'18:40',3,''),(1243,40,'19:00',3,''),(1244,40,'19:20',3,''),(1245,40,'19:40',3,''),(1246,40,'20:00',3,''),(1247,40,'20:20',3,''),(1248,40,'20:40',3,''),(1249,40,'08:00',4,''),(1250,40,'08:20',4,''),(1251,40,'08:40',4,''),(1252,40,'09:00',4,''),(1253,40,'09:20',4,''),(1254,40,'09:40',4,''),(1255,40,'10:00',4,''),(1256,40,'10:20',4,''),(1257,40,'10:40',4,''),(1258,40,'11:00',4,''),(1259,40,'11:20',4,''),(1260,40,'11:40',4,''),(1261,40,'12:00',4,''),(1262,40,'12:20',4,''),(1263,40,'12:40',4,''),(1264,40,'13:00',4,''),(1265,40,'13:20',4,''),(1266,40,'13:40',4,''),(1267,40,'14:00',4,''),(1268,40,'14:20',4,''),(1269,40,'14:40',4,''),(1270,40,'15:00',4,''),(1271,40,'15:20',4,''),(1272,40,'15:40',4,''),(1273,40,'16:00',4,'A'),(1274,40,'16:20',4,'A'),(1275,40,'16:40',4,'A'),(1276,40,'17:00',4,'A'),(1277,40,'17:20',4,'A'),(1278,40,'17:40',4,'A'),(1279,40,'18:00',4,'A'),(1280,40,'18:20',4,'A'),(1281,40,'18:40',4,'A'),(1282,40,'19:00',4,'A'),(1283,40,'19:20',4,''),(1284,40,'19:40',4,''),(1285,40,'20:00',4,''),(1286,40,'20:20',4,''),(1287,40,'20:40',4,''),(1288,40,'08:00',5,''),(1289,40,'08:20',5,''),(1290,40,'08:40',5,''),(1291,40,'09:00',5,''),(1292,40,'09:20',5,''),(1293,40,'09:40',5,''),(1294,40,'10:00',5,''),(1295,40,'10:20',5,''),(1296,40,'10:40',5,''),(1297,40,'11:00',5,''),(1298,40,'11:20',5,''),(1299,40,'11:40',5,''),(1300,40,'12:00',5,''),(1301,40,'12:20',5,''),(1302,40,'12:40',5,''),(1303,40,'13:00',5,''),(1304,40,'13:20',5,''),(1305,40,'13:40',5,''),(1306,40,'14:00',5,''),(1307,40,'14:20',5,''),(1308,40,'14:40',5,''),(1309,40,'15:00',5,''),(1310,40,'15:20',5,''),(1311,40,'15:40',5,''),(1312,40,'16:00',5,''),(1313,40,'16:20',5,''),(1314,40,'16:40',5,''),(1315,40,'17:00',5,''),(1316,40,'17:20',5,''),(1317,40,'17:40',5,''),(1318,40,'18:00',5,''),(1319,40,'18:20',5,''),(1320,40,'18:40',5,''),(1321,40,'19:00',5,''),(1322,40,'19:20',5,''),(1323,40,'19:40',5,''),(1324,40,'20:00',5,''),(1325,40,'20:20',5,''),(1326,40,'20:40',5,''),(1327,40,'08:00',6,''),(1328,40,'08:20',6,''),(1329,40,'08:40',6,''),(1330,40,'09:00',6,''),(1331,40,'09:20',6,''),(1332,40,'09:40',6,''),(1333,40,'10:00',6,''),(1334,40,'10:20',6,''),(1335,40,'10:40',6,''),(1336,40,'11:00',6,''),(1337,40,'11:20',6,''),(1338,40,'11:40',6,''),(1339,40,'12:00',6,''),(1340,40,'12:20',6,''),(1341,40,'12:40',6,''),(1342,40,'13:00',6,''),(1343,40,'13:20',6,''),(1344,40,'13:40',6,''),(1345,40,'14:00',6,''),(1346,40,'14:20',6,''),(1347,40,'14:40',6,''),(1348,40,'15:00',6,''),(1349,40,'15:20',6,''),(1350,40,'15:40',6,''),(1351,40,'16:00',6,''),(1352,40,'16:20',6,''),(1353,40,'16:40',6,''),(1354,40,'17:00',6,''),(1355,40,'17:20',6,''),(1356,40,'17:40',6,''),(1357,40,'18:00',6,''),(1358,40,'18:20',6,''),(1359,40,'18:40',6,''),(1360,40,'19:00',6,''),(1361,40,'19:20',6,''),(1362,40,'19:40',6,''),(1363,40,'20:00',6,''),(1364,40,'20:20',6,''),(1365,40,'20:40',6,'');
+/*!40000 ALTER TABLE `slots` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `templates`
+--
+
+DROP TABLE IF EXISTS `templates`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `templates` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) DEFAULT '',
+  `controller` varchar(64) DEFAULT '',
+  `fn` varchar(128) DEFAULT '',
+  `allowedtemplates` varchar(255) DEFAULT '',
+  `maxnumber` int(11) DEFAULT '99999',
+  `system` char(1) DEFAULT 'N',
+  `defaultchild` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `templates`
+--
+
+LOCK TABLES `templates` WRITE;
+/*!40000 ALTER TABLE `templates` DISABLE KEYS */;
+INSERT INTO `templates` VALUES (2,'Login','LoginController','-/login.ejs','',0,'Y',0),(9,'Dashboard','DashboardController','-/cms/dashboard.ejs','',0,'Y',0),(11,'CMS-Page','PageController','-/cms/pages.ejs','',0,'Y',0),(12,'CMS-Images','ImageController','-/cms/images.ejs','',0,'Y',0),(13,'CMS-Files','FileController','-/cms/files.ejs','',0,'Y',0),(14,'CMS-Forms','FormController','-/cms/forms.ejs','',0,'Y',0),(15,'CMS-Users','UserController','-/cms/users.ejs','',0,'Y',0),(16,'CMS-Templates','TemplateController','-/cms/templates.ejs','',0,'Y',0),(17,'CMS-System','SystemController','','',0,'Y',0),(21,'Admin-Agenda','AgendaController','BO/agenda.ejs','',0,'Y',0),(22,'Admin-Patients','PatientController','BO/patients.ejs','Y',0,'',0),(23,'Admin-Week','SlotController','BO/week.ejs','',0,'Y',0),(24,'Admin-Contacts','ContactController','BO/contacts.ejs','Y',0,'',0),(100,'Content','ContentController','front/index.ejs','',999,'N',100),(101,'Afspraak maken','BookingController','front/agenda.ejs','',0,'N',0),(102,'Artsen','ContentController','front/artsen.ejs','',0,'N',0),(103,'Contact','ContactController','front/contact.ejs','',0,'N',0);
+/*!40000 ALTER TABLE `templates` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `todos`
 --
 
 DROP TABLE IF EXISTS `todos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `todos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` char(1) NOT NULL DEFAULT '',
@@ -414,1407 +415,62 @@ CREATE TABLE `todos` (
   `date` date NOT NULL DEFAULT '0000-00-00',
   PRIMARY KEY (`id`),
   KEY `appointedTo` (`appointedTo`)
-) AUTO_INCREMENT=2829 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=951 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `todos`
 --
 
-INSERT INTO `todos` VALUES (718,'N','VERLOF HILDE','','','',20,'2012-01-02'),
-(687,'H','lies werkt in NM niet in avond','','','',30,'2012-01-02'),
-(874,'H','Sabine S komt niet (ipv Nieuwjaar)','','','',30,'2012-01-02'),
-(756,'H','van loocke willy','','','',10,'2012-01-02'),
-(875,'H','Sabine S komt niet (ipv Nieuwjaar)','','','',10,'2012-01-02'),
-(904,'H','verbeke simonne nuchter','','','',10,'2012-01-02'),
-(949,'H','Dumarey elza','','','',10,'2012-01-02'),
-(950,'H','Seghers martha','','','',10,'2012-01-02'),
-(719,'N','VERLOF HILDE','','','',20,'2012-01-03');
-
-
+LOCK TABLES `todos` WRITE;
+/*!40000 ALTER TABLE `todos` DISABLE KEYS */;
+INSERT INTO `todos` VALUES (687,'H','lies werkt in NM niet in avond','','','',30,'2012-01-02'),(718,'N','VERLOF HILDE','','','',20,'2012-01-02'),(719,'N','VERLOF HILDE','','','',20,'2012-01-03'),(756,'H','van loocke willy','','','',10,'2012-01-02'),(874,'H','Sabine S komt niet (ipv Nieuwjaar)','','','',30,'2012-01-02'),(875,'H','Sabine S komt niet (ipv Nieuwjaar)','','','',10,'2012-01-02'),(904,'H','verbeke simonne nuchter','','','',10,'2012-01-02'),(949,'H','Dumarey elza','','','',10,'2012-01-02'),(950,'H','Seghers martha','','','',10,'2012-01-02');
+/*!40000 ALTER TABLE `todos` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Table structure for table `slots`
+-- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `slots`;
-CREATE TABLE `slots` (
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `dr` int(11) NOT NULL DEFAULT '0',
-  `hour` char(5) NOT NULL DEFAULT '',
-  `daynr` int(11) NOT NULL DEFAULT '0',
-  `type` char(1) NOT NULL DEFAULT '',
+  `username` varchar(128) NOT NULL DEFAULT '-',
+  `name` varchar(128) NOT NULL DEFAULT '-',
+  `password` char(64) DEFAULT NULL,
+  `domain` varchar(32) NOT NULL DEFAULT '',
+  `level` int(11) NOT NULL DEFAULT '0',
+  `badlogins` int(11) NOT NULL DEFAULT '0',
+  `maxbadlogins` int(11) NOT NULL DEFAULT '999',
+  `active` char(1) NOT NULL DEFAULT 'Y',
+  `email` varchar(128) NOT NULL DEFAULT '',
+  `note` varchar(255) NOT NULL DEFAULT '',
+  `nomail` char(1) NOT NULL DEFAULT 'N',
+  `sortorder` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `dr_idx` (`dr`)
-) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+  UNIQUE KEY `username_idx` (`username`,`active`)
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `slots`
+-- Dumping data for table `users`
 --
 
-INSERT INTO `slots` VALUES (1,10,'08:00',0,''),
-(2,10,'08:15',0,''),
-(3,10,'08:30',0,''),
-(4,10,'08:45',0,''),
-(5,10,'09:00',0,''),
-(6,10,'09:30',0,''),
-(7,10,'09:15',0,''),
-(8,10,'09:45',0,''),
-(9,10,'10:00',0,''),
-(10,10,'10:15',0,''),
-(11,10,'10:30',0,''),
-(12,10,'10:45',0,''),
-(13,10,'11:00',0,''),
-(14,10,'11:15',0,''),
-(15,10,'11:30',0,''),
-(16,10,'11:45',0,''),
-(17,10,'12:00',0,''),
-(18,10,'12:15',0,''),
-(19,10,'12:30',0,''),
-(20,10,'12:45',0,''),
-(21,10,'13:00',0,''),
-(22,10,'13:15',0,''),
-(23,10,'13:30',0,''),
-(24,10,'13:45',0,''),
-(25,10,'14:00',0,''),
-(26,10,'14:15',0,''),
-(27,10,'14:30',0,''),
-(28,10,'14:45',0,''),
-(29,10,'15:00',0,''),
-(30,10,'15:15',0,''),
-(31,10,'15:30',0,''),
-(32,10,'15:45',0,''),
-(33,10,'16:00',0,''),
-(34,10,'16:15',0,''),
-(35,10,'16:30',0,''),
-(36,10,'16:45',0,'A'),
-(37,10,'17:00',0,'W'),
-(38,10,'17:15',0,'W'),
-(39,10,'17:30',0,'A'),
-(40,10,'17:45',0,'A'),
-(41,10,'18:00',0,'A'),
-(42,10,'18:15',0,'A'),
-(43,10,'18:30',0,'A'),
-(44,10,'18:45',0,'A'),
-(45,10,'19:00',0,'A'),
-(46,10,'19:15',0,''),
-(47,10,'19:30',0,''),
-(48,10,'19:45',0,''),
-(49,10,'20:00',0,''),
-(50,10,'20:15',0,''),
-(51,10,'20:30',0,''),
-(52,10,'20:45',0,''),
-(53,10,'08:00',1,''),
-(54,10,'08:15',1,''),
-(55,10,'08:30',1,'W'),
-(56,10,'08:45',1,'W'),
-(57,10,'09:00',1,'W'),
-(58,10,'09:30',1,'A'),
-(59,10,'09:15',1,'A'),
-(60,10,'09:45',1,'W'),
-(61,10,'10:00',1,'W'),
-(62,10,'10:15',1,'A'),
-(63,10,'10:30',1,''),
-(64,10,'10:45',1,'A'),
-(65,10,'11:00',1,'A'),
-(66,10,'11:15',1,'C'),
-(67,10,'11:30',1,'C'),
-(68,10,'11:45',1,'C'),
-(69,10,'12:00',1,'C'),
-(70,10,'12:15',1,'C'),
-(71,10,'12:30',1,''),
-(72,10,'12:45',1,''),
-(73,10,'13:00',1,''),
-(74,10,'13:15',1,''),
-(75,10,'13:30',1,''),
-(76,10,'13:45',1,''),
-(77,10,'14:00',1,''),
-(78,10,'14:15',1,''),
-(79,10,'14:30',1,''),
-(80,10,'14:45',1,''),
-(81,10,'15:00',1,''),
-(82,10,'15:15',1,''),
-(83,10,'15:30',1,''),
-(84,10,'15:45',1,''),
-(85,10,'16:00',1,''),
-(86,10,'16:15',1,''),
-(87,10,'16:30',1,''),
-(88,10,'16:45',1,''),
-(89,10,'17:00',1,''),
-(90,10,'17:15',1,''),
-(91,10,'17:30',1,''),
-(92,10,'17:45',1,''),
-(93,10,'18:00',1,''),
-(94,10,'18:15',1,''),
-(95,10,'18:30',1,''),
-(96,10,'18:45',1,''),
-(97,10,'19:00',1,''),
-(98,10,'19:15',1,''),
-(99,10,'19:30',1,''),
-(100,10,'19:45',1,''),
-(101,10,'20:00',1,''),
-(102,10,'20:15',1,''),
-(103,10,'20:30',1,''),
-(104,10,'20:45',1,''),
-(105,10,'08:00',2,''),
-(106,10,'08:15',2,''),
-(107,10,'08:30',2,'W'),
-(108,10,'08:45',2,'W'),
-(109,10,'09:00',2,'A'),
-(110,10,'09:30',2,'A'),
-(111,10,'09:15',2,'W'),
-(112,10,'09:45',2,'W'),
-(113,10,'10:00',2,'W'),
-(114,10,'10:15',2,'A'),
-(115,10,'10:30',2,''),
-(116,10,'10:45',2,'W'),
-(117,10,'11:00',2,'A'),
-(118,10,'11:15',2,'C'),
-(119,10,'11:30',2,'C'),
-(120,10,'11:45',2,'C'),
-(121,10,'12:00',2,'C'),
-(122,10,'12:15',2,''),
-(123,10,'12:30',2,''),
-(124,10,'12:45',2,''),
-(125,10,'13:00',2,''),
-(126,10,'13:15',2,''),
-(127,10,'13:30',2,''),
-(128,10,'13:45',2,''),
-(129,10,'14:00',2,''),
-(130,10,'14:15',2,''),
-(131,10,'14:30',2,''),
-(132,10,'14:45',2,''),
-(133,10,'15:00',2,''),
-(134,10,'15:15',2,''),
-(135,10,'15:30',2,''),
-(136,10,'15:45',2,''),
-(137,10,'16:00',2,''),
-(138,10,'16:15',2,''),
-(139,10,'16:30',2,''),
-(140,10,'16:45',2,''),
-(141,10,'17:00',2,''),
-(142,10,'17:15',2,''),
-(143,10,'17:30',2,''),
-(144,10,'17:45',2,''),
-(145,10,'18:00',2,''),
-(146,10,'18:15',2,''),
-(147,10,'18:30',2,''),
-(148,10,'18:45',2,''),
-(149,10,'19:00',2,''),
-(150,10,'19:15',2,''),
-(151,10,'19:30',2,''),
-(152,10,'19:45',2,''),
-(153,10,'20:00',2,''),
-(154,10,'20:15',2,''),
-(155,10,'20:30',2,''),
-(156,10,'20:45',2,''),
-(157,10,'08:00',3,''),
-(158,10,'08:15',3,''),
-(159,10,'08:30',3,''),
-(160,10,'08:45',3,''),
-(161,10,'09:00',3,''),
-(162,10,'09:30',3,''),
-(163,10,'09:15',3,''),
-(164,10,'09:45',3,''),
-(165,10,'10:00',3,''),
-(166,10,'10:15',3,''),
-(167,10,'10:30',3,''),
-(168,10,'10:45',3,''),
-(169,10,'11:00',3,''),
-(170,10,'11:15',3,''),
-(171,10,'11:30',3,''),
-(172,10,'11:45',3,''),
-(173,10,'12:00',3,''),
-(174,10,'12:15',3,''),
-(175,10,'12:30',3,''),
-(176,10,'12:45',3,''),
-(177,10,'13:00',3,''),
-(178,10,'13:15',3,''),
-(179,10,'13:30',3,''),
-(180,10,'13:45',3,''),
-(181,10,'14:00',3,''),
-(182,10,'14:15',3,''),
-(183,10,'14:30',3,''),
-(184,10,'14:45',3,''),
-(185,10,'15:00',3,''),
-(186,10,'15:15',3,''),
-(187,10,'15:30',3,''),
-(188,10,'15:45',3,''),
-(189,10,'16:00',3,''),
-(190,10,'16:15',3,''),
-(191,10,'16:30',3,''),
-(192,10,'16:45',3,'A'),
-(193,10,'17:00',3,'W'),
-(194,10,'17:15',3,'W'),
-(195,10,'17:30',3,'A'),
-(196,10,'17:45',3,'A'),
-(197,10,'18:00',3,'A'),
-(198,10,'18:15',3,'A'),
-(199,10,'18:30',3,'A'),
-(200,10,'18:45',3,'A'),
-(201,10,'19:00',3,'A'),
-(202,10,'19:15',3,''),
-(203,10,'19:30',3,''),
-(204,10,'19:45',3,''),
-(205,10,'20:00',3,''),
-(206,10,'20:15',3,''),
-(207,10,'20:30',3,''),
-(208,10,'20:45',3,''),
-(209,10,'08:00',4,''),
-(210,10,'08:15',4,''),
-(211,10,'08:30',4,'A'),
-(212,10,'08:45',4,'A'),
-(213,10,'09:00',4,'W'),
-(214,10,'09:30',4,'A'),
-(215,10,'09:15',4,'A'),
-(216,10,'09:45',4,'W'),
-(217,10,'10:00',4,'W'),
-(218,10,'10:15',4,'A'),
-(219,10,'10:30',4,''),
-(220,10,'10:45',4,'W'),
-(221,10,'11:00',4,'A'),
-(222,10,'11:15',4,'C'),
-(223,10,'11:30',4,'C'),
-(224,10,'11:45',4,'C'),
-(225,10,'12:00',4,'C'),
-(226,10,'12:15',4,'C'),
-(227,10,'12:30',4,''),
-(228,10,'12:45',4,''),
-(229,10,'13:00',4,''),
-(230,10,'13:15',4,''),
-(231,10,'13:30',4,''),
-(232,10,'13:45',4,''),
-(233,10,'14:00',4,''),
-(234,10,'14:15',4,''),
-(235,10,'14:30',4,''),
-(236,10,'14:45',4,''),
-(237,10,'15:00',4,''),
-(238,10,'15:15',4,''),
-(239,10,'15:30',4,''),
-(240,10,'15:45',4,''),
-(241,10,'16:00',4,''),
-(242,10,'16:15',4,''),
-(243,10,'16:30',4,''),
-(244,10,'16:45',4,''),
-(245,10,'17:00',4,''),
-(246,10,'17:15',4,''),
-(247,10,'17:30',4,''),
-(248,10,'17:45',4,''),
-(249,10,'18:00',4,''),
-(250,10,'18:15',4,''),
-(251,10,'18:30',4,''),
-(252,10,'18:45',4,''),
-(253,10,'19:00',4,''),
-(254,10,'19:15',4,''),
-(255,10,'19:30',4,''),
-(256,10,'19:45',4,''),
-(257,10,'20:00',4,''),
-(258,10,'20:15',4,''),
-(259,10,'20:30',4,''),
-(260,10,'20:45',4,''),
-(261,10,'08:00',5,''),
-(262,10,'08:15',5,''),
-(263,10,'08:30',5,''),
-(264,10,'08:45',5,''),
-(265,10,'09:00',5,''),
-(266,10,'09:30',5,''),
-(267,10,'09:15',5,''),
-(268,10,'09:45',5,''),
-(269,10,'10:00',5,''),
-(270,10,'10:15',5,''),
-(271,10,'10:30',5,''),
-(272,10,'10:45',5,''),
-(273,10,'11:00',5,''),
-(274,10,'11:15',5,''),
-(275,10,'11:30',5,''),
-(276,10,'11:45',5,''),
-(277,10,'12:00',5,''),
-(278,10,'12:15',5,''),
-(279,10,'12:30',5,''),
-(280,10,'12:45',5,''),
-(281,10,'13:00',5,''),
-(282,10,'13:15',5,''),
-(283,10,'13:30',5,''),
-(284,10,'13:45',5,''),
-(285,10,'14:00',5,''),
-(286,10,'14:15',5,''),
-(287,10,'14:30',5,''),
-(288,10,'14:45',5,''),
-(289,10,'15:00',5,''),
-(290,10,'15:15',5,''),
-(291,10,'15:30',5,''),
-(292,10,'15:45',5,''),
-(293,10,'16:00',5,''),
-(294,10,'16:15',5,''),
-(295,10,'16:30',5,''),
-(296,10,'16:45',5,''),
-(297,10,'17:00',5,''),
-(298,10,'17:15',5,''),
-(299,10,'17:30',5,''),
-(300,10,'17:45',5,''),
-(301,10,'18:00',5,''),
-(302,10,'18:15',5,''),
-(303,10,'18:30',5,''),
-(304,10,'18:45',5,''),
-(305,10,'19:00',5,''),
-(306,10,'19:15',5,''),
-(307,10,'19:30',5,''),
-(308,10,'19:45',5,''),
-(309,10,'20:00',5,''),
-(310,10,'20:15',5,''),
-(311,10,'20:30',5,''),
-(312,10,'20:45',5,''),
-(313,10,'08:00',6,''),
-(314,10,'08:15',6,''),
-(315,10,'08:30',6,''),
-(316,10,'08:45',6,''),
-(317,10,'09:00',6,''),
-(318,10,'09:30',6,''),
-(319,10,'09:15',6,''),
-(320,10,'09:45',6,''),
-(321,10,'10:00',6,''),
-(322,10,'10:15',6,''),
-(323,10,'10:30',6,''),
-(324,10,'10:45',6,''),
-(325,10,'11:00',6,''),
-(326,10,'11:15',6,''),
-(327,10,'11:30',6,''),
-(328,10,'11:45',6,''),
-(329,10,'12:00',6,''),
-(330,10,'12:15',6,''),
-(331,10,'12:30',6,''),
-(332,10,'12:45',6,''),
-(333,10,'13:00',6,''),
-(334,10,'13:15',6,''),
-(335,10,'13:30',6,''),
-(336,10,'13:45',6,''),
-(337,10,'14:00',6,''),
-(338,10,'14:15',6,''),
-(339,10,'14:30',6,''),
-(340,10,'14:45',6,''),
-(341,10,'15:00',6,''),
-(342,10,'15:15',6,''),
-(343,10,'15:30',6,''),
-(344,10,'15:45',6,''),
-(345,10,'16:00',6,''),
-(346,10,'16:15',6,''),
-(347,10,'16:30',6,''),
-(348,10,'16:45',6,''),
-(349,10,'17:00',6,''),
-(350,10,'17:15',6,''),
-(351,10,'17:30',6,''),
-(352,10,'17:45',6,''),
-(353,10,'18:00',6,''),
-(354,10,'18:15',6,''),
-(355,10,'18:30',6,''),
-(356,10,'18:45',6,''),
-(357,10,'19:00',6,''),
-(358,10,'19:15',6,''),
-(359,10,'19:30',6,''),
-(360,10,'19:45',6,''),
-(361,10,'20:00',6,''),
-(362,10,'20:15',6,''),
-(363,10,'20:30',6,''),
-(364,10,'20:45',6,''),
-(365,20,'08:00',0,''),
-(366,20,'08:15',0,''),
-(367,20,'08:30',0,'A'),
-(368,20,'08:45',0,'A'),
-(369,20,'09:00',0,'A'),
-(370,20,'09:30',0,'W'),
-(371,20,'09:15',0,'A'),
-(372,20,'09:45',0,'A'),
-(373,20,'10:00',0,'A'),
-(374,20,'10:15',0,'A'),
-(375,20,'10:30',0,'W'),
-(376,20,'10:45',0,'A'),
-(377,20,'11:00',0,'W'),
-(378,20,'11:15',0,'A'),
-(379,20,'11:30',0,'A'),
-(380,20,'11:45',0,'W'),
-(381,20,'12:00',0,''),
-(382,20,'12:15',0,''),
-(383,20,'12:30',0,''),
-(384,20,'12:45',0,''),
-(385,20,'13:00',0,''),
-(386,20,'13:15',0,''),
-(387,20,'13:30',0,''),
-(388,20,'13:45',0,'A'),
-(389,20,'14:00',0,'W'),
-(390,20,'14:15',0,'A'),
-(391,20,'14:30',0,'W'),
-(392,20,'14:45',0,'A'),
-(393,20,'15:00',0,''),
-(394,20,'15:15',0,''),
-(395,20,'15:30',0,''),
-(396,20,'15:45',0,''),
-(397,20,'16:00',0,''),
-(398,20,'16:15',0,''),
-(399,20,'16:30',0,''),
-(400,20,'16:45',0,''),
-(401,20,'17:00',0,''),
-(402,20,'17:15',0,''),
-(403,20,'17:30',0,''),
-(404,20,'17:45',0,''),
-(405,20,'18:00',0,''),
-(406,20,'18:15',0,''),
-(407,20,'18:30',0,''),
-(408,20,'18:45',0,''),
-(409,20,'19:00',0,''),
-(410,20,'19:15',0,''),
-(411,20,'19:30',0,''),
-(412,20,'19:45',0,''),
-(413,20,'20:00',0,''),
-(414,20,'20:15',0,''),
-(415,20,'20:30',0,''),
-(416,20,'20:45',0,''),
-(417,20,'08:00',1,''),
-(418,20,'08:15',1,''),
-(419,20,'08:30',1,''),
-(420,20,'08:45',1,''),
-(421,20,'09:00',1,''),
-(422,20,'09:30',1,''),
-(423,20,'09:15',1,''),
-(424,20,'09:45',1,''),
-(425,20,'10:00',1,''),
-(426,20,'10:15',1,''),
-(427,20,'10:30',1,''),
-(428,20,'10:45',1,''),
-(429,20,'11:00',1,''),
-(430,20,'11:15',1,''),
-(431,20,'11:30',1,''),
-(432,20,'11:45',1,''),
-(433,20,'12:00',1,''),
-(434,20,'12:15',1,''),
-(435,20,'12:30',1,''),
-(436,20,'12:45',1,''),
-(437,20,'13:00',1,''),
-(438,20,'13:15',1,''),
-(439,20,'13:30',1,''),
-(440,20,'13:45',1,''),
-(441,20,'14:00',1,''),
-(442,20,'14:15',1,''),
-(443,20,'14:30',1,''),
-(444,20,'14:45',1,''),
-(445,20,'15:00',1,''),
-(446,20,'15:15',1,''),
-(447,20,'15:30',1,''),
-(448,20,'15:45',1,''),
-(449,20,'16:00',1,'C'),
-(450,20,'16:15',1,'C'),
-(451,20,'16:30',1,'C'),
-(452,20,'16:45',1,'C'),
-(453,20,'17:00',1,'W'),
-(454,20,'17:15',1,'W'),
-(455,20,'17:30',1,'A'),
-(456,20,'17:45',1,'A'),
-(457,20,'18:00',1,'W'),
-(458,20,'18:15',1,'A'),
-(459,20,'18:30',1,'W'),
-(460,20,'18:45',1,'A'),
-(461,20,'19:00',1,'A'),
-(462,20,'19:15',1,''),
-(463,20,'19:30',1,''),
-(464,20,'19:45',1,''),
-(465,20,'20:00',1,''),
-(466,20,'20:15',1,''),
-(467,20,'20:30',1,''),
-(468,20,'20:45',1,''),
-(469,20,'08:00',2,''),
-(470,20,'08:15',2,''),
-(471,20,'08:30',2,''),
-(472,20,'08:45',2,''),
-(473,20,'09:00',2,''),
-(474,20,'09:30',2,''),
-(475,20,'09:15',2,''),
-(476,20,'09:45',2,''),
-(477,20,'10:00',2,''),
-(478,20,'10:15',2,''),
-(479,20,'10:30',2,''),
-(480,20,'10:45',2,''),
-(481,20,'11:00',2,''),
-(482,20,'11:15',2,''),
-(483,20,'11:30',2,''),
-(484,20,'11:45',2,''),
-(485,20,'12:00',2,''),
-(486,20,'12:15',2,''),
-(487,20,'12:30',2,''),
-(488,20,'12:45',2,''),
-(489,20,'13:00',2,''),
-(490,20,'13:15',2,''),
-(491,20,'13:30',2,''),
-(492,20,'13:45',2,''),
-(493,20,'14:00',2,''),
-(494,20,'14:15',2,''),
-(495,20,'14:30',2,''),
-(496,20,'14:45',2,''),
-(497,20,'15:00',2,''),
-(498,20,'15:15',2,''),
-(499,20,'15:30',2,''),
-(500,20,'15:45',2,''),
-(501,20,'16:00',2,''),
-(502,20,'16:15',2,''),
-(503,20,'16:30',2,''),
-(504,20,'16:45',2,''),
-(505,20,'17:00',2,''),
-(506,20,'17:15',2,''),
-(507,20,'17:30',2,''),
-(508,20,'17:45',2,''),
-(509,20,'18:00',2,''),
-(510,20,'18:15',2,''),
-(511,20,'18:30',2,''),
-(512,20,'18:45',2,''),
-(513,20,'19:00',2,''),
-(514,20,'19:15',2,''),
-(515,20,'19:30',2,''),
-(516,20,'19:45',2,''),
-(517,20,'20:00',2,''),
-(518,20,'20:15',2,''),
-(519,20,'20:30',2,''),
-(520,20,'20:45',2,''),
-(521,20,'08:00',3,''),
-(522,20,'08:15',3,''),
-(523,20,'08:30',3,''),
-(524,20,'08:45',3,''),
-(525,20,'09:00',3,''),
-(526,20,'09:30',3,''),
-(527,20,'09:15',3,''),
-(528,20,'09:45',3,''),
-(529,20,'10:00',3,''),
-(530,20,'10:15',3,''),
-(531,20,'10:30',3,''),
-(532,20,'10:45',3,''),
-(533,20,'11:00',3,''),
-(534,20,'11:15',3,''),
-(535,20,'11:30',3,''),
-(536,20,'11:45',3,''),
-(537,20,'12:00',3,''),
-(538,20,'12:15',3,''),
-(539,20,'12:30',3,''),
-(540,20,'12:45',3,''),
-(541,20,'13:00',3,''),
-(542,20,'13:15',3,''),
-(543,20,'13:30',3,''),
-(544,20,'13:45',3,''),
-(545,20,'14:00',3,''),
-(546,20,'14:15',3,''),
-(547,20,'14:30',3,''),
-(548,20,'14:45',3,''),
-(549,20,'15:00',3,''),
-(550,20,'15:15',3,''),
-(551,20,'15:30',3,''),
-(552,20,'15:45',3,''),
-(553,20,'16:00',3,'C'),
-(554,20,'16:15',3,'C'),
-(555,20,'16:30',3,'W'),
-(556,20,'16:45',3,'C'),
-(557,20,'17:00',3,'W'),
-(558,20,'17:15',3,'W'),
-(559,20,'17:30',3,'A'),
-(560,20,'17:45',3,'A'),
-(561,20,'18:00',3,'A'),
-(562,20,'18:15',3,'A'),
-(563,20,'18:30',3,'W'),
-(564,20,'18:45',3,'A'),
-(565,20,'19:00',3,'A'),
-(566,20,'19:15',3,''),
-(567,20,'19:30',3,''),
-(568,20,'19:45',3,''),
-(569,20,'20:00',3,''),
-(570,20,'20:15',3,''),
-(571,20,'20:30',3,''),
-(572,20,'20:45',3,''),
-(573,20,'08:00',4,''),
-(574,20,'08:15',4,''),
-(575,20,'08:30',4,''),
-(576,20,'08:45',4,''),
-(577,20,'09:00',4,'W'),
-(578,20,'09:30',4,'W'),
-(579,20,'09:15',4,'A'),
-(580,20,'09:45',4,'A'),
-(581,20,'10:00',4,'W'),
-(582,20,'10:15',4,'A'),
-(583,20,'10:30',4,'W'),
-(584,20,'10:45',4,'A'),
-(585,20,'11:00',4,'W'),
-(586,20,'11:15',4,'C'),
-(587,20,'11:30',4,'C'),
-(588,20,'11:45',4,'C'),
-(589,20,'12:00',4,'C'),
-(590,20,'12:15',4,''),
-(591,20,'12:30',4,''),
-(592,20,'12:45',4,''),
-(593,20,'13:00',4,''),
-(594,20,'13:15',4,''),
-(595,20,'13:30',4,''),
-(596,20,'13:45',4,''),
-(597,20,'14:00',4,''),
-(598,20,'14:15',4,''),
-(599,20,'14:30',4,'W'),
-(600,20,'14:45',4,'A'),
-(601,20,'15:00',4,'W'),
-(602,20,'15:15',4,'A'),
-(603,20,'15:30',4,'A'),
-(604,20,'15:45',4,'A'),
-(605,20,'16:00',4,'C'),
-(606,20,'16:15',4,'C'),
-(607,20,'16:30',4,''),
-(608,20,'16:45',4,''),
-(609,20,'17:00',4,''),
-(610,20,'17:15',4,''),
-(611,20,'17:30',4,''),
-(612,20,'17:45',4,''),
-(613,20,'18:00',4,''),
-(614,20,'18:15',4,''),
-(615,20,'18:30',4,''),
-(616,20,'18:45',4,''),
-(617,20,'19:00',4,''),
-(618,20,'19:15',4,''),
-(619,20,'19:30',4,''),
-(620,20,'19:45',4,''),
-(621,20,'20:00',4,''),
-(622,20,'20:15',4,''),
-(623,20,'20:30',4,''),
-(624,20,'20:45',4,''),
-(625,20,'08:00',5,''),
-(626,20,'08:15',5,''),
-(627,20,'08:30',5,''),
-(628,20,'08:45',5,''),
-(629,20,'09:00',5,''),
-(630,20,'09:30',5,''),
-(631,20,'09:15',5,''),
-(632,20,'09:45',5,''),
-(633,20,'10:00',5,''),
-(634,20,'10:15',5,''),
-(635,20,'10:30',5,''),
-(636,20,'10:45',5,''),
-(637,20,'11:00',5,''),
-(638,20,'11:15',5,''),
-(639,20,'11:30',5,''),
-(640,20,'11:45',5,''),
-(641,20,'12:00',5,''),
-(642,20,'12:15',5,''),
-(643,20,'12:30',5,''),
-(644,20,'12:45',5,''),
-(645,20,'13:00',5,''),
-(646,20,'13:15',5,''),
-(647,20,'13:30',5,''),
-(648,20,'13:45',5,''),
-(649,20,'14:00',5,''),
-(650,20,'14:15',5,''),
-(651,20,'14:30',5,''),
-(652,20,'14:45',5,''),
-(653,20,'15:00',5,''),
-(654,20,'15:15',5,''),
-(655,20,'15:30',5,''),
-(656,20,'15:45',5,''),
-(657,20,'16:00',5,''),
-(658,20,'16:15',5,''),
-(659,20,'16:30',5,''),
-(660,20,'16:45',5,''),
-(661,20,'17:00',5,''),
-(662,20,'17:15',5,''),
-(663,20,'17:30',5,''),
-(664,20,'17:45',5,''),
-(665,20,'18:00',5,''),
-(666,20,'18:15',5,''),
-(667,20,'18:30',5,''),
-(668,20,'18:45',5,''),
-(669,20,'19:00',5,''),
-(670,20,'19:15',5,''),
-(671,20,'19:30',5,''),
-(672,20,'19:45',5,''),
-(673,20,'20:00',5,''),
-(674,20,'20:15',5,''),
-(675,20,'20:30',5,''),
-(676,20,'20:45',5,''),
-(677,20,'08:00',6,''),
-(678,20,'08:15',6,''),
-(679,20,'08:30',6,''),
-(680,20,'08:45',6,''),
-(681,20,'09:00',6,''),
-(682,20,'09:30',6,''),
-(683,20,'09:15',6,''),
-(684,20,'09:45',6,''),
-(685,20,'10:00',6,''),
-(686,20,'10:15',6,''),
-(687,20,'10:30',6,''),
-(688,20,'10:45',6,''),
-(689,20,'11:00',6,''),
-(690,20,'11:15',6,''),
-(691,20,'11:30',6,''),
-(692,20,'11:45',6,''),
-(693,20,'12:00',6,''),
-(694,20,'12:15',6,''),
-(695,20,'12:30',6,''),
-(696,20,'12:45',6,''),
-(697,20,'13:00',6,''),
-(698,20,'13:15',6,''),
-(699,20,'13:30',6,''),
-(700,20,'13:45',6,''),
-(701,20,'14:00',6,''),
-(702,20,'14:15',6,''),
-(703,20,'14:30',6,''),
-(704,20,'14:45',6,''),
-(705,20,'15:00',6,''),
-(706,20,'15:15',6,''),
-(707,20,'15:30',6,''),
-(708,20,'15:45',6,''),
-(709,20,'16:00',6,''),
-(710,20,'16:15',6,''),
-(711,20,'16:30',6,''),
-(712,20,'16:45',6,''),
-(713,20,'17:00',6,''),
-(714,20,'17:15',6,''),
-(715,20,'17:30',6,''),
-(716,20,'17:45',6,''),
-(717,20,'18:00',6,''),
-(718,20,'18:15',6,''),
-(719,20,'18:30',6,''),
-(720,20,'18:45',6,''),
-(721,20,'19:00',6,''),
-(722,20,'19:15',6,''),
-(723,20,'19:30',6,''),
-(724,20,'19:45',6,''),
-(725,20,'20:00',6,''),
-(726,20,'20:15',6,''),
-(727,20,'20:30',6,''),
-(728,20,'20:45',6,''),
-(729,30,'08:00',0,''),
-(730,30,'08:15',0,''),
-(731,30,'08:30',0,'A'),
-(732,30,'08:45',0,'W'),
-(733,30,'09:00',0,'A'),
-(734,30,'09:30',0,'W'),
-(735,30,'09:15',0,'A'),
-(736,30,'09:45',0,'A'),
-(737,30,'10:00',0,'W'),
-(738,30,'10:15',0,'W'),
-(739,30,'10:30',0,'W'),
-(740,30,'10:45',0,'A'),
-(741,30,'11:00',0,'A'),
-(742,30,'11:15',0,'C'),
-(743,30,'11:30',0,'C'),
-(744,30,'11:45',0,'C'),
-(745,30,'12:00',0,''),
-(746,30,'12:15',0,''),
-(747,30,'12:30',0,''),
-(748,30,'12:45',0,''),
-(749,30,'13:00',0,''),
-(750,30,'13:15',0,''),
-(751,30,'13:30',0,''),
-(752,30,'13:45',0,''),
-(753,30,'14:00',0,''),
-(754,30,'14:15',0,''),
-(755,30,'14:30',0,''),
-(756,30,'14:45',0,''),
-(757,30,'15:00',0,''),
-(758,30,'15:15',0,''),
-(759,30,'15:30',0,''),
-(760,30,'15:45',0,''),
-(761,30,'16:00',0,'C'),
-(762,30,'16:15',0,'W'),
-(763,30,'16:30',0,'A'),
-(764,30,'16:45',0,'A'),
-(765,30,'17:00',0,'W'),
-(766,30,'17:15',0,'W'),
-(767,30,'17:30',0,'A'),
-(768,30,'17:45',0,'A'),
-(769,30,'18:00',0,'W'),
-(770,30,'18:15',0,'A'),
-(771,30,'18:30',0,'W'),
-(772,30,'18:45',0,'A'),
-(773,30,'19:00',0,'C'),
-(774,30,'19:15',0,''),
-(775,30,'19:30',0,''),
-(776,30,'19:45',0,''),
-(777,30,'20:00',0,''),
-(778,30,'20:15',0,''),
-(779,30,'20:30',0,''),
-(780,30,'20:45',0,''),
-(781,30,'08:00',1,''),
-(782,30,'08:15',1,''),
-(783,30,'08:30',1,'A'),
-(784,30,'08:45',1,'A'),
-(785,30,'09:00',1,'W'),
-(786,30,'09:30',1,'W'),
-(787,30,'09:15',1,'A'),
-(788,30,'09:45',1,'A'),
-(789,30,'10:00',1,'W'),
-(790,30,'10:15',1,'A'),
-(791,30,'10:30',1,'W'),
-(792,30,'10:45',1,'A'),
-(793,30,'11:00',1,'A'),
-(794,30,'11:15',1,'C'),
-(795,30,'11:30',1,'C'),
-(796,30,'11:45',1,'C'),
-(797,30,'12:00',1,'C'),
-(798,30,'12:15',1,''),
-(799,30,'12:30',1,''),
-(800,30,'12:45',1,''),
-(801,30,'13:00',1,''),
-(802,30,'13:15',1,''),
-(803,30,'13:30',1,''),
-(804,30,'13:45',1,''),
-(805,30,'14:00',1,'W'),
-(806,30,'14:15',1,'W'),
-(807,30,'14:30',1,'A'),
-(808,30,'14:45',1,'A'),
-(809,30,'15:00',1,'A'),
-(810,30,'15:15',1,'A'),
-(811,30,'15:30',1,''),
-(812,30,'15:45',1,''),
-(813,30,'16:00',1,''),
-(814,30,'16:15',1,''),
-(815,30,'16:30',1,''),
-(816,30,'16:45',1,''),
-(817,30,'17:00',1,''),
-(818,30,'17:15',1,''),
-(819,30,'17:30',1,''),
-(820,30,'17:45',1,''),
-(821,30,'18:00',1,''),
-(822,30,'18:15',1,''),
-(823,30,'18:30',1,''),
-(824,30,'18:45',1,''),
-(825,30,'19:00',1,''),
-(826,30,'19:15',1,''),
-(827,30,'19:30',1,''),
-(828,30,'19:45',1,''),
-(829,30,'20:00',1,''),
-(830,30,'20:15',1,''),
-(831,30,'20:30',1,''),
-(832,30,'20:45',1,''),
-(833,30,'08:00',2,''),
-(834,30,'08:15',2,''),
-(835,30,'08:30',2,''),
-(836,30,'08:45',2,''),
-(837,30,'09:00',2,''),
-(838,30,'09:30',2,''),
-(839,30,'09:15',2,''),
-(840,30,'09:45',2,''),
-(841,30,'10:00',2,''),
-(842,30,'10:15',2,''),
-(843,30,'10:30',2,''),
-(844,30,'10:45',2,''),
-(845,30,'11:00',2,''),
-(846,30,'11:15',2,''),
-(847,30,'11:30',2,''),
-(848,30,'11:45',2,''),
-(849,30,'12:00',2,''),
-(850,30,'12:15',2,''),
-(851,30,'12:30',2,''),
-(852,30,'12:45',2,''),
-(853,30,'13:00',2,''),
-(854,30,'13:15',2,''),
-(855,30,'13:30',2,''),
-(856,30,'13:45',2,''),
-(857,30,'14:00',2,''),
-(858,30,'14:15',2,''),
-(859,30,'14:30',2,''),
-(860,30,'14:45',2,''),
-(861,30,'15:00',2,''),
-(862,30,'15:15',2,''),
-(863,30,'15:30',2,''),
-(864,30,'15:45',2,''),
-(865,30,'16:00',2,'C'),
-(866,30,'16:15',2,'A'),
-(867,30,'16:30',2,'W'),
-(868,30,'16:45',2,'A'),
-(869,30,'17:00',2,'W'),
-(870,30,'17:15',2,'A'),
-(871,30,'17:30',2,'W'),
-(872,30,'17:45',2,'A'),
-(873,30,'18:00',2,'W'),
-(874,30,'18:15',2,'A'),
-(875,30,'18:30',2,'A'),
-(876,30,'18:45',2,'C'),
-(877,30,'19:00',2,'C'),
-(878,30,'19:15',2,''),
-(879,30,'19:30',2,''),
-(880,30,'19:45',2,''),
-(881,30,'20:00',2,''),
-(882,30,'20:15',2,''),
-(883,30,'20:30',2,''),
-(884,30,'20:45',2,''),
-(885,30,'08:00',3,''),
-(886,30,'08:15',3,''),
-(887,30,'08:30',3,'W'),
-(888,30,'08:45',3,'A'),
-(889,30,'09:00',3,'W'),
-(890,30,'09:30',3,'A'),
-(891,30,'09:15',3,'W'),
-(892,30,'09:45',3,'W'),
-(893,30,'10:00',3,'A'),
-(894,30,'10:15',3,'W'),
-(895,30,'10:30',3,'A'),
-(896,30,'10:45',3,'A'),
-(897,30,'11:00',3,'A'),
-(898,30,'11:15',3,'A'),
-(899,30,'11:30',3,'A'),
-(900,30,'11:45',3,'A'),
-(901,30,'12:00',3,''),
-(902,30,'12:15',3,''),
-(903,30,'12:30',3,''),
-(904,30,'12:45',3,''),
-(905,30,'13:00',3,''),
-(906,30,'13:15',3,''),
-(907,30,'13:30',3,''),
-(908,30,'13:45',3,''),
-(909,30,'14:00',3,''),
-(910,30,'14:15',3,''),
-(911,30,'14:30',3,''),
-(912,30,'14:45',3,''),
-(913,30,'15:00',3,''),
-(914,30,'15:15',3,''),
-(915,30,'15:30',3,''),
-(916,30,'15:45',3,''),
-(917,30,'16:00',3,''),
-(918,30,'16:15',3,''),
-(919,30,'16:30',3,''),
-(920,30,'16:45',3,''),
-(921,30,'17:00',3,''),
-(922,30,'17:15',3,''),
-(923,30,'17:30',3,''),
-(924,30,'17:45',3,''),
-(925,30,'18:00',3,''),
-(926,30,'18:15',3,''),
-(927,30,'18:30',3,''),
-(928,30,'18:45',3,''),
-(929,30,'19:00',3,''),
-(930,30,'19:15',3,''),
-(931,30,'19:30',3,''),
-(932,30,'19:45',3,''),
-(933,30,'20:00',3,''),
-(934,30,'20:15',3,''),
-(935,30,'20:30',3,''),
-(936,30,'20:45',3,''),
-(937,30,'08:00',4,''),
-(938,30,'08:15',4,''),
-(939,30,'08:30',4,''),
-(940,30,'08:45',4,''),
-(941,30,'09:00',4,''),
-(942,30,'09:30',4,''),
-(943,30,'09:15',4,''),
-(944,30,'09:45',4,''),
-(945,30,'10:00',4,''),
-(946,30,'10:15',4,''),
-(947,30,'10:30',4,''),
-(948,30,'10:45',4,''),
-(949,30,'11:00',4,''),
-(950,30,'11:15',4,''),
-(951,30,'11:30',4,''),
-(952,30,'11:45',4,''),
-(953,30,'12:00',4,''),
-(954,30,'12:15',4,''),
-(955,30,'12:30',4,''),
-(956,30,'12:45',4,''),
-(957,30,'13:00',4,''),
-(958,30,'13:15',4,''),
-(959,30,'13:30',4,''),
-(960,30,'13:45',4,''),
-(961,30,'14:00',4,''),
-(962,30,'14:15',4,''),
-(963,30,'14:30',4,''),
-(964,30,'14:45',4,''),
-(965,30,'15:00',4,''),
-(966,30,'15:15',4,''),
-(967,30,'15:30',4,''),
-(968,30,'15:45',4,''),
-(969,30,'16:00',4,'C'),
-(970,30,'16:15',4,'A'),
-(971,30,'16:30',4,'W'),
-(972,30,'16:45',4,'A'),
-(973,30,'17:00',4,'W'),
-(974,30,'17:15',4,'W'),
-(975,30,'17:30',4,'A'),
-(976,30,'17:45',4,'A'),
-(977,30,'18:00',4,'A'),
-(978,30,'18:15',4,'W'),
-(979,30,'18:30',4,'A'),
-(980,30,'18:45',4,'C'),
-(981,30,'19:00',4,'C'),
-(982,30,'19:15',4,''),
-(983,30,'19:30',4,''),
-(984,30,'19:45',4,''),
-(985,30,'20:00',4,''),
-(986,30,'20:15',4,''),
-(987,30,'20:30',4,''),
-(988,30,'20:45',4,''),
-(989,30,'08:00',5,''),
-(990,30,'08:15',5,''),
-(991,30,'08:30',5,''),
-(992,30,'08:45',5,''),
-(993,30,'09:00',5,''),
-(994,30,'09:30',5,''),
-(995,30,'09:15',5,''),
-(996,30,'09:45',5,''),
-(997,30,'10:00',5,''),
-(998,30,'10:15',5,''),
-(999,30,'10:30',5,''),
-(1000,30,'10:45',5,''),
-(1001,30,'11:00',5,''),
-(1002,30,'11:15',5,''),
-(1003,30,'11:30',5,''),
-(1004,30,'11:45',5,''),
-(1005,30,'12:00',5,''),
-(1006,30,'12:15',5,''),
-(1007,30,'12:30',5,''),
-(1008,30,'12:45',5,''),
-(1009,30,'13:00',5,''),
-(1010,30,'13:15',5,''),
-(1011,30,'13:30',5,''),
-(1012,30,'13:45',5,''),
-(1013,30,'14:00',5,''),
-(1014,30,'14:15',5,''),
-(1015,30,'14:30',5,''),
-(1016,30,'14:45',5,''),
-(1017,30,'15:00',5,''),
-(1018,30,'15:15',5,''),
-(1019,30,'15:30',5,''),
-(1020,30,'15:45',5,''),
-(1021,30,'16:00',5,''),
-(1022,30,'16:15',5,''),
-(1023,30,'16:30',5,''),
-(1024,30,'16:45',5,''),
-(1025,30,'17:00',5,''),
-(1026,30,'17:15',5,''),
-(1027,30,'17:30',5,''),
-(1028,30,'17:45',5,''),
-(1029,30,'18:00',5,''),
-(1030,30,'18:15',5,''),
-(1031,30,'18:30',5,''),
-(1032,30,'18:45',5,''),
-(1033,30,'19:00',5,''),
-(1034,30,'19:15',5,''),
-(1035,30,'19:30',5,''),
-(1036,30,'19:45',5,''),
-(1037,30,'20:00',5,''),
-(1038,30,'20:15',5,''),
-(1039,30,'20:30',5,''),
-(1040,30,'20:45',5,''),
-(1041,30,'08:00',6,''),
-(1042,30,'08:15',6,''),
-(1043,30,'08:30',6,''),
-(1044,30,'08:45',6,''),
-(1045,30,'09:00',6,''),
-(1046,30,'09:30',6,''),
-(1047,30,'09:15',6,''),
-(1048,30,'09:45',6,''),
-(1049,30,'10:00',6,''),
-(1050,30,'10:15',6,''),
-(1051,30,'10:30',6,''),
-(1052,30,'10:45',6,''),
-(1053,30,'11:00',6,''),
-(1054,30,'11:15',6,''),
-(1055,30,'11:30',6,''),
-(1056,30,'11:45',6,''),
-(1057,30,'12:00',6,''),
-(1058,30,'12:15',6,''),
-(1059,30,'12:30',6,''),
-(1060,30,'12:45',6,''),
-(1061,30,'13:00',6,''),
-(1062,30,'13:15',6,''),
-(1063,30,'13:30',6,''),
-(1064,30,'13:45',6,''),
-(1065,30,'14:00',6,''),
-(1066,30,'14:15',6,''),
-(1067,30,'14:30',6,''),
-(1068,30,'14:45',6,''),
-(1069,30,'15:00',6,''),
-(1070,30,'15:15',6,''),
-(1071,30,'15:30',6,''),
-(1072,30,'15:45',6,''),
-(1073,30,'16:00',6,''),
-(1074,30,'16:15',6,''),
-(1075,30,'16:30',6,''),
-(1076,30,'16:45',6,''),
-(1077,30,'17:00',6,''),
-(1078,30,'17:15',6,''),
-(1079,30,'17:30',6,''),
-(1080,30,'17:45',6,''),
-(1081,30,'18:00',6,''),
-(1082,30,'18:15',6,''),
-(1083,30,'18:30',6,''),
-(1084,30,'18:45',6,''),
-(1085,30,'19:00',6,''),
-(1086,30,'19:15',6,''),
-(1087,30,'19:30',6,''),
-(1088,30,'19:45',6,''),
-(1089,30,'20:00',6,''),
-(1090,30,'20:15',6,''),
-(1091,30,'20:30',6,''),
-(1092,30,'20:45',6,''),
-(1093,40,'08:00',0,''),
-(1094,40,'08:20',0,''),
-(1095,40,'08:40',0,''),
-(1096,40,'09:00',0,''),
-(1097,40,'09:20',0,''),
-(1098,40,'09:40',0,''),
-(1099,40,'10:00',0,''),
-(1100,40,'10:20',0,''),
-(1101,40,'10:40',0,''),
-(1102,40,'11:00',0,''),
-(1103,40,'11:20',0,''),
-(1104,40,'11:40',0,''),
-(1105,40,'12:00',0,''),
-(1106,40,'12:20',0,''),
-(1107,40,'12:40',0,''),
-(1108,40,'13:00',0,''),
-(1109,40,'13:20',0,''),
-(1110,40,'13:40',0,''),
-(1111,40,'14:00',0,'A'),
-(1112,40,'14:20',0,'A'),
-(1113,40,'14:40',0,'A'),
-(1114,40,'15:00',0,'A'),
-(1115,40,'15:20',0,'A'),
-(1116,40,'15:40',0,'A'),
-(1117,40,'16:00',0,'A'),
-(1118,40,'16:20',0,''),
-(1119,40,'16:40',0,''),
-(1120,40,'17:00',0,''),
-(1121,40,'17:20',0,''),
-(1122,40,'17:40',0,''),
-(1123,40,'18:00',0,''),
-(1124,40,'18:20',0,''),
-(1125,40,'18:40',0,''),
-(1126,40,'19:00',0,''),
-(1127,40,'19:20',0,''),
-(1128,40,'19:40',0,''),
-(1129,40,'20:00',0,''),
-(1130,40,'20:20',0,''),
-(1131,40,'20:40',0,''),
-(1132,40,'08:00',1,''),
-(1133,40,'08:20',1,''),
-(1134,40,'08:40',1,''),
-(1135,40,'09:00',1,''),
-(1136,40,'09:20',1,''),
-(1137,40,'09:40',1,''),
-(1138,40,'10:00',1,''),
-(1139,40,'10:20',1,''),
-(1140,40,'10:40',1,''),
-(1141,40,'11:00',1,''),
-(1142,40,'11:20',1,''),
-(1143,40,'11:40',1,''),
-(1144,40,'12:00',1,''),
-(1145,40,'12:20',1,''),
-(1146,40,'12:40',1,''),
-(1147,40,'13:00',1,''),
-(1148,40,'13:20',1,''),
-(1149,40,'13:40',1,''),
-(1150,40,'14:00',1,''),
-(1151,40,'14:20',1,''),
-(1152,40,'14:40',1,''),
-(1153,40,'15:00',1,''),
-(1154,40,'15:20',1,''),
-(1155,40,'15:40',1,''),
-(1156,40,'16:00',1,'A'),
-(1157,40,'16:20',1,'A'),
-(1158,40,'16:40',1,'A'),
-(1159,40,'17:00',1,'A'),
-(1160,40,'17:20',1,'A'),
-(1161,40,'17:40',1,'A'),
-(1162,40,'18:00',1,'A'),
-(1163,40,'18:20',1,'A'),
-(1164,40,'18:40',1,'A'),
-(1165,40,'19:00',1,'A'),
-(1166,40,'19:20',1,'A'),
-(1167,40,'19:40',1,''),
-(1168,40,'20:00',1,''),
-(1169,40,'20:20',1,''),
-(1170,40,'20:40',1,''),
-(1171,40,'08:00',2,''),
-(1172,40,'08:20',2,''),
-(1173,40,'08:40',2,'A'),
-(1174,40,'09:00',2,'A'),
-(1175,40,'09:20',2,'A'),
-(1176,40,'09:40',2,'A'),
-(1177,40,'10:00',2,'A'),
-(1178,40,'10:20',2,'A'),
-(1179,40,'10:40',2,'A'),
-(1180,40,'11:00',2,'A'),
-(1181,40,'11:20',2,'A'),
-(1182,40,'11:40',2,'A'),
-(1183,40,'12:00',2,''),
-(1184,40,'12:20',2,''),
-(1185,40,'12:40',2,''),
-(1186,40,'13:00',2,''),
-(1187,40,'13:20',2,''),
-(1188,40,'13:40',2,''),
-(1189,40,'14:00',2,'A'),
-(1190,40,'14:20',2,'A'),
-(1191,40,'14:40',2,'A'),
-(1192,40,'15:00',2,'A'),
-(1193,40,'15:20',2,'A'),
-(1194,40,'15:40',2,'A'),
-(1195,40,'16:00',2,'A'),
-(1196,40,'16:20',2,''),
-(1197,40,'16:40',2,''),
-(1198,40,'17:00',2,''),
-(1199,40,'17:20',2,''),
-(1200,40,'17:40',2,''),
-(1201,40,'18:00',2,''),
-(1202,40,'18:20',2,''),
-(1203,40,'18:40',2,''),
-(1204,40,'19:00',2,''),
-(1205,40,'19:20',2,''),
-(1206,40,'19:40',2,''),
-(1207,40,'20:00',2,''),
-(1208,40,'20:20',2,''),
-(1209,40,'20:40',2,''),
-(1210,40,'08:00',3,''),
-(1211,40,'08:20',3,''),
-(1212,40,'08:40',3,'A'),
-(1213,40,'09:00',3,'A'),
-(1214,40,'09:20',3,'A'),
-(1215,40,'09:40',3,'A'),
-(1216,40,'10:00',3,'A'),
-(1217,40,'10:20',3,'A'),
-(1218,40,'10:40',3,'A'),
-(1219,40,'11:00',3,'A'),
-(1220,40,'11:20',3,'A'),
-(1221,40,'11:40',3,'A'),
-(1222,40,'12:00',3,''),
-(1223,40,'12:20',3,''),
-(1224,40,'12:40',3,''),
-(1225,40,'13:00',3,''),
-(1226,40,'13:20',3,''),
-(1227,40,'13:40',3,''),
-(1228,40,'14:00',3,'A'),
-(1229,40,'14:20',3,'A'),
-(1230,40,'14:40',3,'A'),
-(1231,40,'15:00',3,'A'),
-(1232,40,'15:20',3,'A'),
-(1233,40,'15:40',3,'A'),
-(1234,40,'16:00',3,'A'),
-(1235,40,'16:20',3,''),
-(1236,40,'16:40',3,''),
-(1237,40,'17:00',3,''),
-(1238,40,'17:20',3,''),
-(1239,40,'17:40',3,''),
-(1240,40,'18:00',3,''),
-(1241,40,'18:20',3,''),
-(1242,40,'18:40',3,''),
-(1243,40,'19:00',3,''),
-(1244,40,'19:20',3,''),
-(1245,40,'19:40',3,''),
-(1246,40,'20:00',3,''),
-(1247,40,'20:20',3,''),
-(1248,40,'20:40',3,''),
-(1249,40,'08:00',4,''),
-(1250,40,'08:20',4,''),
-(1251,40,'08:40',4,''),
-(1252,40,'09:00',4,''),
-(1253,40,'09:20',4,''),
-(1254,40,'09:40',4,''),
-(1255,40,'10:00',4,''),
-(1256,40,'10:20',4,''),
-(1257,40,'10:40',4,''),
-(1258,40,'11:00',4,''),
-(1259,40,'11:20',4,''),
-(1260,40,'11:40',4,''),
-(1261,40,'12:00',4,''),
-(1262,40,'12:20',4,''),
-(1263,40,'12:40',4,''),
-(1264,40,'13:00',4,''),
-(1265,40,'13:20',4,''),
-(1266,40,'13:40',4,''),
-(1267,40,'14:00',4,''),
-(1268,40,'14:20',4,''),
-(1269,40,'14:40',4,''),
-(1270,40,'15:00',4,''),
-(1271,40,'15:20',4,''),
-(1272,40,'15:40',4,''),
-(1273,40,'16:00',4,'A'),
-(1274,40,'16:20',4,'A'),
-(1275,40,'16:40',4,'A'),
-(1276,40,'17:00',4,'A'),
-(1277,40,'17:20',4,'A'),
-(1278,40,'17:40',4,'A'),
-(1279,40,'18:00',4,'A'),
-(1280,40,'18:20',4,'A'),
-(1281,40,'18:40',4,'A'),
-(1282,40,'19:00',4,'A'),
-(1283,40,'19:20',4,''),
-(1284,40,'19:40',4,''),
-(1285,40,'20:00',4,''),
-(1286,40,'20:20',4,''),
-(1287,40,'20:40',4,''),
-(1288,40,'08:00',5,''),
-(1289,40,'08:20',5,''),
-(1290,40,'08:40',5,''),
-(1291,40,'09:00',5,''),
-(1292,40,'09:20',5,''),
-(1293,40,'09:40',5,''),
-(1294,40,'10:00',5,''),
-(1295,40,'10:20',5,''),
-(1296,40,'10:40',5,''),
-(1297,40,'11:00',5,''),
-(1298,40,'11:20',5,''),
-(1299,40,'11:40',5,''),
-(1300,40,'12:00',5,''),
-(1301,40,'12:20',5,''),
-(1302,40,'12:40',5,''),
-(1303,40,'13:00',5,''),
-(1304,40,'13:20',5,''),
-(1305,40,'13:40',5,''),
-(1306,40,'14:00',5,''),
-(1307,40,'14:20',5,''),
-(1308,40,'14:40',5,''),
-(1309,40,'15:00',5,''),
-(1310,40,'15:20',5,''),
-(1311,40,'15:40',5,''),
-(1312,40,'16:00',5,''),
-(1313,40,'16:20',5,''),
-(1314,40,'16:40',5,''),
-(1315,40,'17:00',5,''),
-(1316,40,'17:20',5,''),
-(1317,40,'17:40',5,''),
-(1318,40,'18:00',5,''),
-(1319,40,'18:20',5,''),
-(1320,40,'18:40',5,''),
-(1321,40,'19:00',5,''),
-(1322,40,'19:20',5,''),
-(1323,40,'19:40',5,''),
-(1324,40,'20:00',5,''),
-(1325,40,'20:20',5,''),
-(1326,40,'20:40',5,''),
-(1327,40,'08:00',6,''),
-(1328,40,'08:20',6,''),
-(1329,40,'08:40',6,''),
-(1330,40,'09:00',6,''),
-(1331,40,'09:20',6,''),
-(1332,40,'09:40',6,''),
-(1333,40,'10:00',6,''),
-(1334,40,'10:20',6,''),
-(1335,40,'10:40',6,''),
-(1336,40,'11:00',6,''),
-(1337,40,'11:20',6,''),
-(1338,40,'11:40',6,''),
-(1339,40,'12:00',6,''),
-(1340,40,'12:20',6,''),
-(1341,40,'12:40',6,''),
-(1342,40,'13:00',6,''),
-(1343,40,'13:20',6,''),
-(1344,40,'13:40',6,''),
-(1345,40,'14:00',6,''),
-(1346,40,'14:20',6,''),
-(1347,40,'14:40',6,''),
-(1348,40,'15:00',6,''),
-(1349,40,'15:20',6,''),
-(1350,40,'15:40',6,''),
-(1351,40,'16:00',6,''),
-(1352,40,'16:20',6,''),
-(1353,40,'16:40',6,''),
-(1354,40,'17:00',6,''),
-(1355,40,'17:20',6,''),
-(1356,40,'17:40',6,''),
-(1357,40,'18:00',6,''),
-(1358,40,'18:20',6,''),
-(1359,40,'18:40',6,''),
-(1360,40,'19:00',6,''),
-(1361,40,'19:20',6,''),
-(1362,40,'19:40',6,''),
-(1363,40,'20:00',6,''),
-(1364,40,'20:20',6,''),
-(1365,40,'20:40',6,'');
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'rsuper','rWorks Super','*7F056D2A1A5A65790F919D1BBA8895699CE62890','rWorks',99,0,99,'Y','johan577@mac.com','','N',0),(2,'radmin','rWorks Admin','*7F056D2A1A5A65790F919D1BBA8895699CE62890','rWorks',50,0,99,'Y','johan577@mac.com','','N',0),(3,'rtest','rWorks Test','*7F056D2A1A5A65790F919D1BBA8895699CE62890','rWorks',2,0,99,'Y','johan577@mac.com','','N',0),(9,'secretariaat','Secretariaat','*7F056D2A1A5A65790F919D1BBA8895699CE62890','essen',50,0,99,'Y','secretariaat@de-essen.be','','N',0),(10,'sabine','Dr. Sabine Fevery','*7F056D2A1A5A65790F919D1BBA8895699CE62890','dr',50,0,99,'Y','sabine@de-essen.be','','N',30),(11,'user','Mr. User Vaneigens','*7F056D2A1A5A65790F919D1BBA8895699CE62890','users',50,0,99,'Y','user@cody-cms.be','','N',10),(20,'hilde','Dr. Hilde Tack','*7F056D2A1A5A65790F919D1BBA8895699CE62890','dr',50,0,99,'Y','hilde@de-essen.be','','N',10),(30,'lies','Dr. Lies Gheyle','*7F056D2A1A5A65790F919D1BBA8895699CE62890','dr',50,0,99,'Y','lies@de-essen.be','','N',20),(40,'liesd','Dr. Lies Delameillieure','*7F056D2A1A5A65790F919D1BBA8895699CE62890','dr',50,0,99,'Y','lies.delameillieure@de-essen.be','','N',40);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+-- Dump completed on 2013-09-25 17:14:05

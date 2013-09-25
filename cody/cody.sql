@@ -285,7 +285,7 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(128) NOT NULL DEFAULT '-',
   `name` varchar(128) NOT NULL DEFAULT '-',
-  `password` varchar(32) NOT NULL DEFAULT '-',
+  `password` varchar(64) NOT NULL DEFAULT '-',
   `domain` varchar(32) NOT NULL DEFAULT '',
   `level` int(11) NOT NULL DEFAULT 0,
   `badlogins` int(11) NOT NULL DEFAULT '0',
