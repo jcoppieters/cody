@@ -6,18 +6,7 @@
 
                      $("div#exportDiv").hide();
 
-                     $("#calDateNav button#prev").button({
-                       icons: { primary: "ui-icon-arrowthick-1-w" }, text: false
-                     });
-                     $("#calDateNav button#next").button({
-                       icons: { primary: "ui-icon-arrowthick-1-e" }, text: false
-                     });
-
-                      $("#calActionNav button#newEvent").button({
-                              icons: { primary: "ui-icon-plusthick" }
-                      }).click(function(){
-                             viewNewForm();
-                      });
+                     redoButtons();
 
                      $(".appointment").click(function(){
                      console.log("click");
@@ -31,30 +20,26 @@
                        $("button#btnDoList").click(function(){
                            doListView(20);
                        });
-                        $("#calActionNav button#exportCal").button({
-                                icons: { primary: "ui-icon-newwin" }
-                              }).click(function(){
-                                $("div#exportDiv").dialog({
-                                  title: "Export calendar",
-                                  width:814, height:520,
-                                  modal: true
-                                });
-                              });
-
-
                    });
 
                    function viewAppointment(apId){
                     doDetailView(775,1000,"Event",apId);
                    }
                    function viewNewForm(){
-                    doDetailView(500,400,"Add new event");
+                    doDetailView(560,450,"Add new event");
                    }
-                   function doDetailView(height,width,title,apId){
+
+                   function viewNewFormOnDate(date){
+                   console.log(date.toDateString());
+                    doDetailView(500,500,"Add new event",-1,date);
+                   }
+                   function doDetailView(height,width,title,apId,date){
+                      var request = typeof date === "undefined" ? "ajaxDetail" : "createFromDate";
+                      console.log(typeof date);
                       $.ajax({
                                  type: "GET",
                                  url: "<%=path.prefix%>/<%=page.language%>/<%= page.itemId %>",
-                                 data: {request: "ajaxDetail", id: apId,pagename: "<%= pagename %>"},
+                                 data: {request: request, id: apId,pagename: "<%= pagename %>", date: date},
                                  dataType: "html",
                                  success: function(html){
                                    $("div#appointmentView").html(html);
@@ -63,6 +48,15 @@
                                      height: height,
                                      title: title
                                    });
+
+                                   redoButtons();
+                                   try
+                                   {
+                                        doButtons();
+                                   }catch(e){
+                                        //do nothing, this exception is throwed in week and year view
+                                        //because they don't have the function doButtons
+                                   }
                                  },
                                  error: function(err){
                                    console.log(err);
@@ -70,10 +64,11 @@
                              });
                    }
 
+
                    function doListView(count){
                        $.ajax({
                          type: "GET",
-                         url: "/<%= page.getURL() %>",
+                         url: "<%=path.prefix%>/<%=page.language%>/<%= page.itemId %>",
                          data: {request: "futureappointments", count: count},
                          dataType: "html",
                          success: function(html){
@@ -87,6 +82,32 @@
                          error: function(){
 
                           }
+                        });
+                   }
+
+                   function redoButtons() {
+                      $("#calDateNav button#prev").button({
+                            icons: { primary: "ui-icon-arrowthick-1-w" }, text: false
+                      });
+
+                      $("#calDateNav button#next").button({
+                            icons: { primary: "ui-icon-arrowthick-1-e" }, text: false
+                      });
+
+                      $("#calActionNav button#newEvent").button({
+                            icons: { primary: "ui-icon-plusthick" }
+                            }).click(function(){
+                                 viewNewForm();
+                       });
+
+                        $("#calActionNav button#exportCal").button({
+                                icons: { primary: "ui-icon-newwin" }
+                              }).click(function(){
+                                $("div#exportDiv").dialog({
+                                  title: "Export calendar",
+                                  width:814, height:520,
+                                  modal: true
+                                });
                         });
                    }
                    </script>
