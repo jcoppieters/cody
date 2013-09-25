@@ -112,13 +112,13 @@
           <% } %>
 
 
-          <form id="navForm" action="<%=path.prefix%>/<%=page.language%>/<%= page.itemId %>" method="post">
+          <form id="navForm" action="/<%=page.language%>/<%= page.itemId %>" method="post">
             <input type="hidden" name="request" value="otherMonth"/>
             <input type="hidden" name="month" id="inpMonth"  value="<%= currentMonth %>"/>
             <input type="hidden" name="year" id="inpYear" value="<%= currentYear %>"/>
           </form>
 
-          <form id="viewAppointmentForm" action="<%=path.prefix%>/<%=page.language%>/<%= page.itemId %>" method="post">
+          <form id="viewAppointmentForm" action="/<%=page.language%>/<%= page.itemId %>" method="post">
             <input type="hidden" name="request" value="viewAppointment"/>
             <input type="hidden" name="id" id="appointmentID" />
           </form>
@@ -138,9 +138,9 @@
                 <button id="next">Next</button>
               </nav>
               <nav id="calViewNav">
-                <a href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=weekview" class="weekname"></a>
-                <a class="active monthname" href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=monthview"></a>
-                <a href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=yearview"class="yearname"></a>
+                <a href="/<%=page.language%>/<%=page.itemId%>?request=weekview" class="weekname"></a>
+                <a class="active monthname" href="/<%=page.language%>/<%=page.itemId%>?request=monthview"></a>
+                <a href="/<%=page.language%>/<%=page.itemId%>?request=yearview"class="yearname"></a>
               </nav>
 
             </caption>
@@ -193,7 +193,7 @@
    <div id="appointmentView"></div>
    <div id="exportDiv">
     <p class="exportmsg"></p>
-    <p><a href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>/ics">Link</a></p>
+    <p><a href="/<%=page.language%>/<%=page.itemId%>/ics">Link</a></p>
    </div>
 
     <% for (var ic in page.content) { %>

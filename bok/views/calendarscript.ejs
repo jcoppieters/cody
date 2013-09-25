@@ -38,7 +38,7 @@
                       console.log(typeof date);
                       $.ajax({
                                  type: "GET",
-                                 url: "<%=path.prefix%>/<%=page.language%>/<%= page.itemId %>",
+                                 url: "/<%=page.language%>/<%= page.itemId %>",
                                  data: {request: request, id: apId,pagename: "<%= pagename %>", date: date},
                                  dataType: "html",
                                  success: function(html){
@@ -68,7 +68,7 @@
                    function doListView(count){
                        $.ajax({
                          type: "GET",
-                         url: "<%=path.prefix%>/<%=page.language%>/<%= page.itemId %>",
+                         url: "/<%=page.language%>/<%= page.itemId %>",
                          data: {request: "futureappointments", count: count},
                          dataType: "html",
                          success: function(html){

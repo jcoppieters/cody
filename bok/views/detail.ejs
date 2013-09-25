@@ -44,7 +44,7 @@
 
 
 <div id="apDetailLeft">
-<form id="frmApdetail" method="post" action="<%=path.prefix %>/<%= page.language %>/<%= page.item.id %>">
+<form id="frmApdetail" method="post" action="/<%= page.language %>/<%= page.item.id %>">
   <input type="hidden" name="request" />
   <input type="hidden" name="pagename" value="<%=pagename %>" />
   <input type="hidden" id="appointmentId" name="id" value="<%=  appointment.idappointment === undefined ? "": appointment.idappointment %>" />
@@ -56,11 +56,7 @@
   <input type="text" name="description" value="<%= appointment.description == undefined ? "": appointment.description%>"/>
  <label class="locDate"></label>
   <input type="text" class="date datePicker" required="required" name="date"
-  value="<% if(view) { %>
-        <%=formatDate(appointment.date)%>
-      <% } else if(createFromDate){ %>
-        <%= formatDate(date)%>
-      <% } %>" />
+         value="<% if(view) { %><%=formatDate(appointment.date)%><% } else if(createFromDate){ %><%= formatDate(date)%><% } %>" />
 
   <label class="locFrom"></label>
   <input type="text" class="hour" required="required" name="start" value="<%= appointment.start  == undefined ? "08:00":appointment.start %>"/>
@@ -124,14 +120,14 @@
 
 <% } %>
 
- <form id="frmDeleteComment" method="post" action="<%=path.prefix%>/<%=page.language%>/<%= page.itemId %>">
+ <form id="frmDeleteComment" method="post" action="/<%=page.language%>/<%= page.itemId %>">
         <input type="hidden" name="request" value="deleteComment" />
         <input type="hidden" name="idToDelete" />
         <input type="hidden" name="apId" value="<%=appointment.idappointment%>"/>
         <input type="hidden" name="pagename" value="<%= pagename %>" />
  </form>
 
- <form method="post" id="commentForm" action="<%=path.prefix%>/<%=page.language%>/<%= page.itemId %>">
+ <form method="post" id="commentForm" action="/<%=page.language%>/<%= page.itemId %>">
         <input type="hidden" name="request" value="commentAppointment"/>
         <input type="hidden" name="apId" value="<%= appointment.idappointment %>" />
         <input type="hidden" name="comment" />

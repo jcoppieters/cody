@@ -40,14 +40,14 @@
                    <button id="exportCal" class="exportCal"></button>
                 </nav>
                 <nav id="calDateNav">
-                    <a href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=otheryear&year=<%=(parseInt(year)-1)%>" class="navButton" id="prev"><button id="prev">Previous</button></a>
+                    <a href="/<%=page.language%>/<%=page.itemId%>?request=otheryear&year=<%=(parseInt(year)-1)%>" class="navButton" id="prev"><button id="prev">Previous</button></a>
                     <h4><%= page.title %> - <%= year %></h4>
-                    <a href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=otheryear&year=<%=(parseInt(year)+1)%>" class="navButton" id="next"><button id="next">Next</button></a>
+                    <a href="/<%=page.language%>/<%=page.itemId%>?request=otheryear&year=<%=(parseInt(year)+1)%>" class="navButton" id="next"><button id="next">Next</button></a>
                 </nav>
                 <nav id="calViewNav">
-                     <a href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=weekview" class="weekname"></a>
-                     <a href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=monthview" class="monthname"></a>
-                     <a href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>?request=yearview" class="active yearname"></a>
+                     <a href="/<%=page.language%>/<%=page.itemId%>?request=weekview" class="weekname"></a>
+                     <a href="/<%=page.language%>/<%=page.itemId%>?request=monthview" class="monthname"></a>
+                     <a href="/<%=page.language%>/<%=page.itemId%>?request=yearview" class="active yearname"></a>
                 </nav>
             </caption>
              <tr>
@@ -93,7 +93,7 @@
     <% include footer.ejs %>
    <div id="exportDiv">
     <p class="exportmsg"></p>
-     <p><a href="<%=path.prefix%>/<%=page.language%>/<%=page.itemId%>/ics">Link</a></p>
+     <p><a href="/<%=page.language%>/<%=page.itemId%>/ics">Link</a></p>
    </div>
 </body>
 </html>
