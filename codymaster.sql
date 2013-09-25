@@ -30,7 +30,6 @@ CREATE TABLE IF NOT EXISTS `websites` (
   `dbhost` varchar(100) NOT NULL,
   `datapath` varchar(200) NOT NULL,
   `db` varchar(100) NOT NULL,
-  `customcontrollers` varchar(3000) NOT NULL,
    `active` char(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
@@ -39,10 +38,13 @@ CREATE TABLE IF NOT EXISTS `websites` (
 -- Gegevens worden uitgevoerd voor tabel `websites`
 --
 
-INSERT INTO `websites` (`id`, `name`, `version`, `dbuser`, `dbpassword`, `dbhost`, `datapath`, `db`, `customcontrollers`) VALUES
-(1, 'essen', 'v0.1a1', 'cody', 'ydoc', 'localhost', '/usr/local/data/essen', 'essen', 'AgendaController,BookingController'),
-(2, 'empty', 'v0.1a1', 'cody', 'ydoc', 'localhost', '/usr/local/data/empty', 'empty', ''),
-(3, 'codyweb', 'v0.1a1', 'cody', 'ydoc', 'localhost', '/usr/local/data/codyweb', 'codyweb', '');
+INSERT INTO `websites` (`id`, `name`, `version`, `dbuser`, `dbpassword`, `dbhost`, `datapath`, `db`) VALUES
+(1, 'essen', 'v0.1a1', 'cody', 'ydoc', 'localhost', '/usr/local/data/essen', 'essen'),
+(2, 'empty', 'v0.1a1', 'cody', 'ydoc', 'localhost', '/usr/local/data/empty', 'empty'),
+(3, 'codyweb', 'v0.1a1', 'cody', 'ydoc', 'localhost', '/usr/local/data/codyweb', 'codyweb'),
+(4, 'stoerhuus', 'v0.1a1', 'cody', 'ydoc', 'localhost', '/usr/local/data/stoerhuus', 'stoerhuus'),
+(5, 'empty', 'v0.1a1', 'cody', 'ydoc', 'localhost', '/usr/local/data/empty', 'empty');
+
 update websites set active='Y';
 
 create unique index nameIndex on cody.websites(name);

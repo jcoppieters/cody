@@ -1,0 +1,45 @@
+<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this essen.</p><![endif]-->
+
+
+<header>
+	<a id="logo" href="/<%=page.language%>/"><img src="<%=static%>/images/logo.png" alt=""></a>
+
+  <% var pp = page.root.getContent('phone'); %>
+  <% var aa = page.root.getContent('address'); %>
+
+  <% if (pp || aa) { %>
+    <div id="contactData">
+     <% if (typeof pp !== "undefined") { %>
+      <div class="contact tel"><%= pp.render() %></div>
+     <% } %>
+     <% if (typeof aa !== "undefined") { %>
+      <div class="contact address"><%= aa.render() %></div>
+     <% } %>
+    </div>
+  <% } %>
+
+
+  <nav id="mainNav">
+		<ul id="mainMenu">
+      <% for (var i in page.root.children) {  
+           var p = page.root.children[i]; 
+           if (p.isVisible()) { %>
+				    <li class="<%= (p == page) ? 'active' : '' %>">
+					    <a href="/<%=p.url%>" class="<%= (p == page) ? 'active' : '' %>"><%= p.title %></a>
+				    </li>
+        <% } %>
+      <% } %>
+		</ul>
+	</nav>
+
+  <nav id="lanNav">
+    <ul id="lanMenu">
+      <% for (var i in app.languages) { var L = app.languages[i]; %>
+      <li class="<%= (page.language == L.id) ? 'active' : '' %>">
+        <a href="/<%=L.id%>/" class="<%= (page.language == L.id) ? 'active' : '' %>"><span class="id"><%= L.id %></span><span class="name"><%= L.name %></span></a>
+      </li>
+      <% } %>
+    </ul>
+  </nav>
+
+</header>
