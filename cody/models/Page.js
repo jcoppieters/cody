@@ -15,11 +15,13 @@ function Page(basis, app) {
     }
   }
 
-  // replace 'item' (an id) by the real object and add 'itemId'
-  this.itemId = this.item;
-  this.item = app.getItem(this.itemId);
-  if (typeof this.item === "undefined") {
-    app.err("Application.fetchPages", "did not find item for page " + this.itemId + " / " + this.title);
+  if (typeof this.item !== "undefined") {
+    // replace 'item' (an id) by the real object and add 'itemId'
+    this.itemId = this.item;
+    this.item = app.getItem(this.itemId);
+    if (typeof this.item === "undefined") {
+      app.err("Application.fetchPages", "did not find item for page " + this.itemId + " / " + this.title);
+    }
   }
 }
 module.exports = Page;
@@ -506,22 +508,25 @@ Page.prototype.updateContent = function( controller, finish ) {
 
 Page.prototype.adjustContent = function( controller, finish ) {
   var self = this;
-  console.log("Page.adjustContent: add correct Content for " + self.itemId);
-  
-  self.deleteContent( controller, function () {
-    console.log("fetchContent for */" + (-1 * self.item.templateId));
-    self.fetchContent( controller.app, "*", -1 * self.item.templateId, function() {
-      // used to be self.language instead of *
-      // but then I decided that templates were language independent
-      cody.Application.each(self.content, function(next) {
-        var aContent = this;
+  console.log("Page.adjustContent: add correct Content for " + self.itemId + " on template: " + (-1 * self.item.templateId));
+  var dummy = new Page({}, controller.app);
+  dummy.fetchContent( controller.app, "*", -1 * self.item.templateId, function() {
+    // used to be self.language instead of *
+    // but then I decided that templates were language independent
+    cody.Application.each(dummy.content, function(next) {
+      var aContent = this;
+      // only attach when no content block with this name exists
+      if (self.getContent(aContent.name) === undefined) {
+        self.content.push(aContent);
         aContent.attachTo(self, self.itemId, self.language);
         aContent.doUpdate(controller, true, next);
-        
-      }, function(err){
-        self.sortContent();
-        finish();
-      });
+      } else {
+        next();
+      }
+
+    }, function(err){
+      self.sortContent();
+      finish();
     });
   });
 };

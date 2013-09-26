@@ -314,7 +314,7 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
   #record fieldset > div { margin: 10px }
   #record #action_buttons { margin: 15px 11px 0px 11px; border-top: solid 1px #cfcfcf; padding: 11px 0 6px 0;}
 
-  #record fieldset div span { margin-top: 5px; margin-left: 3px; display: inline-block }
+  #record fieldset div > span { margin-top: 5px; margin-left: 3px; display: inline-block }
 
   #record label.error { color: red; width: inherit }
 
