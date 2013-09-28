@@ -1,10 +1,20 @@
 //
-// Johan Coppieters - jan 2013 - jWorks
+// Johan Coppieters - jan 2013 - Cody
 //
 //
 console.log("loading " + module.id);
 var cody = require("../index.js");
 
+//
+// Context
+//
+// Created by Application in buildContext as results of servePage for every request,
+// containing all the context info for that request.
+//
+// Accessible through the controller of the request.
+// All its properties are accessible as globals for the view rendered for that request.
+//
+// Additionally provides some helpers (formatting/utitlities), thus accessible by the views.
 
 function Context(path, page, app, req, res) {
   this.version = (app) ? app.version : "v0.0";
@@ -38,6 +48,9 @@ function Context(path, page, app, req, res) {
   this.static = "/static";
   this.dynamic = "/data";
   this.cstatic = "/cody/static";
+
+  var stringPage = app.getPage(page.language, "strings");
+  this.strings = this.fillStrings(stringPage);
 
   this.fn = (page) ? page.getView() : "index.ejs";
 
@@ -90,15 +103,35 @@ Context.prototype.copyFromMini = function(mini) {
   this.dynamic = mini.dynamic;
   this.fn = mini.fn;
 
-  this.page = this.app.findPage(this.path, this.page.language);
+  this.page = this.app.findPage(this.path);
 };
 
 
 //
-// Render content
+// Strings - translations - etc...
 //
+Context.prototype.fillStrings = function(page) {
+  var strings = {};
+  if (typeof page !== "undefined") {
+    page.content.forEach( function (C) {
+      strings[C.name] = C.data;
+    });
+  }
+  return strings;
+};
+
+
+//
+// Render content queried by name or kind.
+//
+// { kind:     String,
+//   not_kind: String,
+//   name:     String,
+//   not_name: String,
+//   intro:    Y/N,     Show intro part?
+//   page:     Page }       Optional Page to get the content from instead of current
+
 Context.prototype.render = function(params) {
-  // supported param's, (not_)kind =, (not_)name =, intro = true/false, page
   var html = "";
   var content = this.page.content;
 
@@ -175,10 +208,21 @@ Context.prototype.getUnique = function() {
   return new Date().getTime();
 };
 
+// returns 'checked' if true, for option lists.
 Context.prototype.checked = function( bool ) {
   return (bool) ? 'checked' : '';
 };
 
+//
+// Creates html options from a given list
+//
+// 1. optionList([String], String)
+//    Creates an option for each string and marks theId as string.
+
+// 2. optionList([Object], String, String, String)
+//    Creates an option for each object, using theIdName and theNameName properties
+//    of each object to set the id and html resp.
+//
 Context.prototype.optionList = function(theList, theId, theIdName, theNameName) {
   var x = "";
   var first = cody.Application.findFirst(theList);
@@ -202,6 +246,24 @@ Context.prototype.optionList = function(theList, theId, theIdName, theNameName) 
   }
   return x;
 };
+
+//
+// optionListF([Any], String, (Any) -> String, (Any) -> String) -> String
+//
+//    Uses two functions that take an element from the list as argument and return
+//    an id/name to create the options. Marks the option that has the id theId as "selected".
+//
+Context.prototype.optionListF = function (theList, theId, getId, getName) {
+  var options = "";
+  theList.forEach(function (item) {
+    var id = getId(item);
+    console.log(id);
+    var name = getName(item);
+    options += "<option value=\"" + id + "\"" + ((id == theId) ? "selected" : "") + ">" + name + "</option>\n";
+  });
+  return options;
+};
+
 
 Context.prototype.find = function(theList, theId, theIdName) {
   var idName = theIdName || "id";
@@ -230,7 +292,7 @@ Context.prototype.toSession = function(paramName, value) {
 
 
 //
-// Param handlers
+// Request Parameter handlers
 //
 
 Context.prototype.getParam = function(paramName, defaultValue) {
@@ -244,6 +306,7 @@ Context.prototype.setParam = function(paramName, value) {
 
 
 
+// Adds a leading "0" when the number < 10.
 function two(n) {
   return (n < 10) ? ("0" + n) : n;
 }
@@ -282,15 +345,15 @@ Context.prototype.makeDate = function(value, defaultValue) {
 
   if (this.dateFormat === "dd-mm-yyyy") {
     return (parts.length < 3) ?
-      defaultValue : new Date(parts[2], parseInt(parts[1])-1, parts[0]);
+      defaultValue : new Date(parts[2], parseInt(parts[1], 10)-1, parts[0]);
 
   } else if (this.dateFormat === "mm-dd-yyyy") {
     return (parts.length < 3) ?
-      defaultValue : new Date(parts[2], parts[0]-1, parts[1]);
+      defaultValue : new Date(parts[2], parseInt(parts[0], 10)-1, parts[1]);
 
   } else { // "yyyy-mm-dd"
     return (parts.length < 3) ?
-      defaultValue : new Date(parts[0], parts[1]-1, parts[0]);
+      defaultValue : new Date(parts[0], parseInt(parts[1], 10)-1, parts[0]);
   }
 }
 
@@ -306,6 +369,4 @@ Context.prototype.makeNum = function(value, defaultValue, precision) {
   if (typeof precision !== "undefined") { value = value.toFixed(precision); }
   return value;
 }
-
-
 

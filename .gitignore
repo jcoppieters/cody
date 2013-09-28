@@ -1,5 +1,6 @@
-# Exclude de essen
+# Exclude de essen and instadeal
 essen/
+instadeal/
 #
 #
 # OS generated files #

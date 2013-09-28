@@ -7,7 +7,7 @@
     var subpage = theChildren[i];
     if (subpage.isVisible()) { %>
     <li><a <%- (page == subpage) ? 'class="active"' : '' %>
-      href="<%=subpage.url%>"><%=subpage.title%></a></li>
+      href="/<%=subpage.url%>"><%=subpage.title%></a></li>
     <%   } %>
     <% } %>
   </ul>

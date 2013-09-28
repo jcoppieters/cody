@@ -95,7 +95,7 @@ a { color: #4d94cc }
 
 img { margin-top: 10px; border: solid 1px #9d9d9c; max-width: 685px;
       box-shadow: 2px 2px 5px lightgrey; -moz-box-shadow: 2px 2px 5px lightgrey; -webkit-box-shadow: 2px 2px 5px lightgrey }
-
+li { font-size: 14px }
 pre { margin: 0 20px 0 0; font-size: 12px; padding: 8px; border: solid 1px #9d9d9c }
 
 /* =============================================================================
@@ -122,6 +122,7 @@ header aside a:active:hover { border-bottom: none }
 footer { background-color: #333334; }
 footer section { width: 1130px; height: 170px; margin: 10px auto 0 auto; display: table; padding-top: 30px }
 footer a { text-align: center; display: inline-block; width: 33%; margin: auto; vertical-align: middle }
+footer img { margin-top: 0px; border: none; max-width: inherit; box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none}
 
 @media (max-width: 1039px) {
   header img { margin-left: 60px }
@@ -170,10 +171,11 @@ footer a { text-align: center; display: inline-block; width: 33%; margin: auto; 
 .home h1 { font-size: 34px; color: #9d9d9c; font-weight: bold; width: 100%; text-align: center; display: block; margin: 20px auto }
 .home h2 { font-size: 20px; color: #333334; font-weight: normal; letter-spacing: 1px }
 
-.home #banner { background-image: url(../images/bannerL.png); margin-bottom: 35px;   }
+.home #banner { background-image: url(../images/bannerL.png); margin-bottom: 35px }
+.home #banner img { margin-top: 0px; border: none; max-width: inherit; box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none}
+
 .home #banner section { width: 1130px; margin: 10px auto }
-.home #banner section > img { margin: 65px 0 0 40px; float: left; display: inline-block; width: 640px;
-                              box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none; border: none; max-width: inherit }
+.home #banner section > img { margin: 65px 0 0 40px; float: left; display: inline-block; width: 640px }
 
 .home #banner section > div { float: left; display: inline-block; width: 440px }
 .home #banner section > div > h2 { margin: 180px 0 163px 20px; display: block; color: white;  }
@@ -251,6 +253,7 @@ footer a { text-align: center; display: inline-block; width: 33%; margin: auto; 
 .page #content article pre {  }
 .page #content article img {  }
 .page #content article li { margin-bottom: 8px; margin-right: 5px }
+.page #content article li li { margin-top: -5px; }
 
 .page #content form {margin: 0px; border: solid 1px #c0c0c0; padding: 10px; }
 .page #content form fieldset { border: none; padding: 0; margin: 0 }

@@ -21,36 +21,10 @@ module.exports = UserController;
 
 
 UserController.prototype.doRequest = function( finish ) {
-  var self = this;
-  
-  // request for displaying the login screen
-  if (self.isRequest("") || this.isRequest("list")) {
-    self.doList( finish );
-		
-  } else if (self.isRequest("save")) {
-    self.doSave( this.getId(), function() {
-      self.setRequest("list");
-      self.doList( finish );
-    });
-      
-  } else if (self.isRequest("delete")) {
-    self.doDelete( this.getId(), function() {
-      self.setRequest("list");
-      self.doList( finish );
-    });
-    
-  } else if (this.isRequest("edit")) {
-    console.log("****" + this.getId());
-    self.doGet( this.getId(), finish);
-    
-  } else if (this.isRequest("new")) {
-    self.doGet( NaN, finish );
-           
-  } else {
-   finish();
+
+  if (! this.doCrudRequest(finish)) {
+    cody.Controller.prototype.doRequest.call(this, finish);
   }
-  
-  return undefined;
 };
 
 

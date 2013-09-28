@@ -36,7 +36,7 @@
     <ul id="lanMenu">
       <% for (var i in app.languages) { var L = app.languages[i]; %>
       <li class="<%= (page.language == L.id) ? 'active' : '' %>">
-        <a href="/<%=L.id%>/" class="<%= (page.language == L.id) ? 'active' : '' %>"><span class="id"><%= L.id %></span><span class="name"><%= L.name %></span></a>
+        <a href="/<%=L.id%>/<%=page.itemId%>" class="<%= (page.language == L.id) ? 'active' : '' %>"><span class="id"><%= L.id %></span><span class="name"><%= L.name %></span></a>
       </li>
       <% } %>
     </ul>

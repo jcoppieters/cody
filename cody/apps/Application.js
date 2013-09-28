@@ -250,12 +250,13 @@ Application.prototype.buildContext = function (path, req, res) {
       return undefined;
   }
 
-  self.log("servePage -> page", page.language + "/" + page.itemId + " - " + page.title);
+  self.log("buildContext -> page", page.language + "/" + page.itemId + " - " + page.title);
   
   // build a context
   var context = new cody.Context(path, page, self, req, res);
   console.log("servePage - params -> "); console.log(context.params);
   console.log("servePage - session -> "); console.log(context.session);
+
   if (typeof req.files !== "undefined") { console.log("servePage - files -> "); console.log(req.files); }
 
   return context;
@@ -330,10 +331,9 @@ Application.prototype.renderView = function( context ) {
 
 Application.prototype.logInFirst = function(context) {
   var self = this;
-  var session = context.req;
 
   // copy minimal version of the context to our session
-  session.pendingContext = context.getMini();
+  context.req.session.pendingContext = context.getMini();
   
   // build path, context and make LoginController
   var aPath = new cody.Path(context.page.language + "/login", self.name, self.defaultlanguage);

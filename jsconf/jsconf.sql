@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.31, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.3-m3, for apple-darwin10.2.0 (i386)
 --
 -- Host: localhost    Database: jsconf
 -- ------------------------------------------------------
--- Server version	5.5.31-0+wheezy1
+-- Server version	5.5.3-m3
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -41,7 +41,13 @@ CREATE TABLE `atoms` (
 
 LOCK TABLES `atoms` WRITE;
 /*!40000 ALTER TABLE `atoms` DISABLE KEYS */;
-INSERT INTO `atoms` VALUES (1,0,10,'Images','','','2012-07-09 14:18:36','2012-07-09 14:18:36'),(2,0,20,'Files','','','2012-07-09 14:18:36','2012-07-09 14:18:36'),(3,0,20,'Forms','','','2012-07-09 14:18:36','2012-07-09 14:18:36'),(21,1,10,'Global','','','2012-08-15 18:55:51','2012-08-15 18:55:54'),(22,21,10,'Map','Tim','jpg','2012-08-15 20:57:34','2013-07-09 15:34:34'),(31,2,10,'a file','','pdf','2012-08-15 18:55:51','2012-08-15 18:55:54');
+INSERT INTO `atoms` values
+(1,0,10,'Images','','','2012-07-09 14:18:36','2012-07-09 14:18:36'),
+(2,0,20,'Files','','','2012-07-09 14:18:36','2012-07-09 14:18:36'),
+(3,0,20,'Forms','','','2012-07-09 14:18:36','2012-07-09 14:18:36'),
+(21,1,10,'Global','','','2012-08-15 18:55:51','2012-08-15 18:55:54'),
+(22,21,10,'Map','Tim','jpg','2012-08-15 20:57:34','2013-07-09 15:34:34'),
+(31,2,10,'a file','','pdf','2012-08-15 18:55:51','2012-08-15 18:55:54');
 /*!40000 ALTER TABLE `atoms` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -73,7 +79,27 @@ CREATE TABLE `content` (
 
 LOCK TABLES `content` WRITE;
 /*!40000 ALTER TABLE `content` DISABLE KEYS */;
-INSERT INTO `content` VALUES (1,97,'nl',10,'N','T',0,'','<p><span>Cody draagt zorg voor uw privacy. Lees deze Privacyverklaring om meer te weten te komen over de manier waarop persoonsgegevens worden ingezameld en verwerkt op deze website. In dit geval handelt Cody Howest daarbij steeds in overeenstemming met de bepalingen van de Belgische privacywet (Wet van 8 december 1992 tot bescherming van de persoonlijke levenssfeer ten opzichte van de verwerking van persoonsgegevens). De persoonlijke gegevens beperken zich enkel tot uw e-mailadres.</span></p>\n<p><span><strong>Verantwoordelijke</strong></span></p>\n<p><span>De verantwoordelijke voor de verwerking is Cody Howest; Rijselstraat 5, 8000 Brugge.</span></p>\n<p><span><strong>Kennisname</strong></span></p>\n<p><span>U kan van deze persoonsgegevens kennis nemen door een aanvraag te richten aan Cody Howest</span><span>(brief, fax of e-mail) en ze, indien nodig, doen verbeteren of verwijderen. Indien u niet gecontacteerd wenst te worden in het kader van email marketing, zullen uw gegevens op uw verzoek kosteloos uit de betrokken lijsten worden</span></p>\n<p><span><strong>Cookies</strong></span></p>\n<p><span>Wij gebruiken cookies om uw toekomstig bezoek aan onze site vlotter te laten verlopen. Een cookie is een klein stukje tekst dat op uw harde schijf wordt geplaatst. Cookies worden veel gebruikt om een hoger functionaliteit, en dus betere dienst, aan de bezoekers te kunnen aanbieden. [U kan het gebruik van cookies uitschakelen, al leidt dit er wel toe dat effecten opsommen die ten gevolge van het uitschakelen van cookies worden veroorzaakt.]</span></p>\n<p><span><strong>Veiligheid</strong></span></p>\n<p><span>Cody Howest verbindt zich ertoe om al de gepaste technische en organisatorische maatregelen te treffen om uw persoonsgegevens te beschermen tegen vernietiging, verlies, onbedoelde wijziging, beschadiging of openbaarmaking.</span></p>\n<p><span><strong>Toestemming</strong></span></p>\n<p><span>Door u akkoord te verklaren met deze voorwaarden en condities geeft u ook uw toestemming voor de verwerking van uw persoonsgegevens voor de doeleinden zoals hierboven beschreven.</span></p>'),(2,98,'nl',10,'N','T',0,'','<p><span>Door gebruik te maken van deze website verklaart u zich akkoord met onderstaande voorwaarden en condities.</span></p>\n<p><span><strong>1. Website</strong></span></p>\n<p>De eigenaar van deze website is&nbsp;<br /> Cody Howest,<br /> Rijselstraat 5<br /> 8000, Brugge,&nbsp;<br /> Belgi&euml;<br /> Tel: 32(0)50 xx,&nbsp;<br /> E-mail: info@howest.be&nbsp;<br />ON: xx</p>\n<p><span>Als u niet akkoord gaat met onderstaande voorwaarden wordt u verzocht de website te verlaten. Cody behoudt zich het recht voor deze voorwaarden periodisch aan te passen waarna de leden op de hoogte zullen worden gebracht van deze wijzigingen. Wanneer u na deze kennisgeving de website blijft gebruiken verklaart u zich akkoord met de doorgevoerde wijzigingen. Cody Howest&nbsp; kan eventueel andere diensten aanbieden aan de gebruikers van deze site. In dat geval zullen de geldende voorwaarden apart worden medegedeeld.</span></p>\n<p><span><strong>2. Toegankelijkheid</strong></span></p>\n<p><span>Cody Howest&nbsp; probeert zo goed als mogelijk de website 24 uur per dag toegankelijk te houden, nochtans kan het gebeuren dat de website ontoegankelijk is voor een korte periode omwille van onderhoudswerken, aanpassingen of technische redenen.</span></p>\n<p><span><strong>3. Verantwoordelijkheid</strong></span></p>\n<p><span>Cody Howest weerlegt elke verantwoordelijkheid met betrekking tot deze website en de aangeboden informatie. Cody Howest&nbsp; verzekert niet dat de informatie op deze website correct, compleet of actueel is. Alle informatie, producten en diensten op deze website kunnen fouten bevatten. De gebruiker wordt verzocht hiermee rekening te houden.</span></p>\n<div><span><br /></span></div>'),(3,97,'en',10,'N','T',0,'','<p><span>Cody draagt zorg voor uw privacy. Lees deze Privacyverklaring om meer te weten te komen over de manier waarop persoonsgegevens worden ingezameld en verwerkt op deze website. In dit geval handelt Cody Howest daarbij steeds in overeenstemming met de bepalingen van de Belgische privacywet (Wet van 8 december 1992 tot bescherming van de persoonlijke levenssfeer ten opzichte van de verwerking van persoonsgegevens). De persoonlijke gegevens beperken zich enkel tot uw e-mailadres.</span></p>\n<p><span><strong>Verantwoordelijke</strong></span></p>\n<p><span>De verantwoordelijke voor de verwerking is Cody Howest; Rijselstraat 5, 8000 Brugge.</span></p>\n<p><span><strong>Kennisname</strong></span></p>\n<p><span>U kan van deze persoonsgegevens kennis nemen door een aanvraag te richten aan Cody Howest</span><span>(brief, fax of e-mail) en ze, indien nodig, doen verbeteren of verwijderen. Indien u niet gecontacteerd wenst te worden in het kader van email marketing, zullen uw gegevens op uw verzoek kosteloos uit de betrokken lijsten worden</span></p>\n<p><span><strong>Cookies</strong></span></p>\n<p><span>Wij gebruiken cookies om uw toekomstig bezoek aan onze site vlotter te laten verlopen. Een cookie is een klein stukje tekst dat op uw harde schijf wordt geplaatst. Cookies worden veel gebruikt om een hoger functionaliteit, en dus betere dienst, aan de bezoekers te kunnen aanbieden. [U kan het gebruik van cookies uitschakelen, al leidt dit er wel toe dat effecten opsommen die ten gevolge van het uitschakelen van cookies worden veroorzaakt.]</span></p>\n<p><span><strong>Veiligheid</strong></span></p>\n<p><span>Cody Howest verbindt zich ertoe om al de gepaste technische en organisatorische maatregelen te treffen om uw persoonsgegevens te beschermen tegen vernietiging, verlies, onbedoelde wijziging, beschadiging of openbaarmaking.</span></p>\n<p><span><strong>Toestemming</strong></span></p>\n<p><span>Door u akkoord te verklaren met deze voorwaarden en condities geeft u ook uw toestemming voor de verwerking van uw persoonsgegevens voor de doeleinden zoals hierboven beschreven.</span></p>'),(4,98,'en',10,'N','T',0,'','<p><span>Door gebruik te maken van deze website verklaart u zich akkoord met onderstaande voorwaarden en condities.</span></p>\n<p><span><strong>1. Website</strong></span></p>\n<p>De eigenaar van deze website is&nbsp;<br /> Cody Howest,<br /> Rijselstraat 5<br /> 8000, Brugge,&nbsp;<br /> Belgi&euml;<br /> Tel: 32(0)50 xx,&nbsp;<br /> E-mail: info@howest.be&nbsp;<br />ON: xx</p>\n<p><span>Als u niet akkoord gaat met onderstaande voorwaarden wordt u verzocht de website te verlaten. Cody behoudt zich het recht voor deze voorwaarden periodisch aan te passen waarna de leden op de hoogte zullen worden gebracht van deze wijzigingen. Wanneer u na deze kennisgeving de website blijft gebruiken verklaart u zich akkoord met de doorgevoerde wijzigingen. Cody Howest&nbsp; kan eventueel andere diensten aanbieden aan de gebruikers van deze site. In dat geval zullen de geldende voorwaarden apart worden medegedeeld.</span></p>\n<p><span><strong>2. Toegankelijkheid</strong></span></p>\n<p><span>Cody Howest&nbsp; probeert zo goed als mogelijk de website 24 uur per dag toegankelijk te houden, nochtans kan het gebeuren dat de website ontoegankelijk is voor een korte periode omwille van onderhoudswerken, aanpassingen of technische redenen.</span></p>\n<p><span><strong>3. Verantwoordelijkheid</strong></span></p>\n<p><span>Cody Howest weerlegt elke verantwoordelijkheid met betrekking tot deze website en de aangeboden informatie. Cody Howest&nbsp; verzekert niet dat de informatie op deze website correct, compleet of actueel is. Alle informatie, producten en diensten op deze website kunnen fouten bevatten. De gebruiker wordt verzocht hiermee rekening te houden.</span></p>\n<div><span><br /></span></div>'),(5,101,'nl',10,'N','T',0,'Content1','<p>....</p>'),(6,101,'en',10,'N','T',0,'Content1','<p>I\'m real content ....</p>'),(7,1,'nl',10,'Y','S',0,'phone','+32-50-381277'),(8,1,'en',10,'Y','S',0,'phone','+32-050-381277'),(9,1,'nl',20,'Y','S',0,'address','Rijselstraat 5 - 8200 Brugge'),(10,1,'en',20,'Y','S',0,'address','Rijselstraat 5 - 8200 Brugge'),(11,104,'nl',10,'N','T',0,'Text','<p>Ik weet iets, niet veel, maar toch...</p>\r\n<p>iedereen weet iets</p>'),(12,1,'nl',30,'N','S',0,'footer.first','© 2013 - Howest'),(13,1,'nl',40,'N','S',0,'footer.second','Made with Cody'),(14,1,'nl',50,'N','S',0,'footer.third','Toegepaste Informatica'),(15,1,'en',30,'N','S',0,'footer.first','© 2013'),(16,1,'en',40,'N','S',0,'footer.second','Made with Cody'),(17,1,'en',50,'N','S',0,'footer.third','TI - Applied Computer Science'),(18,103,'en',10,'N','T',0,'Text','<p>Site under construction.</p>\r\n<p>&nbsp;</p>'),(19,103,'nl',10,'N','T',0,'Text','<p>Hier meer later.</p>\r\n<p> </p>\r\n<p>Trouwens: we zijn wie we zijn, nietwaar?</p>');
+INSERT INTO `content` values
+(1,97,'nl',10,'N','T',0,'','<p><span>Cody draagt zorg voor uw privacy. Lees deze Privacyverklaring om meer te weten te komen over de manier waarop persoonsgegevens worden ingezameld en verwerkt op deze website. In dit geval handelt Cody Howest daarbij steeds in overeenstemming met de bepalingen van de Belgische privacywet (Wet van 8 december 1992 tot bescherming van de persoonlijke levenssfeer ten opzichte van de verwerking van persoonsgegevens). De persoonlijke gegevens beperken zich enkel tot uw e-mailadres.</span></p>\n<p><span><strong>Verantwoordelijke</strong></span></p>\n<p><span>De verantwoordelijke voor de verwerking is Cody Howest; Rijselstraat 5, 8000 Brugge.</span></p>\n<p><span><strong>Kennisname</strong></span></p>\n<p><span>U kan van deze persoonsgegevens kennis nemen door een aanvraag te richten aan Cody Howest</span><span>(brief, fax of e-mail) en ze, indien nodig, doen verbeteren of verwijderen. Indien u niet gecontacteerd wenst te worden in het kader van email marketing, zullen uw gegevens op uw verzoek kosteloos uit de betrokken lijsten worden</span></p>\n<p><span><strong>Cookies</strong></span></p>\n<p><span>Wij gebruiken cookies om uw toekomstig bezoek aan onze site vlotter te laten verlopen. Een cookie is een klein stukje tekst dat op uw harde schijf wordt geplaatst. Cookies worden veel gebruikt om een hoger functionaliteit, en dus betere dienst, aan de bezoekers te kunnen aanbieden. [U kan het gebruik van cookies uitschakelen, al leidt dit er wel toe dat effecten opsommen die ten gevolge van het uitschakelen van cookies worden veroorzaakt.]</span></p>\n<p><span><strong>Veiligheid</strong></span></p>\n<p><span>Cody Howest verbindt zich ertoe om al de gepaste technische en organisatorische maatregelen te treffen om uw persoonsgegevens te beschermen tegen vernietiging, verlies, onbedoelde wijziging, beschadiging of openbaarmaking.</span></p>\n<p><span><strong>Toestemming</strong></span></p>\n<p><span>Door u akkoord te verklaren met deze voorwaarden en condities geeft u ook uw toestemming voor de verwerking van uw persoonsgegevens voor de doeleinden zoals hierboven beschreven.</span></p>'),
+(2,98,'nl',10,'N','T',0,'','<p><span>Door gebruik te maken van deze website verklaart u zich akkoord met onderstaande voorwaarden en condities.</span></p>\n<p><span><strong>1. Website</strong></span></p>\n<p>De eigenaar van deze website is&nbsp;<br /> Cody Howest,<br /> Rijselstraat 5<br /> 8000, Brugge,&nbsp;<br /> Belgi&euml;<br /> Tel: 32(0)50 xx,&nbsp;<br /> E-mail: info@howest.be&nbsp;<br />ON: xx</p>\n<p><span>Als u niet akkoord gaat met onderstaande voorwaarden wordt u verzocht de website te verlaten. Cody behoudt zich het recht voor deze voorwaarden periodisch aan te passen waarna de leden op de hoogte zullen worden gebracht van deze wijzigingen. Wanneer u na deze kennisgeving de website blijft gebruiken verklaart u zich akkoord met de doorgevoerde wijzigingen. Cody Howest&nbsp; kan eventueel andere diensten aanbieden aan de gebruikers van deze site. In dat geval zullen de geldende voorwaarden apart worden medegedeeld.</span></p>\n<p><span><strong>2. Toegankelijkheid</strong></span></p>\n<p><span>Cody Howest&nbsp; probeert zo goed als mogelijk de website 24 uur per dag toegankelijk te houden, nochtans kan het gebeuren dat de website ontoegankelijk is voor een korte periode omwille van onderhoudswerken, aanpassingen of technische redenen.</span></p>\n<p><span><strong>3. Verantwoordelijkheid</strong></span></p>\n<p><span>Cody Howest weerlegt elke verantwoordelijkheid met betrekking tot deze website en de aangeboden informatie. Cody Howest&nbsp; verzekert niet dat de informatie op deze website correct, compleet of actueel is. Alle informatie, producten en diensten op deze website kunnen fouten bevatten. De gebruiker wordt verzocht hiermee rekening te houden.</span></p>\n<div><span><br /></span></div>'),
+(3,97,'en',10,'N','T',0,'','<p><span>Cody draagt zorg voor uw privacy. Lees deze Privacyverklaring om meer te weten te komen over de manier waarop persoonsgegevens worden ingezameld en verwerkt op deze website. In dit geval handelt Cody Howest daarbij steeds in overeenstemming met de bepalingen van de Belgische privacywet (Wet van 8 december 1992 tot bescherming van de persoonlijke levenssfeer ten opzichte van de verwerking van persoonsgegevens). De persoonlijke gegevens beperken zich enkel tot uw e-mailadres.</span></p>\n<p><span><strong>Verantwoordelijke</strong></span></p>\n<p><span>De verantwoordelijke voor de verwerking is Cody Howest; Rijselstraat 5, 8000 Brugge.</span></p>\n<p><span><strong>Kennisname</strong></span></p>\n<p><span>U kan van deze persoonsgegevens kennis nemen door een aanvraag te richten aan Cody Howest</span><span>(brief, fax of e-mail) en ze, indien nodig, doen verbeteren of verwijderen. Indien u niet gecontacteerd wenst te worden in het kader van email marketing, zullen uw gegevens op uw verzoek kosteloos uit de betrokken lijsten worden</span></p>\n<p><span><strong>Cookies</strong></span></p>\n<p><span>Wij gebruiken cookies om uw toekomstig bezoek aan onze site vlotter te laten verlopen. Een cookie is een klein stukje tekst dat op uw harde schijf wordt geplaatst. Cookies worden veel gebruikt om een hoger functionaliteit, en dus betere dienst, aan de bezoekers te kunnen aanbieden. [U kan het gebruik van cookies uitschakelen, al leidt dit er wel toe dat effecten opsommen die ten gevolge van het uitschakelen van cookies worden veroorzaakt.]</span></p>\n<p><span><strong>Veiligheid</strong></span></p>\n<p><span>Cody Howest verbindt zich ertoe om al de gepaste technische en organisatorische maatregelen te treffen om uw persoonsgegevens te beschermen tegen vernietiging, verlies, onbedoelde wijziging, beschadiging of openbaarmaking.</span></p>\n<p><span><strong>Toestemming</strong></span></p>\n<p><span>Door u akkoord te verklaren met deze voorwaarden en condities geeft u ook uw toestemming voor de verwerking van uw persoonsgegevens voor de doeleinden zoals hierboven beschreven.</span></p>'),
+(4,98,'en',10,'N','T',0,'','<p><span>Door gebruik te maken van deze website verklaart u zich akkoord met onderstaande voorwaarden en condities.</span></p>\n<p><span><strong>1. Website</strong></span></p>\n<p>De eigenaar van deze website is&nbsp;<br /> Cody Howest,<br /> Rijselstraat 5<br /> 8000, Brugge,&nbsp;<br /> Belgi&euml;<br /> Tel: 32(0)50 xx,&nbsp;<br /> E-mail: info@howest.be&nbsp;<br />ON: xx</p>\n<p><span>Als u niet akkoord gaat met onderstaande voorwaarden wordt u verzocht de website te verlaten. Cody behoudt zich het recht voor deze voorwaarden periodisch aan te passen waarna de leden op de hoogte zullen worden gebracht van deze wijzigingen. Wanneer u na deze kennisgeving de website blijft gebruiken verklaart u zich akkoord met de doorgevoerde wijzigingen. Cody Howest&nbsp; kan eventueel andere diensten aanbieden aan de gebruikers van deze site. In dat geval zullen de geldende voorwaarden apart worden medegedeeld.</span></p>\n<p><span><strong>2. Toegankelijkheid</strong></span></p>\n<p><span>Cody Howest&nbsp; probeert zo goed als mogelijk de website 24 uur per dag toegankelijk te houden, nochtans kan het gebeuren dat de website ontoegankelijk is voor een korte periode omwille van onderhoudswerken, aanpassingen of technische redenen.</span></p>\n<p><span><strong>3. Verantwoordelijkheid</strong></span></p>\n<p><span>Cody Howest weerlegt elke verantwoordelijkheid met betrekking tot deze website en de aangeboden informatie. Cody Howest&nbsp; verzekert niet dat de informatie op deze website correct, compleet of actueel is. Alle informatie, producten en diensten op deze website kunnen fouten bevatten. De gebruiker wordt verzocht hiermee rekening te houden.</span></p>\n<div><span><br /></span></div>'),
+(5,101,'nl',10,'N','T',0,'Content1','<p>....</p>'),
+(6,101,'en',10,'N','T',0,'Content1','<p>I\'m real content ....</p>'),
+(7,1,'nl',10,'Y','S',0,'phone','+32-50-381277'),
+(8,1,'en',10,'Y','S',0,'phone','+32-050-381277'),
+(9,1,'nl',20,'Y','S',0,'address','Rijselstraat 5 - 8200 Brugge'),
+(10,1,'en',20,'Y','S',0,'address','Rijselstraat 5 - 8200 Brugge'),
+(11,104,'nl',10,'N','T',0,'Text','<p>Ik weet iets, niet veel, maar toch...</p>\r\n<p>iedereen weet iets</p>'),
+(20,104,'en',10,'N','T',0,'Text','<p>I know nothing, not much, but still...</p>\r\n<p>everybody knows something</p>'),
+(12,1,'nl',30,'N','S',0,'footer.first','© 2013 - Howest'),
+(13,1,'nl',40,'N','S',0,'footer.second','Made with Cody'),
+(14,1,'nl',50,'N','S',0,'footer.third','Toegepaste Informatica'),
+(15,1,'en',30,'N','S',0,'footer.first','© 2013'),
+(16,1,'en',40,'N','S',0,'footer.second','Made with Cody'),
+(17,1,'en',50,'N','S',0,'footer.third','TI - Applied Computer Science'),
+(18,103,'en',10,'N','T',0,'Text','<p>Site under construction.</p>\r\n<p>&nbsp;</p>'),
+(19,103,'nl',10,'N','T',0,'Text','<p>Hier meer later.</p>\r\n<p> </p>\r\n<p>Trouwens: we zijn wie we zijn, nietwaar?</p>');
 /*!40000 ALTER TABLE `content` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,7 +149,11 @@ CREATE TABLE `domains` (
 
 LOCK TABLES `domains` WRITE;
 /*!40000 ALTER TABLE `domains` DISABLE KEYS */;
-INSERT INTO `domains` VALUES ('admin','Admin'),('cms','CMS Users'),('user','Users'),('user','Users');
+INSERT INTO `domains` values
+('admin','Admin'),
+('cms','CMS Users'),
+('user','Users'),
+('user','Users');
 /*!40000 ALTER TABLE `domains` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,9 +188,38 @@ CREATE TABLE `items` (
 -- Dumping data for table `items`
 --
 
+
 LOCK TABLES `items` WRITE;
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
-INSERT INTO `items` VALUES (1,'Website',-1,1,100,'A',100,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','S',NULL,'list',''),(3,'Pages',-1,1,100,'M',0,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),(2,'Login',3,1,2,'A',99,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),(99,'Global',3,1,100,'A',0,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),(4,'Footer',-1,1,100,'M',0,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),(97,'Privacy Verklaring',4,1,100,'A',0,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),(98,'Disclaimer',4,1,100,'A',0,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),(9,'Dashboard',-1,1,9,'M',0,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),(10,'CMS',9,1,2,'M',10,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','S','Y','',''),(11,'CMS - Page',10,1,11,'A',10,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),(12,'CMS - Images',10,1,12,'A',20,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),(13,'CMS - Files',10,1,13,'A',30,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),(14,'CMS - Forms',10,1,14,'A',40,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),(15,'CMS - Users',10,1,15,'A',50,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','list',''),(16,'CMS - Templates',10,1,16,'A',60,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','list',''),(17,'CMS - System',10,1,17,'A',70,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),(101,'Info',1,1,100,'M',70,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y',NULL,'list',''),(102,'Content',1,1,100,'A',5,'2013-07-11','2013-07-11 00:00:00','2101-01-31 00:00:00','Y',NULL,'list',''),(103,'About',1,1,100,'A',5,'2013-07-11','2013-07-11 00:00:00','2101-01-31 00:00:00','Y',NULL,'list',''),(104,'Page 1',102,1,100,'A',5,'2013-07-11','2013-07-11 00:00:00','2101-01-31 00:00:00','Y',NULL,'list',''),(105,'Page 2',102,1,100,'A',5,'2013-07-11','2013-07-11 00:00:00','2101-01-31 00:00:00','Y',NULL,'list',''),(300,'CMS - Styles',10,1,104,'M',80,'2013-08-30','2013-07-30 00:00:00','2100-02-21 00:00:00','Y','Y','list',''),(20,'Administration',9,1,2,'M',10,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','S','Y','',''),(21,'Admin - Forms',20,1,18,'A',10,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),(22,'Admin - Comments',20,1,19,'A',10,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),(301,'Under Construction',1,12,100,'A',5,'2013-09-13','2013-09-13 15:49:03','2101-01-31 23:59:59','Y',NULL,'list','');
+INSERT INTO `items` values
+(1,'Website',-1,1,3,'A',100,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','S',NULL,'list',''),
+(2,'Login',3,1,2,'A',99,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),
+(3,'Pages',-1,1,3,'M',0,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),
+(4,'Strings',3,1,4,'M',0,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),
+
+(9,'Dashboard',-1,1,9,'M',0,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),
+(10,'CMS',9,1,3,'M',10,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','S','Y','',''),
+(11,'CMS - Page',10,1,11,'A',10,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),
+(12,'CMS - Images',10,1,12,'A',20,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),
+(13,'CMS - Files',10,1,13,'A',30,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),
+(14,'CMS - Forms',10,1,14,'A',40,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),
+(15,'CMS - Users',10,1,15,'A',50,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','list',''),
+(16,'CMS - Templates',10,1,16,'A',60,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','list',''),
+(17,'CMS - System',10,1,17,'A',70,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),
+
+(20,'Admin',9,1,3,'M',20,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),
+(21,'Admin - Forms',20,1,21,'A',10,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),
+(22,'Admin - Comments',20,1,22,'A',10,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),
+
+(97,'Privacy Verklaring',3,1,100,'A',0,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),
+(98,'Disclaimer',3,1,100,'A',0,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),
+
+(101,'Info',1,1,100,'M',70,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y',NULL,'list',''),
+(102,'Content & Tracks',1,1,100,'A',5,'2013-07-11','2013-07-11 00:00:00','2101-01-31 00:00:00','Y',NULL,'list',''),
+(103,'About',1,1,100,'A',5,'2013-07-11','2013-07-11 00:00:00','2101-01-31 00:00:00','Y',NULL,'list',''),
+(104,'Client side',102,1,100,'A',5,'2013-07-11','2013-07-11 00:00:00','2101-01-31 00:00:00','Y',NULL,'list',''),
+(105,'Server side',102,1,100,'A',5,'2013-07-11','2013-07-11 00:00:00','2101-01-31 00:00:00','Y',NULL,'list',''),
+(106,'Evening',102,1,100,'A',5,'2013-07-11','2013-07-11 00:00:00','2101-01-31 00:00:00','Y',NULL,'list','');
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -185,7 +244,9 @@ CREATE TABLE `languages` (
 
 LOCK TABLES `languages` WRITE;
 /*!40000 ALTER TABLE `languages` DISABLE KEYS */;
-INSERT INTO `languages` VALUES ('en','English',1),('nl','Nederlands',2);
+INSERT INTO `languages` values
+('en','English',1),
+('nl','Nederlands',2);
 /*!40000 ALTER TABLE `languages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -208,7 +269,10 @@ CREATE TABLE `levels` (
 
 LOCK TABLES `levels` WRITE;
 /*!40000 ALTER TABLE `levels` DISABLE KEYS */;
-INSERT INTO `levels` VALUES (2,'user'),(50,'admin'),(99,'super');
+INSERT INTO `levels` values
+(2,'user'),
+(50,'admin'),
+(99,'super');
 /*!40000 ALTER TABLE `levels` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -239,7 +303,65 @@ CREATE TABLE `pages` (
 
 LOCK TABLES `pages` WRITE;
 /*!40000 ALTER TABLE `pages` DISABLE KEYS */;
-INSERT INTO `pages` VALUES (1,'nl','Website','welcome','Y','','','2010-01-01 00:00:00','2013-09-03 13:30:28'),(3,'nl','Pages','','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(2,'nl','Login','login','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(99,'nl','Global','global','Y','','','2010-01-01 00:00:00','2012-08-15 22:02:59'),(4,'nl','Footer','','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(97,'nl','Privacy Verklaring','privacy','Y','','','2010-01-01 00:00:00','2013-03-19 09:30:30'),(98,'nl','Disclaimer','disclaimer','Y','','','2010-01-01 00:00:00','2012-08-20 17:09:50'),(9,'nl','Dashboard','dashboard','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(10,'nl','Website CMS','cms','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(11,'nl','Structuur','pages','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(12,'nl','Beelden','images','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(13,'nl','Bestanden','files','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(14,'nl','Formulieren','forms','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(15,'nl','Gebruikers','users','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(16,'nl','Sjablonen','templates','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(17,'nl','Systeem','system','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(1,'en','Website','welcome','Y','','','2010-01-01 00:00:00','2013-09-03 13:31:26'),(3,'en','Pages','','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(2,'en','Login','login','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(99,'en','Global','global','Y','','','2010-01-01 00:00:00','2012-08-15 22:02:59'),(4,'en','Footer','','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(97,'en','Privacy','privacy','Y','','','2010-01-01 00:00:00','2013-03-19 09:30:30'),(98,'en','Disclaimer','disclaimer','Y','','','2010-01-01 00:00:00','2012-08-20 17:09:50'),(9,'en','Dashboard','dashboard','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(10,'en','Website CMS','cms','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(11,'en','Structure','pages','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(12,'en','Images','images','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(13,'en','Files','files','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(14,'en','Forms','forms','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(15,'en','Users','users','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(16,'en','Templates','templates','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(17,'en','System','system','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(101,'nl','Info','info','Y','','','2010-01-01 00:00:00','2013-07-04 20:13:26'),(101,'en','Info','info','Y','','','2010-01-01 00:00:00','2013-07-11 15:44:54'),(102,'en','Content','content','Y','','','2013-07-11 16:00:40','2013-07-11 16:01:10'),(102,'nl','Inhoud','inhoud','Y','','','2013-07-11 16:00:40','2013-07-11 16:01:26'),(103,'en','About','about','Y','','','2013-07-11 16:00:47','2013-09-03 13:33:25'),(103,'nl','Over ons','overons','Y','','','2013-07-11 16:00:47','2013-09-03 13:37:07'),(104,'en','First page','','Y','','','2013-07-11 16:40:30','2013-07-11 17:35:46'),(104,'nl','Pagina een','','Y','','','2013-07-11 16:40:30','2013-07-11 16:47:16'),(105,'en','Second page','','Y','','','2013-07-11 16:40:43','2013-07-11 17:35:52'),(105,'nl','Pagina twee','','Y','','','2013-07-11 16:40:43','2013-07-11 16:40:52'),(300,'en','Styles','styles','Y','','','2013-08-29 23:47:29','2013-08-31 00:24:40'),(300,'nl','Stijlen','styles','Y','','','2013-08-29 23:47:29','2013-08-31 00:34:56'),(20,'nl','Beheer','admin','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(21,'nl','Formulieren','data','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(22,'nl','Commentaar','comments','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(20,'en','Administration','admin','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(21,'en','Forms','data','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(22,'en','Comments','comments','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),(301,'en','Under Construction','','Y','','','2013-09-13 15:49:03','2013-09-13 15:49:10'),(301,'nl','Under Construction','','Y','','','2013-09-13 15:49:03','2013-09-13 15:49:10');
+INSERT INTO `pages` values
+(1,'nl','Website','welcome','Y','','','2010-01-01 00:00:00','2013-07-11 17:35:06'),
+(2,'nl','Login','login','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(3,'nl','Pages','','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(4,'nl','Vertalingen','strings','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+
+(9,'nl','Dashboard','dashboard','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(10,'nl','Website CMS','cms','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(11,'nl','Structuur','pages','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(12,'nl','Beelden','images','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(13,'nl','Bestanden','files','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(14,'nl','Formulieren','forms','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(15,'nl','Gebruikers','users','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(16,'nl','Sjablonen','templates','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(17,'nl','Systeem','system','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+
+(20,'nl','Administration','admin','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(21,'nl','Forms','data','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(22,'nl','Commentaar','comments','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+
+(97,'nl','Privacy Verklaring','privacy','Y','','','2010-01-01 00:00:00','2013-03-19 09:30:30'),
+(98,'nl','Disclaimer','disclaimer','Y','','','2010-01-01 00:00:00','2012-08-20 17:09:50'),
+
+
+(1,'en','Website','welcome','Y','','','2010-01-01 00:00:00','2013-07-11 17:35:20'),
+(2,'en','Login','login','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(3,'en','Pages','','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(4,'en','Translations','strings','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+
+(9,'en','Dashboard','dashboard','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(10,'en','Website CMS','cms','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(11,'en','Structure','pages','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(12,'en','Images','images','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(13,'en','Files','files','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(14,'en','Forms','forms','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(15,'en','Users','users','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(16,'en','Templates','templates','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(17,'en','System','system','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+
+(20,'en','Administration','admin','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(21,'en','Forms','data','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+(22,'en','Comments','comments','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
+
+(97,'en','Privacy','privacy','Y','','','2010-01-01 00:00:00','2013-03-19 09:30:30'),
+(98,'en','Disclaimer','disclaimer','Y','','','2010-01-01 00:00:00','2012-08-20 17:09:50'),
+
+
+(101,'nl','Info','info','Y','','','2010-01-01 00:00:00','2013-07-04 20:13:26'),
+(101,'en','Info','info','Y','','','2010-01-01 00:00:00','2013-07-11 15:44:54'),
+(102,'en','Content & Tracks','content','Y','','','2013-07-11 16:00:40','2013-07-11 16:01:10'),
+(102,'nl','Inhoud & sessies','inhoud','Y','','','2013-07-11 16:00:40','2013-07-11 16:01:26'),
+(103,'en','About','about','Y','','','2013-07-11 16:00:47','2013-09-28 10:50:47'),
+(103,'nl','Over ons','overons','Y','','','2013-07-11 16:00:47','2013-09-03 13:37:07'),
+(104,'en','Client Side','','Y','','','2013-07-11 16:40:30','2013-07-11 17:35:46'),
+(104,'nl','Client Side','','Y','','','2013-07-11 16:40:30','2013-07-11 16:47:16'),
+(105,'en','Server Side','','Y','','','2013-07-11 16:40:43','2013-07-11 17:35:52'),
+(105,'nl','Server Side','','Y','','','2013-07-11 16:40:43','2013-07-11 16:40:52'),
+(106,'en','Evening','','Y','','','2013-07-11 16:40:43','2013-07-11 17:35:52'),
+(106,'nl','Avond','','Y','','','2013-07-11 16:40:43','2013-07-11 16:40:52');
 /*!40000 ALTER TABLE `pages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -270,7 +392,29 @@ CREATE TABLE `templates` (
 
 LOCK TABLES `templates` WRITE;
 /*!40000 ALTER TABLE `templates` DISABLE KEYS */;
-INSERT INTO `templates` VALUES (2,'Login','','LoginController','-/login.ejs','',0,'Y',0),(9,'Dashboard','','DashboardController','-/cms/dashboard.ejs','',0,'Y',0),(11,'CMS-Page','','PageController','-/cms/pages.ejs','',0,'Y',0),(12,'CMS-Images','','ImageController','-/cms/images.ejs','',0,'Y',0),(13,'CMS-Files','','FileController','-/cms/files.ejs','',0,'Y',0),(14,'CMS-Forms','','FormController','-/cms/forms.ejs','',0,'Y',0),(15,'CMS-Users','','UserController','-/cms/users.ejs','',0,'Y',0),(16,'CMS-Templates','','TemplateController','-/cms/templates.ejs','',0,'Y',0),(17,'CMS-System','','SystemController','','',0,'Y',0),(100,'Content','','ContentController','index.ejs','',999,'N',100),(104,'CMS-Styles','Styles','StylesController','-/cms/styles.ejs','0',999,'Y',0),(18,'Admin-Forms','Incoming data from forms','FormDataController','-/cms/forms-list.ejs','',0,'Y',0),(19,'Admin-Comments','View approve, edit or trash comments','CommentController','-/cms/comments.ejs','',0,'Y',0),(105,'Under Construction','','ContentController','under.ejs','100',999,'N',100);
+INSERT INTO `templates` values
+(2,'Login','','LoginController','-/login.ejs','',0,'Y',0),
+(3,'Directory','','Controller','index.ejs','',0,'Y',0),
+(4,'Strings','','Controller','index.ejs','',0,'Y',0),
+
+(9,'Dashboard','','DashboardController','-/cms/dashboard.ejs','',0,'Y',0),
+(11,'CMS-Page','','PageController','-/cms/pages.ejs','',0,'Y',0),
+(12,'CMS-Images','','ImageController','-/cms/images.ejs','',0,'Y',0),
+(13,'CMS-Files','','FileController','-/cms/files.ejs','',0,'Y',0),
+(14,'CMS-Forms','','FormController','-/cms/forms.ejs','',0,'Y',0),
+(15,'CMS-Users','','UserController','-/cms/users.ejs','',0,'Y',0),
+(16,'CMS-Templates','','TemplateController','-/cms/templates.ejs','',0,'Y',0),
+(17,'CMS-System','','SystemController','','',0,'Y',0),
+(18,'CMS-Styles','Styles','StylesController','-/cms/styles.ejs','0',999,'Y',0),
+
+(21,'Admin-Forms','Incoming data from forms','FormDataController','-/cms/forms-list.ejs','',0,'Y',0),
+(22,'Admin-Comments','View approve, edit or trash comments','CommentController','-/cms/comments.ejs','',0,'Y',0),
+
+(100,'Home','Homepage if any','Controller','index.ejs','',999,'N',100),
+(101,'Content','Displays content of a page','Controller','page.ejs','',0,'N',0),
+(102,'Content no intro','Displays content of a page without its intro','Controller','content.ejs','',0,'N',0),
+(103,'With sub intros','Displays also all intro content of the pages below','Controller','intros.ejs','',0,'N',0);
+
 /*!40000 ALTER TABLE `templates` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -306,7 +450,11 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (12,'rsuper','Cody user','*FACE82D3BB92BAC76B052130CBAD02C5965AB299','users',99,0,99,'Y','johan577@mac.com','note','N',0);
+INSERT INTO `users` values
+(1,'rsuper','rWorks Super','*7F056D2A1A5A65790F919D1BBA8895699CE62890','rWorks',99,0,99,'Y','johan577@mac.com','','N',0),
+(2,'radmin','rWorks Admin','*7F056D2A1A5A65790F919D1BBA8895699CE62890','rWorks',50,0,99,'Y','johan577@mac.com','','N',0),
+(3,'rtest','rWorks Test','*7F056D2A1A5A65790F919D1BBA8895699CE62890','rWorks',2,0,99,'Y','johan577@mac.com','','N',0),
+(9,'codyweb','Cody User','*7F056D2A1A5A65790F919D1BBA8895699CE62890','user',50,0,99,'Y','cody@cody.com','','N',0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -319,4 +467,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-09-25 17:12:55
+-- Dump completed on 2013-09-28 12:53:36

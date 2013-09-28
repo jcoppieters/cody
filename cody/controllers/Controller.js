@@ -45,9 +45,39 @@ Controller.prototype.doRequest = function( finish ) {
   //  pass an empty string (or set this.context.fn to empty)
 
   if (! this.hasSubmittedForm(finish)) {
-
     finish();
   }
+};
+
+Controller.prototype.doCrudRequest = function( finish ) {
+  var self = this;
+
+  if (self.isRequest("") || this.isRequest("list")) {
+    self.doList( finish );
+
+  } else if (self.isRequest("save")) {
+    self.doSave( this.getId(), function() {
+      self.setRequest("list");
+      self.doList( finish );
+    });
+
+  } else if (self.isRequest("delete")) {
+    self.doDelete( this.getId(), function() {
+      self.setRequest("list");
+      self.doList( finish );
+    });
+
+  } else if (this.isRequest("edit")) {
+    self.doGet( this.getId(), finish);
+
+  } else if (this.isRequest("new")) {
+    self.doGet( NaN, finish );
+
+  } else {
+    return false;
+  }
+
+  return true;
 };
 
 Controller.prototype.isRequest = function(theString) {
@@ -223,7 +253,7 @@ Controller.prototype.escape = function(v){
 }
 
 Controller.prototype.closeConnection = function() {
-  console.log("Controller -> connection closed");
+  // console.log("Controller -> done with database connection");
 
   if (this.connection) {
     this.app.returnConnection(this.connection);

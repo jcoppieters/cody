@@ -87,7 +87,7 @@ CalendarController.prototype.regularRequest = function(finish) {
         });
 
     } else if (self.isRequest("otherMonth")) {
-        var month = parseInt(self.getParam("month"));
+        var month = parseInt(self.getParam("month"), 10);
         var year = self.getParam("year");
         self.doCal(month, year, function() {
             finish(self.monthView);
@@ -339,7 +339,7 @@ CalendarController.prototype.doCal =  function(month, year, finish) {
 
     var endDate = "";
     if (self.context.endIndex < 34) {
-        var curYear = sqlMonth === 12 ? (parseInt(year) +1): year;
+        var curYear = sqlMonth === 12 ? (parseInt(year, 10) +1): year;
         var nextMonth = sqlMonth <12 ? (sqlMonth) : 1;
         var endDay = 35 - self.context.endIndex;
         endDate = new Date(curYear, nextMonth, endDay);
@@ -371,7 +371,7 @@ CalendarController.prototype.doCal =  function(month, year, finish) {
                     curDay = daysInMonth(curMonth, curYear) - (self.context.startIndex -1) + i;
                 } else if (i > self.context.endIndex) {
                     if ((sqlMonth) === 12) {
-                        curMonth = 1; curYear = (parseInt(year) +1);
+                        curMonth = 1; curYear = (parseInt(year, 10) +1);
                     } else {
                         curMonth = sqlMonth +1;
                     }
@@ -489,7 +489,7 @@ CalendarController.prototype.addNewAppointment = function(title, description, da
     var param = [];
     var date = new Date(date);
     //generate sql statements by the value of occurrence
-    switch(parseInt(occurrence)) {
+    switch(parseInt(occurrence, 10)) {
         case once:
             sql = CalendarController.sqlInserNewAppointment;
             param.push(title); param.push(description); param.push(date); param.push(start); param.push(end); param.push(location); param.push(userId);
