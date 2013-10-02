@@ -50,7 +50,6 @@ connection.query("SELECT * FROM websites WHERE active='Y' AND ownerconfirmed='Y'
     if(err) throw err;
     cody.Application.each(rows, function(next){
       var row = this;
-      console.log(row);
 
       cody.startWebApp(cody.server, {
             "name": row.name,

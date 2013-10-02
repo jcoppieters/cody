@@ -5,13 +5,7 @@
 
 console.log("loading " + module.id);
 
-if (module.id !== ".") {
-  // used as part of cody
-  var cody = require("./../index.js");
-} else {
-  // standalone for testing
-  var mysql = require("mysql");
-}
+
 
 function Meta(plainObject) {
   this.objects = [];
@@ -57,6 +51,7 @@ Meta.getData = function(result) {
  Meta.Reader.string
  Meta.Reader.email
  Meta.Reader.date
+ Meta.Reader.date3
  Meta.Reader.multiple
  Meta.Reader.phone
  Meta.Reader.integer
@@ -612,6 +607,7 @@ function getChecks(lang, object) {
 /**************************/
 /* Actual HTML generators */
 /**************************/
+
 Meta.Generator.makeGenerator = function(func) {
   Meta.Generator.generators.push(func);
   return Meta.Generator.generators.length - 1;
@@ -717,9 +713,9 @@ Meta.Generator.date3input = Meta.Generator.makeGenerator(function(lang, object) 
 });
 
 
-/********/
-/* Demo */
-/********/
+/******************/
+/* Demo + testing */
+/******************/
 
 /* sample Meta descriptors */
 
@@ -738,13 +734,6 @@ Meta.positive = {
 
 function demo() {
   var X = new Meta();
-
-  var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'cody', password: 'ydoc',
-    database: 'codyweb'
-  });
-
 
   // {name, options, generator, labels}
   X.add({

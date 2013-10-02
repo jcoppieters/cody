@@ -2,7 +2,7 @@
 
 
 <header>
-	<a id="logo" href="/<%=page.language%>/"><img src="<%=static%>/images/logo.png" alt=""></a>
+  <a id="logo" href="/<%=page.language%>/"><img src="<%=static%>/images/logo.png" alt=""></a>
 
   <% var pp = page.root.getContent('phone'); %>
   <% var aa = page.root.getContent('address'); %>
@@ -20,7 +20,7 @@
 
 
   <nav id="mainNav">
-		<ul id="mainMenu">
+	<ul id="mainMenu">
       <% for (var i in page.root.children) {  
            var p = page.root.children[i]; 
            if (p.isVisible()) { %>
@@ -29,8 +29,8 @@
 				    </li>
         <% } %>
       <% } %>
-		</ul>
-	</nav>
+	</ul>
+  </nav>
 
   <nav id="lanNav">
     <ul id="lanMenu">

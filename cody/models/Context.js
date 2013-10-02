@@ -50,7 +50,8 @@ function Context(path, page, app, req, res) {
   this.cstatic = "/cody/static";
 
   var stringPage = app.getPage(page.language, "strings");
-  this.strings = this.fillStrings(stringPage);
+  this.strings = [];
+  this.addStrings(stringPage);
 
   this.fn = (page) ? page.getView() : "index.ejs";
 
@@ -110,14 +111,13 @@ Context.prototype.copyFromMini = function(mini) {
 //
 // Strings - translations - etc...
 //
-Context.prototype.fillStrings = function(page) {
-  var strings = {};
+Context.prototype.addStrings = function(page, kind) {
+  var self = this;
   if (typeof page !== "undefined") {
     page.content.forEach( function (C) {
-      strings[C.name] = C.data;
+      if ((typeof kind === "undefined") || (kind === C.kind)) { self.strings[C.name] = C.data; }
     });
   }
-  return strings;
 };
 
 

@@ -107,7 +107,7 @@ div.content { margin: 15px;  }
  .main h1 { margin-top: 5px }
  .content li { margin-left: 21px }
  .content .filelink { margin-left: 5px; text-decoration: none; }
- .content a .icon { margin-bottom: 6px }
+body .content a img.icon { margin: 0 0 6px 0 }
 
 .main form {margin: 0px; border: solid 1px #c0c0c0; padding: 10px; }
 .main form #action_buttons { border-top: solid 1px #c0c0c0; padding: 10px 0 0 213px; }
@@ -195,7 +195,7 @@ body a { color: black; }
 body a:hover { color: darkred; }
 body .withNav section h1 { display: none }
 body .content nav { width: 230px; }
-body .content .main section > img { margin-top: 15px;
+body .content .main section  img { margin: 15px 3px 3px 3px;
     box-shadow: 2px 2px 5px lightgrey; -moz-box-shadow: 2px 2px 5px lightgrey; -webkit-box-shadow: 2px 2px 5px lightgrey }
 
 body .main .fb-like { position: absolute; top: 75px; right: 39px; }
@@ -220,3 +220,5 @@ body footer span, body footer span.third { margin-top: -33px }
   body header .contact { font-size: 12px; color: #008000 }
   body header img { width: 100px }
   body .content .fb-like { display: none }
+}
+

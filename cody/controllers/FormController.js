@@ -174,6 +174,7 @@ FormController.prototype.saveInfo = function( nodeId, finish ) {
       obj.labels[L] = this.getParam("label-"+L, "");
     }
 
+    // We use the extension field in the atom table to make the difference between forms and form-items.
     if (anObject.extention === "") {
       // form
       obj.alert = self.getParam("alert", "");
@@ -185,6 +186,8 @@ FormController.prototype.saveInfo = function( nodeId, finish ) {
       self.context.shownode = anObject.parentId;
       self.context.opennode = anObject.parentId;
 
+      // next (long) section fill in the correct values for "generator" and "options"
+      // depending on the user's choice of the different parameters (required, validation, generator, min/max, ...)
       var aGenerator = parseInt(self.getParam("generator", cody.Meta.Generator.textinput), 10);
       obj.generator = aGenerator;
       obj.options = {};
@@ -196,14 +199,14 @@ FormController.prototype.saveInfo = function( nodeId, finish ) {
       }
 
       if ((this.getParam("required", "N") === "Y") &&
-        (aGenerator !== cody.Meta.Generator.checkboxinput)) {
+          (aGenerator !== cody.Meta.Generator.checkboxinput)) {
         obj.options.required = true;
       }
 
       // add validation text or number
       var validation = this.getParam("validation", "X");
       if ((aGenerator === cody.Meta.Generator.textinput) ||
-        (aGenerator === cody.Meta.Generator.textarea)) {
+          (aGenerator === cody.Meta.Generator.textareainput)) {
         if (validation === "E") {
           obj.options.email = true;
           obj.reader = cody.Meta.Reader.email;
@@ -232,6 +235,9 @@ FormController.prototype.saveInfo = function( nodeId, finish ) {
       }
 
       // add choices in all languages
+      // there is one field (choice-[language]) for every language
+      // one choice per line and possibly in the format "[id]|[label]"
+      // the user can enter his list without "[id]|", we will add it on next edit
       if (this.isMultiple(aGenerator)){
         if (aGenerator !== cody.Meta.Generator.radioinput) {
           obj.reader = cody.Meta.Reader.multiple;
@@ -259,7 +265,7 @@ FormController.prototype.saveInfo = function( nodeId, finish ) {
         }
       }
 
-      // Date readers
+      // Date readers (1 field or 3 fields)
       if (aGenerator === cody.Meta.Generator.dateinput) {
         obj.reader = cody.Meta.Reader.date;
       } else if (aGenerator === cody.Meta.Generator.date3input) {
