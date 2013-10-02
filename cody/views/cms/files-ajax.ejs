@@ -35,9 +35,9 @@
         <% if ((atom.extention != 'xxx') && (atom.extention != '') && (atom.extention != '---')) { %>
          <div>
           <label for="preview">Current</label>
-          <a href="<%=atom.getPathName(controller)%>?u=<%=getUnique()%>">
+          <a href="<%= dynamic %>/files/<%= atom.getFileName() %>?u=<%=getUnique()%>">
             <img class="icon" src="<%=cstatic%>/extentions/<%=atom.extention%>.png" /></a>
-          <a href="/<%=atom.getPathName(controller)%>?u=<%=getUnique()%>" class="filelink">
+          <a href="<%= dynamic %>/files/<%= atom.getFileName() %>?u=<%=getUnique()%>" class="filelink">
             <%= atom.getFileName() %></a>
          </div>
         <% } %>
