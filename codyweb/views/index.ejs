@@ -44,7 +44,7 @@
       <img src="<%=static%>/images/computer6.png" style="display: none">
       <div>
         <h2><%- render({name: 'banner'}) %></h2>
-        <a href="<%=cstatic%>/cody.zip"><img src="<%=static%>/images/download.png" alt="Download Cody CMS" title="Download Cody"></a>
+        <a href="<%=static%>/cody.zip"><img src="<%=static%>/images/download.png" alt="Download Cody CMS" title="Download Cody"></a>
       </div>
     </section>
   </div>
@@ -62,7 +62,7 @@
           <%- SC.render(controller) %>
         <% }} %>
 
-        <a href="/<%=CP.url%>"><%= CP.title %></a>
+        <!-- a href="/<%=CP.url%>"><%= CP.title %></a -->
       </article>
       <% } %>
     </section>
@@ -70,9 +70,9 @@
 
   <div id="examples">
     <section>
-      <h1>SOME EXAMPLES</h1>
+      <h1>FIRST EXAMPLES</h1>
 
-      <% for (var pc in page.content) { var C = page.content[pc]; if (! C.isIntro() ) { %>
+      <% for (var pc in page.content) { var C = page.content[pc]; if (! C.isIntro() && (C.kind == 'I') ) { %>
       <article>
         <%- C.render(controller) %>
       </article>

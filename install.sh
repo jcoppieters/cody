@@ -27,7 +27,6 @@ mysql empty < empty/empty.sql
 
 echo "current urls: http://localhost:3000/codyweb/nl/ & /en + /essen/nl/ & /en/ + */nl/dashboard & */en/dashboard"
 
-#while [ 1 ]; do  echo "restart node *****************************************************"; node index.js; done
 cd jcms
 forever start index.js
 

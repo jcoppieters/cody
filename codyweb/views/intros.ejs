@@ -33,10 +33,11 @@
         <h3><%= CP.title %></h3>
 
         <% for (var isc in CP.content) { var SC = CP.content[isc];  if (SC.isIntro()) { %>
-        <%- SC.render(controller) %>
+          <%- SC.render(controller) %>
+        <%  } else if (SC.kind == 'I') { %>
+          <img class="intro" src="<%- dynamic %>/images/<%=SC.atom.id%>.<%=SC.atom.extention%>">
         <% }} %>
-
-        <a href="/<%=CP.url%>"><%= CP.title %></a>
+        <!-- a href="/<%=CP.url%>"><%= CP.title %></a -->
       </article>
       <% } %>
     </section>

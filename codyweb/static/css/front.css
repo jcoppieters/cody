@@ -251,7 +251,7 @@ footer img { margin-top: 0px; border: none; max-width: inherit; box-shadow: none
 .page #content article.intro { width: 300px; border-top: solid 1px lightgrey; padding: 18px 0 10px 26px; margin: 10px 10px 0px 20px; }
 .page #content article p { font-size: 14px; color: #333334; margin: 5px 0 24px 0px; padding-right: 20px }
 .page #content article pre {  }
-.page #content article img {  }
+.page #content article img.intro { max-width: 90%; max-height: 165px }
 .page #content article li { margin-bottom: 8px; margin-right: 5px }
 .page #content article li li { margin-top: -5px; }
 
@@ -269,6 +269,8 @@ footer img { margin-top: 0px; border: none; max-width: inherit; box-shadow: none
 .page #content form fieldset > div > label.error { text-align: left; padding: 4px 0 0 160px; color: red; display: block; width: inherit }
 .page #content form fieldset > div > input.error,
 .page #content form fieldset > div > textarea.error { border: 1px solid red }
+
+
 
 @media (max-width: 1023px) {
   .page #content { width: 96%; margin: 10px auto 0 auto; display: block }
@@ -302,10 +304,12 @@ footer img { margin-top: 0px; border: none; max-width: inherit; box-shadow: none
 /* =============================================================================
    Site creation styles
    ========================================================================== */
+.page #content form.sitecreationform { width: 600px; margin-bottom: 18px; box-shadow: lightgrey 2px 2px 2px; }
+
 .sitecreation .userdetail{
     width: 575px;
-    font-size: 25px;
-    height: 50px;
+    font-size: 20px;
+    height: 40px;
     padding: 4px 4px 4px 10px;
     margin-bottom: 20px;
 }
@@ -317,7 +321,7 @@ footer img { margin-top: 0px; border: none; max-width: inherit; box-shadow: none
 .sitecreation{
     padding-left: 60px;
 }
-.warning {padding: 5px 10px; background: #fef9f9; border: 1px solid rgb(253,190,87); color: rgb(210,133,2); text-align: left; width: 700px; }
+.warning {padding: 5px 10px; background: #fef9f9; border: 1px solid rgb(253,190,87); color: rgb(210,133,2); text-align: left; width: 575px; font-size: 15px }
 /* =============================================================================
    Print Styles
    ========================================================================== */

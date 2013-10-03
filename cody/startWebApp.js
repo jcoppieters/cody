@@ -33,7 +33,7 @@ function startWebApp(server, config, done) {
       var thisApp = express();
 
       for (var iL in app.languages) {
-        // mysite.com/nl/page
+        // mysite.com/en/page
         thisApp.all("/" + app.languages[iL].id + "/*", function (req, res) {
           app.servePage(req, res);
         });
@@ -55,7 +55,7 @@ function startWebApp(server, config, done) {
         fileserver.serve();
       });
 
-      // mysite.com/data/file-id.extension
+      // mysite.com/data/[category]file-id.extension (standard "files" and "images")
       thisApp.get("/data/*", function (req, res) {
         var fileserver = new cody.Dynamic(req, res, app.getDataPath());
         fileserver.serve();
