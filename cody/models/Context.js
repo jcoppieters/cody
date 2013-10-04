@@ -42,7 +42,7 @@ function Context(path, page, app, req, res) {
   this.status = "success";
   this.message = "";
   this.host = req.headers.host;
-
+console.log(req.headers);
   this.dateFormat = "dd-mm-yyyy";
 
   this.min = ""; // ".min"

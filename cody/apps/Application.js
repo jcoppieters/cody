@@ -226,7 +226,7 @@ Application.prototype.servePage = function(req, res) {
   var self = this;
    
   // make Path object from the url-path
-  var path = new cody.Path(req._parsedUrl.pathname, self.name, self.defaultlanguage);
+  var path = new cody.Path(req._parsedUrl.pathname, self.defaultlanguage);
 
   self.log("------------------------------------------------------------------- " + new Date() + "--");
   self.log("servePage - path -> " + path.link);
@@ -336,7 +336,7 @@ Application.prototype.logInFirst = function(context) {
   context.req.session.pendingContext = context.getMini();
   
   // build path, context and make LoginController
-  var aPath = new cody.Path(context.page.language + "/login", self.name, self.defaultlanguage);
+  var aPath = new cody.Path(context.page.language + "/login", self.defaultlanguage);
   var aContext = self.buildContext( aPath, context.req, context.res );
   self.handToController(aContext);
 };

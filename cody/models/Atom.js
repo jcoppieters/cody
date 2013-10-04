@@ -1,10 +1,9 @@
 //
-// Johan Coppieters - jan 2013 - jWorks
+// Johan Coppieters - jan 2013 - Cody
 //
 //
 console.log("loading " + module.id);
 var fs = require("fs");
-var cody = require('../index.js');
 
 
 //!! basis objects (passed to Atom constructor or created with addDefaults have a parent that is an integer)
@@ -27,7 +26,7 @@ module.exports = Atom;
 Atom.kDefaultName = "New item";
 
 Atom.addDefaults = function(basis, parent) {
-  if (typeof parent == "undefined") { parent = {}; }
+  if (typeof parent === "undefined") { parent = {}; }
   
   basis.name = basis.name || Atom.kDefaultName;
   basis.parent = basis.parent || parent.id;
@@ -91,7 +90,7 @@ Atom.prototype.getName = function() {
 };
 
 Atom.prototype.setExtention = function(extention) { 
-  this.extention = extention; 
+  this.extention = extention.toLowerCase();
 };
 Atom.prototype.getExtention = function() { 
   return this.extention; 
@@ -101,8 +100,6 @@ Atom.prototype.getFileName = function() {
   return this.id + "." + this.extention; 
 };
 Atom.prototype.getPathName = function(controller) {
-    //return controller.app.getDataPath() + controller.getFolder() + "/" + this.id + "." + this.extention;
-    //TODO: this was adapted to support vhosts, but it needs cleanup
     return controller.app.getDataPath() + controller.getFolder() + "/" + this.id + "." + this.extention;
 
 };
@@ -175,12 +172,12 @@ Atom.prototype.doDelete = function(controller, finish) {
     
     if ((self.extention === "---") || (self.extention === "xxx") || (self.extention === "")) {       
       console.log("Atom.doDelete -> no file attached");
-      if (typeof finish == "function") { finish(); }
+      if (typeof finish === "function") { finish(); }
       
     } else {
       fs.unlink(self.getPathName(controller), function(err) {
         console.log("Atom.doDelete -> file deleted (" + err + ")");
-        if (typeof finish == "function") { finish(err); }
+        if (typeof finish === "function") { finish(err); }
       });
     }
  });

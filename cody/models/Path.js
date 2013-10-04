@@ -1,4 +1,4 @@
-function Path( path, name, deflanguage ) {
+function Path( path, deflanguage ) {
   // eliminate leading "/"
   if(path.indexOf("/") === 0){
     path = path.substring(1);
@@ -8,6 +8,7 @@ function Path( path, name, deflanguage ) {
   this.domain = "";
   this.request = "";
   this.id = "";
+  this.path = path;
 
   // language
   var i = path.indexOf("/");
