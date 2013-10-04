@@ -92,8 +92,8 @@ Content.prototype.renderFacebook = function(controller) {
     '  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";' +
     '  fjs.parentNode.insertBefore(js, fjs);' +
     ' }(document, "script", "facebook-jssdk"));</script>' +
-    '<div class="fb-like" data-href="' + url + '" data-width="450" data-layout="box_count" ' +
-    'data-show-faces="false" data-send="false"></div>';
+    '<div class="fb-like" data-href="' + url + '" data-action="like" data-layout="standard" ' +
+    'data-show-faces="false" data-send="false" colorscheme="light"></div>';
 };
 
 Content.prototype.renderImage = function(controller) {
