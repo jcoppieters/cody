@@ -249,7 +249,7 @@ PageController.prototype.addObject = function( title, refNode, type, kind, finis
 
 PageController.prototype.moveObject = function( nodeId, refNode, type, finish ) {
   var self = this;
-  // type = "before", "after" or "inside"
+  // type = "before" / "after" or "last" / "inside"
   console.log("Received PageController - moveObject, refnode = " + refNode +
               ", node = " + nodeId + ", type = " + type);
   
@@ -257,7 +257,7 @@ PageController.prototype.moveObject = function( nodeId, refNode, type, finish ) 
   var aParent;
   
   // fetch the parent and insertion point
-  if (type === "inside") {
+  if ((type === "inside") || (type === "last")) {
     aParent = self.app.getItem(cody.TreeController.toId(refNode));
     orderNr = 9999;
   } else {  

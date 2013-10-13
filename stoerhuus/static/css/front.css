@@ -198,7 +198,7 @@ body .content nav { width: 230px; }
 body .content .main section  img { margin: 15px 3px 3px 3px;
     box-shadow: 2px 2px 5px lightgrey; -moz-box-shadow: 2px 2px 5px lightgrey; -webkit-box-shadow: 2px 2px 5px lightgrey }
 
-body .xmain .fb-like { position: absolute; top: 75px; right: 39px; }
+body .main .fb-like { margin-left: 14px }
 body .main form { border: none }
 body .main form #action_buttons { padding-left: 213px; border: none }
 

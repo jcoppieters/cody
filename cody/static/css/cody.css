@@ -252,7 +252,7 @@ label.kind { display: inline-block; width: 13px; height: 16px; text-align: cente
         #content_data #content article > div.inputE .ui-menu { width: 150px }
         #content_data #content article > div.inputE > img { vertical-align: top; box-shadow: 1px 1px 5px grey; height: 50px; margin: 2px 0 0 8px; }
         #content_data #content article > div.inputE > img.icon { box-shadow: none; height: 16px; margin: 20px 0 0 8px; }
-        #content_data #content article > div.inputE > span { margin: 22px 0 0 6px; overflow: hidden;  display: inline-block; width: 250px }
+        #content_data #content article > div.inputE > span { margin: 22px 0 0 6px; overflow: hidden;  display: inline-block; width: 200px }
         #content_data #content article > div.inputE > p { margin: 6px 0 0 8px; display: inline-block; width: 330px; overflow: hidden; height: 45px  }
 
 

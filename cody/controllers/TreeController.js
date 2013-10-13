@@ -330,7 +330,7 @@ TreeController.prototype.addObject = function( title, refNode, type, kind, finis
 
 TreeController.prototype.moveObject = function( nodeId, refNode, type, finish ) {
   var self = this;
-  // type = "before", "after" or "inside"
+  // type = "before" / "after" or "last" / "inside"
   console.log("Received TreeController - moveObject, refnode = " + refNode +
     ", node = " + nodeId + ", type = " + type);
 
@@ -338,7 +338,7 @@ TreeController.prototype.moveObject = function( nodeId, refNode, type, finish ) 
   var aParent;
 
   // fetch the parent and insertion point
-  if (type === "inside") {
+  if ((type === "inside") || (type === "last")) {
     aParent = self.app.getAtom(cody.TreeController.toId(refNode));
     orderNr = 9999;
   } else {
@@ -353,7 +353,7 @@ TreeController.prototype.moveObject = function( nodeId, refNode, type, finish ) 
 
   // position in the tree
   anItem.parentId = aParent.id;
-  //console.log("TreeController.MovePage: old order = " + anItem.sortorder + " (of " + anItem.id + "), new order = " + orderNr);
+  //console.log("TreeController.MovePage: old order = " + anItem.sortorder + " (of " + anItem.id + "), new order = " + orderNr + ", in parent = " + anItem.parentId);
   anItem.sortorder = orderNr;
 
   try {
