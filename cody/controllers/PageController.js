@@ -147,34 +147,6 @@ PageController.prototype.respace = function( parent, finish ) {
 };
 
 
-PageController.prototype.isAllowed = function( theNode ) {
-  var aUserDomain = this.getLogin().getDomain();
-  var anItemDomain = theNode.getAllowedDomains();
-
-  console.log("TPageController.isAllowed: user = '" + aUserDomain + "', item = '" + anItemDomain + "'");
-
-  // no userdomain -> not allowed
-  if (aUserDomain === "") { return false; }
-
-  // user has all rights or belongs to cody admin
-  if ((aUserDomain === "*") || (aUserDomain === "cody")) { return true; }
-
-  // item can be edited by any domain or no specific domains are set up
-  if ((anItemDomain === "*") || (anItemDomain === "")) { return true; }
-
-  // there is a user domain and the item has 1 of more domain
-  // loop through them all and check to see if there is a correspondence
-  var aList = anItemDomain.split(",");
-  for (var x in aList) {
-    if (aList[x]===aUserDomain) {
-      return true;
-    }
-  }
-
-  return false;
-};
-
-
 /* Overridden - Action functions */
 
 PageController.prototype.addObject = function( title, refNode, type, kind, finish ) {
@@ -310,7 +282,7 @@ PageController.prototype.renameObject = function( title, nodeId, finish ) {
   var aPage = self.getObject( cody.TreeController.toId(nodeId) );
   if (aPage) {
       
-    if (! self.isAllowed(aPage.item)) {
+    if (! self.isAllowed(aPage)) {
       finish( { status: "NAL" } );
       return;
     }
@@ -405,7 +377,7 @@ PageController.prototype.deleteObject = function( nodeId, finish ) {
   try {
     var aPage = self.getObject( cody.TreeController.toId(nodeId) );
     
-    if (! self.isAllowed(aPage.item)) {
+    if (! self.isAllowed(aPage)) {
       finish( { status: "NAL" } );
       return;
     }
@@ -426,7 +398,7 @@ PageController.prototype.fetchNode = function( theNode, finish ) {
   var self = this;
   
   var aPage = self.getObject( cody.TreeController.toId(theNode) );
-  if (! self.isAllowed(aPage.item)) {
+  if (! self.isAllowed(aPage)) {
     this.gen("NAL,User is not allowed to edit this page with id = " + theNode, { "Content-Type": "application/html" });
     return;
   }
@@ -494,7 +466,7 @@ PageController.prototype.saveContent = function(thePage, theId, finish) {
   console.log("Received PageController - saveContent, pageId = " + thePage + ", contentId = " + aContentId);
   try {
 
-    if (! self.isAllowed(aPage.item)) {
+    if (! self.isAllowed(aPage)) {
       finish( { status: "NAL" } );
       return;
     }

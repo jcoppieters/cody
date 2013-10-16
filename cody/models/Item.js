@@ -90,6 +90,9 @@ Item.kLightBox    = 'L';
 Item.kDefaultName  = 'New item';
 
 
+Item.prototype.getId = function() {
+  return this.id;
+};
 Item.prototype.getAllowedDomains = function() {
   return this.alloweddomains;
 };

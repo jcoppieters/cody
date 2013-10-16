@@ -137,6 +137,35 @@ Controller.prototype.getLoginLevel = function() {
 };
 
 
+Controller.prototype.isAllowed = function( theItemOrPage ) {
+  var aUserDomain = this.getLogin().getDomain();
+  var anItemDomain = theItemOrPage.getAllowedDomains();
+
+  console.log("Controller.isAllowed: user = '" + aUserDomain + "', item/page(" + theItemOrPage.getId() + ") = '" + anItemDomain + "'");
+
+  // no userdomain -> not allowed
+  if (aUserDomain === "") { return false; }
+
+  // user has all rights or belongs to cody admin
+  if ((aUserDomain === "*") || (aUserDomain === "cody")) { return true; }
+
+  // item can be edited by any domain or no specific domains are set up
+  if ((anItemDomain === "*") || (anItemDomain === "")) { return true; }
+
+  // there is a user domain and the item has 1 of more domain
+  // loop through them all and check to see if there is a correspondence
+  var aList = anItemDomain.split(",");
+  for (var x in aList) {
+    if (aList[x]===aUserDomain) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+
+
 //
 // Form handling
 //

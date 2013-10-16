@@ -219,8 +219,8 @@ Page.prototype.needsLogin = function() {
 //
 // Tree interface requirements
 //
-Page.prototype.getAllowedGroups = function() {
-  return this.item.getAllowedgroups();
+Page.prototype.getAllowedDomains = function() {
+  return this.item.getAllowedDomains();
 };
 Page.prototype.hasChildren = function() {
   return (this.children.length > 0);

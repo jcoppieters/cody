@@ -11,7 +11,7 @@ var cody = require("./../index.js");
 function EmailController (context) {
     console.log("EmailController construct");
     cody.Controller.call(this, context);
-};
+}
 
 EmailController.sendEmail = function (pFrom, pTo, pSubject, pText) {
     console.log("Sending email from " + pFrom + " to " + pTo);

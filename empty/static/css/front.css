@@ -96,7 +96,7 @@ header > #lanNav span.name { display: none }
 
 
 /* ===== content ============================================================= */
-.content { margin: 15px }
+.content { margin: 15px; min-height: 350px }
 
 div.noNav { border-left: none; min-width: 790px; width: inherit }
 .main { display: inline-block; width: 790px; vertical-align: top; margin: 0;

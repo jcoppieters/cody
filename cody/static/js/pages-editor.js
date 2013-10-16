@@ -55,7 +55,7 @@ function addPage() {
     this.warnUser("Please select an item first");
   }
   return false;
-};
+}
 
 function selectedTemplate() {
   $("#template_selector").dialog("close");
@@ -82,10 +82,10 @@ function getPage(id) {
      data: "request=getnode&node=" + id,
      success: function(msg){
        if (msg.substring(0,3) === "NOK") {
-      	 WarnUser("Got error from server: " + msg);
+         self.warnUser("Got error from server: " + msg);
               
        } else if (msg.substring(0,3) === "NAL") {
-      	 	WarnUser("You are not allowed to edit this page, sorry.");
+         self.warnUser("You are not allowed to edit this page, sorry.");
              
        } else {
 

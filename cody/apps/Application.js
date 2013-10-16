@@ -278,9 +278,13 @@ Application.prototype.handToController = function(context) {
   //  and if so and not yet done: store this action and perform login first
   if (controller.needsLogin()) {
     if (controller.isLoggedIn()) {
-      self.log("http get - check login", "already logged in");
+      self.log("Application - check login", "already logged in");
+      if (! controller.isAllowed(context.page)) {
+        self.notAllowed(context);
+        return;
+      }
     } else {
-      self.log("http get - check login", "needs login, redirect/remember");
+      self.log("Application - check login", "needs login, redirect/remember");
       
       self.logInFirst(context);
       return;
@@ -335,11 +339,21 @@ Application.prototype.logInFirst = function(context) {
   // copy minimal version of the context to our session
   context.req.session.pendingContext = context.getMini();
   
-  // build path, context and make LoginController
+  // build path, context and (probably) make LoginController
   var aPath = new cody.Path(context.page.language + "/login", self.defaultlanguage);
   var aContext = self.buildContext( aPath, context.req, context.res );
   self.handToController(aContext);
 };
+
+Application.prototype.notAllowed = function(context) {
+  var self = this;
+
+  // build path, context and send the user to the "not allowed" page (if any)
+  var aPath = new cody.Path(context.page.language + "/notallowed", self.defaultlanguage);
+  var aContext = self.buildContext( aPath, context.req, context.res );
+  self.handToController(aContext);
+};
+
 
 /////////////////
 // SQL support //

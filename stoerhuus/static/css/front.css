@@ -100,7 +100,7 @@ header > #lanNav span.name { display: none }
 
 
 /* ===== content ============================================================= */
-div.content { margin: 15px;  }
+div.content { margin: 15px; min-height: 350px }
  .main { display: inline-block; width: 790px; vertical-align: top; margin: 0;
          border-left: solid 1px lightgrey; padding-left: 10px; }
  div.noNav { border-left: none }
