@@ -8,7 +8,8 @@
     <% } %>
   </aside>
 	<nav>
-    <% for (var ip in page.root.children) { var p = page.root.children[ip];
+    <% var children = app.getPage(page.language, 1).children %>
+    <% for (var ip in children) { var p = children[ip];
          if (p.isVisible()) { %>
            <a class="<%= (p == page.top) ? 'active' : '' %>" href="/<%=p.url%>"><%= p.title %></a>
     <%   } %>

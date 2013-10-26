@@ -109,6 +109,15 @@ Controller.prototype.getId = function(defaultValue) {
 
 
 //
+// ask another controller to handle the current request
+//
+Controller.prototype.delegate = function(link) {
+  this.close();
+  this.app.redirect(this.context, link);
+};
+
+
+//
 // User login stuff -- most of the time proxied to the context object 
 //
 

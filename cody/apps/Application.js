@@ -280,12 +280,14 @@ Application.prototype.handToController = function(context) {
     if (controller.isLoggedIn()) {
       self.log("Application - check login", "already logged in");
       if (! controller.isAllowed(context.page)) {
+        controller.close();
         self.notAllowed(context);
         return;
       }
     } else {
       self.log("Application - check login", "needs login, redirect/remember");
-      
+
+      controller.close();
       self.logInFirst(context);
       return;
     }
@@ -333,25 +335,26 @@ Application.prototype.renderView = function( context ) {
   context.res.render(viewfile, context);
 };
 
-Application.prototype.logInFirst = function(context) {
+Application.prototype.redirect = function(context, redirectTo) {
   var self = this;
 
-  // copy minimal version of the context to our session
-  context.req.session.pendingContext = context.getMini();
-  
-  // build path, context and (probably) make LoginController
-  var aPath = new cody.Path(context.page.language + "/login", self.defaultlanguage);
+  // either [language]/itemlink or itemlink
+  var newURL = (redirectTo.indexOf("/") != 2) ? context.page.language + "/" + redirectTo : redirectTo;
+  var aPath = new cody.Path(newURL, self.defaultlanguage);
   var aContext = self.buildContext( aPath, context.req, context.res );
   self.handToController(aContext);
 };
 
-Application.prototype.notAllowed = function(context) {
-  var self = this;
+Application.prototype.logInFirst = function(context) {
 
-  // build path, context and send the user to the "not allowed" page (if any)
-  var aPath = new cody.Path(context.page.language + "/notallowed", self.defaultlanguage);
-  var aContext = self.buildContext( aPath, context.req, context.res );
-  self.handToController(aContext);
+  // copy minimal version of the context to our session
+  context.req.session.pendingContext = context.getMini();
+
+  this.redirect(context, "login");
+};
+
+Application.prototype.notAllowed = function(context) {
+  this.redirect(context, "notallowed");
 };
 
 

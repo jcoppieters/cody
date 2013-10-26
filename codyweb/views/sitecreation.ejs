@@ -19,8 +19,10 @@
 <div id="banner"></div>
 
 <div id="content">
-    <% var theChildren; %>
+  <% var theChildren = []; %>
+  <% if ((page.root.itemId == 1) && (page.parent.itemId != 1)) { %>
     <% include menu-left %>
+  <% } %>
 
     <section class="<%= (theChildren.length == 0) ? 'noNav' : 'withNav' %>">
         <h1><%= page.title %></h1>

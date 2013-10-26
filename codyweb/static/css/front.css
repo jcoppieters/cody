@@ -234,6 +234,7 @@ footer img { margin-top: 0px; border: none; max-width: inherit; box-shadow: none
 
 .page #content { width: 1023px; margin: 10px auto }
 .page #content nav { width: 250px; display: inline-block; border: 1px solid #9d9d9c; margin: 8px; background-color: white; vertical-align: top }
+.page #content nav > span { display: inline-block; margin: 8px 0 0 8px }
 .page #content nav ul { margin: 8px 16px 16px 8px; padding: 0 }
 .page #content nav li { margin: 8px 2px 8px 2px; padding: 10px 0 0 0; border-top: solid 1px #9d9d9c }
 .page #content nav li:first-child { border-top: none }
