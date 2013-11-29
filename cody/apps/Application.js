@@ -455,7 +455,7 @@ Application.prototype.hasAtomChildren = function(parent) {
   var self = this;
 
   for (var i = 0; i < self.atoms.length; i++) {
-    if  (self.atoms[i].id === parent.id) {
+    if  (self.atoms[i].parent === parent.id) {
       return true;
     }
   }

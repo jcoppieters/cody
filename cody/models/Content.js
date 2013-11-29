@@ -82,6 +82,7 @@ Content.prototype.renderForm = function(controller) {
 
 Content.prototype.renderFacebook = function(controller) {
   var url = this.data.replace("[page]", controller.context.page.getURL(this.language));
+  if (url === "") url = controller.context.page.getURL(this.language);
   if (url.indexOf("http") < 0) { url = "http://" + url; }
 
   return '<div id="fb-root"></div>' +
@@ -94,6 +95,18 @@ Content.prototype.renderFacebook = function(controller) {
     ' }(document, "script", "facebook-jssdk"));</script>' +
     '<div class="fb-like" data-href="' + url + '" data-action="like" data-layout="standard" ' +
     'data-show-faces="false" data-send="false" colorscheme="light"></div>';
+};
+
+Content.prototype.renderShare = function(controller) {
+  var url = this.data.replace("[page]", controller.context.page.getURL(this.language));
+  if (url === "") url = controller.context.page.getURL(this.language);
+  if (url.indexOf("http") < 0) { url = "http://" + url; }
+
+  return '<a href="#" onclick="' +
+        'window.open(' +
+        '  \'https://www.facebook.com/sharer/sharer.php?u=\'+encodeURIComponent(location.href), ' +
+        '  \'facebook-share-dialog\', \'width=626,height=436\'); ' +
+        'return false;">Share on Facebook</a>';
 };
 
 Content.prototype.renderImage = function(controller) {
@@ -127,6 +140,9 @@ Content.prototype.render = function(controller) {
   } else if (this.kind === "B") {
     return this.renderFacebook(controller);
 
+  } else if (this.kind === "H") {
+    return this.renderShare(controller);
+
   } else if (this.kind === "I") {
     return this.renderImage(controller);
 
@@ -146,7 +162,7 @@ Content.prototype.render = function(controller) {
 Content.prototype.scrapeFrom = function(controller) {
   this.name = controller.getParam("name", "");
   this.intro = controller.getParam("intro", "N");
-  this.atom = controller.getParam("atom", "N");
+  this.atom = controller.getParam("atom", 0);
     this.getAtom(this.atom, controller.app);
   this.data = controller.getParam("data", "");
   this.kind = controller.getParam("kind", "T");
@@ -156,7 +172,7 @@ Content.prototype.scrapeFrom = function(controller) {
 Content.prototype.scrapeFromWithId = function(controller) {
   this.name = controller.getParam("name_"+this.id, this.name);
   this.intro = controller.getParam("intro_"+this.id, "N");
-  this.atom = controller.getParam("atom_"+this.id, "N");
+  this.atom = controller.getParam("atom_"+this.id, 0);
     this.getAtom(this.atom, controller.app);
   this.data = controller.getParam("data_"+this.id, "");
   this.kind = controller.getParam("kind_"+this.id, "T");

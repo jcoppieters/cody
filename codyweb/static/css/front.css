@@ -101,8 +101,13 @@ pre { margin: 0 20px 0 0; font-size: 12px; padding: 8px; border: solid 1px #9d9d
 /* =============================================================================
    All pages - Header & Footer
    ========================================================================== */
+/* original
+header { width: 1130px; margin: 10px auto; } */
+#banner { margin-top: 84px; }
+header {
+  box-shadow: 0px 3px 2px black; height:84px; padding:10px 10px 10px 0; margin: 0px auto;
+  width: 100%; background-color: white; position: fixed; top: 0; left: 0 }
 
-header { width: 1130px; margin: 10px auto; }
 header img { margin: 0 0 0 95px; height: 60px; display: inline-block;
              box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none; border: none; max-width: inherit }
 header nav { float: right; margin: 0 }
@@ -145,7 +150,8 @@ footer img { margin-top: 0px; border: none; max-width: inherit; box-shadow: none
    ========================================================================== */
 
 #ribbon { height: 149px; width: 149px; overflow: hidden; padding: 0; margin: 0;
-  position: absolute; top: 84px; right: 0; z-index: 999 }
+  position: fixed; top: 84px; right: 0; z-index: 999 }
+
 #ribbon a {
   display: block; position: relative; left: 0; top: 0; font-size: 14px; font-weight: bolder; text-decoration: none;
   text-align: center; color: #333334; width: 240px; padding: 8px 30px; border: 1px solid #ed9d00; background-color: #fcc14e;
@@ -226,7 +232,7 @@ footer img { margin-top: 0px; border: none; max-width: inherit; box-shadow: none
    Content page
    ========================================================================== */
 
-.page header { width: 1023px }
+.page header { /* width: 1023px */ }
 .page header nav a { margin: 24px 4px 0 46px }
 .page header img { margin-left: 8px;
                    box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none; border: none; max-width: inherit }

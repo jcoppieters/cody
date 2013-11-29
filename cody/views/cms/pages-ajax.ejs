@@ -78,7 +78,19 @@
             <img src="<%=cstatic%>/icons/B.png">
             <div class="input">
               <input type="hidden" name="atom_<%= c.id %>" class="atom" value="<%= c.atomId %>" />
-              <h5>Facebook 'like' - URL</h5>
+              <h5>Facebook 'like' - URL <small>(empty = current)</small></h5>
+              <textarea name="data_<%= c.id %>" class="stringdata"><%= c.data %></textarea>
+            </div>
+            <div class="actions">
+              <button class="doDeletor">Delete</button>
+              <span class="ui-icon-arrowthick-2-n-s ui-icon">Move</span>
+            </div>
+
+            <% } else if (c.kind == "H") { %>
+            <img src="<%=cstatic%>/icons/H.png">
+            <div class="input">
+              <input type="hidden" name="atom_<%= c.id %>" class="atom" value="<%= c.atomId %>" />
+              <h5>Facebook 'share' - URL <small>(empty = current)</small></h5>
               <textarea name="data_<%= c.id %>" class="stringdata"><%= c.data %></textarea>
             </div>
             <div class="actions">

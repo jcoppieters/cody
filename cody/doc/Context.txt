@@ -1,0 +1,252 @@
+//
+// Johan Coppieters - jan 2013 - Cody
+//
+//
+//
+// Context
+//
+// Created by Application in buildContext as results of servePage for every request,
+// containing all the context info for that request.
+//
+// Accessible
+//    - through the controller of the request
+//    - used as global scope while rendering a view
+//      so all its properties are accessible as globals for the view rendered for that request.
+//
+// Additionally provides some helpers (formatting/utitlities), thus accessible by the views.
+
+//
+// Instance variables
+//
+
+// from the constructor"
+
+function Context(path, page, app, req, res) {
+
+  this.version = [ string ]     // copied from incoming Application object
+
+  this.page = page;
+  this.app = app;
+  this.req = req;
+  this.res = res;
+  this.path = path;
+  this.params = [ hashmap<string, string> ]      // sum of url params + if available all posted values <name, value>
+  this.request = [ string ]      //
+
+  this.status = [ string ]       // "success", "failed"
+  this.message = [ string ]      // corresponding message
+
+  this.host = [ string ]         // copied from: req.headers.host  =  name for the (virtual) host
+  this.dateFormat = [ string ];  //  "dd-mm-yyyy" / "yyyy-mm-dd" / "dmm-dd-yyyy"
+
+  this.min = [ string ]          // "" / ".min" to be used when including scripts minified of not
+  this.static = [ string ];      // path to all static content, example: in a view: <%= static %>/aLayout.css
+  this.dynamic = [ string ];     // path to all dynamic content, example: in a view: <%= dynamic %>/images/123.jpg
+  this.cstatic = [ string ];     // path to all static content of the framework, example: in a view: <%= cstatic %>/icons/P.png
+
+  this.strings = [ hashmap<string, string> ]  // all content of the page "[language]/strings", typically to be used as application wide multi language labels
+
+  this.fn = [ string ]           // the name of the view file of the current page, if nothing specified: "index.ejs";
+
+  this.session [ session object ] // copied from the request-object, if available this session also contains the login user-object
+  this.cody = [ cody module ]    // making the complete cody lib accessible to your controller and/or views
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+
+Context.prototype.render = function(params)
+//
+// Render content queried by name or kind.
+//
+
+// params:
+//
+// { kind:     String,
+//   not_kind: String,
+//   name:     String,
+//   not_name: String,
+//   intro:    Y/N,         Show intro part?
+//   page:     Page }       Optional Page to get the content from instead of current
+
+--------------------------------------------------------------------------------------------------------------------
+
+
+//
+// login stuff
+//
+
+Context.prototype.setLogin = function(login) {
+  this.session.login = login;
+  this.login = new cody.User(login);
+};
+Context.prototype.isLoggedIn = function() {
+  return (this.login) && (typeof this.login !== "undefined") && (this.login.active === "Y");
+};
+Context.prototype.getLogin = function() {
+  return this.login || new cody.User({});
+};
+
+--------------------------------------------------------------------------------------------------------------------
+
+//
+// General utilities
+//
+Context.prototype.getValueByIndex = function(object, index) {
+  var nr = 0;
+  for (var iO in object) {
+    if (nr === index) { return object[iO]; }
+    nr++;
+  }
+  return undefined;
+}
+Context.prototype.getKeyByIndex = function(object, index) {
+  var nr = 0;
+  for (var iO in object) {
+    if (nr === index) { return iO; }
+    nr++;
+  }
+  return undefined;
+}
+
+--------------------------------------------------------------------------------------------------------------------
+
+Context.prototype.val = function(value) {
+  return (typeof value === "undefined") ? "" : value;
+};
+
+Context.prototype.getUnique = function() {
+  return new Date().getTime();
+};
+
+
+
+--------------------------------------------------------------------------------------------------------------------
+rendering widgets
+--------------------------------------------------------------------------------------------------------------------
+
+// returns 'checked' if true, for option lists.
+Context.prototype.checked = function( bool ) {
+  return (bool) ? 'checked' : '';
+};
+
+//
+// Creates html options from a given list
+//
+// 1. optionList([String], String)
+//    Creates an option for each string and marks theId as string.
+
+// 2. optionList([Object], String, String, String)
+//    Creates an option for each object, using theIdName and theNameName properties
+//    of each object to set the id and html resp.
+//
+Context.prototype.optionList = function(theList, theId, theIdName, theNameName) {
+  var x = "";
+  var first = cody.Application.findFirst(theList);
+
+  if (typeof first === "string") {
+    for (var j=0; j < theList.length; j++) {
+      var S = theList[j];
+      x += "<option value=\"" + S + "\"" + ((S == theId) ? "selected" : "") + ">" + S + "</option>\n";
+    }
+
+  } else {
+    var idName = theIdName || "id";
+    var nameName = theNameName || "name";
+
+    for (var i in theList) {
+      if (theList.hasOwnProperty(i)) {
+        var O = theList[i];
+        x += "<option value=\"" + O[idName] + "\"" + ((O[idName] == theId) ? "selected" : "") + ">" + O[nameName] + "</option>\n";
+      }
+    }
+  }
+  return x;
+};
+
+//
+// optionListF([Any], String, (Any) -> String, (Any) -> String) -> String
+//
+//    Uses two functions that take an element from the list as argument and return
+//    an id/name to create the options. Marks the option that has the id theId as "selected".
+//
+Context.prototype.optionListF = function (theList, theId, getId, getName) {
+  var options = "";
+  theList.forEach(function (item) {
+    var id = getId(item);
+    console.log(id);
+    var name = getName(item);
+    options += "<option value=\"" + id + "\"" + ((id == theId) ? "selected" : "") + ">" + name + "</option>\n";
+  });
+  return options;
+};
+
+
+Context.prototype.find = function(theList, theId, theIdName) {
+  var idName = theIdName || "id";
+  for (var i=0; i < theList.length; i++) {
+    var R = theList[i];
+    if (R[idName] == theId) {
+      return R;
+    }
+  }
+  return {};
+};
+
+
+//
+// Session handlers
+//
+
+Context.prototype.fromSession = function(paramName, defaultValue) {
+  var x = this.session[paramName];
+  return (typeof x === "undefined") ? defaultValue : x;
+};
+
+Context.prototype.toSession = function(paramName, value) {
+  this.session[paramName] = value;
+};
+
+
+//
+// Request Parameter handlers
+//
+
+Context.prototype.getParam = function(paramName, defaultValue) {
+  var x = this.params[paramName];
+  return (typeof x === "undefined") ? defaultValue : x;
+};
+
+Context.prototype.setParam = function(paramName, value) {
+  this.params[paramName] = value;
+};
+
+
+
+function two(n)
+
+// Adds a leading "0" when the number < 10.
+
+
+Context.prototype.formatTime = function(aDate)
+
+// returns the time formated as "HH:MM:SS"
+
+
+Context.prototype.formatShortTime = function(aDate)
+
+// returns the time formated as "HH:MM"
+
+
+
+//
+//  format depending on the dateFormat field of this context
+//
+Context.prototype.formatDate = function(aDate) {
+
+Context.prototype.makeDate = function(value, defaultValue) {
+
+Context.prototype.makeInt = function(value, defaultValue) {
+
+Context.prototype.makeNum = function(value, defaultValue, precision) {
+

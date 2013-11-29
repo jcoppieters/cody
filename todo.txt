@@ -113,3 +113,7 @@ Yanic: [ done door Johan: 15/09/2013 ]
 
 Johan:
 - Website cody documentatie / intro texts / ...
+
+- "Images" (met id = 1) was weg bij Stoerhuus ??  Delete van toplevel?
+ [done 2013/11/02 - hasAtomChildren had fout in Application ]
+

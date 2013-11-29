@@ -225,3 +225,22 @@ User.prototype.doDelete = function(controller, finish) {
     if (typeof finish === "function") { finish(isOK); }
   });
 };
+
+
+User.emailExists = function (controller, email, finish) {
+ controller.query("SELECT * FROM users WHERE email = ?", [email], function (err, rows) {
+   if (err)
+     return finish(err);
+   finish(undefined, rows.length > 0);
+ });
+};
+
+User.getByEmail = function (controller, email, finish) {
+ controller.query("SELECT * FROM users WHERE email = ?", [email], function (err, rows) {
+   if (err) return finish(err);
+   if (rows.length > 0) {
+     return finish(undefined, new User(rows[0]));
+   }
+   return finish(undefined, new User());
+ });
+};

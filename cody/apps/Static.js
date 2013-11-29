@@ -75,7 +75,7 @@ Static.prototype.tryCache = function (filename) {
   if (file) {
     // add 1 to nr of uses
     var type = mime.lookup(filename);
-    // console.log("Static -> cache hit: " + filename + " - " + file.length + " bytes as " + type);
+    console.log("Static.serve -> cache hit: " + filename + " - " + file.length + " bytes as " + type);
     this.response.writeHead(200, { "Content-Type": type });
     this.response.write(file, "binary");
     this.response.end();
