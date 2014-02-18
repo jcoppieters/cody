@@ -528,7 +528,7 @@ function getClasses(object, extraClass) {
   }
 
   // end the class string
-  if (x !== "") { x += "'" }
+  if (x !== "") { x += "'"; }
   return x;
 }
 

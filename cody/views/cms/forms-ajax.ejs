@@ -82,14 +82,6 @@
       $('#numbervalidationdiv').hide();
       $('div.choices').show();
 
-
-    } else if (theType === <%=cody.Meta.Generator.submitbutton%>) { // Post or submit button
-      $('#mindiv').hide();
-      $('#maxdiv').hide();
-      $('#requireddiv').hide();
-      $('#textvalidationdiv').hide();
-      $('#numbervalidationdiv').hide();
-      $('div.choices').hide();
     }
 
     return true;
@@ -151,7 +143,6 @@
               <option value="<%=cody.Meta.Generator.selectinput%>" <%= (object.generator === cody.Meta.Generator.selectinput) ? 'selected' : '' %>>Popup menu</option>
               <option value="<%=cody.Meta.Generator.radioinput%>" <%= (object.generator === cody.Meta.Generator.radioinput) ? 'selected' : '' %>>Radio buttons</option>
               <option value="<%=cody.Meta.Generator.checkboxinput%>" <%= (object.generator === cody.Meta.Generator.checkboxinput) ? 'selected' : '' %>>Check boxes</option>
-              <option value="<%=cody.Meta.Generator.submitbutton%>" <%= (object.generator === cody.Meta.Generator.submitbutton) ? 'selected' : '' %>>Submit button</option>
             </select>
           </div>
 

@@ -186,7 +186,7 @@ FormController.prototype.saveInfo = function( nodeId, finish ) {
       self.context.shownode = anObject.parentId;
       self.context.opennode = anObject.parentId;
 
-      // next (long) section fill in the correct values for "generator" and "options"
+      // next (long) section fills in the correct values for "generator" and "options"
       // depending on the user's choice of the different parameters (required, validation, generator, min/max, ...)
       var aGenerator = parseInt(self.getParam("generator", cody.Meta.Generator.textinput), 10);
       obj.generator = aGenerator;
