@@ -10,26 +10,31 @@
 <% include header.ejs %>
 
 <body id="page<%= page.itemId %>">
-	<div id="wrapper">
 
-    <% include menu-top.ejs %>
+    <% include top.ejs %>
+    <% if (typeof submitted != "undefined") { %>
+      <h2>Thank you!</h2>
+      <div>
+        <p>We will keep you informed and send you an email as confirmation in the next coming days.</p>
+        <p>See you on March the 20th at Howest Brugge.</p>
+      </div>
+    <% } %>
 
-		<div class="content">
+    <%- render({intro: 'N', not_kind: 'M'}) %>
 
-      <% var theChildren; %>
-      <% include menu-left.ejs %>
+    <% if (typeof submitted === "undefined") { %>
+    <h2>Register</h2>
+    <div>
+      <p>The event is completely sponsored by Howest, so no need to pay, you only have to register here.</p>
 
-			<div class="main <%= (theChildren.length == 0) ? 'noNav' : 'withNav' %>">
-        <section>
-          <h1><%= page.title %></h1>
+      <%- render({intro: 'N', kind: 'M'}) %>
 
-          <%- render() %>
-        </section>
-			</div>
-		</div>
+      <p>As the number of participants is limited, please let us know if you registered and are unable to come, this way you are not blocking people on the waiting list.<p>
+
+    </div>
+    <% } %>
 
     <% include footer.ejs %>
-	</div>
 
 </body>
 </html>
