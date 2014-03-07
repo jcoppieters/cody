@@ -1,0 +1,64 @@
+<!doctype html>
+
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="<%=page.language%>"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="<%=page.language%>"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="<%=page.language%>"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="<%=page.language%>">
+<!--<![endif]-->
+
+<% include header.ejs %>
+
+<body id="page<%= page.itemId %>">
+  <script>
+    var gTimer;
+
+    function setRunner() {
+      if (gTimer) clearInterval(gTimer);
+      gTimer = setInterval(function(){
+        window.location.href = "wall";
+      }, 1000 * 60 * 1);
+    }
+
+    $(document).ready( function() {
+      setRunner();
+
+      $(document).keydown(setRunner);
+      $(document).mousedown(setRunner);
+    });
+
+  </script>
+	<div id="wrapper">
+
+    <% include top.ejs %>
+
+		<div class="content wall">
+
+
+        <section>
+          <form method="post" action="wall">
+            <textarea cols="80" rows="3" name="note"></textarea>
+            <input type="submit" name="request" value="Remark">
+            <input type="submit" name="request" value="Ask">
+          </form>
+        </section>
+
+        <section>
+          <ul>
+          <% for (var m in wallList) { var message = wallList[m]; %>
+            <li><span class="<%=message.kind%>"><%= formatShortTime(message.at) %></span>
+              - <%= message.note %>
+              <% if (login.level > 10) { %>
+                <a href="wall?request=delete&id=<%=message.id%>">X</a>
+              <% } %>
+            </li>
+          <% } %>
+          </ul>
+        </section>
+		</div>
+
+    <% include footer.ejs %>
+	</div>
+
+</body>
+</html>

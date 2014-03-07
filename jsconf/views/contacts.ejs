@@ -1,0 +1,150 @@
+<!doctype html>
+
+<html lang="<%=page.language%>">
+
+<% include header.ejs %>
+
+<body id="contacts">
+
+	<script src="<%=cstatic%>/js/lib/jquery-1.9.1<%=min%>.js"></script>
+	<script src="<%=cstatic%>/js/lib/jquery-ui-1.10.1<%=min%>.js"></script>
+	<script src="<%=cstatic%>/js/lib/jquery.validate<%=min%>.js"></script>
+	<script src="<%=cstatic%>/js/lib/localization/messages_<%=page.language%>.js"></script>
+	
+	<script>
+	  $(document).ready( function() {
+	    $("#records td.edit a").prepend("<span class='icon-pencil'></span>");
+	    
+      $("#doNew").button({ icons: { primary: "ui-icon-plus"}, text: true}).click( function() {
+        $("#request").val("new"); 
+        $("#record").submit();
+      });
+      $("#doSave").button({ icons: { primary: "ui-icon-check"}, text: true}).click( function() {
+        $("#request").val("save"); 
+        $("#record").submit();
+      });
+	    $("#doDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( function() {
+	      $("#request").val("delete"); 
+	      $("#record").submit();
+	    });
+	    $("#doCancel").button({ icons: { primary: "ui-icon-close"}, text: true}).click( function() {
+	      $("#request").val("list"); 
+	      $("#record").submit();
+	    });
+	    $("#domains").change(function() {
+	      $('#domain').val(this.options[this.selectedIndex].value);
+	    });
+	    
+	    $("#record").validate();
+	  });
+	</script>
+
+  <section>
+    <header>
+      <% include top.ejs %>
+      <% include navigation.ejs %>
+    </header>
+    
+    <div>
+	
+    <% if (typeof contact != "undefined") { %>
+		<form action="./contacts" method="post" id="record">
+   			<input type="hidden" name="request" id="request" value="save" /> 
+   			<input type="hidden" name="id" value="<%- contact.id %>" /> 
+
+			<fieldset class="horizontal">
+				<div>
+					<label for="name">Name</label>
+					<input name="name" id="name" type="text" value="<%- contact.name %>" class="required"/>
+				</div>
+				<div>
+					<label for="cie">Cie</label>
+					<input name="cie" id="cie" type="text" value="<%- contact.cie %>" />
+				</div>
+        <div>
+    					<label for="title">Title</label>
+    					<input name="title" id="title" type="text" value="<%- contact.title %>" />
+    				</div>
+				<div>
+					<label for="phone">Phone</label>
+					<input name="phone" id="phone" type="text" value="<%- contact.phone %>" />
+				</div>
+        <div>
+    			<label for="origin">Origin</label>
+           <input name="origin" id="origin" type="text" value="<%- contact.origin %>" />
+    		</div>
+        <div>
+    			<label for="target">Target</label>
+          <input name="target0" id="target0" type="checkbox" value="s" <%= checked(indexOf(contact.target,'s')>0) %> />stage
+          <input name="target1" id="target1" type="checkbox" value="j" <%= checked(indexOf(contact.target,'j')>0) %> />jsConf
+          <input name="target2" id="target2" type="checkbox" value="c" <%= checked(indexOf(contact.target,'c')>0) %> />Cody
+    		</div>
+        <div>
+    			<label for="email">Email</label>
+    			<input name="email" id="email" type="text" value="<%- contact.email %>"  class="required email"/>
+    		</div>
+        <div>
+          <label for="nomail">Allows Mail</label>
+          <input name="nomail" id="nomailY" type="radio" value="Y" <%= checked(contact.nomail == 'Y') %> /><label class="choice" for="nomailY">No</label>
+          <input name="nomail" id="nomailN" type="radio" value="N" <%= checked(contact.nomail != 'Y') %> /><label class="choice" for="nomailN">Yes</label>
+        </div>
+        <div>
+          <label for="active">Active</label>
+          <input name="active" id="activeY" type="radio" value="Y" <%= checked(contact.active == 'Y') %> /><label class="choice" for="activeY">Yes</label>
+          <input name="active" id="activeN" type="radio" value="N" <%= checked(contact.active != 'Y') %> /><label class="choice" for="activeN">No</label>
+        </div>
+			</fieldset>
+			<div id="action_buttons">
+				<button id="doSave">Save</button>
+				<% if (contact.id > 0) { %>
+					<button id="doDelete">Delete</button>
+				<% } %>
+				<button id="doCancel">Cancel</button>
+		  </div>
+		</form>
+    <% } %>
+      
+      
+    <% if (typeof contacts != "undefined") { %>
+    <form action="./contacts" method="post" id="search">
+ 	   	<input type="hidden" name="request" id="request" value="list" />
+      <div>
+        <label>Target</label>
+        <input name="target0" id="target0" type="checkbox" value="s" <%= checked(indexOf(contact.target,'s')>0) %> />stage
+        <input name="target1" id="target1" type="checkbox" value="j" <%= checked(indexOf(contact.target,'j')>0) %> />jsConf
+        <input name="target2" id="target2" type="checkbox" value="c" <%= checked(indexOf(contact.target,'c')>0) %> />Cody
+      </div>
+      <div>
+        <label for="text">Text</label>
+        <textarea name="text"></textarea>
+      </div>
+
+ 	   	<!--TODO: add  search button + input field -->
+      <button id="doNew">New</button>
+      <button id="doNew">Email</button>
+
+			<table id="records"> 
+			   <tr> 
+				 <th>Naam</th><th>Cie</th><th>Email</th><th>Phone</th><th>Origin</th><th>Active</th>
+			   </tr> 
+				
+			  <% for (var i=0; i < contacts.length; i++) { var u = contacts[i]; %>			  
+					<tr>
+						<td class="edit"><a href="/<%=page.url%>/edit/<%= u.id %>"><%= (u.name==='') ? '--' : u.name %></a></td>
+						<td><%= u.cie %></td>
+            <td><%= u.email %></td>
+            <td><%= u.phone %></td>
+            <td><%= u.origin %></td>
+						<td><%= (u.active == 'Y') ? 'active' : '-' %></td>
+					</tr>
+				<% } %>
+			</table>
+		</form>
+	  <% } %>
+	  
+    </div>
+ 
+    <% include footer.ejs %>
+  </section>
+</body>
+</html>
