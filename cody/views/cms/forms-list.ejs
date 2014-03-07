@@ -73,9 +73,10 @@ $(document).ready(function(){
 
       <div id="ltabs" class="ui-tabs ui-widget">
         <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-          <li class="ui-state-default ui-corner-top <%= (form_show === "N") ? 'ui-tabs-active ui-state-active' : '' %>" ><a href="/<%=page.language%>/data?request=list&form_show=N" class="ui-tabs-anchor">New</a></li>
-          <li class="ui-state-default ui-corner-top <%= (form_show === "T") ? 'ui-tabs-active ui-state-active' : '' %>" ><a href="/<%=page.language%>/data?request=list&form_show=T" class="ui-tabs-anchor">To Do</a></li>
-          <li class="ui-state-default ui-corner-top <%= (form_show === "D") ? 'ui-tabs-active ui-state-active' : '' %>" ><a href="/<%=page.language%>/data?request=list&form_show=D" class="ui-tabs-anchor">Done</a></li>
+          <li class="ui-state-default ui-corner-top <%= (form_show === "N") ? 'ui-tabs-active ui-state-active' : '' %>" ><a href="/<%=page.language%>/data?request=list&form_show=N" class="ui-tabs-anchor">New<%= (form_show === "N") ? (': '+data.length) : '' %></a></li>
+          <li class="ui-state-default ui-corner-top <%= (form_show === "T") ? 'ui-tabs-active ui-state-active' : '' %>" ><a href="/<%=page.language%>/data?request=list&form_show=T" class="ui-tabs-anchor">To Do<%= (form_show === "T") ? (': '+data.length) : '' %></a></li>
+          <li class="ui-state-default ui-corner-top <%= (form_show === "D") ? 'ui-tabs-active ui-state-active' : '' %>" ><a href="/<%=page.language%>/data?request=list&form_show=D" class="ui-tabs-anchor">Done<%= (form_show === "D") ? (': '+data.length) : '' %></a></li>
+          <li class="ui-state-default ui-corner-top <%= (form_show === "A") ? 'ui-tabs-active ui-state-active' : '' %>" ><a href="/<%=page.language%>/data?request=list&form_show=A" class="ui-tabs-anchor">Archive<%= (form_show === "A") ? (': '+data.length) : '' %></a></li>
         </ul>
 
         <div id="tree" class="ui-corner-bottom">
