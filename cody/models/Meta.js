@@ -184,7 +184,6 @@ Meta.prototype.saveDefinition = function( controller, done ) {
 Meta.prototype.readDefinition = function( controller, id, done ) {
   // read from database in table "meta" and "add" to ourselfs
   this.metaId = id;
-  var self = this;
 
   // get meta from the database and inject
   var data = "{}";

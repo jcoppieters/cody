@@ -1,0 +1,57 @@
+<!doctype html>
+
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="<%=page.language%>"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="<%=page.language%>"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="<%=page.language%>"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="<%=page.language%>">
+<!--<![endif]-->
+
+<% include header.ejs %>
+<script>
+    $(document).ready(function(){
+      //set automatically the width of the navigation li's
+      $("nav#mainNav ul li").css("width",$("nav#mainNav ul").width() / $("nav#mainNav ul li").length);
+
+      $("div.accordion").accordion({collapsible: true, active:false});
+
+    });
+
+</script>
+<style>
+  h3 strong { float: right }
+  div.accordion { margin: 5px }
+</style>
+
+<body id="page<%= page.itemId %>">
+<% include head.ejs %>
+   <div id="wrapper">
+
+     <div class="content">
+
+
+       <div class="main">
+
+
+          <%- render() %>
+
+          <% var me = getLogin().id; %>
+
+
+          <div class="accordion">
+            <% for(var i = 0; i < members.length; i++) { var member = members[i]; %>
+              <h3><%= member.name %> <%= (member.id === me) ? '**' : '' %><strong><%= member.phone1 %></strong></h3>
+              <article>
+                <%= member %>
+
+              </article>
+            <% } %>
+          </div>
+       </div>
+     </div>
+
+     <% include footer.ejs %>
+   </div>
+
+</body>
+</html>

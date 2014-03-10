@@ -371,6 +371,25 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES (1,'rsuper','rWorks Super','*7F056D2A1A5A65790F919D1BBA8895699CE62890','rWorks',99,0,99,'Y','johan577@mac.com','','N',0),(2,'radmin','rWorks Admin','*7F056D2A1A5A65790F919D1BBA8895699CE62890','rWorks',50,0,99,'Y','johan577@mac.com','','N',0),(3,'rtest','rWorks Test','*7F056D2A1A5A65790F919D1BBA8895699CE62890','rWorks',2,0,99,'Y','johan577@mac.com','','N',0),(9,'codyweb','Cody User','*7F056D2A1A5A65790F919D1BBA8895699CE62890','user',50,0,99,'Y','cody@cody.com','','N',0),(11,'user','Mr. User Vaneigens','*7F056D2A1A5A65790F919D1BBA8895699CE62890','users',50,0,99,'Y','user@cody-cms.be','','N',10);
+
+insert into users values
+(10, 'Surmont', 'Filip Surmont', password("Filip"),'bok',00,0,00,'Y','','','N', 0),
+(11, 'Janssens', 'Peter Janssens', password("Peter"),'bok',00,0,00,'Y','','','N', 0),
+(12, 'Coppieters', 'Johan Coppieters', password("Johan"),'bok',00,0,00,'Y','','','N', 0),
+(13, 'Lecoutere', 'Dominiek Lecoutere', password("Dominiek"),'bok',00,0,00,'Y','','','N', 0),
+(14, 'Balliere', 'Peter Balliere', password("Peter"),'bok',00,0,00,'Y','','','N', 0),
+(15, 'De Rycke', 'Johan De Rycke', password("Johan"),'bok',00,0,00,'Y','','','N', 0),
+(16, 'Cabooter', 'Marc Cabooter', password("Marc"),'bok',00,0,00,'Y','','','N', 0),
+(17, 'Deleyn', 'Gilbert Deleyn', password("Gilbert"),'bok',00,0,00,'Y','','','N', 0),
+(18, 'Dombret', 'Jacques Dombret', password("Jacques"),'bok',00,0,00,'Y','','','N', 0),
+(19, 'Fevery', 'Lionel Fevery', password("Lionel"),'bok',00,0,00,'Y','','','N', 0),
+(20, 'Vanfleteren', 'Marc Vanfleteren', password("Marc"),'bok',00,0,00,'Y','','','N', 0),
+(21, 'Schumacher', 'Paul Schumacher', password("Paul"),'bok',00,0,00,'Y','','','N', 0),
+(22, 'Van Dooren', 'Jan Van Dooren', password("Jan"),'bok',00,0,00,'Y','','','N', 0),
+(23, 'Decadt', 'Geert Decadt', password("Geert"),'bok',00,0,00,'Y','','','N', 0),
+(24, 'Carrette', 'Herman Carrette', password("Herman"),'bok',00,0,00,'Y','','','N', 0),
+(25, 'Vandeweghe', 'Hans Vandeweghe', password("Hans"),'bok',00,0,00,'Y','','','N', 0);
+
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

@@ -35,6 +35,8 @@ function Application(config) {
   this.dbpassword = config.dbpassword || "ydoc";
   this.dbhost = config.dbhost || "localhost";
   this.db = config.db || "cody";
+  this.smtp = config.smtp || "smtp.telenet.be";
+  this.mailFrom = config.mailFrom || "info@cody-cms.org";
 
   this.dumpStructures = config.dumpstructures || true;
   if (this.logging) {

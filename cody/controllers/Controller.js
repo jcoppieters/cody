@@ -5,6 +5,7 @@
 console.log("loading " + module.id);
 
 var mysql = require("mysql");
+var nodemailer = require("nodemailer");
 var cody = require("../index.js");
 
 
@@ -200,6 +201,8 @@ Controller.prototype.hasSubmittedForm = function(finish) {
       // save the values in a database
       form.saveValues(self, "N", finish);
 
+      self.alertFormOwner(anAtom, form);
+
     } else {
       // store the meta object + it's values for re-displaying
       if (typeof self.context.errorForms === "undefined") {
@@ -212,6 +215,66 @@ Controller.prototype.hasSubmittedForm = function(finish) {
     return true;
   }
   return false;
+};
+
+
+Controller.prototype.alertFormOwner = function(atom, form) {
+  var self = this;
+
+  var lan = self.context.page.language;
+  var formDesc = JSON.parse(atom.note);
+
+  if ((typeof formDesc.alert != "undefined") && (formDesc.alert != "")) {
+    var mail = "Dear webmaster,\n\nA user of the app: '" + atom.app.name + "' submitted a form: '" + formDesc.labels[lan] + "' with values:\n\n";
+    for (var iE in form.objects) { var element = form.objects[iE];
+      if (typeof element.options.choices !== "undefined") {
+        mail += element.labels[lan] + ": " + element.options.choices[lan][element.value] + "\n";
+      } else {
+        mail += element.labels[lan] + ": " + element.value + "\n";
+      }
+    }
+    mail += "\n\nYour website.\n";
+    self.sendMail("info@cody-cms.org", formDesc.alert, "Message from " + atom.app.name, mail);
+  }
+};
+
+Controller.prototype.sendMail = function (pFrom, pTo, pSubject, pText, pHtml) {
+  // for the moment we don't wait for the smtp transfer to be completed
+  // so we can't generate error feedback to the user, perhaps make a version with a callback too?
+
+  console.log("Sending email from " + pFrom + " to " + pTo);
+
+  var mailOptions = {
+      from: pFrom, // sender address
+      to: pTo, // list of receivers
+      subject: pSubject // Subject line
+  };
+  var hasText = (typeof pText !== "undefined") && (pText) && (pText !== "");
+  if (hasText) {
+    mailOptions.text = pText;
+  }
+  if ((typeof pHtml !== "undefined") && (pHtml) && (pHtml !== "")) {
+    mailOptions.html = pHtml;
+    mailOptions.generateTextFromHTML = ! hasText;
+  }
+
+  var smtpTransport = nodemailer.createTransport("SMTP", {
+    host: this.context.app.smtp,
+    secureConnection: false,
+    port: 25/*,
+    auth: {
+      user: "user@domain.com",
+      pass: "password"
+    }                   */
+  });
+
+  smtpTransport.sendMail(mailOptions, function (error, response) {
+      if (error) {
+          console.log("Error sending mail: " + error);
+      } else {
+          console.log("Message sent: " + response.message);
+      }
+  });
 };
 
 //

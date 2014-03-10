@@ -8,16 +8,16 @@ var fs = require("fs");
 CalendarController.sqlGetAllAppointments = "select * from appointment";
 CalendarController.sqlGetAppointmentById = "select * from appointment where idappointment = ?";
 CalendarController.sqlGetAppointmentsForDay = "select * from appointment where date = ?";
-CalendarController.sqlGetAppointmentsForRange = "select *, (select count(*) from appointmentcomment where appointmentId = ap.idappointment) as commentcount from appointment ap left join users on users.id = ap.userId where date >= ? and date <= ? order by date";
-CalendarController.sqlGetFutureAppointments = "select * from appointment where date(date) >= date(now()) order by date limit ?";
-CalendarController.sqlInserNewAppointment = "insert into appointment(title, description, date, start, end, location, userId) values(?, ?, ?, ?, ?, ?, ?)";
-CalendarController.sqlInsertWithoutValues = "insert into appointment(title, description, date, start, end, location, userId) values";
+CalendarController.sqlGetAppointmentsForRange = "select *, (select count(*) from appointmentcomment where appointmentId = ap.idappointment) as commentcount from appointment ap left join users on users.id = ap.userId where date(`date`) >= date(?) and date(`date`) <= date(?) order by date";
+CalendarController.sqlGetFutureAppointments = "select * from appointment where date(`date`) >= date(now()) order by date limit ?";
+CalendarController.sqlInserNewAppointment = "insert into appointment(title, description, `date`, start, end, location, userId) values(?, ?, ?, ?, ?, ?, ?)";
+CalendarController.sqlInsertWithoutValues = "insert into appointment(title, description, `date`, start, end, location, userId) values";
 CalendarController.sqlInsertOnlyValues = "(?, ?, ?, ?, ?, ?, ?)";
 CalendarController.sqlDeleteAppointment =  "delete from appointment where idappointment = ?";
-CalendarController.sqlUpdateAppointment = "update appointment set title = ?, description = ?, date = ?, start = ?, end = ?, location = ? where idappointment = ?" ;
+CalendarController.sqlUpdateAppointment = "update appointment set title = ?, description = ?, `date` = ?, start = ?, end = ?, location = ? where idappointment = ?" ;
 
-CalendarController.sqlGetCommentsForAppointment = "select * from appointmentComment ap join users u on u.id = ap.userId where ap.appointmentId = ? order by time";
-CalendarController.sqlSubmitComment = "insert into appointmentComment(appointmentId, userId, time, comment) values(?, ?, ?, ?)";
+CalendarController.sqlGetCommentsForAppointment = "select * from appointmentcomment ap join users u on u.id = ap.userId where ap.appointmentId = ? order by time";
+CalendarController.sqlSubmitComment = "insert into appointmentcomment(appointmentId, userId, time, comment) values(?, ?, ?, ?)";
 CalendarController.sqlDeleteComment = "delete from appointmentcomment where idappointmentComment = ?";
 
 function CalendarController(context) {
@@ -73,6 +73,8 @@ CalendarController.prototype.regularRequest = function(finish) {
 
     } else if (self.isRequest("add")) {
         var title = self.getParam("title");
+        title = (title === "") ? "--" : title;
+
         var description =  self.getParam("description");
         //var date = self.getParam("date");  //this will get the date as a string
         var date = self.getDate("date",new Date()); // this will get the date as an easy to use object
@@ -315,6 +317,7 @@ CalendarController.prototype.doViewAppointment = function(id, finish) {
 
 CalendarController.prototype.doCal =  function(month, year, finish) {
     var self = this;
+
     var thisMonth = new Date(year, month, 1);
     self.context.startIndex = thisMonth.getDay();
     self.context.endIndex = self.context.startIndex + (daysInMonth(month, year)-1);
@@ -325,12 +328,13 @@ CalendarController.prototype.doCal =  function(month, year, finish) {
     self.context.pagename ="month";
     var sqlMonth = (month +1);
 
+
     //construct start- and end date
     var startDate = "";
 
     if (self.context.startIndex > 0) {
-        var curYear = sqlMonth === 1? (year - 1): year;
-        var prevMonth = sqlMonth === 1 ? 12 : month -1;
+        var curYear = month === 0 ? (year - 1): year;
+        var prevMonth = month === 0 ? 11 : month -1;
         var startDay = daysInMonth(prevMonth, curYear) - self.context.startIndex;
         startDate = new Date(curYear, prevMonth, startDay);
     }else {
@@ -348,6 +352,7 @@ CalendarController.prototype.doCal =  function(month, year, finish) {
     }
     console.log("looking for appointments between: " + startDate + " and " + endDate);
     self.query(CalendarController.sqlGetAppointmentsForRange, [startDate, endDate], function(err, res) {
+      console.log(res);
         self.context.days = [];
         if (err) {
             console.log(err);

@@ -188,7 +188,7 @@ Calendar view styling
 .calendar #tblCalendar td { font-size: 14px; border: 1px solid black; height:90px; width:142px; padding: 1px }
 .calendar #tblCalendar td.other{ background-color: #F0F5F5;}
 .calendar #tblCalendar tr:first-child { border-left:1px solid black; border-right: 1px solid black; border-bottom:2px solid black }
-.calendar #tblCalendar div.apItem { margin:0; padding:0 }
+.calendar #tblCalendar div.apItem { margin:0; padding:0; color: red; }
 
 .week table#tblCalendar .appHolder {text-align:center; font-size:14px; background-color:#F0F5F5;cursor:pointer;}
 
