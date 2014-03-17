@@ -82,7 +82,7 @@ Controller.prototype.doCrudRequest = function( finish ) {
 };
 
 Controller.prototype.isRequest = function(theString) {
-  return (this.context) && (this.context.request === theString);
+  return (this.context) && (this.context.request.toUpperCase() === theString.toUpperCase());
 };
 Controller.prototype.setRequest = function(theString) {
   if (this.context) {

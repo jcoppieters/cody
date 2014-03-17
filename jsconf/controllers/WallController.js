@@ -60,8 +60,8 @@ WallController.prototype.doRequest = function( finish ) {
 WallController.prototype.getList = function( finish ) {
   var self = this;
 
-  this.query("select id, note, at, kind from wall order by at desc limit 20", [], function(err, results) {
-    if (err) this.feedBack(false, err);
+  self.query("select id, note, at, kind from wall order by at desc limit 20", [], function(err, results) {
+    if (err) self.feedBack(false, err);
     console.log("got " + results.length + " results");
     self.context.wallList = results;
     finish();

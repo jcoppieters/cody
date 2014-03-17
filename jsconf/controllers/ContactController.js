@@ -110,7 +110,7 @@ ContactController.prototype.sendEmail = function (pFrom, pTo, pSubject, pText) {
 
     //TODO: for production, modify this to use /usr/bin/sendmail
     var smtpTransport = nodemailer.createTransport("SMTP", {
-        host: "relay.skynet.be ", //change this to match your server
+        host: "relay.skynet.be", //change this to match your server
         secureConnection: false,
         port: 25/*,
          auth: {
