@@ -52,16 +52,18 @@ connection.query("SELECT * FROM websites WHERE active='Y' AND ownerconfirmed='Y'
       var row = this;
 
       cody.startWebApp(cody.server, {
-            "name": row.name,
-            "version": row.version,
-            "defaultlanguage": row.defaultlanguage,
-            "hostnames" : row.hostname,
-            "dbuser": row.dbuser,
-            "dbpassword": row.dbpassword,
-            "dbhost": row.dbhost,
-            "datapath": row.datapath,
-            "db": row.db,
-            "controllers": require("./" + row.name + "/controllers/")
+          "name": row.name,
+          "mailFrom": "info@cody-cms.org",
+          "smtp": "smtpmailer.howest.be",
+          "version": row.version,
+          "defaultlanguage": row.defaultlanguage,
+          "hostnames" : row.hostname,
+          "dbuser": row.dbuser,
+          "dbpassword": row.dbpassword,
+          "dbhost": row.dbhost,
+          "datapath": row.datapath,
+          "db": row.db,
+          "controllers": require("./" + row.name + "/controllers/")
         }, next);
 
     }, function() {
