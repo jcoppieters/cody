@@ -14,17 +14,19 @@ header > div > p { display: inline }
 header > div > div { display: inline-block; width: 70%; border: none; background: transparent; margin: 0; padding: 0 }
 header > div > div > p { color: white; margin-right: 20px; }
 header img { display: inline-block; width: 25%; max-width: 200px; border-radius:6px }
-header a { color: white; float: right; padding-top:10px }
+header a { color: white; padding-top:10px }
 header a:hover { text-decoration: none; color: red }
 header span { font-size: 30px; color: yellow; padding-right: 10px }
+header strong { float: right; color: white }
 
 footer { background: black url(../images/pttrn.png) repeat left top; padding: 20px 0; margin: 0 }
 footer div { max-width: 908px; width: 90%; margin: 0 auto; padding: 0; border: none; background: transparent; }
 footer img { display: inline-block }
 footer a { text-decoration: none; text-align: center;
-           display: inline-block; width: 33%; margin: auto; vertical-align: middle }
+           display: inline-block; width: 32%; margin: auto; vertical-align: middle }
 
 section { max-width: 908px; width: 90%; margin: 0 auto; padding: 0; border: 0; background: transparent; }
+section img { max-width: 800px; box-shadow: darkgrey 3px 3px 3px; margin: 8px; }
 
 label { display: inline-block; width: 95px; }
 button { display: inline-block; padding: 10px 20px; border-radius: 4px; border: 0; font-size: 16px; color: #fff; background: #53b478; font-weight: bold; }
