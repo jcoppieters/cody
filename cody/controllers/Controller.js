@@ -241,6 +241,7 @@ Controller.prototype.alertFormOwner = function(atom, form) {
 Controller.prototype.sendMail = function (pFrom, pTo, pSubject, pText, pHtml) {
   // for the moment we don't wait for the smtp transfer to be completed
   // so we can't generate error feedback to the user, perhaps make a version with a callback too?
+  var self = this;
 
   console.log("Sending email from " + pFrom + " to " + pTo);
 
@@ -258,8 +259,9 @@ Controller.prototype.sendMail = function (pFrom, pTo, pSubject, pText, pHtml) {
     mailOptions.generateTextFromHTML = ! hasText;
   }
 
+  console.log("connecting to " + self.context.app.smtp);
   var smtpTransport = nodemailer.createTransport("SMTP", {
-    host: this.context.app.smtp,
+    host: self.context.app.smtp,
     secureConnection: false,
     port: 25/*,
     auth: {

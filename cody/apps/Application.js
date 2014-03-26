@@ -28,7 +28,7 @@ function Application(config) {
 
   //TODO: don't we have to return errors if some of these are missing ?
   this.name = config.name || "cody";
-  this.version =  config.version || "v0.1";
+  this.version =  config.version || "v0.2";
   this.datapath =  config.datapath || "./data";
 
   this.dbuser = config.dbuser || "cody";
