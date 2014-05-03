@@ -61,14 +61,16 @@ Controller.prototype.doCrudRequest = function( finish ) {
   } else if (self.isRequest("save")) {
     self.model.scrapeFrom(self);
     self.model.doSave( this.getId(), function() {
-      self.setRequest("list");
-      self.model.doList( finish );
+      self.nextRequest("list", finish);
+      //self.setRequest("list");
+      //self.model.doList( finish );
     });
 
   } else if (self.isRequest("delete")) {
     self.model.doDelete( this.getId(), function() {
-      self.setRequest("list");
-      self.model.doList( finish );
+      self.nextRequest("list", finish);
+      //self.setRequest("list");
+      //self.model.doList( finish );
     });
 
   } else if (this.isRequest("edit")) {
