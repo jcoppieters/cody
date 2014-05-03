@@ -32,6 +32,7 @@ module.exports = WallController;
 // we get this function whenever Cody thinks we're responsible for handling the http request
 WallController.prototype.doRequest = function( finish ) {
   var self = this;
+  var topic = self.context.page.link;
 
   if (self.isRequest("delete")) {
     self.query("delete from wall where id = ?", [this.getParam("id", 0)], function(err, result) {
@@ -39,13 +40,13 @@ WallController.prototype.doRequest = function( finish ) {
       self.getList(finish);
     });
 
-  } else if ((self.isRequest("Ask")) || (self.isRequest("Remark"))) {
+  } else if ((self.isRequest("Ask")) || (self.isRequest("Remark")) || (self.isRequest("Vertel")) || (self.isRequest("Opmerking"))) {
     // get our 2 main parameters
     console.log("request" + self.context.request);
-    var kind = (this.isRequest("Ask")) ? "Q" : "R";
+    var kind = ((this.isRequest("Ask")) || (this.isRequest("Vertel"))) ? "Q" : "R";
     var note = this.getParam("note", "");
 
-    self.query("insert into wall (at, note, kind) values (now(), ?, ?)", [note, kind], function(err, result) {
+    self.query("insert into wall (at, note, kind, topic) values (now(), ?, ?, ?)", [note, kind, topic], function(err, result) {
       if (err) self.feedBack(false, err);
       self.getList(finish);
     });
@@ -60,7 +61,7 @@ WallController.prototype.doRequest = function( finish ) {
 WallController.prototype.getList = function( finish ) {
   var self = this;
 
-  self.query("select id, note, at, kind from wall order by at desc limit 20", [], function(err, results) {
+  self.query("select id, note, at, kind from wall where topic = ? order by at desc limit 200", [self.context.page.link], function(err, results) {
     if (err) self.feedBack(false, err);
     console.log("got " + results.length + " results");
     self.context.wallList = results;

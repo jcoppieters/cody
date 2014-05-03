@@ -1,0 +1,68 @@
+body { margin: 0; padding: 0; font-family: helvetica, arial, sans-serif }
+p { display: inline; font-size: 15px }
+h1 { font-size: 45px; color: white; font-weight: bold; width: 100%; text-align: left;
+     display: block; margin: 20px 0 30px 0 }
+h2 { font-size: 45px; color: #53b478; font-weight: bold;  margin: 25px 0 15px }
+div p { color: #333334; display: block }
+
+div { padding: 5px 20px 5px 20px; margin: 0 0 20px; font-size: 17px  }
+
+header { background: black url(../pttrn.jpg) repeat left top; color: white; margin: 10px 0 0 0;
+         padding: 10px 0; height: 146px; min-width: 480px; box-shadow: 3px 3px 3px darkgrey  }
+header > div { background: transparent; border: none; padding: 0; margin: 0 auto }
+header > div > p { color: white; margin-right: 20px; }
+header a { color: white; padding-top:10px }
+header a:hover { text-decoration: none; color: red }
+header span { font-size: 30px; color: yellow; padding-right: 10px }
+header strong { float: right; color: white }
+header nav a { border-left: solid 1px white; margin-left: 9px; padding-left: 14px; padding-top: 0 }
+header nav a:first-child { border-left: none; margin-left: 9px; padding-left: 0 }
+header section { float: right; width: 200px; }
+header div { padding-left: 20px; margin: 0 }
+
+footer { background: black url(../bottom.jpg) repeat left top; padding: 10px 0; margin: 0; height: 38px;
+         box-shadow: 3px 3px 3px darkgrey; background-position-y: -30px; }
+footer div { margin: 0 0 0 40px; color: white; padding: 0; border: none; background: transparent; }
+footer img { display: inline-block }
+footer a { text-decoration: none; text-align: center;
+           display: inline-block; width: 32%; margin: auto; vertical-align: middle }
+
+.content { margin-top: 10px }
+
+.content section { margin: 0; width: 670px;  vertical-align: top; }
+.content div { display: inline-block; width: 680px }
+.content aside { display: inline-block; vertical-align: top; margin-top: 10px }
+.content aside img { width: 280px; display: inline-block; box-shadow: 3px 3px 3px darkgrey;
+            vertical-align: top; margin-left: 15px; margin-bottom: 15px; }
+
+
+label { display: inline-block; width: 95px; }
+button { display: inline-block; padding: 10px 20px; border-radius: 4px; border: 0; font-size: 16px; color: #fff; background: #53b478; font-weight: bold; }
+
+input[type=text] { width: 400px; font-size: 14px; border-radius: 4px; height: 24px; border: darkgrey 1px solid }
+form div { margin: 7px 0 5px 0; border: none; padding: 0 }
+div.radios { display: inline-block; }
+div.radios label { width: inherit; margin-left: 3px; margin-right: 20px }
+#action_buttons { padding-left: 107px }
+fieldset { border: none }
+label.error { width:400px; color:red; display: block;  }
+
+/* wall */
+.wall .warning { color: red;font-size: 16pt; }
+.wall textarea { display: block }
+.wall ul { list-style: none; padding: 0 }
+.wall li { margin: 16px 0 10px 0; padding: 12px 0 0 0; border-top: solid 1px darkgrey; }
+.wall li b { color: darkblue }
+.wall span { font-weight: bold }
+.wall li.R { color: red }
+.wall span.R { font-size: 15px }
+.wall a img { margin-left: 8px }
+.wall em.R { display: block; padding-left: 10px; }
+.wall small { font-size: 13px; color: darkblue }
+
+.wall #email { width: 300px; }
+
+form#logon label { width: 120px; display: block }
+form#logon input { width: 120px; display: block; border-radius: 4px; height: 24px }
+form#logon input[type=submit] { width: inherit; margin-top: 15px }
+form#logon div { background-color: transparent; margin-top: 0 }

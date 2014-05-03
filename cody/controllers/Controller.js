@@ -53,26 +53,29 @@ Controller.prototype.doRequest = function( finish ) {
 Controller.prototype.doCrudRequest = function( finish ) {
   var self = this;
 
+  if (typeof self.model === "undefined") return false;
+
   if (self.isRequest("") || this.isRequest("list")) {
-    self.doList( finish );
+    self.model.doList( finish );
 
   } else if (self.isRequest("save")) {
-    self.doSave( this.getId(), function() {
+    self.model.scrapeFrom(self);
+    self.model.doSave( this.getId(), function() {
       self.setRequest("list");
-      self.doList( finish );
+      self.model.doList( finish );
     });
 
   } else if (self.isRequest("delete")) {
-    self.doDelete( this.getId(), function() {
+    self.model.doDelete( this.getId(), function() {
       self.setRequest("list");
-      self.doList( finish );
+      self.model.doList( finish );
     });
 
   } else if (this.isRequest("edit")) {
-    self.doGet( this.getId(), finish);
+    self.model.doGet( this.getId(), finish);
 
   } else if (this.isRequest("new")) {
-    self.doGet( NaN, finish );
+    self.model.doGet( NaN, finish );
 
   } else {
     return false;
@@ -110,11 +113,41 @@ Controller.prototype.getId = function(defaultValue) {
 
 
 //
-// ask another controller to handle the current request
+// ask another controller to handle the current (changed) request
+//   = internal redirect ( <-> this.redirect )
 //
 Controller.prototype.delegate = function(link) {
   this.close();
   this.app.redirect(this.context, link);
+};
+
+//
+// Ask same controller/page to handle another request
+//  prevents post requests from being re-executed
+//   = external redirect
+//
+Controller.prototype.nextRequest = function(err, request, finish) {
+  var self = this;
+  // if only 2 parameters, assume that no "err" was passed.
+  if (typeof finish === "undefined") {
+    finish = request; request = err; err = null;
+  }
+
+  if (err) {
+    // don't do the redirect... let's hope the current view is going to display the error
+    //  change the view to error.ejs ??
+    self.feedback(false, err);
+    finish();
+  } else {
+    self.redirect(this.context.page.getURL() + "/" + request, finish);
+  }
+};
+
+// real redirect handled by the server
+//   = external redirect ( <-> this.delegate )
+Controller.prototype.redirect = function(url, finish) {
+  this.context.res.redirect(url);
+  if (typeof finish === "function") finish("");
 };
 
 
@@ -402,6 +435,8 @@ Controller.prototype.gen = function( theContent, theHeader ) {
 Controller.prototype.feedBack = function(success, message) {
   this.context.status = (success) ? "success" : "error";
   this.context.message = message;
+  this.context.xmessage = message;
   this.context.success = success;
 };
+Controller.prototype.feedback = Controller.prototype.feedBack;
 

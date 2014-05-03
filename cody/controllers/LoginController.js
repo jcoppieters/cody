@@ -102,7 +102,7 @@ LoginController.prototype.tryLogin = function( finish ) {
         // remember the user in the context and session
         self.setLogin(aUser);
         aUser.clearBadLogins(self, function() {
-          self.continueRequest();
+          self.continueRequest( finish );
         });
         
       } else {
@@ -120,7 +120,7 @@ LoginController.prototype.tryLogin = function( finish ) {
 };
 
 
-LoginController.prototype.continueRequest = function() {
+LoginController.prototype.continueRequest = function(finish) {
   var self = this;
   var anApp = self.app;
   
@@ -128,6 +128,14 @@ LoginController.prototype.continueRequest = function() {
   var aSession = self.context.session;
   if (aSession && aSession.pendingContext) {
     console.log("LoginController.tryLogin -> found pending session after login");
+
+    /* we could have Express handle this too, but still some research to do
+      request({ url: req.host + req.path, headers: req.headers, body: req.body }, function(err, remoteResponse, remoteBody) {
+            if (err) { return res.status(500).end('Error'); }
+            res.writeHead(...); // copy all headers from remoteResponse
+            res.end(remoteBody);
+      });
+    */
     
     // hand off control to pending controller and adapt our context, remove pending request
     self.context.copyFromMini(aSession.pendingContext);
@@ -135,12 +143,15 @@ LoginController.prototype.continueRequest = function() {
     anApp.handToController(self.context);
     
   } else {
+    // no pending request, send to "logged in" page
     console.log("LoginController.tryLogin -> found no pending session after login -> go to 'logged-in page'");
 
-    // no pending request, send to "logged in" page
-    var aPath = new cody.Path(self.loggedInUrl, self.app.defaultlanguage);
-    var aContext = anApp.buildContext( aPath, self.context.req, self.context.res );
-    anApp.handToController(aContext);
+    // perhaps "loggedInUrl" in login request or take default of this controller.
+    var url = self.getParam("loggedInUrl", self.loggedInUrl);
+
+    // used to be internal redirect, now we just let the browser handle everything.
+    self.redirect(url);
+    finish("");
   }
 };
 

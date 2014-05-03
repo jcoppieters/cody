@@ -40,12 +40,19 @@ function startWebApp(server, config, done) {
 
         // mysite.com/nl
         thisApp.all("/" + app.languages[iL].id, function (req, res) {
-          app.servePage(req, res);
+          console.log("------------------------------------------------------------------- " + new Date() + "--");
+          console.log("-- redirecting to " + "/" + app.languages[iL].id + "/");
+          res.redirect("/" + app.languages[iL].id + "/");
+          // app.servePage(req, res);
         });
       }
-      // mysite.com
+
+      // no language -> mysite.com
       thisApp.all("/", function (req, res) {
-        app.servePage(req, res);
+        console.log("------------------------------------------------------------------- " + new Date() + "--");
+        console.log("-- redirecting to " + "/" + app.defaultlanguage + "/");
+        res.redirect("/" + app.defaultlanguage + "/");
+        //app.servePage(req, res);
       });
 
 

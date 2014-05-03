@@ -1,5 +1,6 @@
 module.exports.Application = require("./apps/Application.js");
 
+module.exports.Model = require("./models/Model.js");
 module.exports.Atom = require("./models/Atom.js");
 module.exports.Item = require("./models/Item.js");
 module.exports.Page = require("./models/Page.js");

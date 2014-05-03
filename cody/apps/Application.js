@@ -149,8 +149,8 @@ Application.findFirst = function(theList) {
 
 // Daisy chain operators
 // - list should be an array
-// - iterator is a function that should the passed function when done
-//   if it passes an error to the function the loop end here
+// - iterator is a function that should call the passed function when done
+//   if it passes an error to the function the loop ends here
 // - finished is a function that is called when everything is done with no parameter
 //   or that is called when the first error occurs
 //
@@ -337,6 +337,7 @@ Application.prototype.renderView = function( context ) {
   context.res.render(viewfile, context);
 };
 
+// internal redirect
 Application.prototype.redirect = function(context, redirectTo) {
   var self = this;
 
@@ -422,7 +423,10 @@ Application.prototype.fetchLanguages = function(done) {
   
   cody.Page.loadLanguages(self.connection, function(result) {
     for (var i in result) {
-      if (result.hasOwnProperty(i)) { self.languages.push(result[i]); }
+      if (result.hasOwnProperty(i)) {
+        self.languages.push(result[i]);
+        if (typeof self.defaultlanguage === "undefined") self.defaultlanguage = result[i].id;
+      }
     }
     self.log("Application.fetchLanguages", "fetched " + result.length + " languages");
     

@@ -1,0 +1,72 @@
+<!doctype html>
+
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="<%=page.language%>"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="<%=page.language%>"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="<%=page.language%>"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="<%=page.language%>">
+<!--<![endif]-->
+
+<% include header.ejs %>
+
+<body id="page<%= page.itemId %>">
+
+    <% include top.ejs %>
+
+    <section>
+      <% if (typeof submitted != "undefined") { %>
+        <%if (page.language == "nl") { %>
+          <h2>Dank U!</h2>
+          <div>
+            <p>We houden U op de hoogte en sturen je later nog een email ter bevestiging.</p>
+            <p>We zien je zowiezo op 20 maart in Howest te Brugge.</p>
+          </div>
+        <% } else { %>
+          <h2>Thank you!</h2>
+          <div>
+            <p>We will keep you informed and send you an email as confirmation in the next coming days.</p>
+            <p>See you on March the 20th at Howest Brugge.</p>
+          </div>
+        <% } %>
+      <% } %>
+
+      <%- render({intro: 'N', not_kind: 'M'}) %>
+
+      <% if (typeof submitted === "undefined") { %>
+        <%if (page.language == "nl") { %>
+          <h2>Registreer</h2>
+          <div>
+            <p>U hoeft enkel hieronder te registreren. Studenten Howest betalen niets,
+              anders betaalt U 10€ <br>
+              op rekening BE22 0012 6531 1547, BIC: GEBABEBB op naam van Howest
+              met mededeling BDB1311-JSCONF14</p>
+
+            <%- render({intro: 'N', kind: 'M'}) %>
+
+            <p>Aangezien het aantal deelnemers beperkt is, hadden we graag geweten
+              indien je geregistreerd was en toch niet kan komen.
+              Op deze manier geef je aan de mensen die op de wachtlijst staan toch nog een kans om te komen.<p>
+
+          </div>
+        <% } else { %>
+          <h2>Register</h2>
+          <div>
+            <p>You only have to register here. Entrance for Howest students is free,
+               to all other people we ask to pay 10€ <br>
+              on account BE22 0012 6531 1547, BIC: GEBABEBB of Howest with the message BDB1311-JSCONF14</p>
+               </p>
+
+            <%- render({intro: 'N', kind: 'M'}) %>
+
+            <p>As the number of participants is limited, please let us know if you registered and are unable to come,
+              this way you are not blocking people on the waiting list.<p>
+
+          </div>
+       <% } %>
+      <% } %>
+    </section>
+
+    <% include footer.ejs %>
+
+</body>
+</html>

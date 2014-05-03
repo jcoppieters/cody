@@ -11,7 +11,15 @@ var nodemailer = require("nodemailer");
 
 function ContactController(context) {
   console.log("ContactController.constructor -> page(" + context.page.itemId + ") = " + context.page.title + ", request = " + context.request);
-  
+
+  // make a contact model
+  this.model = new cody.Model(this, "contacts", "id",
+    ["name", "cie", "title", "email", "phone", "origin", "target", "active", "nomail"],
+    [ "", "", "", "", "", "", "", "Y", "N" ],
+    ["name","target"]);
+
+  this.model.addRef("targets", "select id, name from targets order by name");
+
 	// init inherited controller
 	cody.Controller.call(this, context);
 }
@@ -22,114 +30,59 @@ module.exports = ContactController;
 
 
 ContactController.prototype.doRequest = function( finish ) {
+  var self = this;
 
-  if (! this.doCrudRequest(finish)) {
+  if (this.doCrudRequest(finish)) {
+    // handled by std controller
+
+  } else if (this.isRequest("mail")) {
+    this.doMails(finish);
+
+  } else {
     cody.Controller.prototype.doRequest.call(this, finish);
+
   }
 };
 
+ContactController.prototype.doMails = function (finished) {
+  this.sendTargetMails(finished, this.getParam("q.target", ""), "johan577@mac.com", "testing", "cody-cms.org testing");
+}
 
 
-ContactController.prototype.doDelete = function( theId, finish ) {
+ContactController.prototype.sendTargetMails = function (finished, target, pFrom, pSubject, pText) {
   var self = this;
-  
-  this.query("delete from contacts where id = ?", [], function() {
-    if (err) {
-      self.feedBack(false, "Failed to delete the contact");
-    } else {
-      self.feedBack(true, "Successfully deleted the contact");
+
+  var p = "";
+  var ps = [];
+  if (Array.isArray(target)) {
+    for(var it in target) {
+      p = p + ((it == 0) ? "where " : " or ") + "target like ?";
+      ps.push("%"+target[it]+"%");
     }
-    finish();
-  });
-};
+  }
+  console.log("Sending email from " + pFrom + " to targets: " + target + " -> " + p);
 
-	
-ContactController.prototype.doSave = function( theId, finish ) {
-  var self = this;
-  cody.Contact.getContact( self, theId, function(aContact) {
-    aContact.scrapeFrom(self);
-    aContact.doUpdate(self, function() {
-      if (aContact.id === self.getLoginId()) {
-        self.setLogin(aContact);
+  self.query("select * from contacts " + p, ps, function(err, result) {
+    if (err) { console.log("error selecting contacts for target "+target + " -> " + err); } else {
+
+      for (var iC in result) {
+        var C = result[iC];
+        //self.sendMail (pFrom, C.email, pSubject, pText);
+        console.log (pFrom + " - " + C.email + " - " +  pSubject + " - " +  pText);
+
       }
-      self.feedBack(true, "Successfully saved the contact");
-      finish();
-    });    
-  });
-};
-
-
-ContactController.prototype.doGet = function(id, finish) {
-  var self = this;
-  
-  self.doGetRefs( function() {
-    if (isNaN(id) || (id <= 0)) {
-      self.context.contact = {id: 0};
-      finish();
-    } else {
-      this.query("select * from contacts where id = ?", [id], function(err, result) {
-        if (result.length > 0)
-          self.context.contact = result[0];
-        else
-          self.context.contact = {};
-        finish();
-      });
     }
   });
-};
-
-
-ContactController.prototype.doGetRefs = function(finish) {
-  var self = this;
-
-  this.query("select * from targets order by name", function(err, result) {
-    self.context.targets = result;
-    finish();
-  });
-};
-
-ContactController.prototype.doList = function(finish) {
-  var self = this;
-
-  this.query("select * from contacts ", [], function(err, result) {
-    self.context.contacts = result;
-    
-    self.doGetRefs(finish);
-  });
-};
-
-ContactController.prototype.sendEmail = function (pFrom, pTo, pSubject, pText) {
-    console.log("Sending email from " + pFrom + " to " + pTo);
-
-    var mailOptions = {
-        from: pFrom, // sender address
-        to: pTo, // list of receivers
-        subject: pSubject, // Subject line
-        html: pText // HTML body
-    };
-
-    //TODO: for production, modify this to use /usr/bin/sendmail
-    var smtpTransport = nodemailer.createTransport("SMTP", {
-        host: "relay.skynet.be", //change this to match your server
-        secureConnection: false,
-        port: 25/*,
-         auth: {
-         contact: "contact@domain.com",
-         pass: "password"
-         }                   */
-    });
-
-    smtpTransport.sendMail(mailOptions, function (error, response) {
-        if (error) {
-            console.log("Error sending mail: " + error);
-        } else {
-            console.log("Message sent: " + response.message);
-        }
-    });
 
 };
 
 /*
+create table targets (
+ id char(1) not null primary key,
+ name varchar(63)
+ );
+insert into targets values ('j', 'jsconf'), ('s', 'Stage'), ('c', 'Cody');
+
 create table contacts (
  id int(11) not null primary key auto_increment,
  cie varchar(127),
@@ -142,6 +95,10 @@ create table contacts (
  active char(1) default 'Y',
  nomail char(1) default 'N'
 );
+alter table contacts add column origin varchar(15);
+alter table contacts add column target varchar(31);
+alter table contacts add column active char(1) default 'Y';
+alter table contacts add column  nomail char(1) default 'N';
 
 insert into contacts (cie, name,title, email, phone) values('4U Solutions BVBA','Gekiere Ruben', 'zaakvoerder', 'ruben@gekiere.com', '+32 494232018');
 insert into contacts (cie, name,title, email, phone) values('Accenture','De troyer Stephanie', 'Recruiting', 'stephanie.de.troyer@accenture.com', '+32 2 226 7015');
