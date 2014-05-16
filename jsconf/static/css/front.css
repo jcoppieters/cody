@@ -32,7 +32,7 @@ label { display: inline-block; width: 95px; }
 button { display: inline-block; padding: 10px 20px; border-radius: 4px; border: 0; font-size: 16px; color: #fff; background: #53b478; font-weight: bold; }
 
 input[type=text] { width: 400px; font-size: 14px; border-radius: 4px; height: 24px; border: darkgrey 1px solid }
-form div { margin: 7px 0 5px 0; border: none; padding: 0 }
+form div { margin: 7px 0 15px 0; border: none; padding: 0 }
 div.radios { display: inline-block; }
 div.radios label { width: inherit; margin-left: 3px; margin-right: 20px }
 #action_buttons { padding-left: 107px }
@@ -45,3 +45,12 @@ label.error { width:400px; color:red; display: block; margin-left: 80px }
 .wall li { margin: 12px 0 12px 0; padding: 0 }
 .wall span { font-weight: bold }
 .wall span.Q { color: red }
+
+#search > div > span { margin: 0 8px 0 3px ; }
+#records { border-collapse: collapse; width: 99%; margin-top: 15px }
+#records a { text-decoration: underline; color: inherit; }
+#records th { border-bottom:solid 2px green; border-top:solid 2px green; padding: 5px; text-align: left }
+#records td { padding: 5px; font-size: 12px; }
+#records .inactive td { color: darkgray }
+#records tr:nth-child(odd) { background-color: white }
+

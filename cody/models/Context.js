@@ -37,7 +37,7 @@ function Context(path, page, app, req, res) {
       this.params[b] = req.body[b];
     }
   }
-  this.request = this.params.request || path.request || "";
+  this.request = this.params.request || path.request || page.item.defaultrequest || "";
 
   this.status = "success";
   this.message = "";
@@ -297,6 +297,17 @@ Context.prototype.toSession = function(paramName, value) {
 
 Context.prototype.getParam = function(paramName, defaultValue) {
   var x = this.params[paramName];
+
+  if (typeof defaultValue === "boolean") {
+    x = (x === "true") || (x === "Y") || (x === "1") || (x === 1);
+  };
+
+  if (typeof defaultValue === "number") {
+    if ((typeof x === "undefined") || (x === "")) return defaultValue;
+    var tmp = parseFloat(x);
+    x = (tmp % 1 === 0) ? parseInt(x) : tmp;
+  };
+
   return (typeof x === "undefined") ? defaultValue : x;
 };
 

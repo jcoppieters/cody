@@ -66,3 +66,13 @@ form#logon label { width: 120px; display: block }
 form#logon input { width: 120px; display: block; border-radius: 4px; height: 24px }
 form#logon input[type=submit] { width: inherit; margin-top: 15px }
 form#logon div { background-color: transparent; margin-top: 0 }
+
+/* photos */
+.photos section { display: block; border-top: solid 1px darkgrey }
+.photos section article img { width: 600px; display: inline-block; vertical-align: top; margin: 10px 5px 5px 5px; box-shadow: 3px 3px 3px darkgrey }
+.photos section article div { width: 400px; display: inline-block; vertical-align: top }
+.photos section article span { display: block; width: 300px }
+.photos section article span.title { font-weight: bold }
+.photos section article span.at { font-style: italic; font-size: 11px; margin-top: 10px; margin-bottom: 10px }
+
+.photos label { vertical-align: top }

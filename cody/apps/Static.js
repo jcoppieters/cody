@@ -14,7 +14,8 @@ var path = ".";
 
 var cache = {},
     nrCache = 0,
-    maxCache = 1; //30
+    maxCache = 1, //1 is good for developement -> 30 seems to be reasonable for small websites.
+    maxCacheAge = 86400;
 
 
 function Static(req, res, appFolder) {
@@ -27,7 +28,7 @@ function Static(req, res, appFolder) {
   // - other application could be very small (10? 20?)
 
   //if (typeof cacheSize !== "undefined") {
-  //  this.maxCache = cacheSize;
+  //  cache[appFolder].maxCache = cacheSize;
   //}
 }
 module.exports = Static;
@@ -70,19 +71,24 @@ Static.prototype.addCache = function (filename, file) {
   // console.log("Static -> added to cache: " + filename);
 };
 
+
 Static.prototype.tryCache = function (filename) {
   var file = cache[filename];
   if (file) {
     // add 1 to nr of uses
     var type = mime.lookup(filename);
     console.log("Static.serve -> cache hit: " + filename + " - " + file.length + " bytes as " + type);
-    this.response.writeHead(200, { "Content-Type": type });
+    this.response.writeHead(200, {
+      "Content-Type": type,
+      "Cache-Control": "public, max-age=" + maxCacheAge // thanks Aselbie
+    });
     this.response.write(file, "binary");
     this.response.end();
     return true;
   }
   return false;
 };
+
 
 Static.prototype.serve = function () {
   var self = this;
@@ -130,7 +136,10 @@ Static.prototype.serve = function () {
 
         var type = mime.lookup(filename);
         console.log("Static.serve -> sending: " + filename + " - " + file.length + " bytes as " + type);
-        self.response.writeHead(200, { "Content-Type": type });
+        self.response.writeHead(200, {
+          "Content-Type": type,
+          "Cache-Control": "public, max-age=" + maxCacheAge
+        });
         self.response.write(file, "binary");
         self.response.end();
         

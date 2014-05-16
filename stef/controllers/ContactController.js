@@ -18,12 +18,12 @@ function ContactController(context) {
     id: {name: "id", def: 0},
     cols: [
       {name: "name", def: "", list: true, sort: "asc", q: "like"},
-      {name: "cie", def: "", q: "like", list: true},
-      {name: "title", def: "", list: false},
-      {name: "target", def: "", list: false, q: "like"},
+      {name: "cie", def: "", q: "like"},
+      {name: "title", def: "", list: true},
+      {name: "target", def: "", list: true, q: "like"},
       {name: "email", def: "", list: true},
       {name: "phone", def: "", list: true},
-      {name: "origin", def: "", list: false},
+      {name: "origin", def: "", list: true},
       {name: "active", def: "Y", list: true},
       {name: "nomail", def: "N"}]
   });

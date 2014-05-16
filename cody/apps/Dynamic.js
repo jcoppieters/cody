@@ -10,7 +10,9 @@ var libpath = require("path"),
     url = require("url"),
     mime = require("mime"),
     cody = require("../index.js");
- 
+
+var maxCacheAge = 600;  // 10 minutes  ???
+
 
 function Dynamic(req, res, path) {
   this.request = req;
@@ -50,7 +52,10 @@ Dynamic.prototype.serve = function () {
 
         var type = mime.lookup(filename);
         console.log("Dynamic.serve -> reading: " + filename + " - " + file.length + " bytes as " + type);
-        self.response.writeHead(200, { "Content-Type": type });
+        self.response.writeHead(200, {
+          "Content-Type": type,
+          "Cache-Control": "public, max-age=" + maxCacheAge
+        });
         self.response.write(file, "binary");
         self.response.end();
       });

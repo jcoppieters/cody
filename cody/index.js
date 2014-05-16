@@ -16,6 +16,7 @@ module.exports.Controller = require("./controllers/Controller.js");
 module.exports.ContentController = module.exports.Controller;
 module.exports.LoginController = require("./controllers/LoginController.js");
 module.exports.UserController = require("./controllers/UserController.js");
+// module.exports.ContactController = require("./controllers/ContactController.js");
 
 module.exports.DashboardController = require("./controllers/DashboardController.js");
 module.exports.TreeController = require("./controllers/TreeController.js");

@@ -60,17 +60,13 @@ Controller.prototype.doCrudRequest = function( finish ) {
 
   } else if (self.isRequest("save")) {
     self.model.scrapeFrom(self);
-    self.model.doSave( this.getId(), function() {
+    self.model.doSave( function() {
       self.nextRequest("list", finish);
-      //self.setRequest("list");
-      //self.model.doList( finish );
     });
 
   } else if (self.isRequest("delete")) {
     self.model.doDelete( this.getId(), function() {
       self.nextRequest("list", finish);
-      //self.setRequest("list");
-      //self.model.doList( finish );
     });
 
   } else if (this.isRequest("edit")) {
@@ -100,14 +96,16 @@ Controller.prototype.getRequest = function() {
 
 
 Controller.prototype.getId = function(defaultValue) {
-  if (typeof defaultValue === "undefined") defaultValue = -1;
+  // if there is a model connected to this controller, use the attributes of model.id
+  var idname = (typeof this.model !== "undefined") ? this.model.id.name : "id";
+  if (defaultValue === undefined) defaultValue = (typeof this.model !== "undefined") ? this.model.id.def : -1;
 
-  var x = this.context.getParam("id");
+  var x = this.context.getParam(idname);
   x = (typeof x === "undefined") ? NaN : parseInt(x, 10);
 
   if (isNaN(x)) {
     x = this.context.path.id;
-    x = (typeof x === "undefined") ? NaN : parseInt(x, 10);
+    x = (x === undefined) ? NaN : parseInt(x, 10);
   }
 
   return isNaN(x) ? defaultValue : x;

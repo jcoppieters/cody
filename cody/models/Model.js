@@ -6,33 +6,20 @@
 var cody = require("../index.js");
 console.log("loading " + module.id);
 
-function Model(theController, tableName, idName, colNames, defValues, qNames) {
+function Model(theController, options) {
   this.controller = theController;
-  this.tableName = tableName;
-  this.idName = idName;
-  this.colNames = colNames;
-  this.defValues = defValues;
-  this.qNames = (typeof qNames === "undefined") ? [] : qNames;
+  theController.model = this;
 
-  // - make question mark list, as long as there are colNames
-  // - make an update list "colname = ?, ..."
-  // - make an valuelist, init with defaultList
-  this.qList = [];
-  this.valueList = [];
-  var updateArr = [];
+  this.tableName = options.tableName;
+  this.id = options.id || {name: "id", def: 0};
+  this.cols = options.cols;
 
-  for (var iN in colNames) {
-    this.qList.push("?");
-    updateArr.push(colNames[iN]+"=?");
-    this.valueList[iN] = defValues[iN];
-  }
-  this.updateList = updateArr.join(", ");
 
-  // array with objects containing per reference table
-  //  - (name, query) to be fetched and set upon "doGet"
+  // refs: array with objects containing per reference table
+  //  - (name, query) to be fetched and set upon "doGet"  or
   //  - (name, array) to be set upon "doGet"
   //
-  this.refs = [];
+  this.refs = options.refs || [];
 }
 module.exports = Model;
 
@@ -41,61 +28,116 @@ Model.prototype.addRef = function(name, list) {
   this.refs.push({name: name, list: list});
 };
 
+Model.prototype.getId = function() {
+  return (typeof this.id.val !== "undefined") ? this.id.val : this.id.def;
+};
+Model.prototype.getString = function() {
+  var n = this.cols.reduce(function(prev, curr) { return prev + ((curr.name === "name") ? curr.val : ""); }, "");
+  return n + " [" + this.id.name + "=" + this.id.val + "]";
+};
+Model.prototype.getEmpty = function() {
+  var r = {};
+  r[this.id.name] = this.id.def;
+  return r;
+};
+
+
+Model.prototype.getNameList = function() {
+  return this.cols
+    .map(function(ele) { return ele.name; })
+    .join(", ");
+};
+Model.prototype.getUpdateList = function() {
+  return this.cols
+    .map(function(ele) { return ele.name + "=?"; })
+    .join(", ");
+};
+Model.prototype.getListList = function() {
+  return this.cols
+    .filter(function(ele) { return ele.list; })
+    .map(function(ele) { return ele.name; })
+    .join(", ");
+};
+Model.prototype.getOrderBy = function() {
+  return this.cols
+    .filter(function(ele) { return ele.sort; })
+    .map(function(ele) { return ele.name + " " + ele.sort; })
+    .join(", ");
+};
+Model.prototype.getWhere = function() {
+  var wl = this.cols
+    .filter(function(ele) { return ele.q; })
+    .map(function(ele) { return ele.name+" "+ele.q+" ?"; })
+    .join(" and ");
+
+  return (wl.length === 0) ? "" : " where " + wl;
+};
+
+
+Model.prototype.makeInsert = function() {
+  var qs = this.cols.map(function(ele) { return "?"; }).join(",");
+  return "insert into " + this.tableName + " (" + this.getNameList() + ") " + " values (" + qs + ")";
+};
+Model.prototype.makeUpdate = function() {
+  return "update " + this.tableName + " set " + this.getUpdateList() + " where " + this.id.name + " = ?";
+};
+Model.prototype.makeSelect = function() {
+  return "select " + this.id.name + "," + this.getNameList() + " from " + this.tableName + " where " + this.id.name + " = ?";
+};
+Model.prototype.makeDelete = function() {
+  return "delete from " + this.tableName + " where " + this.id.name + " = ?";
+};
+
+Model.prototype.makeList = function() {
+  return "select " + this.id.name + "," + this.getListList() + " from " + this.tableName + this.getWhere() + " order by " + this.getOrderBy();
+};
+
 
 Model.prototype.scrapeFrom = function() {
-  for (var iN in this.colNames) {
-    this.valueList[iN] = this.controller.getParam(this.colNames[iN], this.defValues[iN]);
-    if (Array.isArray(this.valueList[iN])) this.valueList[iN] = this.valueList[iN].join(",");
-    // console.log(this.colNames[iN] + " = " + this.valueList[iN]);
-  }
+  var self = this;
+
+  self.cols.forEach(function(ele) {
+    ele.val = self.controller.getParam(ele.name, ele.def);
+    if (Array.isArray(ele.val)) ele.val = ele.val.join(",");
+    console.log("scraped: " + ele.name + " = " + ele.val);
+  });
+  self.id.val = self.controller.getParam(self.id.name, self.id.def);
+  console.log("scraped: " + self.getString());
 };
 
 
 Model.prototype.doDelete = function( theId, finish ) {
   var self = this;
 
-  this.controller.query("delete from " + self.tableName + " where id = ?", [theId], function() {
+  self.controller.query(self.makeDelete(), [theId], function(err, result) {
     if (err) {
-      this.controller.feedBack(false, "Failed to delete the record " + theId + " from " + self.tableName);
+      self.controller.feedBack(false, "Failed to delete the record " + theId + " from " + self.tableName);
     } else {
-      this.controller.feedBack(true, "Successfully deleted a record " + theId + " from " + self.tableName);
+      self.controller.feedBack(true, "Successfully deleted a record " + theId + " from " + self.tableName);
     }
     finish();
   });
 };
 
 
-Model.prototype.makeInsert = function() {
-  return "insert into " + this.tableName +
-    " (" + this.colNames.join(",") + ") " +
-    " values (" + this.qList.join(",") + ")";
-};
-Model.prototype.makeUpdate = function() {
-  return "update " + this.tableName +
-    " set " + this.updateList +
-    " where " + this.idName + " = ?";
-};
-Model.prototype.makeSelect = function() {
-  return "select * from " + this.tableName + " where id = ?";
-};
-Model.prototype.makeList = function() {
-  return "select * from " + this.tableName + " order by " + this.colNames[1];
-};
 
 
-Model.prototype.doSave = function( theId, finish ) {
+Model.prototype.doSave = function( finish ) {
   var self = this;
 
-  if ((typeof theId === "undefined") || (theId === 0)) {
+  var values = self.cols.map(function(ele) { return ele.val; });
 
+  if (self.id.val === self.id.def) {
     // no id -> a new record -> insert
-    console.log("query: " + self.makeInsert() + " <- " + self.valueList);
-    this.controller.query(self.makeInsert(), self.valueList, function(err, result){
+    console.log("query: " + self.makeInsert() + " <- " + values);
+    self.controller.query(self.makeInsert(), values, function(err, result){
       if (err) {
         console.log("error inserting into " + self.tableName + " -> " + err);
-        this.controller.feedBack(true, "Error inserting a record in " + self.tableName);
+        self.controller.feedBack(true, "Error inserting a record in " + self.tableName);
       } else {
-        this.controller.feedBack(true, "Successfully a record in " + self.tableName);
+        self.id.val = result.insertId;
+        console.log("generated id -> " + self.getString());
+        self.controller.feedBack(true, "Successfully a record in " + self.tableName);
       }
       finish();
     });
@@ -103,15 +145,15 @@ Model.prototype.doSave = function( theId, finish ) {
   } else {
     // an existing record -> update
     // add the id to the end of the list
-    self.valueList.push(theId);
+    values.push(self.id.val);
 
-    console.log("query: " + self.makeUpdate() + " <- " + self.valueList);
-    this.controller.query(self.makeUpdate(), self.valueList, function(err, result){
+    console.log("query: " + self.makeUpdate() + " <- " + values);
+    self.controller.query(self.makeUpdate(), values, function(err, result){
       if (err) {
-        console.log("error updating " + self.tableName + ", id = " + theId + " -> " + err);
-        self.controller.feedBack(true, "Error updating the record " + theId + " in " + self.tableName);
+        console.log("error updating " + self.tableName + ", record = " + self.getString() + " -> " + err);
+        self.controller.feedBack(true, "Error updating the record = " + self.getString() + " in " + self.tableName);
       } else {
-        self.controller.feedBack(true, "Successfully updated the record " + theId + " in " + self.tableName);
+        self.controller.feedBack(true, "Successfully updated the record = " + self.getString() + " in " + self.tableName);
       }
       finish();
     });
@@ -121,16 +163,16 @@ Model.prototype.doSave = function( theId, finish ) {
 Model.prototype.doGetRefs = function(finish) {
   var self = this;
 
-  cody.Application.each(this.refs, function(done) {
+  cody.Application.each(self.refs, function(done) {
     if (typeof this.list === "String") {
-      // "refs" is a string containing a query
+      // "list" is a string containing a query
       self.controller.query(this.list, [], function(err, results) {
         self.controller.context[this.name] = results;
         done();
       });
 
     } else {
-      // "refs" is an array containing the values
+      // "list" is an array containing the values
       self.controller.context[this.name] = this.list;
       done();
     }
@@ -141,8 +183,9 @@ Model.prototype.doGet = function(theId, finish) {
   var self = this;
 
   self.doGetRefs( function() {
-    if ((typeof theId === "undefined") || isNaN(theId) || (theId <= 0)) {
-      self.controller.context.record = {id: 0};
+    if ((theId === undefined) || isNaN(theId) || (theId === self.id.def)) {
+      self.controller.context.record = self.getEmpty();
+      self.id.val = self.id.def;
       finish();
 
     } else {
@@ -150,8 +193,10 @@ Model.prototype.doGet = function(theId, finish) {
       self.controller.query(self.makeSelect(), [theId], function(err, result) {
         if (result.length > 0) {
           self.controller.context.record = result[0];
+          self.id.val = theId;
         } else {
-          self.controller.context.record = {};
+          self.controller.context.record = self.getEmpty();
+          self.id.val = 0;
         }
         finish();
       });
@@ -166,19 +211,39 @@ Model.prototype.doList = function(finish) {
   // get search params
   //  - into "record" for reference in the template
   //  - and into "q" for the query.
-  var val;
   var record = {};
-  self.q = [];
-  for (var iN in this.qNames) {
-    val = this.controller.getParam("q."+this.qNames[iN], "")
-    self.q.push(val);
-    record[self.qNames[iN]] = val;
-  }
+  var q = [];
+  self.cols.forEach(function(ele) { console.log("dolist -> " + ele.name + " / " + ele.q);
+    if (ele.q !== undefined) {
+      // if this column has a q option set in the model ("like", "=", "<", ...)
+      var val = self.controller.getParam("q."+ele.name, ele.def);
+
+      // if the returned value is an array, we've got a multiple select form element
+      // convert the returned array in a komma separated list
+      if (Array.isArray(val)) { val = val.join("%"); }
+
+      // remember the value in the "record" element,
+      //  perhaps it is displayed in the search result list
+      record[ele.name] = val;
+
+      // for "like"s we add % before and after, others should match exactly
+      q.push((ele.q === "like") ? ("%" + val + "%") : val);
+    }
+  });
   self.controller.context.record = record;
 
+  console.log("made search params: " + q.join("|"));
+
   // fetch the list
-  this.controller.query(self.makeList(), self.q, function(err, result) {
-    self.controller.context.records = result;
+  console.log("list records: " + q.join("|") + " -> " + self.makeList());
+  self.controller.query(self.makeList(), q, function(err, result) {
+    if (err) {
+      console.log("error searching for records " + self.tableName + ", search params = " + q.join("|") + " -> " + err);
+      console.log("error searching, while using: " + self.makeList());
+      self.controller.feedBack(true, "Error searching for records in " + self.tableName);
+    } else {
+      self.controller.context.records = result;
+    }
 
     self.doGetRefs(finish);
   });

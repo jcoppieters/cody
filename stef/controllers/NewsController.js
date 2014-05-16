@@ -1,5 +1,5 @@
 //
-// Johan Coppieters - mar 2014 - jsconf
+// Johan Coppieters - apr 2014 - website StefDekien started from jsconf.be
 //
 //
 console.log("loading " + module.id);
