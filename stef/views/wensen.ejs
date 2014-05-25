@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="<%=page.language%>">
+
+<% include header.ejs %>
+
+<body id="page<%= page.itemId %>">
+  <script>
+
+    $(document).ready( function() {
+      $("#wallform").validate();
+    });
+
+  </script>
+
+	<div id="wrapper">
+
+    <% include top.ejs %>
+
+		<div class="content wall">
+      <div>
+        <img class="bericht" src="/data/images/78.jpg">
+
+        <% if ((typeof message != "undefined") && (message != "")) { %>
+          <section>
+            <p class="warning"><%-message%></p>
+          </section>
+        <% } %>
+
+        <section>
+          <form method="post" action="/<%= page.getURL() %>" id="wallform">
+              Indien je wenst kan je hier een deelneming aan<br>Katrien, Charlotte, Louis &amp; familie nalaten.
+              <textarea cols="80" rows="5" name="note"></textarea>
+              Jouw email adres:
+              <input type="email" name="email" id="email" value="" class="required email">
+              <br>
+              <input type="submit" name="request" value="Reactie">
+          </form>
+        </section>
+
+
+        <% if (login.level > 10) { %>
+        <hr>
+        <section>
+          <%= wallList.length %> boodschappen.
+          <ul>
+          <% var reacties = 0; %>
+          <% for (var m in wallList) { var M = wallList[m]; %>
+                <li class="<%=M.kind%>"><span>Reactie op <%= formatDate(M.at) %> om <%= formatShortTime(M.at) %> door <a href="mailto:<%=M.email%>"><%=M.email%></a></span>
+                    <a href="<%= page.link %>?request=delete&id=<%=M.id%>"><img src="<%=static%>/del.gif"></a>
+                    <br>
+                    <em><%- M.note %></em>
+                </li>
+          <% } %>
+          </ul>
+        </section>
+        <% } %>
+      </div>
+
+      <aside>
+        <%- render({kind: 'I'}) %>
+      </aside>
+		</div>
+
+    <% include footer.ejs %>
+	</div>
+
+</body>
+</html>

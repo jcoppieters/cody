@@ -1,5 +1,4 @@
-rsync -avzP  /Users/johan/Development/WebStorm/jcms/cody root@vpn.cody-cms.org:/usr/local/src/cody/jcms
-
+rsync -avzP  /Users/johan/Development/WebStorm/jcms/cody root@vpn.cody-cms.org:/usr/local/src/jcms/cody
 
 - redirect / to /nl or /en [ done ]
 - delete content from page fails ... ?? [ fixed on 23/06, a > where it should have been a >= ]

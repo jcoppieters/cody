@@ -86,7 +86,7 @@ Application.prototype.addControllers = function() {
   var self = this;
 
   // add all controllers in the controller directory of cody
-  require("fs").readdirSync("./cody/controllers/").forEach(function(file) {
+  require("fs").readdirSync("../jcms/cody/controllers/").forEach(function(file) {
     var ctl = require("../controllers/" + file);
     self.addController(ctl.name, ctl);
   });

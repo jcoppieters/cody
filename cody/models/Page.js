@@ -230,11 +230,15 @@ Page.prototype.isActive = function() {
 };
 Page.prototype.isVisible = function() { 
   var now = new Date();
-    var nowf=now+"";
-   var x = this.getName();
-    var y=x+"";
   return (this.active === 'Y') && (this.item.validfrom <= now) && (this.item.validto >= now);
 };
+Page.prototype.hasBelow = function(p) {
+  if (this === p) return true;
+  for (var iP in this.children) {
+    if (this.children[iP].hasBelow(p)) return true;
+  }
+  return false;
+}
 
 Page.prototype.getChildren = function() {
   return this.children;

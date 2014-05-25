@@ -15,7 +15,7 @@ create table photos(
  at datetime,
  title varchar(64) default 'new photo',
  ext varchar(8) default '',
- note varchar(1024) default ''
+ note varchar(2048) default ''
 );
 
  */

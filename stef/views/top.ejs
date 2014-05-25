@@ -2,43 +2,45 @@
 
 <header>
   <section>
-    <% if (isLoggedIn()) { %>
-      <%=login.name%>
-      <a href="/<%=page.language%>/login/logout">Afmelden</a>
-    <% } else { %>
-      <form action="/<%=page.language%>/login" name="logon" id="logon" method="post" class="clearfix">
-        <input type="hidden" name="request" value="login" />
-        <input type="hidden" name="loggedInUrl" value="/nl/stef" />
-        <fieldset class="clearfix">
-          <div id="logonuser">
-            <label for="username">Naam</label>
-            <input name="username" id="username" type="text" />
-          </div>
-          <div>
-            <label for="password">Wachtwoord</label>
-            <input type="password" id="password" name="password" />
-          </div>
+    <% if (page.getId() == 302) { %>
+      <% if (isLoggedIn()) { %>
+        <%=login.name%>
+        <a href="/<%=page.language%>/login/logout">Afmelden</a>
+      <% } else { %>
+        <form action="/<%=page.language%>/login" name="logon" id="logon" method="post" class="clearfix">
+          <input type="hidden" name="request" value="login" />
+          <input type="hidden" name="loggedInUrl" value="/nl/stef" />
+          <fieldset class="clearfix">
+            <div id="logonuser">
+              <label for="username">Naam</label>
+              <input name="username" id="username" type="text" />
+            </div>
+            <div>
+              <label for="password">Wachtwoord</label>
+              <input type="password" id="password" name="password" />
+            </div>
 
-          <% if (message == "login-failed") { %>
-            <p class="warning">Wrong username or password, try again.</p>
-          <% } else if (message == "login-locked") { %>
-            <p class="warning">Your account is blocked, please contact the site administrator.</p>
-          <% } %>
+            <% if (message == "login-failed") { %>
+              <p class="warning">Wrong username or password, try again.</p>
+            <% } else if (message == "login-locked") { %>
+              <p class="warning">Your account is blocked, please contact the site administrator.</p>
+            <% } %>
 
-          <div class="action_buttons">
-            <input type="submit" value="Aanmelden" />
-          </div>
-        </fieldset>
+            <div class="action_buttons">
+              <input type="submit" value="Aanmelden" />
+            </div>
+          </fieldset>
 
-      </form>
+        </form>
+      <% } %>
     <% } %>
   </section>
   <div>
     <%- render({intro: 'Y'}) %>
     <nav>
-      <% for (var i in page.parent.children) { var P = page.parent.children[i]; %>
+      <% for (var i in page.parent.children) { var P = page.parent.children[i]; if (P.isActive()) { %>
         <a href="/<%=P.getURL()%>"><%=P.title%></a>
-      <% } %>
+      <% }} %>
     </nav>
   </div>
 </header>

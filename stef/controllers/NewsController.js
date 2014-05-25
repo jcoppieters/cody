@@ -65,7 +65,7 @@ NewsController.prototype.getList = function( finish ) {
 
   // var kind = (self.getLoginLevel() > 0) ? "'Q','R'" : "'Q'";
 
-  self.query("select id, note, at, kind, email from wall where topic = ? order by at desc limit 1000", [self.context.page.link], function(err, results) {
+  self.query("select id, note, at, kind, email from wall where topic = ? order by at desc limit 3000", [self.context.page.link], function(err, results) {
     if (err) self.feedBack(false, err);
     console.log("got " + results.length + " Wall results");
     self.context.wallList = results;

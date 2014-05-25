@@ -54,7 +54,7 @@ CalendarController.prototype.doRequest = function(finish) {
     }
     // no specific content, just regular CalendarRequest
     //  if no request/view specified, default to monthview
-    if (self.isRequest("")) { self.setRequest("monthview"); }
+    if (self.isRequest("") || self.isRequest("list")) { self.setRequest("monthview"); }
     self.regularRequest(finish);
 }
 

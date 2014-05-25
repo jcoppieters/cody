@@ -53,15 +53,15 @@
         <section>
           <% for (var iP in records) { var p = records[iP]; %>
             <article>
-              <div>
                 <span class="title"><%= p.title %></span>
                 <span class="at">Opgestuurd op: <%= formatDate(p.at) %></span>
-                <span class="note"><%= p.note %></span>
                 <% if (login.level >= 10) { %>
-                <span><a href="/<%= page.getURL() %>/delete/<%= p.id %>">Verwijderen</a></span>
+                 <span><a href="/<%= page.getURL() %>/delete/<%= p.id %>">Verwijderen</a></span>
                 <% } %>
-              </div>
-              <img src="<%=dynamic%>/photos/<%=p.id%>.<%=p.ext%>">
+                <div>
+                  <img src="<%=dynamic%>/photos/<%=p.id%>.<%=p.ext%>">
+                  <span class="note"><%- p.note %></span>
+                </div>
             </article>
           <% } %>
         </section>
