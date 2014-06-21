@@ -7,11 +7,20 @@ var cody = require("../index.js");
 console.log("loading " + module.id);
 
 function Model(theController, options) {
-  this.controller = theController;
-  theController.model = this;
+  if (theController != null) {
+    this.controller = theController;
+    theController.model = this;
+  }
 
   this.tableName = options.tableName;
   this.id = options.id || {name: "id", def: 0};
+
+  // cols: array with objects containing meta data and values
+  //   {name: "username", def: "", list: true, sort: "asc", q: "like"}
+  //
+  //  name=..., def=default value, list=appears with doList is called, sort...,
+  //  like=when there are q.name params use this operator
+
   this.cols = options.cols;
 
 
@@ -23,6 +32,21 @@ function Model(theController, options) {
 }
 module.exports = Model;
 
+/* Example: User model
+var aUser = new cody.Model(this, {
+  tableName: "patients",
+  id: {name: "id", def: 0},
+  cols: [
+    {name: "name", def: "", list: true, sort: "asc"},
+    {name: "firstname", def: "", list: true, sort: "asc"},
+    {name: "street", def: "", list: true},
+    {name: "town", def: "", list: true},
+    {name: "tel1", def: "", list: true},
+    {name: "tel2", def: "", list: true},
+    {name: "email", def: "", list: true}]
+});
+
+*/
 
 Model.prototype.addRef = function(name, list) {
   this.refs.push({name: name, list: list});

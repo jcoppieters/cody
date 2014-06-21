@@ -31,7 +31,7 @@ module.exports = User;
 // Class stuff
 //
 
-User.sqlGetUserByPw = "select * from users where username = ? and password = password(?)";  // password = password(?) ...
+User.sqlGetUserByPw = "select * from users where username = ? and password = password(?)";
 User.sqlGetUserById = "select * from users where id = ?";
 User.sqlDeleteUser = "delete from users where id = ?";
 User.sqlGetUserList = "select * from users where level <= ? order by name";

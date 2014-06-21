@@ -27,7 +27,7 @@ function PhotoController(context) {
     tableName: "photos",
     id: {name: "id", def: 0},
     cols: [
-      {name: "at", def: new Date(), list: true, sort: "asc"},
+      {name: "at", def: new Date(), list: true, sort: "desc"},
       {name: "title", def: "", list: true, q: "like"},
       {name: "note", def: "", list: true},
       {name: "ext", def: "", list: true}]

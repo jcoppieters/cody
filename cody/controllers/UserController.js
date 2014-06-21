@@ -10,7 +10,7 @@ var cody = require("./../index.js");
 
 function UserController(context) {
   console.log("UserController.constructor -> page(" + context.page.itemId + ") = " + context.page.title + ", request = " + context.request);
-  
+
 	// init inherited controller
 	cody.Controller.call(this, context);
 }
@@ -19,10 +19,30 @@ UserController.prototype = Object.create( cody.Controller.prototype );
 module.exports = UserController;
 
 
-
 UserController.prototype.doRequest = function( finish ) {
+  var self = this;
 
-  if (! this.doCrudRequest(finish)) {
+
+  if (self.isRequest("") || this.isRequest("list")) {
+    self.doList( finish );
+
+  } else if (self.isRequest("save")) {
+      self.doSave(  this.getId(), function() {
+        self.nextRequest("list", finish);
+      });
+
+  } else if (self.isRequest("delete")) {
+      self.doDelete( this.getId(), function() {
+        self.nextRequest("list", finish);
+      });
+
+  } else if (this.isRequest("edit")) {
+    self.doGet( this.getId(), finish);
+
+  } else if (this.isRequest("new")) {
+    self.doGet(NaN, finish);
+
+  } else {
     cody.Controller.prototype.doRequest.call(this, finish);
   }
 };

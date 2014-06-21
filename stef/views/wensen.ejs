@@ -48,7 +48,7 @@
                 <li class="<%=M.kind%>"><span>Reactie op <%= formatDate(M.at) %> om <%= formatShortTime(M.at) %> door <a href="mailto:<%=M.email%>"><%=M.email%></a></span>
                     <a href="<%= page.link %>?request=delete&id=<%=M.id%>"><img src="<%=static%>/del.gif"></a>
                     <br>
-                    <em><%- M.note %></em>
+                    <em class="<%=M.kind%>"><%- M.note %></em>
                 </li>
           <% } %>
           </ul>

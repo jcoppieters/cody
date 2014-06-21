@@ -311,6 +311,7 @@ Application.prototype.handToController = function(context) {
       }
       
       self.log("Application.handToController -> finished -> render view", (context.fn==="") ? "** none **" : context.fn);
+
       self.renderView( context );
     }
       
