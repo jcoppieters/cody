@@ -11,11 +11,16 @@ var ejs = require('ejs');
 var cody = require('./cody');
 
 cody.server = express();
+var bodyParser = require('body-parser');
+var expressSession = require('express-session');
+var multer = require('multer');
 
-// cookies are encrypted, so we need a pass phrase
-cody.server.use(express.bodyParser());
-cody.server.use(express.cookieParser("a secret"));
-cody.server.use(express.cookieSession());
+
+// use the new 4.x middleware
+cody.server.use(bodyParser());
+cody.server.use(expressSession({secret: 'a secret', cookie: { maxAge: 60*60*1000 }}));
+cody.server.use(bodyParser.urlencoded({ extended: true }));
+cody.server.use(multer());
 
 
 // startup a routing for all static content of cody (images, javascript, css)
@@ -38,50 +43,50 @@ cody.bootstrap = function () {
 // startup all the web applications
 
 
-var connection = mysql.createConnection({
-  host: "localhost",
-  user: "cody", password: "ydoc",
-  database: "cody"
-})
+  var connection = mysql.createConnection({
+    host: "localhost",
+    user: "cody", password: "ydoc",
+    database: "cody"
+  });
 
-connection.connect();
+  connection.connect();
 
-connection.query("SELECT * FROM websites WHERE active='Y' AND ownerconfirmed='Y' ORDER BY id", function(err, rows, fields) {
-    if(err) throw err;
-    cody.Application.each(rows, function(next){
-      var row = this;
+  connection.query("SELECT * FROM websites WHERE active='Y' AND ownerconfirmed='Y' ORDER BY id", function(err, rows, fields) {
+      if(err) throw err;
+      cody.Application.each(rows, function(next){
+        var row = this;
 
-      cody.startWebApp(cody.server, {
-          "name": row.name,
-          "mailFrom": "info@cody-cms.org",
-          "smtp": "smtpmailer.howest.be",
-          "version": row.version,
-          "defaultlanguage": row.defaultlanguage,
-          "hostnames" : row.hostname,
-          "dbuser": row.dbuser,
-          "dbpassword": row.dbpassword,
-          "dbhost": row.dbhost,
-          "datapath": row.datapath,
-          "db": row.db,
-          "controllers": require("./" + row.name + "/controllers/")
-        }, next);
+        cody.startWebApp(cody.server, {
+            "name": row.name,
+            "mailFrom": "info@cody-cms.org",
+            "smtp": "smtpmailer.howest.be",
+            "version": row.version,
+            "defaultlanguage": row.defaultlanguage,
+            "hostnames" : row.hostname,
+            "dbuser": row.dbuser,
+            "dbpassword": row.dbpassword,
+            "dbhost": row.dbhost,
+            "datapath": row.datapath,
+            "db": row.db,
+            "controllers": require("./" + row.name + "/controllers/")
+          }, next);
 
-    }, function() {
-      console.log("Loaded all apps....");
-      connection.end();
+      }, function() {
+        console.log("Loaded all apps....");
+        connection.end();
 
-      cody.server.listen(3000);
-      console.log('Listening on port 3000');
-    });
-});
+        cody.server.listen(3000);
+        console.log('Listening on port ' + cody.server.get('port'));
+      });
+  });
 
 
 
-if (!process.stderr.isTTY) {
-    process.on('uncaughtException', function (err) {
-        console.error('Uncaught exception : ' + err.stack);
-    });
-}
-
+  if (!process.stderr.isTTY) {
+      process.on('uncaughtException', function (err) {
+          console.error('Uncaught exception : ' + err.stack);
+      });
+  }
 };
+
 cody.bootstrap();

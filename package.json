@@ -4,9 +4,13 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "express": "3.x",
+    "body-parser": "1.x",
     "ejs": "0.x",
+    "express": "4.x",
+    "express-session": "1.x",
     "mime": "1.x",
-    "mysql": "2.x"
+    "multer": "^0.1.4",
+    "mysql": "2.x",
+    "vhost": "2.x"
   }
 }

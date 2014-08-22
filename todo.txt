@@ -1,20 +1,28 @@
 rsync -avzP  /Users/johan/Development/WebStorm/jcms/cody root@vpn.cody-cms.org:/usr/local/src/jcms/cody
+rsync -avzP  /Users/johan/Development/WebStorm/jcms/codyweb root@vpn.cody-cms.org:/usr/local/src/jcms/codyweb
+rsync -avzP  /Users/johan/Development/WebStorm/jcms/stef root@vpn.cody-cms.org:/usr/local/src/jcms/stef
+
+- model/User.js aanpassen om Model.js te gebruiken.
+- Diverse models die aangemaakt worden in een Controller (bvb. PhotoController)
+  naar een apart bestand verhuizen (bvb: models/Photo.js)
+
+- daily backups !!
 
 - redirect / to /nl or /en [ done ]
-- delete content from page fails ... ?? [ fixed on 23/06, a > where it should have been a >= ]
-- new folder in "Images" -> "Choose file" ?? [ fixed 21/06 ]
+- delete content from page fails ... ?? [ fixed on 23/06/2013, a > where it should have been a >= ]
+- new folder in "Images" -> "Choose file" ?? [ fixed 21/06/2013 ]
 
 - sending mails from javascript
 
 - templates
   - add "note" om bij "add content" bij elke template een beetje uitleg te geven over de template
-    ook in add-content kiezer deze tekst tonen. [ done 24/06 ]
+    ook in add-content kiezer deze tekst tonen. [ done 24/06/2013 ]
   - implement "allowedTemplates" (page controller + template editing) and MaxNumber
   - duplicate template [ done 22/06 ]
-  - lijst van automatisch toegevoegde benoemde content items (negative atoms met naam) [ done 22/06 ]
-    opgelet: PageController nakijken dat naam overgenomen wordt van gepredefinieerde atoms. [ done 22/06 ]
+  - lijst van automatisch toegevoegde benoemde content items (negative atoms met naam) [ done 22/06/2013 ]
+    opgelet: PageController nakijken dat naam overgenomen wordt van gepredefinieerde atoms. [ done 22/06/2013 ]
   - gekoppelde form -> data aan pagina hangen / kunnen afbeelden
-- passwords niet meer als plain text stockeren
+- passwords niet meer als plain text stockeren [ done ]
 - in loginController std functionaliteit om nieuw password op te sturen
 
 - maken dat ook /nl als /nl/ aanvaard wordt [ done ]
@@ -78,7 +86,7 @@ Dieter:
  uiteindelijk zou ik willen voorstellen om Tom zijn site te hermaken / hosten in Cody.
 
 
-- Als voorbeeld vereniging site opzetten
+- Als voorbeeld vereniging site opzetten [ done ]
   - leden (besloten groep, dus er hoeft geen registratie te zijn,
     wel een login om verder dan de eerste pagina te geraken,
     eigen controller -> needsLogin aanpassen)

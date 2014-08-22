@@ -2,8 +2,9 @@ console.log("loading " + module.id);
 
 var cody = require("./index.js");
 var express = require("express");
+var vhost = require("vhost");
 
-function startWebApp(server, config, done) {
+function startWebApp(mainServer, config, done) {
   if (typeof config.name === "undefined") {
       console.log("startWebApp - missing name from config options");
       return false;
@@ -30,16 +31,17 @@ function startWebApp(server, config, done) {
   app.init(function () {
 
     if ((config.hostnames !== undefined) && (config.hostnames !== "")) {
-      var thisApp = express();
+
+      var siteServer = express();
 
       for (var iL in app.languages) {
         // mysite.com/en/page
-        thisApp.all("/" + app.languages[iL].id + "/*", function (req, res) {
+        siteServer.all("/" + app.languages[iL].id + "/*", function (req, res) {
           app.servePage(req, res);
         });
 
         // mysite.com/nl
-        thisApp.all("/" + app.languages[iL].id, function (req, res) {
+        siteServer.all("/" + app.languages[iL].id, function (req, res) {
           console.log("------------------------------------------------------------------- " + new Date() + "--");
           console.log("-- redirecting to " + "/" + app.languages[iL].id + "/");
           res.redirect("/" + app.languages[iL].id + "/");
@@ -48,7 +50,7 @@ function startWebApp(server, config, done) {
       }
 
       // no language -> mysite.com
-      thisApp.all("/", function (req, res) {
+      siteServer.all("/", function (req, res) {
         console.log("------------------------------------------------------------------- " + new Date() + "--");
         console.log("-- redirecting to " + "/" + app.defaultlanguage + "/");
         res.redirect("/" + app.defaultlanguage + "/");
@@ -57,13 +59,13 @@ function startWebApp(server, config, done) {
 
 
       // mysite.com/static/file-path
-      thisApp.get("/static/*", function (req, res) {
+      siteServer.get("/static/*", function (req, res) {
         var fileserver = new cody.Static(req, res, config.name);
         fileserver.serve();
       });
 
       // mysite.com/data/[category]file-id.extension (standard "files" and "images")
-      thisApp.get("/data/*", function (req, res) {
+      siteServer.get("/data/*", function (req, res) {
         var fileserver = new cody.Dynamic(req, res, app.getDataPath());
         fileserver.serve();
       });
@@ -71,7 +73,7 @@ function startWebApp(server, config, done) {
       // mysite.com,www.mysite.com,mysite.be,...
       var hosts = config.hostnames.split(",");
       for (var iH in hosts) {
-        server.use(express.vhost(hosts[iH], thisApp));
+        mainServer.use(vhost(hosts[iH], siteServer));
         console.log("======= started " + config.name + " on " + hosts[iH] + " =======\n");
       }
 
