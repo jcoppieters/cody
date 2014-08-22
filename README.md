@@ -1,7 +1,7 @@
-cody
-====
+Cody CMS
+========
 
-Javascript Content Management System running on Node.js
+A Javascript Content Management System running on Node.js
 
 We've just upgraded to Express 4.x, sorry it took so long.
 

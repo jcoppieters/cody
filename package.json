@@ -1,7 +1,7 @@
 {
-  "name": "jsCody",
-  "description": "Cody CMS test",
-  "version": "0.0.1",
+  "name": "Cody",
+  "description": "Cody CMS",
+  "version": "1.0b1",
   "private": true,
   "dependencies": {
     "body-parser": "1.x",

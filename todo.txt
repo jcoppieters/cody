@@ -31,7 +31,6 @@ rsync -avzP  /Users/johan/Development/WebStorm/jcms/stef root@vpn.cody-cms.org:/
 
 - github
   - readme
-  - repository
 
 - unit testing
   - bvb: controller.getParam, Id, Num, Int: allerlei waarden in params steken en er terug uithalen
