@@ -1,0 +1,39 @@
+#!/bin/bash
+realpath="$(readlink -f "$0")"
+realpkgroot="${realpath%/*}/../"
+echo Creating cody web tree in current directory
+echo -n "Enter sitename: "
+read sitename
+echo "Note: also using $sitename as database name."
+echo -n "Enter root password for mysql so we can create a new database and user: "
+read dbrootpw
+echo -n "Enter site database user: "
+read dbuser
+echo -n "Enter site database password: "
+read dbpass
+echo -n "Enter hostname for site: "
+read hostname
+
+mysql -uroot "-p$dbrootpw" -e "create database $sitename default charset utf8"
+mysql -uroot "-p$dbrootpw" -e "grant all on $sitename.* to '$dbuser'@'%' identified by '$dbpass'"
+mysql -uroot "-p$dbrootpw" -e "grant all on mysite.* to '$dbuser'@'localhost' identified by '$dbpass'"
+mysql -uroot "-p$dbrootpw" -e "source $realpkgroot/doc/codymaster.sql"
+mysql -uroot "-p$dbrootpw" -f cody -e "INSERT INTO websites (name, version, dbuser, dbpassword, dbhost, datapath, db, active, ownerconfirmed) VALUES ('$sitename', 'v0.1', '$dbuser', '$dbpass', 'localhost', '/tmp', '$sitename', 'Y', 'Y')"
+
+cp -r "$realpkgroot/doc/empty" .
+mv empty/* .
+rmdir empty
+
+mysql "-u$dbuser" "-p$dbpass" "$sitename" -f -e "source empty.sql"
+
+echo "Site $sitename has been prepared."
+echo
+echo "Please create DNS entries, or add to /etc/hosts:"
+echo "127.0.0.1     $hostname"
+echo
+echo "Also check $sitename/index.js to fine-tine extra parameters, encryption key, ..."
+echo
+echo "Start your site using:"
+echo "forever start index.js"
+echo "or"
+echo "node index.js"

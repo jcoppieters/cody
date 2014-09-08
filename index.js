@@ -1,92 +1,46 @@
-//
-// Johan Coppieters - jan 2013 - jWorks
-//
-//
+global.__base = __dirname + '/';
 
-var express = require('express');
-var fs = require('fs');
-var mysql = require('mysql');
+module.exports.Application = require("./apps/Application.js");
 
-var ejs = require('ejs');
-var cody = require('./cody');
+module.exports.Model = require("./models/Model.js");
+module.exports.Atom = require("./models/Atom.js");
+module.exports.Item = require("./models/Item.js");
+module.exports.Page = require("./models/Page.js");
+module.exports.Meta = require("./models/Meta.js");
+module.exports.Content = require("./models/Content.js");
+module.exports.Template = require("./models/Template.js");
+module.exports.User = require("./models/User.js");
 
-cody.server = express();
-var bodyParser = require('body-parser');
-var expressSession = require('express-session');
-var multer = require('multer');
+module.exports.Path = require("./models/Path.js");
+module.exports.Context = require("./models/Context.js");
 
+module.exports.Controller = require("./controllers/Controller.js");
+module.exports.ContentController = module.exports.Controller;
+module.exports.LoginController = require("./controllers/LoginController.js");
+module.exports.UserController = require("./controllers/UserController.js");
+// module.exports.ContactController = require("./controllers/ContactController.js");
 
-// use the new 4.x middleware
-cody.server.use(bodyParser());
-cody.server.use(expressSession({secret: 'a secret', cookie: { maxAge: 60*60*1000 }}));
-cody.server.use(bodyParser.urlencoded({ extended: true }));
-cody.server.use(multer());
+module.exports.DashboardController = require("./controllers/DashboardController.js");
+module.exports.TreeController = require("./controllers/TreeController.js");
+module.exports.PageController = require("./controllers/PageController.js");
+module.exports.ImageController = require("./controllers/ImageController.js");
+module.exports.FileController = require("./controllers/FileController.js");
+module.exports.FormController = require("./controllers/FormController.js");
+module.exports.StylesController = require("./controllers/StylesController.js");
+module.exports.SystemController = require("./controllers/SystemController.js");
+module.exports.TemplateController = require("./controllers/TemplateController.js");
 
+module.exports.Static = require("./apps/Static.js");
+module.exports.Dynamic = require("./apps/Dynamic.js");
 
-// startup a routing for all static content of cody (images, javascript, css)
-cody.server.get("/cody/static/*", function (req, res) {
-    var fileserver = new cody.Static(req, res, "");
-    fileserver.serve();
-});
+module.exports.startWebApp = require("./startWebApp.js");
 
-// startup a routing for the unit tests
-cody.server.all("/cody/*", function (req, res) {
-    var aPath = new cody.Path("cody/en/test", "en");
-    var aContext = new cody.Context(aPath, undefined, undefined, req, res);
-    res.render("../cody/views/front/index.ejs", { context: aContext });
-});
+module.exports.unitTests = require("./tests/");
 
-
-// startup all the web applications
-
-cody.bootstrap = function () {
-// startup all the web applications
-
-
-  var connection = mysql.createConnection({
-    host: "localhost",
-    user: "cody", password: "ydoc",
-    database: "cody"
-  });
-
-  connection.connect();
-
-  connection.query("SELECT * FROM websites WHERE active='Y' AND ownerconfirmed='Y' ORDER BY id", function(err, rows, fields) {
-      if(err) throw err;
-      cody.Application.each(rows, function(next){
-        var row = this;
-
-        cody.startWebApp(cody.server, {
-            "name": row.name,
-            "mailFrom": "info@cody-cms.org",
-            "smtp": "smtpmailer.howest.be",
-            "version": row.version,
-            "defaultlanguage": row.defaultlanguage,
-            "hostnames" : row.hostname,
-            "dbuser": row.dbuser,
-            "dbpassword": row.dbpassword,
-            "dbhost": row.dbhost,
-            "datapath": row.datapath,
-            "db": row.db,
-            "controllers": require("./" + row.name + "/controllers/")
-          }, next);
-
-      }, function() {
-        console.log("Loaded all apps....");
-        connection.end();
-
-        cody.server.listen(3000);
-        console.log('Listening on port ' + cody.server.get('port'));
-      });
-  });
-
-
-
-  if (!process.stderr.isTTY) {
-      process.on('uncaughtException', function (err) {
-          console.error('Uncaught exception : ' + err.stack);
-      });
-  }
-};
-
-cody.bootstrap();
+module.exports.express = require("express")
+module.exports.mysql = require("mysql")
+module.exports.fs = require("fs")
+module.exports.ejs = require("ejs")
+module.exports.bodyParser = require("body-parser")
+module.exports.expressSession = require("express-session")
+module.exports.multer = require("multer")

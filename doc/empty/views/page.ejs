@@ -1,0 +1,35 @@
+<!doctype html>
+
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="<%=page.language%>"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="<%=page.language%>"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="<%=page.language%>"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="<%=page.language%>">
+<!--<![endif]-->
+
+<% include header.ejs %>
+
+<body id="page<%= page.itemId %>">
+  <div id="wrapper">
+
+    <% include menu-top.ejs %>
+
+	  <div class="content">
+
+        <% var theChildren; %>
+        <% include menu-left.ejs %>
+
+		<div class="main <%= (theChildren.length == 0) ? 'noNav' : 'withNav' %>">
+        <section>
+          <h1><%= page.title %></h1>
+
+          <%- render() %>
+        </section>
+	  </div>
+	</div>
+
+    <% include footer.ejs %>
+  </div>
+
+</body>
+</html>

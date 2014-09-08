@@ -1,0 +1,15 @@
+<% theChildren = (page.item.parentId == 1) ? page.children : page.parent.children; %>
+
+<% if (theChildren.length > 0) { %>
+  <nav>
+    <ul>
+      <% for (var i in theChildren) {
+        var subpage = theChildren[i];
+        if (subpage.isVisible()) { %>
+          <li><a <%- (page == subpage) ? 'class="active"' : '' %>
+                 href="/<%=subpage.url%>"><%=subpage.title%></a></li>
+        <% } %>
+      <% } %>
+    </ul>
+  </nav>
+<% } %>
