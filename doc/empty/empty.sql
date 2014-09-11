@@ -57,7 +57,7 @@ INSERT INTO `atoms` VALUES
 (33,32,10,'name','{\"name\":\"name\",\"labels\":{\"en\":\"Name\",\"it\":\"Name\"},\"generator\":1,\"options\":{\"required\":true},\"reader\":1}','---','2013-09-07 22:32:45','2014-09-03 10:27:20'),
 (35,32,30,'question','{\"name\":\"question\",\"labels\":{\"en\":\"Question\",\"it\":\"Question\"},\"generator\":2,\"options\":{\"required\":true,\"cols\":\"60\",\"rows\":\"6\"},\"reader\":1}','---','2013-09-08 11:24:14','2014-09-03 10:27:10'),
 (36,32,20,'e-mail address','{\"name\":\"e-mail address\",\"labels\":{\"en\":\"Email Address\",\"it\":\"Email Address\"},\"generator\":1,\"options\":{\"required\":true,\"email\":true},\"reader\":2}','---','2013-09-08 15:59:32','2014-09-03 10:26:57'),
-(37,2,20,'A File','Charter Stoer Huus - 23 mei 2013','pdf','2013-09-08 16:04:49','2014-09-03 10:28:39'),
+(37,2,20,'A File','Charter My site - 23 mei 2013','pdf','2013-09-08 16:04:49','2014-09-03 10:28:39'),
 
 (40,1,5,'Photos','','xxx','2013-09-09 15:41:08','2014-09-03 10:24:24'),
 (41,40,5,'Photo1','Screen Shot 2013-09-09 at 15.40.35','jpg','2013-09-09 15:41:18','2014-09-03 10:24:39'),
