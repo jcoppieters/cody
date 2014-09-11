@@ -1,6 +1,7 @@
 # Exclude de essen and instadeal
-essen/
-instadeal/
+.idea/
+tests/
+node_modules/
 #
 #
 # OS generated files #
