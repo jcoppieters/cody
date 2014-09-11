@@ -56,7 +56,7 @@ function Context(path, page, app, req, res) {
   this.fn = (page) ? page.getView() : "index.ejs";
 
   this.session = req.session;
-  this.setLogin(this.session.login);
+  this.setLogin((typeof this.session === "undefined") ? {} : this.session.login);
 
   // make global cody lib available
   this.cody = cody;
@@ -169,7 +169,7 @@ Context.prototype.render = function(params) {
 //
 
 Context.prototype.setLogin = function(login) {
-  this.session.login = login;
+  if (typeof this.session !== "undefined") this.session.login = login;
   this.login = new cody.User(login);
 };
 Context.prototype.isLoggedIn = function() {
