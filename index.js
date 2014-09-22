@@ -35,7 +35,7 @@ module.exports.Dynamic = require("./apps/Dynamic.js");
 
 module.exports.startWebApp = require("./startWebApp.js");
 
-module.exports.unitTests = require("./tests/");
+// module.exports.unitTests = require("./tests/");
 
 module.exports.express = require("express")
 module.exports.mysql = require("mysql")
