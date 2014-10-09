@@ -17,8 +17,6 @@ read hostname
 mysql -uroot "-p$dbrootpw" -e "create database $sitename default charset utf8"
 mysql -uroot "-p$dbrootpw" -e "grant all on $sitename.* to '$dbuser'@'%' identified by '$dbpass'"
 mysql -uroot "-p$dbrootpw" -e "grant all on mysite.* to '$dbuser'@'localhost' identified by '$dbpass'"
-mysql -uroot "-p$dbrootpw" -e "source $realpkgroot/doc/codymaster.sql"
-mysql -uroot "-p$dbrootpw" -f cody -e "INSERT INTO websites (name, version, dbuser, dbpassword, dbhost, datapath, db, active, ownerconfirmed) VALUES ('$sitename', 'v0.1', '$dbuser', '$dbpass', 'localhost', '/tmp', '$sitename', 'Y', 'Y')"
 
 cp -r "$realpkgroot/doc/empty" .
 mv empty/* .

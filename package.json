@@ -26,7 +26,8 @@
     "multer": "^0.1.4",
     "mysql": "2.x",
     "vhost": "2.x",
-    "body-parser": "^1.6.7"
+    "body-parser": "^1.6.7",
+    "nodemailer": "^1.3.0"
   },
   "engines": {
     "node": "*"
