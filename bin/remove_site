@@ -1,0 +1,20 @@
+#!/bin/bash
+
+realpkgroot="${PWD}/node_modules/cody"
+echo Creating cody web tree in current directory
+echo -n "1) Enter sitename: "
+read sitename
+echo -n "2) Enter site database user: "
+read dbuser
+echo "Note: the mysql root password is empty by default (just press enter)"
+echo -n "3) Enter mysql root password: "
+read dbrootpw
+read -n "Are you sure you want to delete ${sitename}? [y/n]"
+read proceed
+
+if [proceed]; then
+  mysql --user=root "--password=$dbrootpw" -e "drop database $sitename"
+  mysql --user=root "--password=$dbrootpw" -e "drop user $dbuser"
+
+  echo "Site '$sitename' database has been removed."
+fi

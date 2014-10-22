@@ -37,7 +37,7 @@ By following these steps you will be running your own CMS system in no time. If 
 * Set up a new web site using the guided scaffolding
 
   ```bash
-    $ ./node_modules/.bin/ccs
+    $ ./node_modules/.bin/create_site
     Creating cody web tree in current directory
     1) Enter sitename: mysite
     Note: also using my site as database name.
@@ -81,7 +81,7 @@ By following these steps you will be running your own CMS system in no time. If 
 
 ## Configuration
 
-The ccs scaffolding creates a config.json file in the root of your project directory. Once created this file can be adjusted manually or the values can be overriden by using environment variables (both cases need a server restart), e.g.
+The create_site scaffolding creates a config.json file in the root of your project directory. Once created this file can be adjusted manually or the values can be overriden by using environment variables (both cases need a server restart), e.g.
 
 ```bash
 $ dbuser=dbuser dbpassword=dbpassword port=8080 node index.js
