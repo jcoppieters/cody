@@ -11,6 +11,8 @@ You can now use npm to install Cody thanks to Jonas.
 
 ## Getting Started
 
+By following these steps you will be running your own CMS system in no time. If any of the steps do not work for you, please report this as an issue on this github repository and we will look into it as soon as possible!
+
 * Install [nodejs](http://nodejs.org/download/) and [mysql](http://dev.mysql.com/downloads/mysql/)
 * Create a new directory for your cms and navigate to it (in unix):
 
