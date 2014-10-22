@@ -15,8 +15,8 @@ You can now use npm to install Cody thanks to Jonas.
 * Create a new directory for your cms and navigate to it (in unix):
 
   ```bash
-        $ mkdir mycms
-        $ cd mycms
+	$ mkdir mycms
+	$ cd mycms
   ```
 * Install cody and its dependencies
   
