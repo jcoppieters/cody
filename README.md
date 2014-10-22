@@ -95,10 +95,6 @@ Have a look at the config.json file to see which configuration variables you can
   > You entered the incorrect password for your root user of the mysql database.
   
   Try to figure out the correct password or reset it: http://dev.mysql.com/doc/refman/5.0/en/resetting-permissions.html
-  
-## Changelog
-* 3.1.1: ccs now generates a config.json file that contains all the necessary configuration variables (can be overriden by setting the respective environment variables). The user is no longer required to change the index.js afer scaffolding.
-
 
 ## License
 
