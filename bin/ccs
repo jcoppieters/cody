@@ -25,12 +25,27 @@ rmdir empty
 
 mysql "--user=$dbuser" "--password=$dbpass" "$sitename" -f -e "source empty.sql"
 
+echo "{
+\"name\":\"${sitename}\",
+\"mailFrom\": \"info@${hostname}\",
+\"hostnames\":\"localhost,${hostname}\",
+\"db\": \"${sitename}\",
+\"dbuser\":\"${dbuser}\",
+\"dbpassword\":\"${dbpass}\",
+\"dbhost\": \"localhost\",
+\"smtp\": \"smtpmailer.${hostname}\",
+\"version\": \"V0.1\",
+\"defaultlanguage\": \"en\",
+\"datapath\": \"/usr/local/data/empty\",
+\"port\": 3001
+}" > config.json
+
 echo "Site '$sitename' has been prepared."
 echo
 echo "Please create DNS entries, or add to /etc/hosts:"
 echo "127.0.0.1     $hostname"
 echo
-echo "Also check $sitename/index.js to fine-tune extra parameters, encryption key, ..."
+echo "Also check $sitename/index.js and $sitename/config.json to fine-tune extra parameters, encryption key, ..."
 echo
 echo "Start your site using:"
 echo "forever start index.js"

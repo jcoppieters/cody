@@ -30,28 +30,23 @@ cody.server.get("/cody/static/*", function (req, res) {
     fileserver.serve();
 });
 
+// setup the config from config.json + overwrite by environment values
+cody.config = require('./config');
+cody.config.controllers = require("./controllers/");
 
-cody.startWebApp(cody.server, {
-    "name": "empty",
-    "mailFrom": "info@mysite.com",
-    "smtp": "smtpmailer.mysite.com",
-    "version": "V0.1",
-    "defaultlanguage": "en",
-    "hostnames" : "mysite.com,www.mysite.com,mysite.local",
-    "dbuser": "cody",
-    "dbpassword": "ydoc",
-    "dbhost": "localhost",
-    "datapath": "/usr/local/data/empty",
-    "db": "empty",
-    "controllers": require("./controllers/")
-  },
-  function() {
+Object.keys(cody.config).forEach(function (name) {
+  cody.config[name] = process.env[name] || cody.config[name];
+});
+
+// startup the web server
+cody.startWebApp(cody.server, cody.config, function() {
     console.log("Loaded web app....");
-    var portNr = 3001;
+    console.log("with config (adjust in config.json or by setting as environment variables):")
+    console.log(cody.config);
+    var portNr = cody.config.port || 3001;
     cody.server.listen(portNr);
     console.log('Listening on port ' + portNr);
-  }
-);
+});
 
 
 if (!process.stderr.isTTY) {
