@@ -8,23 +8,38 @@ See http://www.cody-cms.org for more info and examples on http://github.com/jcop
 
 You can now use npm to install Cody thanks to Jonas.
 
+## Features
+
+* Node.js CMS
+* Easy-to-use graphical interface + wysiwyg (what you see is what you get) editor that allows non-programmers to manage the site's *content*, *users*, *files*, *forms* and *images*.
+* Tree structured GUI to manage the structure of the site and the editable content by using templates and drag-and-drop.
+* Works seemless with your existing node.js code.
+
 
 ## Getting Started
+
+By following these steps you will be running your own CMS system in no time. If any of the steps do not work for you, please report this as an issue on this github repository and we will look into it as soon as possible!
 
 * Install [nodejs](http://nodejs.org/download/) and [mysql](http://dev.mysql.com/downloads/mysql/)
 * Create a new directory for your cms and navigate to it (in unix):
 
   ```bash
-        $ mkdir mycms
-        $ cd mycms
+	$ mkdir mycms
+	$ cd mycms
   ```
+* Install cody and its dependencies
   
+  ```bash
+	$ npm install cody
+	$ npm install
+  ``` 
+
 * Set up a new web site using the guided scaffolding
 
   ```bash
     $ ./node_modules/.bin/ccs
     Creating cody web tree in current directory
-    1) Enter sitename: my site
+    1) Enter sitename: mysite
     Note: also using my site as database name.
     Note: by default the mysql root user has no password so you can just hit enter, if you forgot the root password see http://dev.mysql.com/doc/refman/5.0/en/resetting-permissions.html
     2) Enter root password for mysql so we can create a new database and user: 
@@ -59,9 +74,20 @@ You can now use npm to install Cody thanks to Jonas.
     $ forever start index.js
   ```
   
-* Go to "http://mysite.local"
+* Go to "http://mysite.local:3001" to see your current site and go to "http://mysite.local:3001/en/dashboard" to see the CMS of the site.
 
-    
+  the default users are: 'super', 'admin', 'test' and 'user' which all have password 'empty'
+
+
+## Configuration
+
+The ccs scaffolding creates a config.json file in the root of your project directory. Once created this file can be adjusted manually or the values can be overriden by using environment variables (both cases need a server restart), e.g.
+
+```bash
+$ dbuser=dbuser dbpassword=dbpassword port=8080 node index.js
+```
+
+Have a look at the config.json file to see which configuration variables you can use.
 
 
 ## Troubleshooting
@@ -76,8 +102,6 @@ You can now use npm to install Cody thanks to Jonas.
   > You entered the incorrect password for your root user of the mysql database.
   
   Try to figure out the correct password or reset it: http://dev.mysql.com/doc/refman/5.0/en/resetting-permissions.html
-  
-    
 
 ## License
 
