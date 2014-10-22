@@ -65,9 +65,20 @@ You can now use npm to install Cody thanks to Jonas.
     $ forever start index.js
   ```
   
-* Go to "http://mysite.local"
+* Go to "http://mysite.local:3001" to see your current site and go to "http://mysite.local:3001/en/dashboard" to see the CMS of the site.
 
-    
+  the default users are: 'super', 'admin', 'test' and 'user' which all have password 'empty'
+
+
+## Configuration
+
+The ccs scaffolding creates a config.json file in the root of your project directory. Once created this file can be adjusted manually or the values can be overriden by using environment variables (both cases need a server restart), e.g.
+
+```bash
+$ dbuser=dbuser dbpassword=dbpassword port=8080 node index.js
+```
+
+Have a look at the config.json file to see which configuration variables you can use.
 
 
 ## Troubleshooting
