@@ -18,7 +18,13 @@ You can now use npm to install Cody thanks to Jonas.
         $ mkdir mycms
         $ cd mycms
   ```
+* Install cody and its dependencies
   
+  ```bash
+	$ npm install cody
+	$ npm install
+  ``` 
+
 * Set up a new web site using the guided scaffolding
 
   ```bash
