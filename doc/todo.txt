@@ -1,6 +1,3 @@
-rsync -avzP  /Users/johan/Development/WebStorm/jcms/cody root@vpn.cody-cms.org:/usr/local/src/jcms/cody
-rsync -avzP  /Users/johan/Development/WebStorm/jcms/codyweb root@vpn.cody-cms.org:/usr/local/src/jcms/codyweb
-rsync -avzP  /Users/johan/Development/WebStorm/jcms/stef root@vpn.cody-cms.org:/usr/local/src/jcms/stef
 
 - model/User.js aanpassen om Model.js te gebruiken.
 - Diverse models die aangemaakt worden in een Controller (bvb. PhotoController)
@@ -8,11 +5,26 @@ rsync -avzP  /Users/johan/Development/WebStorm/jcms/stef root@vpn.cody-cms.org:/
 
 - daily backups !!
 
+- in loginController std functionaliteit om nieuw password op te sturen
+
+- github
+  - readme
+  - contrib
+  - licence [ done ]
+
+- stop/start/restart Cody
+  moet degelijk script worden om in /etc/init.d te zetten
+  voorbeelden genoeg aldaar te vinden.
+
+
 - redirect / to /nl or /en [ done ]
 - delete content from page fails ... ?? [ fixed on 23/06/2013, a > where it should have been a >= ]
 - new folder in "Images" -> "Choose file" ?? [ fixed 21/06/2013 ]
 
-- sending mails from javascript
+- sending mails from javascript [ done ]
+
+- "Images" (met id = 1) was weg bij Stoerhuus ??  Delete van toplevel?
+ [done 2013/11/02 - hasAtomChildren had fout in Application ]
 
 - templates
   - add "note" om bij "add content" bij elke template een beetje uitleg te geven over de template
@@ -23,88 +35,25 @@ rsync -avzP  /Users/johan/Development/WebStorm/jcms/stef root@vpn.cody-cms.org:/
     opgelet: PageController nakijken dat naam overgenomen wordt van gepredefinieerde atoms. [ done 22/06/2013 ]
   - gekoppelde form -> data aan pagina hangen / kunnen afbeelden
 - passwords niet meer als plain text stockeren [ done ]
-- in loginController std functionaliteit om nieuw password op te sturen
+
 
 - maken dat ook /nl als /nl/ aanvaard wordt [ done ]
   evenals /  [ done ]
 
 
-- github
-  - readme
 
 - unit testing
   - bvb: controller.getParam, Id, Num, Int: allerlei waarden in params steken en er terug uithalen
 
 
-websites / projecten
-- BZYC
-  - leden
-  - tijd, water & stroom verbruik registratie
-- Howest?
-- BOIC?
-- Dr Site omzetten van Java -> Cody
-- BOK [ Dieter ]
-
-
-Laurens:
+Hosting on cody-web:
 - de server parameters (uit cody.websites) editeerbaar maken in de backoffice
   wel de naam read-only houden.
-
-- gezien het toch in dit genre is, maar wel meer "cody": mogelijkheid tot talen bijmaken / weglaten
-  opgelet, je moet dan ook pages en content bijmaken / verwijderen... eigenlijk alle tabellen met language in.
-
-- installatie
-  - eerst handmatig, met documentatie (en waar nodig aanpassingen)
-    inclusief database, npm's, etc..
-  - daarna voorstel voor automatisch opzetten van een extra site
-
-- stop/start/restart Cody
-  moet degelijk script worden om in /etc/init.d te zetten
-  voorbeelden genoeg aldaar te vinden.
-
-- om uiteindelijk een uitbreiding te maken op de website van cody
+- een uitbreiding te maken op de website van cody
  inclusief registratie e.d.
-
 - daarna: uploaden van css en logo in backoffice.
   ook header en footer image ?
-
 - virtual host selectie -> app [ done ]
-
-
-Dieter:
-- Usercontroller + login.ejs uitbreiden met "Forgot password"
- opsturen per email, maar wat? iemand een voorstel?
-  - gewoon nieuw password genereren?
-  - verplichten direct om te veranderen?
-  - link naar de site waarmee je direct nieuw pw moet kiezen?
- voor mij mag het simpel zijn.
-
-- Content website opzetten
- maar vooral documenteren, met screenshots en korte uitleg per operatie
- je mag gerust wat layout/html e.d. stelen van http://soft.vub.ac.be/~tvcutsem/invokedynamic/
- uiteindelijk zou ik willen voorstellen om Tom zijn site te hermaken / hosten in Cody.
-
-
-- Als voorbeeld vereniging site opzetten [ done ]
-  - leden (besloten groep, dus er hoeft geen registratie te zijn,
-    wel een login om verder dan de eerste pagina te geraken,
-    eigen controller -> needsLogin aanpassen)
-  - uiteraard ook content, navigatie 1 niveau diep is ok
-    (huidige content hoeft niet hernomen worden - bok.coppieters.be)
-  - kalender, leden kunnen hier iets op zetten (titel, door wie, datum, uur, locatie) en aanpassen
-    hij kan doorbladerd worden per maand
-    het hoeft zeker geen echte "month view" te zijn
-    een lijst met activiteiten per maand (of zelfs per jaar is meer dan voldoende)
-  - export van die kalendar naar ical formaat zodat je je kan "subscriben" aan de kalender
-    ik denk dat outlook dit kan (of ical op Mac).
-  - voorzien om eventueel door wissel kleuren en images nieuuwe
-    waarom direct niet multi vereniging?
-
-
-- Ik zie dat die site van Tom ook commentaar toelaat
-  misschien een leuke optie / voorbeeld controller die je later kan maken
-  zodat je per pagina kan aanduiden of je commentaar toelaat...
-  (met captcha?)
 
 
 Yanic: [ done door Johan: 15/09/2013 ]
@@ -116,10 +65,4 @@ Yanic: [ done door Johan: 15/09/2013 ]
 - bij het krijgen van een meta data id + (bestaande - or lege) data + param's object
   -> json string of object teruggeven dat kan bewaard worden
     of fouten teruggeven indien data niet voldoet aan de meta definitie.
-
-Johan:
-- Website cody documentatie / intro texts / ...
-
-- "Images" (met id = 1) was weg bij Stoerhuus ??  Delete van toplevel?
- [done 2013/11/02 - hasAtomChildren had fout in Application ]
 
