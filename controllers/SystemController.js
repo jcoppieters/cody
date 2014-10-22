@@ -34,6 +34,7 @@ SystemController.prototype.doRequest = function( finish ) {
     }
     hostname = self.escape(hostname);
     self.query("SELECT * FROM cody.websites WHERE hostname=" +  hostname + " OR hostname LIKE " + self.escape("%,"+hostname) + " OR hostname LIKE " + self.escape(hostname + ",%"), function(err, results){
+        if (err) throw err;
         if(results.length > 0){
             var result = results[0];
             self.context.config = result;
