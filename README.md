@@ -32,7 +32,7 @@ By following these steps you will be running your own CMS system in no time. If 
   ```bash
     $ ./node_modules/.bin/ccs
     Creating cody web tree in current directory
-    1) Enter sitename: my site
+    1) Enter sitename: mysite
     Note: also using my site as database name.
     Note: by default the mysql root user has no password so you can just hit enter, if you forgot the root password see http://dev.mysql.com/doc/refman/5.0/en/resetting-permissions.html
     2) Enter root password for mysql so we can create a new database and user: 
@@ -96,7 +96,9 @@ Have a look at the config.json file to see which configuration variables you can
   
   Try to figure out the correct password or reset it: http://dev.mysql.com/doc/refman/5.0/en/resetting-permissions.html
   
-    
+## Changelog
+* 3.1.1: ccs now generates a config.json file that contains all the necessary configuration variables (can be overriden by setting the respective environment variables). The user is no longer required to change the index.js afer scaffolding.
+
 
 ## License
 
