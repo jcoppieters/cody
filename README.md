@@ -51,7 +51,6 @@ By following these steps you will be running your own CMS system in no time. If 
     Please create DNS entries, or add to /etc/hosts:
     127.0.0.1     mysite.local
     
-    Also check mysite/index.js to fine-tune extra parameters, encryption key, ...
     Also check index.js and config.json to fine-tune extra parameters, encryption key, ...
     
     Start your site using:
