@@ -45,7 +45,7 @@ echo
 echo "Please create DNS entries, or add to /etc/hosts:"
 echo "127.0.0.1     $hostname"
 echo
-echo "Also check $sitename/index.js and $sitename/config.json to fine-tune extra parameters, encryption key, ..."
+echo "Also check index.js and config.json to fine-tune extra parameters, encryption key, ..."
 echo
 echo "Start your site using:"
 echo "forever start index.js"
