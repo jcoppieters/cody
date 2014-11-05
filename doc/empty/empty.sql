@@ -1,27 +1,5 @@
--- MySQL dump 10.13  Distrib 5.5.31, for debian-linux-gnu (x86_64)
---
--- Host: localhost    Database: mysite
--- ------------------------------------------------------
--- Server version	5.5.31-0+wheezy1
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Table structure for table `atoms`
---
-
 DROP TABLE IF EXISTS `atoms`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
 CREATE TABLE `atoms` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `parent` int(11) NOT NULL DEFAULT '0',
@@ -33,14 +11,8 @@ CREATE TABLE `atoms` (
   `updated` datetime DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=200 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `atoms`
---
 
 LOCK TABLES `atoms` WRITE;
-/*!40000 ALTER TABLE `atoms` DISABLE KEYS */;
 INSERT INTO `atoms` VALUES 
 (1,0,10,'Images','','','2012-01-01 00:00:00','2013-11-02 18:28:10'),
 (2,0,20,'Files','','','2012-07-09 14:18:36','2012-07-09 14:18:36'),
@@ -67,16 +39,9 @@ INSERT INTO `atoms` VALUES
 (45,44,5,'Founded','Founded on april 1rst 1984','pdf','2013-09-09 16:03:16','2014-09-03 10:29:45'),
 (49,21,20,'Image2','ourimage','jpg','2013-09-30 20:23:34','2014-09-03 10:25:08'),
 (50,21,30,'Image3','diversiteit','jpg','2013-09-30 20:26:34','2014-09-03 10:25:12');
-/*!40000 ALTER TABLE `atoms` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `content`
---
-
 DROP TABLE IF EXISTS `content`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `content` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `item` int(11) NOT NULL DEFAULT '0',
@@ -90,14 +55,9 @@ CREATE TABLE `content` (
   PRIMARY KEY (`id`),
   KEY `item` (`item`,`language`)
 ) AUTO_INCREMENT=200 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `content`
---
 
 LOCK TABLES `content` WRITE;
-/*!40000 ALTER TABLE `content` DISABLE KEYS */;
 INSERT INTO `content` VALUES 
 (1,97,'nl',10,'N','T',0,'','<p><span>Cody draagt zorg voor uw privacy. Lees deze Privacyverklaring om meer te weten te komen over de manier waarop persoonsgegevens worden ingezameld en verwerkt op deze website. In dit geval handelt Cody Howest daarbij steeds in overeenstemming met de bepalingen van de Belgische privacywet (Wet van 8 december 1992 tot bescherming van de persoonlijke levenssfeer ten opzichte van de verwerking van persoonsgegevens). De persoonlijke gegevens beperken zich enkel tot uw e-mailadres.</span></p>\n<p><span><strong>Verantwoordelijke</strong></span></p>\n<p><span>De verantwoordelijke voor de verwerking is Cody Howest; Rijselstraat 5, 8000 Brugge.</span></p>\n<p><span><strong>Kennisname</strong></span></p>\n<p><span>U kan van deze persoonsgegevens kennis nemen door een aanvraag te richten aan Cody Howest</span><span>(brief, fax of e-mail) en ze, indien nodig, doen verbeteren of verwijderen. Indien u niet gecontacteerd wenst te worden in het kader van email marketing, zullen uw gegevens op uw verzoek kosteloos uit de betrokken lijsten worden</span></p>\n<p><span><strong>Cookies</strong></span></p>\n<p><span>Wij gebruiken cookies om uw toekomstig bezoek aan onze site vlotter te laten verlopen. Een cookie is een klein stukje tekst dat op uw harde schijf wordt geplaatst. Cookies worden veel gebruikt om een hoger functionaliteit, en dus betere dienst, aan de bezoekers te kunnen aanbieden. [U kan het gebruik van cookies uitschakelen, al leidt dit er wel toe dat effecten opsommen die ten gevolge van het uitschakelen van cookies worden veroorzaakt.]</span></p>\n<p><span><strong>Veiligheid</strong></span></p>\n<p><span>Cody Howest verbindt zich ertoe om al de gepaste technische en organisatorische maatregelen te treffen om uw persoonsgegevens te beschermen tegen vernietiging, verlies, onbedoelde wijziging, beschadiging of openbaarmaking.</span></p>\n<p><span><strong>Toestemming</strong></span></p>\n<p><span>Door u akkoord te verklaren met deze voorwaarden en condities geeft u ook uw toestemming voor de verwerking van uw persoonsgegevens voor de doeleinden zoals hierboven beschreven.</span></p>'),
 (2,98,'nl',10,'N','T',0,'','<p><span>Door gebruik te maken van deze website verklaart u zich akkoord met onderstaande voorwaarden en condities.</span></p>\n<p><span><strong>1. Website</strong></span></p>\n<p>De eigenaar van deze website is&nbsp;<br /> Cody Howest,<br /> Rijselstraat 5<br /> 8000, Brugge,&nbsp;<br /> Belgi&euml;<br /> Tel: 32(0)50 xx,&nbsp;<br /> E-mail: info@howest.be&nbsp;<br />ON: xx</p>\n<p><span>Als u niet akkoord gaat met onderstaande voorwaarden wordt u verzocht de website te verlaten. Cody behoudt zich het recht voor deze voorwaarden periodisch aan te passen waarna de leden op de hoogte zullen worden gebracht van deze wijzigingen. Wanneer u na deze kennisgeving de website blijft gebruiken verklaart u zich akkoord met de doorgevoerde wijzigingen. Cody Howest&nbsp; kan eventueel andere diensten aanbieden aan de gebruikers van deze site. In dat geval zullen de geldende voorwaarden apart worden medegedeeld.</span></p>\n<p><span><strong>2. Toegankelijkheid</strong></span></p>\n<p><span>Cody Howest&nbsp; probeert zo goed als mogelijk de website 24 uur per dag toegankelijk te houden, nochtans kan het gebeuren dat de website ontoegankelijk is voor een korte periode omwille van onderhoudswerken, aanpassingen of technische redenen.</span></p>\n<p><span><strong>3. Verantwoordelijkheid</strong></span></p>\n<p><span>Cody Howest weerlegt elke verantwoordelijkheid met betrekking tot deze website en de aangeboden informatie. Cody Howest&nbsp; verzekert niet dat de informatie op deze website correct, compleet of actueel is. Alle informatie, producten en diensten op deze website kunnen fouten bevatten. De gebruiker wordt verzocht hiermee rekening te houden.</span></p>\n<div><span><br /></span></div>'),
@@ -173,16 +133,10 @@ INSERT INTO `content` VALUES
 (116,103,'en',10,'N','T',0,'Text','<h3>Lorem Ipsum - 103</h3>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.'),
 (118,157,'en',10,'N','T',0,'Text','<h3>Lorem Ipsum - 157</h3>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.'),
 (117,156,'en',10,'N','T',0,'Text','<h3>Lorem Ipsum - 156</h3>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.');
-/*!40000 ALTER TABLE `content` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `data`
---
-
 DROP TABLE IF EXISTS `data`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
 CREATE TABLE `data` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `atom` int(11) NOT NULL DEFAULT '0',
@@ -192,52 +146,33 @@ CREATE TABLE `data` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=200 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `data`
---
+
 
 LOCK TABLES `data` WRITE;
-/*!40000 ALTER TABLE `data` DISABLE KEYS */;
 INSERT INTO `data` VALUES 
  (1,32,'{\"Titel\":\"\",\"Naam\":\"ikke\",\"e-mail adres\":\"johan577@mac.com\",\"vraag\":\"Ik heb geen vragen!\"}','S','2013-09-10 19:09:39',NULL);
-/*!40000 ALTER TABLE `data` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `domains`
---
 
 DROP TABLE IF EXISTS `domains`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
 CREATE TABLE `domains` (
   `id` varchar(32) NOT NULL DEFAULT '',
   `name` varchar(32) DEFAULT '?'
 ) DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `domains`
---
 
 LOCK TABLES `domains` WRITE;
-/*!40000 ALTER TABLE `domains` DISABLE KEYS */;
 INSERT INTO `domains` VALUES 
  ('admin','Admin'),
  ('cms','CMS Users'),
  ('user','Users');
-/*!40000 ALTER TABLE `domains` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `items`
---
 
 DROP TABLE IF EXISTS `items`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
 CREATE TABLE `items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL DEFAULT '',
@@ -256,14 +191,9 @@ CREATE TABLE `items` (
   PRIMARY KEY (`id`),
   KEY `parent_idx` (`parent`)
 ) AUTO_INCREMENT=200 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `items`
---
 
 LOCK TABLES `items` WRITE;
-/*!40000 ALTER TABLE `items` DISABLE KEYS */;
 INSERT INTO `items` VALUES 
 (1,'Website',-1,1,100,'M',100,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','S',NULL,'list',''),
 (2,'Login',3,1,2,'A',99,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','N','',''),
@@ -277,7 +207,6 @@ INSERT INTO `items` VALUES
 (14,'Forms',10,1,14,'A',40,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),
 (15,'Users',10,1,15,'A',50,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','list',''),
 (16,'Templates',10,1,16,'A',60,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','list',''),
-/*(17,'System',10,1,17,'A',70,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''), */
 (20,'Management',9,1,2,'M',10,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','S','Y','',''),
 (21,'Forms',20,1,18,'A',10,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),
 (22,'Comments',20,1,19,'A',10,'2010-01-01','2010-01-01 00:00:00','2100-01-01 00:00:00','Y','Y','',''),
@@ -302,69 +231,39 @@ INSERT INTO `items` VALUES
 (155,'28 sept 13',152,1,100,'M',5,'2013-09-28','2013-09-30 00:00:00','2101-01-31 00:00:00','Y',NULL,'list',''),
 (156,'02 nov 13',152,1,100,'D',5,'2013-11-02','2013-11-02 00:00:00','2101-01-31 00:00:00','Y',NULL,'list',''),
 (157,'New item',152,1,100,'D',5,'2013-12-06','2013-12-06 00:00:00','2101-01-31 00:00:00','Y',NULL,'list','');
-/*!40000 ALTER TABLE `items` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `languages`
---
 
 DROP TABLE IF EXISTS `languages`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `languages` (
   `id` varchar(4) NOT NULL DEFAULT '',
   `name` varchar(32) DEFAULT '',
   `sortorder` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `languages`
---
 
 LOCK TABLES `languages` WRITE;
-/*!40000 ALTER TABLE `languages` DISABLE KEYS */;
 INSERT INTO `languages` VALUES 
  ('en','English',1),
  ('nl','Nederlands',2);
-/*!40000 ALTER TABLE `languages` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `levels`
---
-
 DROP TABLE IF EXISTS `levels`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `levels` (
   `id` int(11) DEFAULT NULL,
   `name` varchar(32) DEFAULT NULL
 ) DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `levels`
---
 
 LOCK TABLES `levels` WRITE;
-/*!40000 ALTER TABLE `levels` DISABLE KEYS */;
 INSERT INTO `levels` VALUES 
  (2,'user'),
  (50,'admin'),
  (99,'super');
-/*!40000 ALTER TABLE `levels` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `pages`
---
 
 DROP TABLE IF EXISTS `pages`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pages` (
   `item` int(11) NOT NULL DEFAULT '0',
   `language` varchar(2) NOT NULL DEFAULT '',
@@ -377,14 +276,8 @@ CREATE TABLE `pages` (
   `updated` datetime DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`item`,`language`)
 ) DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pages`
---
 
 LOCK TABLES `pages` WRITE;
-/*!40000 ALTER TABLE `pages` DISABLE KEYS */;
 INSERT INTO `pages` VALUES 
 (1,'nl','Stoerhuus','welcome','Y','','','2010-01-01 00:00:00','2014-09-03 11:08:24'),
 (2,'nl','Login','login','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
@@ -398,7 +291,6 @@ INSERT INTO `pages` VALUES
 (14,'nl','Forms','forms','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
 (15,'nl','Users','users','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
 (16,'nl','Templates','templates','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
-/* (17,'nl','System','system','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'), */
 (20,'nl','Management','admin','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
 (21,'nl','Forms','data','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
 (22,'nl','Comments','comments','Y','','','2010-01-01 00:00:00','2010-01-01 00:00:00'),
@@ -461,16 +353,10 @@ INSERT INTO `pages` VALUES
 (155,'en','28 sept 13','28september2013','Y','','','2013-09-30 19:43:20','2013-10-20 23:30:55'),
 (156,'en','02 nov 13','02november2013','Y','','','2013-11-02 17:59:36','2013-11-02 18:34:12'),
 (157,'en','11 dec 13','','Y','','','2013-12-06 22:04:00','2013-12-06 22:11:13');
-/*!40000 ALTER TABLE `pages` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `templates`
---
-
 DROP TABLE IF EXISTS `templates`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
 CREATE TABLE `templates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) DEFAULT '',
@@ -483,14 +369,9 @@ CREATE TABLE `templates` (
   `defaultchild` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=200 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `templates`
---
 
 LOCK TABLES `templates` WRITE;
-/*!40000 ALTER TABLE `templates` DISABLE KEYS */;
 INSERT INTO `templates` VALUES 
 (2,'Login','','LoginController','-/login.ejs','',0,'Y',0),
 (9,'Dashboard','','DashboardController','-/cms/dashboard.ejs','',0,'Y',0),
@@ -500,7 +381,6 @@ INSERT INTO `templates` VALUES
 (14,'CMS-Forms','','FormController','-/cms/forms.ejs','',0,'Y',0),
 (15,'CMS-Users','','UserController','-/cms/users.ejs','',0,'Y',0),
 (16,'CMS-Templates','','TemplateController','-/cms/templates.ejs','',0,'Y',0),
-/* (17,'CMS-System','','SystemController','','',0,'Y',0), */
 (18,'Admin-Forms','Incoming data from forms','FormDataController','-/cms/forms-list.ejs','',0,'Y',0),
 (19,'Admin-Comments','View approve, edit or trash comments','CommentController','-/cms/comments.ejs','',0,'Y',0),
 
@@ -508,16 +388,10 @@ INSERT INTO `templates` VALUES
 (103,'With intros','Displays also all intro content of the pages below','ContentController','intros.ejs','',0,'N',0),
 
 (106,'CMS-Styles','','StylesController','-/cms/styles.ejs','',0,'Y',0);
-/*!40000 ALTER TABLE `templates` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `users`
---
 
 DROP TABLE IF EXISTS `users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(128) NOT NULL DEFAULT '-',
@@ -535,27 +409,12 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_idx` (`username`,`active`)
 ) AUTO_INCREMENT=200 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `users`
---
 
 LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES 
 (1,'super','rWorks Super',password("empty"),'rWorks',99,0,99,'Y','info@mysite.com','','N',0),
 (2,'admin','rWorks Admin',password("empty"),'rWorks',50,0,99,'Y','info@mysite.com','','N',0),
 (3,'test','rWorks Test',password("empty"),'rWorks',2,0,99,'Y','info@mysite.com','','N',0),
 (11,'user','Mr. Owner User',password("empty"),'users', 50,0,99,'Y','info@mysite.com','','N',10);
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
