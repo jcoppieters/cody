@@ -1,5 +1,7 @@
 # History
 
+## 3.3.2 - 06/11/2014
+* The scaffolding is now written in node, run with: $node ./node_modules/cody/bin/create_script
 
 ## 3.2.0 - 22/10/2014
 
