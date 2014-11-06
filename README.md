@@ -37,7 +37,8 @@ By following these steps you will be running your own CMS system in no time. If 
 * Set up a new web site using the guided scaffolding
 
   ```bash
-    $ ./node_modules/.bin/create_site
+    $ node ./node_modules/.bin/create_site
+    
     Creating cody web tree in current directory
     1) Enter sitename: mysite
     Note: also using my site as database name.
