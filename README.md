@@ -31,13 +31,12 @@ By following these steps you will be running your own CMS system in no time. If 
   
   ```bash
 	$ npm install cody
-	$ npm install
   ``` 
 
 * Set up a new web site using the guided scaffolding
 
   ```bash
-    $ node ./node_modules/.bin/create_site
+    $ node ./node_modules/cody/bin/create_site
     
     Creating cody web tree in current directory
     1) Enter sitename: mysite
