@@ -14,6 +14,12 @@ var libpath = require("path"),
 var maxCacheAge = 600;  // 10 minutes  ???
 
 
+function generate404(resp) {
+  resp.writeHead(404, { "Content-Type": "text/plain" });
+  resp.write("404 Not Found\n");
+  resp.end();
+}
+
 function Dynamic(req, res, path) {
   this.request = req;
   this.response = res;
@@ -27,17 +33,22 @@ Dynamic.prototype.serve = function () {
   var self = this;
 
   var uri = url.parse(self.request.url).pathname;
-  uri = uri.replace("data/","");
-  var filename = this.path + "/" + ((uri.indexOf("/") === 0) ? uri.substring(1) : uri);
-  
+  uri = uri.replace("data/", "");
+  var filename = libpath.normalize(libpath.join(this.path, uri));
+
+  // check for malicious paths -- thanks to Tom Hunkapiller
+  if (filename.indexOf(this.path) !== 0) {
+    console.log("Dynamic.serve -> malicious path: " + uri);
+    generate404(self.response);
+    return;
+  }
+
 
   // check if this file exists
   fs.exists(filename, function (exists) {
       if (!exists) {
         console.log("Dynamic.serve -> file not found: " + filename);
-        self.response.writeHead(404, { "Content-Type": "text/plain" });
-        self.response.write("404 Not Found\n");
-        self.response.end();
+        generate404(self.response);
         return;
       }
 
