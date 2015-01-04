@@ -359,6 +359,8 @@ Page.prototype.doDeactivate = function(controller, next) {
 /* Content stuff */
 
 Page.prototype.render = function(params) {
+  console.log("ERROR ** this seems to be so wrong??");
+
   return this.content.render(params);
 }
 

@@ -414,6 +414,8 @@ Controller.prototype.addParamsToContext = function( context ) {
 // Output & feedback utilities
 //
 Controller.prototype.render =  function( theContent ) {
+  this.app.log("Controller", "ERROR ** attempt to render a content with kind = '" +  theContent.kind + "' and no renders provided");
+
   return "<!-- unknown content type = " + theContent.kind + ", atomId = " + theContent.atomId + ", data = " + theContent.data + "-->";
 };
 
