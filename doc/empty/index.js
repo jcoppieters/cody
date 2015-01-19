@@ -48,6 +48,14 @@ cody.startWebApp(cody.server, cody.config, function() {
     console.log('Listening on port ' + portNr);
 });
 
+// if -c exists, use the customized config
+if(process.argv.indexOf("-c") != -1){
+    var extraConfigFilePath = process.argv[process.argv.indexOf("-c") + 1];
+    var obj = JSON.parse(fs.readFileSync(extraConfigFilePath, 'utf8'));
+    Object.keys(cody.config).forEach(function (name) {
+        cody.config[name] = obj[name] || cody.config[name];
+    });
+}
 
 if (!process.stderr.isTTY) {
     process.on('uncaughtException', function (err) {
