@@ -81,13 +81,20 @@ By following these steps you will be running your own CMS system in no time. If 
 
 ## Configuration
 
-The create_site scaffolding creates a config.json file in the root of your project directory. Once created this file can be adjusted manually or the values can be overriden by using environment variables (both cases need a server restart), e.g.
+The create_site scaffolding creates a config.json file in the root of your project directory. This configuration can be adjust in the following three ways, listed in order of overwriting order (e.g. values of 2 will overwrite those of 1, etc.):
 
+1. Manually adjust the values in the config.json file
+2. Create your own config file and supply it at command-line with the -c option (since v3.2.5, thanks to [andretw](https://github.com/jcoppieters/cody/pull/17))
+```bash
+$ node index.js -c my_overwriting_config.json
+```
+3. Provide environment variables
 ```bash
 $ dbuser=dbuser dbpassword=dbpassword port=8080 node index.js
 ```
 
-Have a look at the config.json file to see which configuration variables you can use.
+Careful, all three cases need a server restart before they take effect!
+Have a look at the generated config.json file to see which configuration variables you can use.
 
 
 ## Troubleshooting
@@ -103,6 +110,19 @@ Have a look at the config.json file to see which configuration variables you can
   
   Try to figure out the correct password or reset it: http://dev.mysql.com/doc/refman/5.0/en/resetting-permissions.html
 
+## Contributors
+
+  * Johan Coppieters
+  * Jonas Maes
+  * Tim Coppieters
+  * Dieter
+  * Laurens
+  * Jelle
+
+  * devoidfury
+  * Andretw
+  * You? We are always happy to review and accept your issues/pull requests!
+  
 ## License
 
 Copyright (c) 2012-2014 Johan Coppieters, Howest Brugge. See the LICENSE.md file for license rights and
