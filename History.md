@@ -1,6 +1,8 @@
 # History
-## 3.3.4 - 20/01/2015
+## 3.3.5 - 20/01/2015
 * Allow custom config file that overwrites the default config by supplying it on command-line with -c, by andretw. [Pull request](https://github.com/jcoppieters/cody/pull/17)
+
+## 3.3.4 - 02/01/2015
 * Security: prevent from loading static files outside of the public folder scope. [Issue](https://github.com/jcoppieters/cody/issues/16)
 
 ## 3.3.2 - 06/11/2014
