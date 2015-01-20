@@ -30,10 +30,21 @@ cody.server.get("/cody/static/*", function (req, res) {
     fileserver.serve();
 });
 
-// setup the config from config.json + overwrite by environment values
+// setup the config. Order of importance: config.json < -c command line config < environment values
+// 1. load default config
 cody.config = require('./config');
 cody.config.controllers = require("./controllers/");
 
+// 2. if -c exists, overwrite customized config values
+if(process.argv.indexOf("-c") != -1){
+    var extraConfigFilePath = process.argv[process.argv.indexOf("-c") + 1];
+    var obj = JSON.parse(fs.readFileSync(extraConfigFilePath, 'utf8'));
+    Object.keys(cody.config).forEach(function (name) {
+        cody.config[name] = obj[name] || cody.config[name];
+    });
+}
+
+// 3. overwrite environment variable values
 Object.keys(cody.config).forEach(function (name) {
   cody.config[name] = process.env[name] || cody.config[name];
 });
@@ -47,7 +58,6 @@ cody.startWebApp(cody.server, cody.config, function() {
     cody.server.listen(portNr);
     console.log('Listening on port ' + portNr);
 });
-
 
 if (!process.stderr.isTTY) {
     process.on('uncaughtException', function (err) {
