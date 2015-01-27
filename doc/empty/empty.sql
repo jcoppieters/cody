@@ -5,7 +5,7 @@ CREATE TABLE `atoms` (
   `parent` int(11) NOT NULL DEFAULT '0',
   `sortorder` int(11) DEFAULT '0',
   `name` varchar(64) NOT NULL DEFAULT '',
-  `note` varchar(255) DEFAULT NULL,
+  `note` varchar(4096) DEFAULT NULL,
   `extention` varchar(3) DEFAULT '',
   `created` datetime DEFAULT '0000-00-00 00:00:00',
   `updated` datetime DEFAULT '0000-00-00 00:00:00',
