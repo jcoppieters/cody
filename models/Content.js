@@ -85,16 +85,15 @@ Content.prototype.renderFacebook = function(controller) {
   if (url === "") url = controller.context.page.getURL(this.language);
   if (url.indexOf("http") < 0) { url = "http://" + url; }
 
-  return '<div id="fb-root"></div>' +
+  return '<div class="fb-like" data-href="' + url + '" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false"></div>' +
+    '<div id="fb-root"></div>' +
     '<script>(function(d, s, id) {' +
-    '  var js, fjs = d.getElementsByTagName(s)[0];' +
-    '  if (d.getElementById(id)) return;' +
-    '  js = d.createElement(s); js.id = id;' +
-    '  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";' +
-    '  fjs.parentNode.insertBefore(js, fjs);' +
-    ' }(document, "script", "facebook-jssdk"));</script>' +
-    '<div class="fb-like" data-href="' + url + '" data-action="like" data-layout="standard" ' +
-    'data-show-faces="false" data-send="false" colorscheme="light"></div>';
+    ' var js, fjs = d.getElementsByTagName(s)[0];' +
+    ' if (d.getElementById(id)) return;' +
+    ' js = d.createElement(s); js.id = id;' +
+    ' js.src = "http://connect.facebook.net/en_US/all.js#xfbml=1";' +
+    ' fjs.parentNode.insertBefore(js, fjs);' +
+    '}(document, "script", "facebook-jssdk"));</script>';
 };
 
 Content.prototype.renderShare = function(controller) {
@@ -102,11 +101,15 @@ Content.prototype.renderShare = function(controller) {
   if (url === "") url = controller.context.page.getURL(this.language);
   if (url.indexOf("http") < 0) { url = "http://" + url; }
 
-  return '<a href="#" onclick="' +
-        'window.open(' +
-        '  \'https://www.facebook.com/sharer/sharer.php?u=\'+encodeURIComponent(location.href), ' +
-        '  \'facebook-share-dialog\', \'width=626,height=436\'); ' +
-        'return false;">Share on Facebook</a>';
+  return '<div class="fb-share-button" data-href="http://zzz.yyy.xx" data-layout="button"></div>' +
+      '<div id="fb-root"></div>' +
+      '<script>(function(d, s, id) {' +
+      ' var js, fjs = d.getElementsByTagName(s)[0];' +
+      ' if (d.getElementById(id)) return;' +
+      ' js = d.createElement(s); js.id = id;' +
+      ' js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";' +
+      ' fjs.parentNode.insertBefore(js, fjs);' +
+      '}(document, "script", "facebook-jssdk"));</script>';
 };
 
 Content.prototype.renderImage = function(controller) {

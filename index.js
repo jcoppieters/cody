@@ -37,10 +37,10 @@ module.exports.startWebApp = require("./startWebApp.js");
 
 // module.exports.unitTests = require("./tests/");
 
-module.exports.express = require("express")
-module.exports.mysql = require("mysql")
-module.exports.fs = require("fs")
-module.exports.ejs = require("ejs")
-module.exports.bodyParser = require("body-parser")
-module.exports.expressSession = require("express-session")
-module.exports.multer = require("multer")
+module.exports.express = require("express");
+module.exports.mysql = require("mysql");
+module.exports.fs = require("fs");
+module.exports.ejs = require("ejs");
+module.exports.bodyParser = require("body-parser");
+module.exports.expressSession = require("express-session");
+module.exports.multer = require("multer");

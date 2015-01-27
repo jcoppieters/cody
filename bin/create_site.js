@@ -122,7 +122,7 @@ rl.question("Enter sitename: ", function (sitename) {
                         smtp: "smtpmailer."+hostname,
                         version: "V0.1",
                         defaultlanguage: "en",
-                        datapath: "/usr/local/data/empty",
+                        datapath: "/usr/local/data/"+sitename,
                         port: 3001
                       }));
                    
