@@ -91,6 +91,13 @@ FormController.prototype.emptyLabels = function(isForm) {
 };
 
 
+FormController.prototype.isMultiple = function( aGenerator ) {
+  return ((aGenerator === cody.Meta.Generator.checkboxinput) ||
+          (aGenerator === cody.Meta.Generator.selectinput) ||
+          (aGenerator === cody.Meta.Generator.radioinput));
+};
+
+
 FormController.prototype.fetchNode = function( theNode, finish ) {
   var self = this;
 
@@ -131,9 +138,7 @@ FormController.prototype.fetchNode = function( theNode, finish ) {
         obj.min = (typeof obj.options.minimum === "undefined") ? "" : obj.options.minimum;
         obj.max = (typeof obj.options.maximum === "undefined") ? "" : obj.options.maximum;
       }
-      if ((obj.generator == cody.Meta.Generator.checkboxinput) ||
-          (obj.generator == cody.Meta.Generator.selectinput) ||
-          (obj.generator == cody.Meta.Generator.radioinput)){
+      if (self.isMultiple(obj.generator)){
         if (typeof obj.options.choices !== "undefined") {
           for (var iC in obj.options.choices) {
             var C = obj.options.choices[iC];
@@ -151,11 +156,15 @@ FormController.prototype.fetchNode = function( theNode, finish ) {
 };
 
 
-FormController.prototype.isMultiple = function( aGenerator ) {
-  return ((aGenerator === cody.Meta.Generator.checkboxinput) ||
-          (aGenerator === cody.Meta.Generator.selectinput) ||
-          (aGenerator === cody.Meta.Generator.radioinput));
-};
+
+// Read all meta definitions from the posted form
+//  1) decide what reader should be taken, based on the "generator"
+//    + some parameters (phone, number, email, date, date3)
+//  2) read labels
+//  3) read choices (for checkboxes, radio's, popup's)
+//  4) read specific options (required, default value, ...)
+//
+// Finally store in an atom/object
 
 FormController.prototype.saveInfo = function( nodeId, finish ) {
   var self = this;
@@ -239,7 +248,7 @@ FormController.prototype.saveInfo = function( nodeId, finish ) {
       // one choice per line and possibly in the format "[id]|[label]"
       // the user can enter his list without "[id]|", we will add it on next edit
       if (this.isMultiple(aGenerator)){
-        if (aGenerator !== cody.Meta.Generator.radioinput) {
+        if (aGenerator === cody.Meta.Generator.checkbox) {
           obj.reader = cody.Meta.Reader.multiple;
         }
         obj.options.choices = {};
@@ -284,4 +293,3 @@ FormController.prototype.saveInfo = function( nodeId, finish ) {
     finish();
   }
 };
-
