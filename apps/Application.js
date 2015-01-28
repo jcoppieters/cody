@@ -38,6 +38,7 @@ function Application(config) {
   this.dbhost = config.dbhost || "localhost";
   this.db = config.db || "cody";
   this.smtp = config.smtp || "smtp.telenet.be";
+  this.smtpoptions = config.smtpoptions; // see https://github.com/andris9/Nodemailer
   this.mailFrom = config.mailFrom || "info@cody-cms.org";
 
   this.dumpStructures = config.dumpstructures || true;

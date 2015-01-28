@@ -267,7 +267,7 @@ Controller.prototype.alertFormOwner = function(atom, form) {
       }
     }
     mail += "\n\nYour website.\n";
-    self.sendMail("info@cody-cms.org", formDesc.alert, "Message from " + atom.app.name, mail);
+    self.sendMail(self.app.mailFrom, formDesc.alert, "Message from " + atom.app.name, mail);
   }
 };
 
@@ -289,28 +289,35 @@ Controller.prototype.sendMail = function (pFrom, pTo, pSubject, pText, pHtml) {
   }
   if ((typeof pHtml !== "undefined") && (pHtml) && (pHtml !== "")) {
     mailOptions.html = pHtml;
-    mailOptions.generateTextFromHTML = ! hasText;
   }
 
-  console.log("connecting to " + self.context.app.smtp);
-  var smtpTransport = nodemailer.createTransport("SMTP", {
-    host: self.context.app.smtp,
-    secureConnection: false,
-    port: 25/*,
-    auth: {
-      user: "user@domain.com",
-      pass: "password"
-    }                   */
-  });
+  // create transport options -- smtp defaults
+  var options = {
+      host: self.context.app.smtp,
+      secureConnection: false,
+      port: 25
+    };
+  // if the smtp-options are defined in the config, use these instead of the older 'separate'/'default' style
+  if (typeof self.app.smtpoptions != "undefined") {
+    options = self.app.smtpoptions;
+  }
+  // allow the authentication params to be defined separately
+  if (typeof self.app.smtpauth != "undefined") {
+    options.auth = self.app.smtpauth;
+  }
 
-  smtpTransport.sendMail(mailOptions, function (error, response) {
+  console.log(" connecting to " + options.host);
+  var smtpTransport = nodemailer.createTransport(options);
+
+  smtpTransport.sendMail(mailOptions, function (error, info) {
       if (error) {
           console.log("Error sending mail: " + error);
       } else {
-          console.log("Message sent: " + response.message);
+          console.log("Message sent: " + info.response);
       }
   });
 };
+
 
 //
 // Session handling
