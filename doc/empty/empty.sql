@@ -6,7 +6,7 @@ CREATE TABLE `atoms` (
   `sortorder` int(11) DEFAULT '0',
   `name` varchar(64) NOT NULL DEFAULT '',
   `note` varchar(4096) DEFAULT NULL,
-  `extention` varchar(3) DEFAULT '',
+  `extention` varchar(4) DEFAULT '',
   `created` datetime DEFAULT '0000-00-00 00:00:00',
   `updated` datetime DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
