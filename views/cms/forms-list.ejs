@@ -37,6 +37,19 @@
   }
 
 $(document).ready(function(){
+  $("#formdata #doSendMail")
+      .button({ icons: { primary: "ui-icon-mail-closed"}, text: true})
+      .click(function(){
+    $("#formdata #request").val("sendmail");
+    $("#formdata").submit();
+  });
+  $("#formdata #doTestMail")
+      .button({ icons: { primary: "ui-icon-person"}, text: true})
+      .click(function(){
+    $("#formdata #request").val("testmail");
+    $("#formdata").submit();
+  });
+
     $("#tree table td").click(function(){
       var parent = $(this).parent();
       var id = parent.attr("data-id");
@@ -105,6 +118,32 @@ $(document).ready(function(){
     </div>
 
     <div id="right_cont">
+      <div id="content_data">
+      <form action="/<%=page.language%>/data" method="post" id="formdata">
+        <fieldset>
+          <input type="hidden" name="form_show" value="<%=form_show%>">
+          <input type="hidden" name="request" id="request" value="list">
+          <div>
+            <label for="subject">Subject</label><input type="text" name="subject" id="subject" value="<%=subject%>">
+          </div>
+          <div>
+            <label for="content">Content</label><textarea cols="80" rows="10" id="content" name="content"><%=content%></textarea>
+          </div>
+          <div>
+            <label for="testmail">Test mail</label><input type="text" name="testmail" id="testmail" value="<%=testmail%>">
+          </div>
+          <div>
+            <label for="testname">Test name</label><input type="text" name="testname" id="testname" value="<%=testname%>">
+          </div>
+        </fieldset>
+
+        <div id="action_buttons">
+          <button id="doSendMail">Send Mails</button>
+          <button id="doTestMail">Test Mail</button>
+        </div>
+
+      </form>
+      </div>
     </div>
 
   </div>

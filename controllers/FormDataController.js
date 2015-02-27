@@ -48,29 +48,107 @@ FormDataController.prototype.doRequest = function( finish ) {
     self.context.fn = "-/cms/forms-data.ejs";
     self.editData(meta, id, finish);
 
+  } else if (this.isRequest("sendmail")) {
+    self.context.fn = "-/cms/forms-list.ejs";
+    self.sendAllMail(finish);
+
+  } else if (this.isRequest("testmail")) {
+    self.context.fn = "-/cms/forms-list.ejs";
+    self.sendTestMail(finish);
+
   } else {
     cody.Controller.prototype.doRequest.call(self, finish);
   }
 
 };
 
+FormDataController.prototype.getDetailData = function() {
+  var self = this;
+
+  // current status and form id
+  self.context.form_show = self.updateSession("form_show", "N");
+  self.context.form_meta = self.updateSession("form_meta", 0);
+
+  // get mail data
+  self.context.subject = this.updateSession("subject", "");
+  self.context.content = this.updateSession("content", "");
+  self.context.testmail = this.updateSession("testmail", "");
+  self.context.testname = this.updateSession("testname", "");
+};
+
+
+FormDataController.prototype.personalize = function(text, params) {
+  // write generic replace... who???
+  if (typeof params.Name != "undefined")
+    text = text.replace("[name]", params.Name).replace("[Name]", params.Name);
+  if (typeof params.name != "undefined")
+    text = text.replace("[name]", params.name).replace("[Name]", params.name);
+
+  return text;
+}
+
+FormDataController.prototype.sendAllMail = function(finish) {
+  var self = this;
+  var nr = 0;
+
+  // fetch list & detail data
+  self.listData(function() {
+    // loop over self.content.data and send mails...
+    cody.Application.each(self.context.data,
+      function(done) {
+        var body = self.personalize(self.context.content, this.data);
+
+        // allow "email", "Email", "Mail" or "mail" in the formdata.
+        var email = (typeof this.data.Email != "undefined") ? this.data.Email :
+          (typeof this.data.email != "undefined") ? this.data.email :
+          (typeof this.data.Mail != "undefined") ? this.data.Mail :
+          (typeof this.data.mail != "undefined") ? this.data.mail : "";
+
+        if (email !== "") {
+          self.sendMail(self.app.mailFrom, this.data.Email || this.data.email || this.data.mail,
+                        self.context.subject, body, function() {
+            nr++;
+            done();
+          });
+        } else {
+          done();
+        }
+      },
+      function(err) {
+        if (err) console.log("something went wrong: " + err);
+        console.log("Sent " + nr + " mails");
+        self.feedBack(true, "Sent " + nr + " mails");
+        finish();
+      });
+  });
+};
+
+FormDataController.prototype.sendTestMail = function(finish) {
+  var self = this;
+
+  // fetch list & detail data
+  self.listData(function() {
+
+    var body = self.personalize(self.context.content, {name: self.context.testname});
+    self.sendMail(self.app.mailFrom, self.context.testmail, self.context.subject, body);
+
+    finish();
+  });
+};
+
+
 
 FormDataController.prototype.listData = function(finish) {
   var self = this;
 
   // allow users to come back to the list view and still see the same
-  var status = this.getParam("form_show", this.fromSession("form_show", "N"));
-  this.toSession("form_show", status);
-  self.context.form_show = status;
+  self.getDetailData();
 
-  var meta = this.getParam("form_meta", this.fromSession("form_meta", 0));
-  this.toSession("form_meta", meta);
-
-  console.log("FormDataController.listData ->  meta = " + meta + ", status = " + status);
+  console.log("FormDataController.listData ->  meta = " + self.context.form_meta + ", status = " + self.context.form_show);
 
   self.query("select id, atom, data,status,created, modified from data " +
     "where (atom = ? or ? = 0) and (status = ? or ? = 'X') order by atom, created desc",
-    [meta, meta, status, status], function(error, result) {
+    [self.context.form_meta, self.context.form_meta, self.context.form_show, self.context.form_show], function(error, result) {
       if (error) { console.log("FormDataController.listData -> error " + error); }
       self.context.data = [];
       for (var i = 0; i < result.length; i++) {

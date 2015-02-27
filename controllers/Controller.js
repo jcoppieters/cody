@@ -271,10 +271,16 @@ Controller.prototype.alertFormOwner = function(atom, form) {
   }
 };
 
-Controller.prototype.sendMail = function (pFrom, pTo, pSubject, pText, pHtml) {
+Controller.prototype.sendMail = function (pFrom, pTo, pSubject, pText, pHtml, finished) {
   // for the moment we don't wait for the smtp transfer to be completed
   // so we can't generate error feedback to the user, perhaps make a version with a callback too?
   var self = this;
+
+  // swap params
+  if (typeof pHtml === "function") {
+    finished = pHtml;
+    pHtml = undefined;
+  }
 
   console.log("Sending email from " + pFrom + " to " + pTo);
 
@@ -315,9 +321,9 @@ Controller.prototype.sendMail = function (pFrom, pTo, pSubject, pText, pHtml) {
       } else {
           console.log("Message sent: " + info.response);
       }
+    if (typeof finished === "function") finished();
   });
 };
-
 
 //
 // Session handling
@@ -328,6 +334,12 @@ Controller.prototype.fromSession = function(paramName, defaultValue) {
 
 Controller.prototype.toSession = function(paramName, value) {
   this.context.toSession(paramName, value);
+};
+
+Controller.prototype.updateSession = function(paramName, defaultValue) {
+  var value = this.getParam(paramName, this.context.fromSession(paramName, defaultValue));
+  this.context.toSession(paramName, value);
+  return value;
 };
 
 //
