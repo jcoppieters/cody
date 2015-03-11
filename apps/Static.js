@@ -102,7 +102,7 @@ Static.prototype.serve = function () {
   // module path with a directory, so we need extra .. to refer to
   // the directory it is in.
   if (self.appFolder != "") {
-    filename = libpath.resolve(module.parent.parent.filename, "..", uri.substring(1));
+    filename = libpath.resolve(module.parent.parent.filename, "..", self.appFolder, uri.substring(1));
   }
   else
   {
