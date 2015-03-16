@@ -1,13 +1,15 @@
 
 - model/User.js aanpassen om Model.js te gebruiken.
+  tevens ook nog bug in usercontroller na "save", iets met redirect mis
+
 - Diverse models die aangemaakt worden in een Controller (bvb. PhotoController)
   naar een apart bestand verhuizen (bvb: models/Photo.js)
 
-- daily backups !!
+- daily backups !! [ done -> dropbox voor .sql en data.tgz / github voor code ]
 
 - in loginController std functionaliteit om nieuw password op te sturen
 
-- github
+- github [ done ]
   - readme
   - contrib
   - licence [ done ]
@@ -50,7 +52,7 @@ Hosting on cody-web:
 - de server parameters (uit cody.websites) editeerbaar maken in de backoffice
   wel de naam read-only houden.
 - een uitbreiding te maken op de website van cody
- inclusief registratie e.d.
+  inclusief registratie e.d.
 - daarna: uploaden van css en logo in backoffice.
   ook header en footer image ?
 - virtual host selectie -> app [ done ]
@@ -66,3 +68,10 @@ Yanic: [ done door Johan: 15/09/2013 ]
   -> json string of object teruggeven dat kan bewaard worden
     of fouten teruggeven indien data niet voldoet aan de meta definitie.
 
+
+- Projects todo
+  - Grader / Grades (Howest)
+  - Dr / Agenda Site omzetten van Java -> Cody
+  - BOK [ ±done: Dieter ]
+  - Verlanglijstje / mobile version
+  - Empty sites uitbreiden met templates van Jill

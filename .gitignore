@@ -1,11 +1,13 @@
-# Exclude de essen and instadeal
+#
+# Project Exclude
+#
 .idea/
 tests/
 node_modules/
+/doc/todo-jc.txt
 #
+# OS generated files
 #
-# OS generated files #
-######################
 .DS_Store
 .DS_Store?
 ._*
@@ -14,3 +16,4 @@ node_modules/
 ehthumbs.db
 Thumbs.db
 *.log
+
