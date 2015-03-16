@@ -4,7 +4,7 @@
   },
   "name": "cody",
   "description": "Cody CMS",
-  "version": "3.2.8",
+  "version": "3.3.0",
   "repository": {
     "type": "git",
     "url": "http://github.com/jcoppieters/cody.git"
