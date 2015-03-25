@@ -64,7 +64,9 @@
 				<div>
 					<label for="password">Password</label>
 					<input name="password" id="password" type="text" value="" <% if (typeof user.username === "undefined") { %> class="required" <% } %> />
-          <span>Leave empty if you don't want to change your password.</span>
+          <% if (user.id > 0) { %>
+            <span>Leave empty if you don't want to change your password.</span>
+          <% } %>
 				</div>
 				<div>
 					<label for="domain">Group</label>

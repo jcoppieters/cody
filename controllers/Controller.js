@@ -139,7 +139,7 @@ Controller.prototype.nextRequest = function(err, request, finish) {
     self.feedback(false, err);
     finish();
   } else {
-    self.redirect(this.context.page.getURL() + "/" + request, finish);
+    self.redirect("/" + this.context.page.getURL() + "/" + request, finish);
   }
 };
 
