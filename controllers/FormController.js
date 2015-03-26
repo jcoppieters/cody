@@ -98,6 +98,7 @@ FormController.prototype.isMultiple = function( aGenerator ) {
 };
 
 
+// overridden function for forms
 FormController.prototype.fetchNode = function( theNode, finish ) {
   var self = this;
 
@@ -157,6 +158,8 @@ FormController.prototype.fetchNode = function( theNode, finish ) {
 
 
 
+// overridden function for forms
+//
 // Read all meta definitions from the posted form
 //  1) decide what reader should be taken, based on the "generator"
 //    + some parameters (phone, number, email, date, date3)
@@ -168,7 +171,7 @@ FormController.prototype.fetchNode = function( theNode, finish ) {
 
 FormController.prototype.saveInfo = function( nodeId, finish ) {
   var self = this;
-  console.log("TreeController.saveInfo: node = " + nodeId );
+  console.log("FormController.saveInfo: node = " + nodeId );
 
   var anObject = this.getObject(cody.TreeController.toId(nodeId));
   if (typeof anObject !== "undefined") {

@@ -117,9 +117,11 @@ Atom.prototype.isChild = function(anAtom) {
 
 Atom.prototype.scrapeFrom = function(controller) {
   // update all item info from the controller
-  this.name = controller.getParam("name");
-  this.extention = controller.getParam("extention");
-  this.note = controller.getParam("note");
+  // JC: 26/03/2015 -- added default param "", otherwise extention would be undefined for forms
+  //  and if the caller was a FormController, it would assume it was an form element, not a form itself.
+  this.name = controller.getParam("name", "");
+  this.extention = controller.getParam("extention", "");
+  this.note = controller.getParam("note", "");
 };
 
 

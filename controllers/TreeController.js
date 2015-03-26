@@ -248,7 +248,7 @@ TreeController.prototype.getTree = function( theRoot ) {
 
 TreeController.prototype.saveInfo = function( nodeId, finish ) {
   var self = this;
-  console.log("TreeController.saveInfo: node = " + nodeId );
+  console.log("FormController.saveInfo: node = " + nodeId );
   
   var anObject = this.getObject(TreeController.toId(nodeId));
   if (typeof anObject !== "undefined") {
