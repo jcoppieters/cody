@@ -24,8 +24,8 @@ By following these steps you will be running your own CMS system in no time. If 
 * Create a new directory for your cms and navigate to it (in unix):
 
   ```bash
-	$ mkdir mycms
-	$ cd mycms
+	$ mkdir codydev
+	$ cd codydev
   ```
 * Install cody and its dependencies
   
@@ -45,7 +45,7 @@ By following these steps you will be running your own CMS system in no time. If 
     2) Enter root password for mysql so we can create a new database and user: 
     3) Enter site database user: mysitename
     4) Enter site database password: mysitepassword
-    5) Enter hostname for site: mysite.local
+    5) Enter hostname for site: mysite.local (or localhost)
     Site mysite has been prepared.
     
     Please create DNS entries, or add to /etc/hosts:
@@ -54,9 +54,9 @@ By following these steps you will be running your own CMS system in no time. If 
     Also check index.js and config.json to fine-tune extra parameters, encryption key, ...
     
     Start your site using:
-    forever start index.js
+    forever start mysite.js
     or
-    node index.js
+    node mysite.js
   ```
 * Add a DNS entry for given hostname, e.g.
 
@@ -66,17 +66,18 @@ By following these steps you will be running your own CMS system in no time. If 
 * Run the server
   
   ```bash
-    $ node index.js
+    $ node mysite.js
   ```
   or if you want to automatically restart the server on changes
   
   ```bash
-    $ forever start index.js
+    $ forever start mysite.js
   ```
   
 * Go to "http://mysite.local:3001" to see your current site and go to "http://mysite.local:3001/en/dashboard" to see the CMS of the site.
 
   the default users are: 'super', 'admin', 'test' and 'user' which all have password 'empty'
+  you can ofcourse use "http://localhost:3001" too.
 
 
 ## Configuration

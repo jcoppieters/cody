@@ -17,3 +17,10 @@
 ```
 
 > The user is no longer required to change the index.js afer scaffolding.
+
+## 3.3.4 - 28/03/2015
+* Added ContactController
+
+## 3.3.5 - 29/03/2015
+* changed the directory structure to more reflect the hosting setup
+* changes create script and you now have a startupscript in your cody-dev directory per project
