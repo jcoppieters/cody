@@ -55,7 +55,7 @@ var copy = function (src, dest) {
  * @param {string} dest The path to the new copy.
  */
 var copyRecursiveSync = function(src, dest) {
-  console.log(src + " -> " + dest);
+  // console.log(src + " -> " + dest);
   var exists = fs.existsSync(src);
   var stats = exists && fs.statSync(src);
   var isDirectory = exists && stats.isDirectory();
