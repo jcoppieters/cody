@@ -1,7 +1,11 @@
 
 //
-// Johan Coppieters - apr 2014 - Cody
+// Johan Coppieters - apr 2014 - Cody - beta 1
 //
+// beta 2: added "label" and "hide" in cols.
+//         added loopLabelList (for iterating over the cols)
+//
+// planned: beta 3: remove console.log's
 //
 var cody = require("../index.js");
 console.log("loading " + module.id);
@@ -39,11 +43,12 @@ var aUser = new cody.Model(this, {
   cols: [
     {name: "name", def: "", list: true, sort: "asc"},
     {name: "firstname", def: "", list: true, sort: "asc"},
-    {name: "street", def: "", list: true},
-    {name: "town", def: "", list: true},
-    {name: "tel1", def: "", list: true},
-    {name: "tel2", def: "", list: true},
-    {name: "email", def: "", list: true}]
+    {name: "street", label: "Street", def: "", list: true},
+    {name: "town", label: "Town", def: "", list: true},
+    {name: "tel1", label: "Phone 1", def: "", list: true},
+    {name: "tel2", label: "Phone 2", def: "", list: true},
+    {name: "active", label: "Active", def: "Y", list: true, hide: true},
+    {name: "email", label: "Email", def: "", list: true}]
 });
 
 */
@@ -65,7 +70,6 @@ Model.prototype.getEmpty = function() {
   return r;
 };
 
-
 Model.prototype.getNameList = function() {
   return this.cols
     .map(function(ele) { return ele.name; })
@@ -76,12 +80,19 @@ Model.prototype.getUpdateList = function() {
     .map(function(ele) { return ele.name + "=?"; })
     .join(", ");
 };
+
 Model.prototype.getListList = function() {
   return this.cols
     .filter(function(ele) { return ele.list; })
     .map(function(ele) { return ele.name; })
     .join(", ");
 };
+Model.prototype.loopLabelList = function(render) {
+  this.cols
+    .filter(function(ele) { return ele.list && ! ele.hide; })
+    .forEach(function(ele) { render(ele.label); });
+}
+
 Model.prototype.getOrderBy = function() {
   return this.cols
     .filter(function(ele) { return ele.sort; })
@@ -243,7 +254,7 @@ Model.prototype.doList = function(finish) {
       var val = self.controller.getParam("q."+ele.name, ele.def);
 
       // if the returned value is an array, we've got a multiple select form element
-      // convert the returned array in a komma separated list
+      // convert the returned array in a comma separated list
       if (Array.isArray(val)) { val = val.join("%"); }
 
       // remember the value in the "record" element,

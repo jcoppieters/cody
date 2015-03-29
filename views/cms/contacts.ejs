@@ -1,0 +1,173 @@
+<!doctype html>
+
+<html lang="<%=page.language%>">
+
+<% include header.ejs %>
+<link rel="stylesheet" href="<%=cstatic%>/css/ui-lightness/jquery-ui-1.10.1<%=min%>.css" media="screen,projection">
+
+<body id="data">
+  <script src="<%=cstatic%>/js/lib/jquery-1.9.1<%=min%>.js"></script>
+  <script src="<%=cstatic%>/js/lib/jquery-ui-1.10.1<%=min%>.js"></script>
+  <script src="<%=cstatic%>/js/lib/jquery.validate<%=min%>.js"></script>
+  <script src="<%=cstatic%>/js/lib/localization/messages_<%=page.language%>.js"></script>
+
+  <section>
+    <header>
+      <% include top.ejs %>
+      <% include navigation.ejs %>
+    </header>
+
+    <script>
+      $(document).ready( function() {
+        $("#records td.edit a").prepend("<span class='icon-pencil'></span>");
+
+        $("#doNew").button({ icons: { primary: "ui-icon-plus"}, text: true}).click( function() {
+          $("#request").val("new");
+          $("#record").submit();
+        });
+        $("#doSearch").button({ icons: { primary: "ui-icon-plus"}, text: true}).click( function() {
+           $("#request").val("list");
+           $("#record").submit();
+         });
+        $("#doMail").button({ icons: { primary: "ui-icon-plus"}, text: true}).click( function() {
+           $("#request").val("mail");
+           $("#record").submit();
+         });
+        $("#doSave").button({ icons: { primary: "ui-icon-check"}, text: true}).click( function() {
+          $("#request").val("save");
+          $("#record").submit();
+        });
+        $("#doDelete").button({ icons: { primary: "ui-icon-trash"}, text: true}).click( function() {
+          $("#request").val("delete");
+          $("#record").submit();
+        });
+        $("#doCancel").button({ icons: { primary: "ui-icon-close"}, text: true}).click( function() {
+          $("#request").val("list");
+          $("#record").submit();
+        });
+
+        $("#record").validate();
+      });
+    </script>
+
+    <style>
+      #records .inactive td { color: lightgrey }
+      #data table tr:nth-child(even) td { background-color: #e9e9e9 }
+    </style>
+
+    <% if ((typeof records === "undefined") && (typeof record !== "undefined")) {  %>
+      <div id="content_data" style="margin: 6px 1px 0 1px">
+        <form action="<%= path.link %>" method="post" id="record">
+          <input type="hidden" name="request" id="request" value="save" />
+          <input type="hidden" name="id" value="<%- record.id %>" />
+
+          <fieldset class="horizontal">
+            <div>
+              <label for="name">Name</label>
+              <input name="name" id="name" type="text" value="<%- record.name %>" class="required"/>
+            </div>
+            <div>
+              <label for="cie">Cie</label>
+              <input name="cie" id="cie" type="text" value="<%- record.cie %>" />
+            </div>
+            <div>
+              <label for="titles">Title</label>
+              <input name="title" id="titles" type="text" value="<%- record.title %>" />
+            </div>
+            <div>
+              <label for="phone">Phone</label>
+              <input name="phone" id="phone" type="text" value="<%- record.phone %>" />
+            </div>
+            <div>
+              <label for="origin">Origin</label>
+               <input name="origin" id="origin" type="text" value="<%- record.origin %>" />
+            </div>
+            <div>
+              <label for="target">Tags</label>
+              <input name="tags[]" id="tag0" type="checkbox" value="s" <%= checked(record.tags && record.tags.indexOf('s')>=0) %> /><label class="choice" for="tag0">stage</label>
+              <input name="tags[]" id="tag1" type="checkbox" value="j" <%= checked(record.tags && record.tags.indexOf('j')>=0) %> /><label class="choice" for="tag1">jsConf</label>
+              <input name="tags[]" id="tag2" type="checkbox" value="c" <%= checked(record.tags && record.tags.indexOf('c')>=0) %> /><label class="choice" for="tag2">Cody</label>
+              <!-- TODO: add free text field for new tag -->
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input name="email" id="email" type="text" value="<%- record.email %>"  class="required email"/>
+            </div>
+            <div>
+              <label for="nomail">Allows Mail</label>
+              <input name="nomail" id="nomailY" type="radio" value="Y" <%= checked(record.nomail == 'Y') %> /><label class="choice" for="nomailY">No</label>
+              <input name="nomail" id="nomailN" type="radio" value="N" <%= checked(record.nomail != 'Y') %> /><label class="choice" for="nomailN">Yes</label>
+            </div>
+            <div>
+              <label for="active">Active</label>
+              <input name="active" id="activeY" type="radio" value="Y" <%= checked(record.active == 'Y') %> /><label class="choice" for="activeY">Yes</label>
+              <input name="active" id="activeN" type="radio" value="N" <%= checked(record.active != 'Y') %> /><label class="choice" for="activeN">No</label>
+            </div>
+          </fieldset>
+
+          <div id="action_buttons" style="padding-left: 104px">
+            <button id="doSave">Save</button>
+            <% if (record.id > 0) { %>
+              <button id="doDelete">Delete</button>
+            <% } %>
+            <button id="doCancel">Cancel</button>
+          </div>
+        </form>
+      </div>
+    <% } %>
+
+
+    <% if (typeof records != "undefined") { %>
+
+      <div id="content_data" style="margin: 6px 1px 0 1px">
+        <form action="<%= path.link %>" method="post" id="record">
+          <input type="hidden" name="request" id="request" value="list" />
+          <fieldset class="horizontal">
+            <div>
+              <label>Target</label>
+              <!-- TODO: get from table -->
+              <input name="q.tags[]" id="tag0" type="checkbox" value="s" <%= checked(tags.indexOf('s')>=0) %> /><label class="choice">stage</label>
+              <input name="q.tags[]" id="tag1" type="checkbox" value="j" <%= checked(tags.indexOf('j')>=0) %> /><label class="choice">jsConf</label>
+              <input name="q.tags[]" id="tag2" type="checkbox" value="c" <%= checked(tags.indexOf('c')>=0) %> /><label class="choice">Cody</label>
+            </div>
+            <div>
+              <label for="text">Name</label>
+              <input type="text" name="q.name" value="<%= record.name %>">
+            </div>
+          </fieldset>
+
+          <div id="action_buttons" style="padding-left: 104px">
+            <!-- TODO: add  search button + input field -->
+            <button id="doNew">New</button>
+            <button id="doMail">Email</button>
+            <button id="doSearch">Search</button>
+          </div>
+        </form>
+      </div>
+
+      <div style="margin: 8px 2px 0 1px; border: solid 1px #cfcfcf">
+        <table id="records" style="margin: 0">
+           <tr>
+             <% model.loopLabelList( function(label) { %>
+               <th><%=label%></th>
+             <% }); %>
+           </tr>
+
+
+          <% for (var i=0; i < records.length; i++) { var u = records[i]; %>
+            <tr <%- (u.active=='Y') ? '' : 'class="inactive"' %>>
+              <td class="edit"><a href="/<%=page.url%>/edit/<%= u.id %>"><%= (u.name==='') ? '--' : u.name %></a></td>
+              <td><%= u.cie %></td>
+              <td><%- (u.nomail=='N') ? '' : '(' %><%= u.email %><%- (u.nomail=='N') ? '' : ')' %></td>
+              <td><%= u.phone %></td>
+            </tr>
+          <% } %>
+        </table>
+      </div>
+    <% } %>
+
+
+    <% include footer.ejs %>
+  </section>
+</body>
+</html>
