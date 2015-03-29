@@ -3,14 +3,18 @@
 //
 // empty website for Cody CMS
 //
+// v1.0 -- was running from within the web dir
+// v1.1 -- now running from the dir above... using the config from within...
 //
 
 var cody = require('cody');
 var express = cody.express;
 var fs = cody.fs;
 var mysql = cody.mysql;
+var path = require("path");
 
 var ejs = cody.ejs;
+var sitename = __filename.split("/").pop().split(".")[0];
 
 cody.server = express();
 var bodyParser = cody.bodyParser;
@@ -32,8 +36,8 @@ cody.server.get("/cody/static/*", function (req, res) {
 
 // setup the config. Order of importance: config.json < -c command line config < environment values
 // 1. load default config
-cody.config = require('./config');
-cody.config.controllers = require("./controllers/");
+cody.config = require(path.join(__dirname, sitename, "config.json"));
+cody.config.controllers = require(path.join(__dirname, sitename, "controllers"));
 
 // 2. if -c exists, overwrite customized config values
 if(process.argv.indexOf("-c") != -1){
