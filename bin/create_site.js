@@ -137,6 +137,7 @@ rl.question("1) Enter projectname: ", function (sitename) {
                         }));
                       copy(path.join(rootwd, sitename, "index.js"), path.join(rootwd, sitename+".js"));
 
+                      mkdir(datadir);
                       mkdir(path.join(datadir,sitename));
                       console.log("created "+sitename+"/");
                       mkdir(path.join(datadir,sitename,"images"));
