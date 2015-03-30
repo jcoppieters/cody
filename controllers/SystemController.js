@@ -13,32 +13,41 @@ module.exports = SystemController;
 
 function SystemController(context) {
     var self = this;
-    this.formView = "-/cms/system.ejs";
 
-    console.log("SystemController.constructor");
-    //this.formView = "-/cms/styles.ejs";
+  console.log("SystemController.constructor -> page(" + context.page.itemId + ") = " + context.page.title + ", request = " + context.request);
+
     // init inherited controller
     cody.Controller.call(self, context);
 }
-
 SystemController.prototype = Object.create( cody.Controller.prototype );
 
 
 //fetch config values from database
 SystemController.prototype.doRequest = function( finish ) {
   var self = this;
-  self.formView = "-/cms/system.ejs";
+  self.context.fn = "-/cms/system.ejs";
 
-  if (self.isRequest("OK")) {
+  if (self.isRequest("reload")) {
+    self.app.init(function() {
+      self.feedback(true, "System reloaded.");
+      finish();
+    });
+
+  } else if (self.isRequest("Save")) {
     self.query("UPDATE cody.websites SET hostname=? WHERE id=?", [this.getParam("hostname"), this.getParam("id")], function (err2, results2) {
       self.doList(function() {
-        finish();
-        cody.bootstrap();
+        self.app.init(function() {
+          self.feedback(true, "Parameters saved and system reloaded.");
+          finish();
+        });
       });
     });
 
-  } else {
+  } else if (self.isRequest("Hosting")) {
     self.doList(finish);
+
+  } else {
+    finish();
   }
 
 };

@@ -4,7 +4,7 @@
 
 <% include header.ejs %>
 
-<body id="templates">
+<body id="data">
 
 <script src="<%=cstatic%>/js/lib/jquery-1.9.1<%=min%>.js"></script>
 <script src="<%=cstatic%>/js/lib/jquery-ui-1.10.1<%=min%>.js"></script>
@@ -16,20 +16,39 @@
         <% include navigation.ejs %>
     </header>
 
-    <div>
-        <form method="post" action="/<%= page.getURL() %>">
+  <div style="margin-bottom: 10px">
+    <a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="/<%= page.getURL() %>?request=hosting"><span class="ui-button-icon-primary ui-icon ui-icon-pencil"></span><span class="ui-button-text">Hosting params</span></a>
+    <a class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" href="/<%= page.getURL() %>?request=reload"><span class="ui-button-icon-primary ui-icon ui-icon-power"></span><span class="ui-button-text">Reload Structures</span></a>
+  </div>
+
+  <div id="content_data">
+
+    <% if (typeof config !== "undefined") { %>
+        <form method="post" action="/<%= page.getURL() %>" id="record">
           <input type="hidden" name="id" value="<%=config.id%>" />
-        <p>Change System settings (better done in config.json)</p>
 
-        <p class="warning">Warning: When changing the hostname, make sure you can still reach your site.<br />You can give more than 1 name, separating with comma's. Ex:"old-name.org,new-name.org,www.new-name.org".</p>
+          <fieldset>
+            <p>Change System settings (better done in config.json)</p>
 
-        </p>
-        <p><label for="hostname">Hostname:<br /><input type="text" id="hostname" name="hostname" value="<%=config.hostname %>" size="50" /></label></p>
-        <p><label for="owneremail">E-mailaddress owner:<br /><input type="email" id="owneremail" name="owneremail" value="<%=config.owneremail %>" size="50" disabled="disabled" /></label></p>
-            <input type="submit" name="request" value="OK" />
+            <p class="notification error">Warning: When changing the hostname, make sure you can still reach your site.<br />You can give more than 1 name, separating with comma's. Ex:"old-name.org,new-name.org,www.new-name.org".</p>
+
+            <div><label for="hostname">Hostname</label>
+                 <input type="text" id="hostname" name="hostname" value="<%=config.hostname %>" />
+            </div>
+
+            <div><label for="owneremail">E-mail owner</label>
+                 <input type="email" id="owneremail" name="owneremail" value="<%=config.owneremail %>" disabled="disabled" />
+            </div>
+          </fieldset>
+
+          <div id="action_buttons">
+            <input type="submit" name="request" value="Save" />
+          </div>
         </form>
-    </div>
+    <% } %>
+  </div>
 
+  <% include footer.ejs %>
 </section>
 </body>
 </html>
