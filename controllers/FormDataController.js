@@ -99,13 +99,14 @@ FormDataController.prototype.sendAllMail = function(finish) {
         var body = self.personalize(self.context.content, this.data);
 
         // allow "email", "Email", "Mail" or "mail" in the formdata.
-        var email = (typeof this.data.Email != "undefined") ? this.data.Email :
+        var email =
+          (typeof this.data.Email != "undefined") ? this.data.Email :
           (typeof this.data.email != "undefined") ? this.data.email :
-          (typeof this.data.Mail != "undefined") ? this.data.Mail :
-          (typeof this.data.mail != "undefined") ? this.data.mail : "";
+          (typeof this.data.Mail  != "undefined") ? this.data.Mail :
+          (typeof this.data.mail  != "undefined") ? this.data.mail : "";
 
         if (email !== "") {
-          self.sendMail(self.app.mailFrom, this.data.Email || this.data.email || this.data.mail,
+          self.sendMail(self.app.mailFrom, email,
                         self.context.subject, body, function() {
             nr++;
             done();

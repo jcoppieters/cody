@@ -9,6 +9,14 @@
 
 <% include ./cms/header.ejs %>
 
+<!-- TODO translation... where?
+<h2 id="loginfirst">Alvorens naar de gevraagde pagina te gaan, moet U zich eerst aanmelden.</h2>
+<p class="warning">Verkeerde gebruikersnaam of wachtwoord, gelieve nogmaals te proberen.</p>
+<p class="warning">Uw gebruikersnaam is geblokkeerd, gelieve contact op te nemen met de site bouwer.</p>
+<p class="warning">U bent nu afgemeld</p>
+-->
+
+
 <body>
 <section>
   <header>
@@ -23,24 +31,24 @@
          <a href="login?request=logout">Logout</a>
          
       <% } else { %>
-        <h2 id="loginfirst">Alvorens naar de gevraagde pagina te gaan, moet U zich eerst aanmelden.</h2>
+        <h2 id="loginfirst">Before you can access this requested page you first need to login.</h2>
         <form action="/<%=page.language%>/login" name="logon" id="logon" method="post" class="clearfix">
           <input type="hidden" name="request" value="login" /> 
           <fieldset class="clearfix">
             <div id="logonuser">
-              <label for="username">Gebruikersnaam</label>
+              <label for="username">Username</label>
               <input name="username" id="username" type="text" />
               </div>
             <div>
-              <label for="password">Wachtwoord</label>
+              <label for="password">Password</label>
               <input type="password" id="password" name="password" />
             </div>
           </fieldset>	
             
           <% if (message == "login-failed") { %>
-            <p class="warning">Verkeerde gebruikersnaam of wachtwoord, gelieve nogmaals te proberen.</p>
+            <p class="warning">Wrong username of password, please try again.</p>
           <% } else if (message == "login-locked") { %>
-            <p class="warning">Uw gebruikersnaam is geblokkeerd, gelieve contact op te nemen met de site bouwer.</p>
+            <p class="warning">Your username is blocked, please take contact with your site builder.</p>
           <% } %>
                     
           <div class="action_buttons">
@@ -56,6 +64,11 @@
     </div>
     
   </div>
+</section>
+
+<script type="text/javascript" language="JavaScript">
+  document.forms['logon'].elements['username'].focus();
+</script>
 
 </body>
 </html>

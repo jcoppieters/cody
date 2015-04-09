@@ -61,7 +61,7 @@ Content.prototype.renderText = function(controller) {
 
 Content.prototype.renderParams = function(controller) {
   // these values should already be in the current context
-  return "<!-- page params " + content.data + " -->";
+  return "<!-- page params " + this.data + " -->";
 }
 
 Content.prototype.renderForm = function(controller) {
