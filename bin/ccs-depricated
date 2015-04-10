@@ -20,10 +20,10 @@ mysql --user=root "--password=$dbrootpw" -e "grant all on $sitename.* to '$dbuse
 mysql --user=root "--password=$dbrootpw" -e "grant all on mysite.* to '$dbuser'@'localhost' identified by '$dbpass'"
 
 cp -r "$realpkgroot/doc/empty" .
-mv empty/* .
-rmdir empty
+mv empty $sitename
+mv $sitename/index.js $sitename.js
 
-mysql "--user=$dbuser" "--password=$dbpass" "$sitename" -f -e "source empty.sql"
+mysql "--user=$dbuser" "--password=$dbpass" "$sitename" -f -e "source $sitename/empty.sql"
 
 echo "{
 \"name\":\"${sitename}\",
@@ -38,7 +38,7 @@ echo "{
 \"defaultlanguage\": \"en\",
 \"datapath\": \"/usr/local/data/empty\",
 \"port\": 3001
-}" > config.json
+}" > $sitename/config.json
 
 echo "Site '$sitename' has been prepared."
 echo
@@ -48,6 +48,6 @@ echo
 echo "Also check index.js and config.json to fine-tune extra parameters, encryption key, ..."
 echo
 echo "Start your site using:"
-echo "forever start index.js"
+echo "forever start $sitename.js"
 echo "or"
-echo "node index.js"
+echo "node $sitename.js"
