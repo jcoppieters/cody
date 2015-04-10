@@ -153,9 +153,9 @@ rl.question("1) Enter projectname: ", function (sitename) {
                       console.log("Also check index.js and config.json to fine-tune extra parameters, encryption key, ...");
                       console.log("---")
                       console.log("Start your site using:");
-                      console.log("$ forever start " + sitename + " +.js");
+                      console.log("$ forever start " + sitename + ".js");
                       console.log("    or");
-                      console.log("$ node " + sitename + " +.js");
+                      console.log("$ node " + sitename + ".js");
                       con.end();
                       rl.close();
                     });
