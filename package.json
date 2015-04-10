@@ -15,9 +15,6 @@
     "cms",
     "howest"
   ],
-  "bin": {
-    "ccs": "./bin/ccs"
-  },
   "dependencies": {
     "ejs": "0.x",
     "express": "4.x",
