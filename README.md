@@ -126,7 +126,7 @@ Have a look at the generated config.json file to see which configuration variabl
   
 ## License
 
-Copyright (c) 2012-2014 Johan Coppieters, Howest Brugge. See the LICENSE.md file for license rights and
+Copyright (c) 2012-2015 Johan Coppieters, Howest Brugge. See the LICENSE.md file for license rights and
 limitations. This project is licensed under the terms of the MIT license.
 
 

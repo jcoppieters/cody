@@ -24,3 +24,6 @@
 ## 3.3.5 - 29/03/2015
 * changed the directory structure to more reflect the hosting setup
 * changes create script and you now have a startupscript in your cody-dev directory per project
+
+## 3.3.10 - 10/04/2015
+* better setup, small corrections.
