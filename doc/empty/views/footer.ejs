@@ -4,12 +4,12 @@
   <% var third = page.root.getContent('footer.third'); %>
 
   <% if (first && (typeof first !== "undefined")) { %>
-    <span class="first"><%= first.render() %></span>
+    <span class="first"><%- first.render() %></span>
   <% } %>
   <% if (second && (typeof second !== "undefined")) { %>
-    <span class="second"><%= second.render() %></span>
+    <span class="second"><%- second.render() %></span>
   <% } %>
   <% if (third && (typeof third !== "undefined")) { %>
-    <span class="third"><%= third.render() %></span>
+    <span class="third"><%- third.render() %></span>
   <% } %>
 </footer>

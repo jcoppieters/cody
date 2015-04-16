@@ -2,7 +2,31 @@
 
 
 <header>
-  <a id="logo" href="/<%=page.language%>/"><img src="<%- dynamic %>/images/11.jpg" alt=""></a>
+  <a id="logo" href="/<%=page.language%>/"><img src="<%- dynamic %>/images/11.png" alt=""></a>
+
+  <nav id="mainNav">
+	  <ul id="mainMenu">
+      <% for (var i in page.root.children) {  
+           var p = page.root.children[i]; 
+           if (p.isVisible()) { %>
+				    <li class="<%= (p == page) ? 'active' : '' %>">
+					    <a href="/<%=p.url%>" class="<%= (p == page) ? 'active' : '' %>"><%= p.title %></a>
+				    </li>
+        <% } %>
+      <% } %>
+	  </ul>
+  </nav>
+
+  <nav id="lanNav">
+    <ul id="lanMenu">
+      <% for (var i in app.languages) { var L = app.languages[i]; %>
+      <li class="<%= (page.language == L.id) ? 'active' : '' %>">
+        <a href="/<%=L.id%>/<%=page.itemId%>" class="<%= (page.language == L.id) ? 'active' : '' %>"><span class="id"><%= L.id %></span><span class="name"><%= L.name %></span></a>
+      </li>
+      <% } %>
+    </ul>
+  </nav>
+
 
   <% var pp = page.root.getContent('phone'); %>
   <% var aa = page.root.getContent('address'); %>
@@ -19,27 +43,5 @@
   <% } %>
 
 
-  <nav id="mainNav">
-	<ul id="mainMenu">
-      <% for (var i in page.root.children) {  
-           var p = page.root.children[i]; 
-           if (p.isVisible()) { %>
-				    <li class="<%= (p == page) ? 'active' : '' %>">
-					    <a href="/<%=p.url%>" class="<%= (p == page) ? 'active' : '' %>"><%= p.title %></a>
-				    </li>
-        <% } %>
-      <% } %>
-	</ul>
-  </nav>
-
-  <nav id="lanNav">
-    <ul id="lanMenu">
-      <% for (var i in app.languages) { var L = app.languages[i]; %>
-      <li class="<%= (page.language == L.id) ? 'active' : '' %>">
-        <a href="/<%=L.id%>/<%=page.itemId%>" class="<%= (page.language == L.id) ? 'active' : '' %>"><span class="id"><%= L.id %></span><span class="name"><%= L.name %></span></a>
-      </li>
-      <% } %>
-    </ul>
-  </nav>
 
 </header>
