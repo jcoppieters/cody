@@ -41,9 +41,19 @@ cody.server.get("/cody/static/*", function (req, res) {
 //  1. config.json >> 2. -c command line config >> 3. environment values
 
 
-// 1. load default config
+// 1a. load default config
 cody.config = require(path.join(__dirname, sitename, "config.json"));
-cody.config.controllers = require(path.join(__dirname, sitename, "controllers"));
+cody.config.controllers = cody.config.controllers || []
+
+// 1b. require controllers
+var cpath = path.join(__dirname, sitename, "controllers");
+var ctrls = fs.readdirSync(cpath);
+ctrls.forEach(function (ctrl) {
+  var cname = ctrl.substr(0, ctrl.indexOf("."));
+  console.log("Loaded controller: " + cname);
+  cody.config.controllers[cname] = require(path.join(cpath, cname));
+});
+
 
 // 2. if -c exists, overwrite customized config values
 if(process.argv.indexOf("-c") != -1){
