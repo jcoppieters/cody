@@ -45,7 +45,7 @@ var copyDir = function (src, dest) {
 var copy = function (src, dest) {
   var oldFile = fs.createReadStream(src);
   var newFile = fs.createWriteStream(dest);
-  util.pump(oldFile, newFile);
+  oldFile.pipe(newFile);
 };
 
 /**
@@ -144,6 +144,8 @@ rl.question("\n1) Enter projectname: ", function (sitename) {
                             port: 3001
                           }));
                         copy(path.join(rootwd, sitename, "index.js"), path.join(rootwd, sitename+".js"));
+                        fs.unlinkSync(path.join(rootwd, sitename, "index.js"));
+
 
                         mkdir(datadir);
                         mkdir(path.join(datadir,sitename));
