@@ -123,6 +123,11 @@ rl.question("\n1) Enter projectname: ", function (sitename) {
                     fs.readdirSync(codywd + "/doc/empty").forEach(function (src) {
                       copyRecursiveSync(path.join(codywd,"doc","empty", src), path.join(rootwd, sitename , src));
                     });
+
+                  // dirty fix !!   Please remove.
+                  mkdir(path.join(rootwd, sitename, "controllers"));
+                  // end of dirty fix
+
                     fs.readFile(path.join(rootwd, sitename, "empty.sql"), function (err, initstatements) {
                       if (err) throw err;
 

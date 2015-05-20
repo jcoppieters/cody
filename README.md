@@ -13,7 +13,7 @@ You can now use npm to install Cody thanks to Jonas.
 * Node.js CMS
 * Easy-to-use graphical interface + wysiwyg (what you see is what you get) editor that allows non-programmers to manage the site's *content*, *users*, *files*, *forms* and *images*.
 * Tree structured GUI to manage the structure of the site and the editable content by using templates and drag-and-drop.
-* Works seemless with your existing node.js code.
+* Works seamless with your existing node.js code.
 
 
 ## Getting Started

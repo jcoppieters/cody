@@ -19,7 +19,7 @@ var bodyParser = cody.bodyParser;
 var expressSession = cody.expressSession;
 var multer = cody.multer;
 
-var sitename = __filename.split("/").pop().split(".")[0];
+var sitename = __filename.split(path.sep).pop().split(".")[0];
 
 
 // use the new 4.x middleware
