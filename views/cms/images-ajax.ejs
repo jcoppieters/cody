@@ -6,13 +6,13 @@
 	<fieldset id="tabs">
     <div id="options" class="horizontal">
       <div>
-        <label for="Item">Name</label>
+        <label for="Item"><%= __('Name')%></label>
         <input name="name" id="name" type="text" value="<%= atom.name %>" size="62" />
       </div> 
       <div class="clearfix">
-        <label for="info">Info</label>
-        <p class="content_text">Created: <%= formatDate(atom.created) %> @ <%= formatTime(atom.created) %>
-          <br> Last Modified: <%= formatDate(atom.updated) %> @  <%= formatTime(atom.updated) %></p>
+        <label for="info"><%= __('Info')%></label>
+        <p class="content_text"><%= __('Created')%>: <%= formatDate(atom.created) %> @ <%= formatTime(atom.created) %>
+          <br><%= __('Last Modified')%> : <%= formatDate(atom.updated) %> @  <%= formatTime(atom.updated) %></p>
       </div>
       <% if(atom.extention == '') { %>
         <input type="hidden" name="extention" value="" />
@@ -20,25 +20,25 @@
       <% } else { %>
         <% if (( atom.extention != 'xxx') && ( atom.extention != '---')) { %>
           <div>
-            <label for="extention">Extension</label>
+            <label for="extention"><%= __('Extension')%></label>
             <input name="extention" id="extention" type="text" value="<%= atom.extention %>" size="4" />
           </div>
         <% } %>
         <div>
-          <label for="note">Note</label>
+          <label for="note"><%= __('Note')%></label>
           <textarea name="note" id="note" cols="60" rows="3"><%= atom.note %></textarea>
         </div>
 
         <% if (atom.extention != 'xxx') { %>
           <div>
-            <label for="fileupload">Image</label>
+            <label for="fileupload"><%= __('Image')%></label>
             <input id="fileToUpload" type="file" size="30" name="fileToUpload" class="input" onchange='$("#preview").attr("src","")'/>
           </div>
         <% } %>
         
         <% if ((atom.extention != 'xxx') && (atom.extention != '') && (atom.extention != '---')) { %>
 	        <div>
-	          <label for="preview">Preview</label>
+	          <label for="preview"><%= __('Preview')%></label>
 	          <img id="preview" src="<%= controller.getFilePath() %>/<%= atom.id %>.<%= atom.extention %>?now=<%= getUnique() %>" />
 	        </div>      
         <% } %>       
@@ -48,8 +48,8 @@
 	
 	
 		<div id="action_buttons">
-			<button id="doSave">Save</button>
-			<button id="doRealDelete">Delete</button>
+			<button id="doSave"><%= __('Save')%></button>
+			<button id="doRealDelete"><%= __('Delete')%></button>
 	  </div>
   </form>
 </div>	
