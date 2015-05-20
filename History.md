@@ -1,4 +1,19 @@
 # History
+
+## 3.3.17 - 20/05/2015
+* Added an example controller to the empty site, removes the bug where the controller directory isn't tracked by git.
+
+## 3.3.10 - 10/04/2015
+* better setup, small corrections.
+
+## 3.3.5 - 29/03/2015
+* changed the directory structure to more reflect the hosting setup
+* changes create script and you now have a startupscript in your cody-dev directory per project
+> The user is no longer required to change the index.js afer scaffolding.
+
+## 3.3.14 - 28/03/2015
+* Added ContactController
+
 ## 3.3.5 - 20/01/2015
 * Allow custom config file that overwrites the default config by supplying it on command-line with -c, by andretw. [Pull request](https://github.com/jcoppieters/cody/pull/17)
 
@@ -16,14 +31,5 @@
   $ dbuser=mydbuser dbpassword=mydbpassword port=8080 node index
 ```
 
-> The user is no longer required to change the index.js afer scaffolding.
 
-## 3.3.4 - 28/03/2015
-* Added ContactController
 
-## 3.3.5 - 29/03/2015
-* changed the directory structure to more reflect the hosting setup
-* changes create script and you now have a startupscript in your cody-dev directory per project
-
-## 3.3.10 - 10/04/2015
-* better setup, small corrections.
