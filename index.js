@@ -44,3 +44,4 @@ module.exports.ejs = require("ejs");
 module.exports.bodyParser = require("body-parser");
 module.exports.expressSession = require("express-session");
 module.exports.multer = require("multer");
+module.exports.i18n = require("i18n");

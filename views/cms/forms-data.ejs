@@ -5,16 +5,16 @@
     <input type="hidden" name="request" value="" />
     <fieldset>
       <div>
-        <label>Status</label>
+        <label><%= __("Status")%></label>
         <div>
-          <input type=radio id="new" name="status" value="N" <%= (data.status==="N") ? "Checked" : "" %>><label for="new">New</label>
-          <input type=radio id="todo" name="status" value="T" <%= (data.status==="T") ? "Checked" : "" %>><label for="todo">To Do</label>
-          <input type=radio id="done" name="status" value="D" <%= (data.status==="D") ? "Checked" : "" %>><label for="done">Done</label>
-          <input type=radio id="done" name="status" value="A" <%= (data.status==="A") ? "Checked" : "" %>><label for="archive">Archive</label>
+          <input type=radio id="new" name="status" value="N" <%= (data.status==="N") ? "Checked" : "" %>><label for="new"><%= __("New")%></label>
+          <input type=radio id="todo" name="status" value="T" <%= (data.status==="T") ? "Checked" : "" %>><label for="todo"><%= __("To Do")%> </label>
+          <input type=radio id="done" name="status" value="D" <%= (data.status==="D") ? "Checked" : "" %>><label for="done"><%= __("Done")%></label>
+          <input type=radio id="done" name="status" value="A" <%= (data.status==="A") ? "Checked" : "" %>><label for="archive"><%= __("Archive")%></label>
         </div>
       </div>
       <div id="info">
-        <label>Info</label>
+        <label><%= __("Info")%></label>
         <div>
           <strong>Created: </strong><%= formatDate(data.created) %> <%= formatTime(data.created) %>
           <% if ((typeof data.modified !== "undefined") && (data.modified)) { %>

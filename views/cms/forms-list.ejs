@@ -124,22 +124,22 @@ $(document).ready(function(){
           <input type="hidden" name="form_show" value="<%=form_show%>">
           <input type="hidden" name="request" id="request" value="list">
           <div>
-            <label for="subject">Subject</label><input type="text" name="subject" id="subject" value="<%=subject%>">
+            <label for="subject"><%= __("Subject")%></label><input type="text" name="subject" id="subject" value="<%=subject%>">
           </div>
           <div>
-            <label for="content">Content</label><textarea cols="80" rows="10" id="content" name="content"><%=content%></textarea>
+            <label for="content"><%= __("Content")%></label><textarea cols="80" rows="10" id="content" name="content"><%=content%></textarea>
           </div>
           <div>
-            <label for="testmail">Test mail</label><input type="text" name="testmail" id="testmail" value="<%=testmail%>">
+            <label for="testmail"><%= __("Test mail")%> </label><input type="text" name="testmail" id="testmail" value="<%=testmail%>">
           </div>
           <div>
-            <label for="testname">Test name</label><input type="text" name="testname" id="testname" value="<%=testname%>">
+            <label for="testname"><%= __("Test name")%> </label><input type="text" name="testname" id="testname" value="<%=testname%>">
           </div>
         </fieldset>
 
         <div id="action_buttons">
-          <button id="doSendMail">Send Mails</button>
-          <button id="doTestMail">Test Mail</button>
+          <button id="doSendMail"><%= __("Send Mails")%></button>
+          <button id="doTestMail"><%= __("Test Mail")%></button>
         </div>
 
       </form>

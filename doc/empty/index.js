@@ -21,6 +21,14 @@ var multer = cody.multer;
 
 var sitename = __filename.split(path.sep).pop().split(".")[0];
 
+// add i18n
+var i18n = cody.i18n;
+i18n.configure({
+    locales:['zh-cn', 'en'],
+    directory: __dirname + '/locales',
+    defaultLocale: 'en'
+});
+cody.server.use(i18n.init);
 
 // use the new 4.x middleware
 cody.server.use(bodyParser());
