@@ -167,6 +167,10 @@ rl.question("\n1) Enter projectname: ", function (sitename) {
                         console.log("$ forever start " + sitename + ".js");
                         console.log("    or");
                         console.log("$ node " + sitename + ".js");
+                        console.log("-");
+                        console.log("surf to http://localhost:3001");
+                        console.log("    or manage your site at");
+                        console.log("http://localhost:3001/en/dashboard");
                         con.end();
                         rl.close();
                       });
