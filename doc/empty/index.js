@@ -60,13 +60,13 @@ if(process.argv.indexOf("-c") != -1){
     var extraConfigFilePath = process.argv[process.argv.indexOf("-c") + 1];
     var obj = JSON.parse(fs.readFileSync(extraConfigFilePath, 'utf8'));
     Object.keys(cody.config).forEach(function (name) {
-        cody.config[name] = obj[name] || cody.config[name];
+      cody.config[name] = (typeof obj[name] === "undefined") ? cody.config[name] : obj[name];
     });
 }
 
 // 3. overwrite environment variable values
 Object.keys(cody.config).forEach(function (name) {
-  cody.config[name] = process.env[name] || cody.config[name];
+  cody.config[name] = (typeof process.env[name] === "undefined") ? cody.config[name] : process.env[name];
 });
 
 

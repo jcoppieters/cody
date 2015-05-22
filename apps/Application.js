@@ -30,11 +30,12 @@ function Application(config) {
 
   //TODO: don't we have to return errors if some of these are missing ?
   this.name = config.name || "cody";
-  this.version =  config.version || "v0.2";
+  this.version =  config.version || "v1.0";
   this.datapath =  config.datapath || "./data";
 
   this.dbuser = config.dbuser || "cody";
-  this.dbpassword = config.dbpassword || "ydoc";
+  // allowing empty password, thanks linksgo2011 & ticup (changed also in template startup file: doc/empty/index.js)
+  this.dbpassword = (typeof config.dbpassword === "undefined") ? "ydoc" : config.dbpassword;
   this.dbhost = config.dbhost || "localhost";
   this.db = config.db || "cody";
   this.smtp = config.smtp || "smtp.telenet.be";

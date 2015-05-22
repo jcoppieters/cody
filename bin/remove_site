@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# this is rubbish...  "Creating tree... dropping the database..."
+# we should look at the config.json
+#   and remove the used directories (asking confirmation for each one)
+#   and drop the database in the config file
+
+exit
+
+
 realpkgroot="${PWD}/node_modules/cody"
 echo Creating cody web tree in current directory
 echo -n "1) Enter sitename: "
