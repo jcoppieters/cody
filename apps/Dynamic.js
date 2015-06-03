@@ -37,7 +37,7 @@ Dynamic.prototype.serve = function () {
     self.request.connection.remoteAddress ||
     self.request.socket.remoteAddress ||
     self.request.connection.socket.remoteAddress;
-  console.log("- LOG --D-- " + ip + "|" + new Date() + "|" + self.request._parsedUrl.pathname);
+  console.log("--LOG--D--|" + ip + "|" + new Date() + "|" + self.request.headers['host'] + "|" + self.request._parsedUrl.pathname);
 
   uri = uri.replace("data/", "");
   var filename = libpath.normalize(libpath.join(this.path, uri));

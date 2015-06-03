@@ -243,8 +243,8 @@ Application.prototype.servePage = function(req, res) {
     req.connection.remoteAddress ||
     req.socket.remoteAddress ||
     req.connection.socket.remoteAddress;
-  console.log("- LOG --A-- " + ip + "|" + new Date() + "|" + req._parsedUrl.pathname);
-  
+  console.log("--LOG--A--|" + ip + "|" + new Date() + "|" + req.headers['host'] + "|" + req._parsedUrl.pathname);
+
   self.log("servePage - path -> " + path.link);
   
    

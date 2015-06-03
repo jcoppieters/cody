@@ -98,7 +98,7 @@ Static.prototype.serve = function () {
     self.request.connection.remoteAddress ||
     self.request.socket.remoteAddress ||
     self.request.connection.socket.remoteAddress;
-  console.log("- LOG --S-- " + ip + "|" + new Date() + "|" + self.request._parsedUrl.pathname);
+  console.log("--LOG--S--|" + ip + "|" + new Date() + "|" + req.headers['host'] + "|" + self.request._parsedUrl.pathname);
 
   var filename;
 
