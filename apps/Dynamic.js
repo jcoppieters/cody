@@ -31,8 +31,14 @@ module.exports = Dynamic;
 
 Dynamic.prototype.serve = function () {
   var self = this;
-
   var uri = url.parse(self.request.url).pathname;
+
+  var ip = self.request.headers['x-forwarded-for'] ||
+    self.request.connection.remoteAddress ||
+    self.request.socket.remoteAddress ||
+    self.request.connection.socket.remoteAddress;
+  console.log("- LOG --D-- " + ip + "|" + new Date() + "|" + self.request._parsedUrl.pathname);
+
   uri = uri.replace("data/", "");
   var filename = libpath.normalize(libpath.join(this.path, uri));
 

@@ -238,7 +238,14 @@ Application.doList = function(functionList, finished) {
 Application.prototype.servePage = function(req, res) {
   var self = this;
    
-  // make Path object from the url-path
+  var ip = self.request.headers['x-forwarded-for'] ||
+    self.request.connection.remoteAddress ||
+    self.request.socket.remoteAddress ||
+    self.request.connection.socket.remoteAddress;
+  console.log("LOG: " + ip);
+  console.log(self.request);
+
+   // make Path object from the url-path
   var path = new cody.Path(req._parsedUrl.pathname, self.defaultlanguage);
 
   self.log("------------------------------------------------------------------- " + new Date() + "--");

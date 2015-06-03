@@ -92,8 +92,14 @@ Static.prototype.tryCache = function (filename) {
 
 Static.prototype.serve = function () {
   var self = this;
-
   var uri = url.parse(self.request.url).pathname;
+
+  var ip = self.request.headers['x-forwarded-for'] ||
+    self.request.connection.remoteAddress ||
+    self.request.socket.remoteAddress ||
+    self.request.connection.socket.remoteAddress;
+  console.log("- LOG --S-- " + ip + "|" + new Date() + "|" + self.request._parsedUrl.pathname);
+
   var filename;
 
   // JM: module.parent = the invoking cody; its parent is the running

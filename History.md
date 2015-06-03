@@ -1,5 +1,8 @@
 # History
 
+## 3.3.19 - 03/06/2015 - JC
+* Added IP and path logging for the 3 app's. (starts with "LOG --A--", S and D for resp. Application, Static and Dynamic content requests)
+
 ## 3.3.17 - 20/05/2015
 * Added an example controller to the empty site, removes the bug where the controller directory isn't tracked by git.
 
