@@ -1,24 +1,22 @@
 <nav>
-  <% if (isLoggedIn()) { %>
+    <% if (isLoggedIn()) { %>
     <ul>
-      <% for (var i in page.parent.children) {
-      var p = page.parent.children[i];
-      if (p.isVisible()) { %>
-      <li><a href="/<%= p.url %>" class="<%= (p == page) ? 'active' : '' %>"><%= p.title %></a></li>
-      <% } %>
-      <% } %>
+        <% for (var i in page.parent.children) {
+        var p = page.parent.children[i];
+        if (p.isVisible()) { %>
+        <li><a href="/<%= p.url %>" class="<%= (p == page) ? 'active' : '' %>"><%= p.title %></a></li>
+        <% } %>
+        <% } %>
     </ul>
-  <% } else { %>
-    <h1 id="logintitle">Login</h1>
-  <% } %>
+    <% } else { %>
+    <h1 id="logintitle"><%= __("Login")%></h1>
+    <% } %>
 </nav>
-
 <% if (message !== "") { %>
-  <p class="notification <%= status %>"><%= message %></p>
-  <% if (status === "success") { %>
-    <script>
-      $(document).ready( function () { $(".notification").delay(6000).fadeOut(1000); } );
-    </script>
-  <% } %>
+<p class="notification <%= status %>"><%= __(message) %></p>
+<% if (status === "success") { %>
+<script>
+$(document).ready( function () { $(".notification").delay(6000).fadeOut(1000); } );
+</script>
 <% } %>
-
+<% } %>

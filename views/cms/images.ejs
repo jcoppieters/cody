@@ -31,19 +31,19 @@
     <div>
 		
  	    <div id="left_nav">
-	      <button id="doAddFolder">Add Folder</button>
-	      <button id="doAddImage">Add Image</button><br>
-	      <button id="doRename" >Rename</button>
-	      <button id="doDelete" >Delete</button>
-	      <button id="doEdit" >Edit</button>
+	      <button id="doAddFolder"><%= __("Add Folder")%> </button>
+	      <button id="doAddImage"><%= __("Add Image")%> </button><br>
+	      <button id="doRename" ><%= __("Rename")%></button>
+	      <button id="doDelete" ><%= __("Delete")%></button>
+	      <button id="doEdit" ><%= __("Edit")%></button>
 
         <div id="tree">
           <ul>
-            <li id="id_<%= controller.getRoot() %>" class="open" rel="root"><a href="#"><ins>&nbsp;</ins>Images</a>
+            <li id="id_<%= controller.getRoot() %>" class="open" rel="root"><a href="#"><ins>&nbsp;</ins><%= __("Images")%></a>
               <%- controller.getTree() %>
             </li>
 
-            <li id="id_4" class="open" rel="root"><a href="#"><ins>&nbsp;</ins>Layout</a>
+            <li id="id_4" class="open" rel="root"><a href="#"><ins>&nbsp;</ins><%= __("Layout")%></a>
               <%- controller.getTree(4) %>
             </li>
 

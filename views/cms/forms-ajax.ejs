@@ -105,16 +105,16 @@
 
         <% if (atom.extention === "") { %>
           <div>
-            <label for="name">Name</label>
+            <label for="name"><%= __("Name")%></label>
             <input name="name" id="name" type="text" value="<%= object.name %>" size="40" />
           </div>
           <div>
-            <label for="alert">Warn email</label>
+            <label for="alert"><%= __("Warn email")%> </label>
             <input name="alert" id="alert" type="text" value="<%= object.alert %>" size="40" />
           </div>
           <% for (var iL in app.languages) { var L = app.languages[iL]; %>
             <div id="labeldiv-<%= L.id %>" class="labels">
-              <label for="label-<%= L.id %>">Button <%= L.name %></label>
+              <label for="label-<%= L.id %>"><%= __("Button")%> <%= L.name %></label>
               <input name="label-<%= L.id %>" id="label-<%= L.id %>" type="text" value="<%= object.labels[L.id] %>" size="62" />
             </div>
           <% } %>
@@ -122,7 +122,7 @@
         <% } else { %>
 
           <div>
-            <label for="name">Name</label>
+            <label for="name"><%= __("Name")%></label>
             <input name="name" id="name" type="text" value="<%= object.name %>" size="40" />
             <select onchange="copyColumn()" id="usercolumns"><option value="0">-- prefill with --</option>
               <% var user = getLogin();
@@ -133,7 +133,7 @@
           </div>
 
           <div id="generatordiv">
-            <label for="generator">Type</label>
+            <label for="generator"><%= __("Type")%></label>
             <select name="generator" id="generator" onchange="return ShowOptions(this.value);">
               <option value="<%=cody.Meta.Generator.textinput%>" <%= (object.generator === cody.Meta.Generator.textinput) ? 'selected' : '' %>>Text line</option>
               <option value="<%=cody.Meta.Generator.textareainput%>" <%= (object.generator === cody.Meta.Generator.textareainput) ? 'selected' : '' %>>Text block</option>
@@ -147,53 +147,53 @@
           </div>
 
           <div id="defaultdiv">
-            <label for="default">Default value</label>
+            <label for="default"><%= __("Default value")%> </label>
             <input name="default" id="default" type="text" value="<%= val(object.options.default) %>" />
           </div>
 
           <div id="mindiv">
-            <label for="min">Min / Length</label>
+            <label for="min"><%= __("Min / Length")%></label>
             <input name="min" id="min" type="text" value="<%= val(object.min) %>" size="4" />
           </div>
           <div id="maxdiv">
-            <label for="max">Max / Lines</label>
+            <label for="max"><%= __("Max / Lines")%> </label>
             <input name="max" id="max" type="text" value="<%= val(object.max) %>" size="4" />
           </div>
           <div id="requireddiv">
-            <label for="required">Required</label>
+            <label for="required"><%= __("Required")%></label>
             <input name="required" id="required" type="checkbox" value="Y" <%= (object.options.required) ? 'checked' : '' %> />
           </div>
 
           <div id="textvalidationdiv">
-            <label for="no">Validation</label>
+            <label for="no"><%= __("Validation")%></label>
             <div class="radios">
               <input name="validation" id="no" type="radio" value="X" <%= ((!object.options.number) && (! object.options.email) && (! object.options.phone)) ? 'checked' : '' %> />
-              <label for="no">No</label>
+              <label for="no"><%= __("No")%></label>
               <input name="validation" id="email" type="radio" value="E" <%= (object.options.email) ? 'checked' : '' %> />
-              <label for="email">Email</label>
+              <label for="email"><%= __("Email")%></label>
               <input name="validation" id="phone" type="radio" value="P" <%= (object.options.phone) ? 'checked' : '' %> />
-              <label for="phone">Phone</label>
+              <label for="phone"><%= __("Phone")%></label>
             </div>
           </div>
 
           <div id="numbervalidationdiv">
-            <label for="email">Validation</label>
+            <label for="email"><%= __("Validation")%></label>
             <div class="radios">
               <input name="validation" id="integer" type="radio" value="I" <%= (object.reader == cody.Meta.Reader.integer) ? 'checked' : '' %> />
-              <label for="integer">Whole number</label>
+              <label for="integer"><%= __("Whole number")%> </label>
               <input name="validation" id="number" type="radio" value="N" <%= (object.reader == cody.Meta.Reader.number) ? 'checked' : '' %> />
-              <label for="number">Allow decimals</label>
+              <label for="number"><%= __("Allow decimals")%> </label>
             </div>
           </div>
 
           <% for (var iL in app.languages) { var L = app.languages[iL]; %>
             <div><label class="language"><%= L.name %></label></div>
             <div id="labeldiv-<%= L.id %>" class="labels">
-              <label for="label-<%= L.id %>"> - Label</label>
+              <label for="label-<%= L.id %>"> - <%= __("Label")%></label>
               <input name="label-<%= L.id %>" id="label-<%= L.id %>" type="text" value="<%= object.labels[L.id] %>" size="62" />
             </div>
             <div id="choicediv-<%= L.id %>" class="choices">
-              <label for="choice-<%= L.id %>"> - Choices</label>
+              <label for="choice-<%= L.id %>"> - <%= __("Choices")%></label>
               <textarea name="choice-<%= L.id %>" id="choice-<%= L.id %>" cols="62" rows="6"><%= (typeof object.options.choices === "undefined") ? "" : object.options.choices[L.id] %></textarea>
             </div>
           <% } %>
@@ -203,8 +203,8 @@
     </fieldset>
 
     <div id="action_buttons">
-      <button id="doSave">Save</button>
-      <button id="doRealDelete">Delete</button>
+      <button id="doSave"><%= __("Save")%></button>
+      <button id="doRealDelete"><%= __("Delete")%></button>
     </div>
   </form>
 </div>

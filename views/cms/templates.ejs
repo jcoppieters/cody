@@ -93,50 +93,50 @@
 
 			<fieldset id="left">
 				<div>
-					<label for="name">Name</label>
+					<label for="name"><%= __("Name")%></label>
 					<input name="name" id="name" type="text" value="<%- template.name %>" class="required"/>
 				</div>
         <div>
-          <label for="description">Description</label>
+          <label for="description"><%= __("Description")%></label>
           <textarea name="description" id="description"><%- template.description %></textarea>
         </div>
         <div>
-          <label for="systemY">System</label>
-          <input name="system" id="systemY" type="radio" value="Y" <%= checked(template.system == 'Y') %> /><label class="choice" for="systemY">Yes</label>
-          <input name="system" id="systemN" type="radio" value="N" <%= checked(template.system != 'Y') %> /><label class="choice" for="systemN">No</label>
+          <label for="systemY"><%= __("System")%></label>
+          <input name="system" id="systemY" type="radio" value="Y" <%= checked(template.system == 'Y') %> /><label class="choice" for="systemY"><%= __("Yes")%></label>
+          <input name="system" id="systemN" type="radio" value="N" <%= checked(template.system != 'Y') %> /><label class="choice" for="systemN"><%= __("No")%></label>
         </div>
 				<div>
-					<label for="controller">Controller</label>
+					<label for="controller"><%= __("Controller")%></label>
 					<input name="controller" id="controller" type="text" value="<%- template.controllerName %>" class="required" />
 				</div>
 				<div>
-					<label for="fn">Render file</label>
+					<label for="fn"><%= __("Render file")%> </label>
 					<input name="fn" id="fn" type="text" value="<%- template.fn %>" class="required" />
 				</div>
         <div>
-          <label for="maxnumber">Max allowed</label>
+          <label for="maxnumber"><%= __("Max allowed")%> </label>
           <input name="maxnumber" id="maxnumber" type="text" class="number" value="<%- template.maxnumber %>"  class="required number"/>
         </div>
         <div>
-          <label for="defaultchild">Default child</label>
+          <label for="defaultchild"><%= __("Default child")%> </label>
           <select name="defaultchild" id="defaultchild">
-            <option value="0">No children</option>
+            <option value="0"><%= __("No children")%> </option>
             <%- optionList(app.templates, template.defaultchild, "id", "name") %>
           </select>
         </div>
         <div>
-          <label for="allowedtemplates">Allowed children</label>
+          <label for="allowedtemplates"><%= __("Allowed children")%> </label>
           <input name="allowedtemplates" id="allowedtemplates" type="text" value="<%- template.allowedtemplates %>" />
         </div>
 			</fieldset>
 
       <fieldset id="right">
         <div class="list">
-          <h4 class="intro">Intro</h4>
+          <h4 class="intro"><%= __("Intro")%></h4>
           <% var prev = "X";
           for (var ic in template.content) { var c = template.content[ic];
             if ((prev != c.intro) && (c.intro == "N")) { prev = c.intro; %>
-              <h4 class="main">Main</h4>
+              <h4 class="main"><%= __("Main")%></h4>
             <% } %>
             <article id="id_<%= c.id %>">
               <img src="<%=cstatic%>/icons/<%= c.kind.toUpperCase() %>.png">
@@ -144,23 +144,23 @@
               <input type="hidden" name="sortorder_<%= c.id %>" class="sortorder" value="<%= c.sortorder %>" />
               <input type="hidden" name="intro_<%= c.id %>" class="intro" value="<%= c.intro %>" />
               <input type="hidden" name="kind_<%= c.id %>" class="kind" value="<%= c.kind %>" />
-              <button class="doDeletor" rel="<%= c.id %>">Delete</button>
-              <span class="ui-icon-arrowthick-2-n-s ui-icon mover">Move</span>
+              <button class="doDeletor" rel="<%= c.id %>"><%= __("Delete")%></button>
+              <span class="ui-icon-arrowthick-2-n-s ui-icon mover"><%= __("Move")%></span>
             </article>
           <% } %>
         </div>
         <div class="actions">
-          <button id="doAdd">Add</button>
+          <button id="doAdd"><%= __("Add")%></button>
         </div>
       </fieldset>
 
 			<div id="action_buttons">
-				<button id="doSave">Save</button>
+				<button id="doSave"><%= __("Save")%></button>
 				<% if (template.id > 0) { %>
-          <button id="doDuplicate">Duplicate</button>
-          <button id="doDelete">Delete</button>
+          <button id="doDuplicate"><%= __("Duplicate")%></button>
+          <button id="doDelete"><%= __("Delete")%></button>
 				<% } %>
-				<button id="doCancel">Cancel</button>
+				<button id="doCancel"><%= __("Cancel")%></button>
 		  </div>
 		</form>
     <% } %>
@@ -169,11 +169,11 @@
     <% if (typeof templates != "undefined") { %>
     <form action="./templates" method="post" id="search">
  	   	<input type="hidden" name="request" id="request" value="list" />
-			<button id="doNew">New</button>
+			<button id="doNew"><%= __("New")%></button>
 
 			<table id="records">
 			   <tr>
-				 <th>Name</th><th>Controller</th><th>Render</th><th>System</th>
+				 <th><%= __("Name")%></th><th><%= __("Controller")%></th><th><%= __("Render")%></th><th><%= __("System")%></th>
 			   </tr>
 
 			  <% for (var i in templates) { var t = templates[i]; %>
