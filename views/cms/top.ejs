@@ -1,11 +1,11 @@
   <img src="<%=cstatic%>/images/logoMC.png">
   <% if (page.parent && isLoggedIn()) { %>
-    <span id="breadcrumb"><a href="/<%=page.language%>/dashboard">Dashboard</a> » <%=page.parent.title%></span>
+    <span id="breadcrumb"><a href="/<%=page.language%>/dashboard"><%= __("Dashboard")%></a> » <%=page.parent.title%></span>
   <% } %>
   <section>
-    <a href="<%=cstatic%>/manual.pdf">Help</a>
+    <a href="<%=cstatic%>/manual.pdf"><%= __("Help")%></a>
     <% if (isLoggedIn()) { %>
-      <a href="/<%=page.language%>/users?request=edit&id=<%=login.id%>">Account</a>
-      <a href="/<%=page.language%>/login/logout">Sign out</a>
+      <a href="/<%=page.language%>/users?request=edit&id=<%=login.id%>"><%= __("Account")%></a>
+      <a href="/<%=page.language%>/login/logout"><%= __("Sign out")%></a>
     <% } %>
   </section>

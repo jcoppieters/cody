@@ -54,63 +54,63 @@
 
 			<fieldset class="horizontal">
 				<div>
-					<label for="name">Name</label>
+					<label for="name"><%= __("Name")%></label>
 					<input name="name" id="name" type="text" value="<%- user.name %>" class="required"/>
 				</div>
 				<div>
-					<label for="username">Login</label>
+					<label for="username"><%= __("Login")%></label>
 					<input name="username" id="username" type="text" value="<%- user.username %>" class="required" />
 				</div>
 				<div>
-					<label for="password">Password</label>
+					<label for="password"><%= __("Password")%></label>
 					<input name="password" id="password" type="text" value="" <% if (typeof user.username === "undefined") { %> class="required" <% } %> />
           <% if (user.id > 0) { %>
-            <span>Leave empty if you don't want to change your password.</span>
+            <span><%= __("Leave empty if you don't want to change your password.")%></span>
           <% } %>
 				</div>
 				<div>
-					<label for="domain">Group</label>
+					<label for="domain"><%= __("Group")%></label>
 					<input name="domain" id="domain" type="text" value="<%- user.domain %>" />
 
 					<select name="domains" id="domains">
-						<option value="">Choose an existing group or type a new one</option>
+						<option value=""><%= __("Choose an existing group or type a new one")%></option>
              <%- optionList(domains, -1) %>
 					</select>
 				</div>
 				<div>
-					<label for="level">Level</label>
+					<label for="level"><%= __("Level")%></label>
 					<select name="level" id ="level">
 					  <%- optionList(levels, user.level) %>
 					</select>
 				</div>
         <div>
-          <label for="active">Active</label>
+          <label for="active"><%= __("Active")%></label>
           <input name="active" id="activeY" type="radio" value="Y" <%= checked(user.active == 'Y') %> /><label class="choice" for="activeY">Yes</label>
           <input name="active" id="activeN" type="radio" value="N" <%= checked(user.active != 'Y') %> /><label class="choice" for="activeN">No</label>
         </div>
         <div>
-          <label for="badlogins">Bad logins</label>
+          <label for="badlogins"><%= __("Bad logins")%> </label>
           <input name="badlogins" id="badlogins" type="text" class="number" value="<%- user.badlogins %>"  class="required number"/>
           
-          <label for="maxbadlogins">Max allowed</label>
+          <label for="maxbadlogins"><%= __("Max allowed")%> </label>
           <input name="maxbadlogins" id="maxbadlogins" type="text" class="number" value="<%- user.maxbadlogins %>"  class="required number"/>
         </div>
         <div>
-          <label for="nomail">Allows Mail</label>
+          <label for="nomail"><%= __("Allows Mail")%> </label>
           <input name="nomail" id="nomailY" type="radio" value="Y" <%= checked(user.nomail == 'Y') %> /><label class="choice" for="nomailY">No</label>
           <input name="nomail" id="nomailN" type="radio" value="N" <%= checked(user.nomail != 'Y') %> /><label class="choice" for="nomailN">Yes</label>
         </div>
 				<div>
-					<label for="email">Email</label>
+					<label for="email"><%= __("Email")%></label>
 					<input name="email" id="email" type="text" value="<%- user.email %>"  class="required email"/>
 				</div>
 			</fieldset>
 			<div id="action_buttons">
-				<button id="doSave">Save</button>
+				<button id="doSave"><%= __("Save")%></button>
 				<% if (user.id > 0) { %>
-					<button id="doDelete">Delete</button>
+					<button id="doDelete"><%= __("Delete")%></button>
 				<% } %>
-				<button id="doCancel">Cancel</button>
+				<button id="doCancel"><%= __("Cancel")%></button>
 		  </div>
 		</form>
     <% } %>
@@ -120,11 +120,11 @@
     <form action="./users" method="post" id="search">
  	   	<input type="hidden" name="request" id="request" value="list" /> 
  	   	<!--TODO: add  search button + input field -->
-			<button id="doNew">New</button>
+			<button id="doNew"><%= __("New")%></button>
 									
 			<table id="records"> 
 			   <tr> 
-				 <th>Naam</th><th>Login</th><th>Domain</th><th>Level</th><th>Login</th><th>Email</th>
+				 <th><%= __("Naam")%></th><th><%= __("Login")%></th><th><%= __("Domain")%></th><th><%= __("Level")%></th><th><%= __("Login")%></th><th><%= __("Email")%></th>
 			   </tr> 
 				
 			  <% for (var i=0; i < users.length; i++) { var u = users[i]; %>			  
