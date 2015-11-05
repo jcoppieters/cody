@@ -5,6 +5,7 @@
   "name": "cody",
   "description": "Cody CMS",
   "version": "3.4.0",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "http://github.com/jcoppieters/cody.git"
