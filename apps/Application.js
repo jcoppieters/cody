@@ -37,6 +37,7 @@ function Application(config) {
   // allowing empty password, thanks linksgo2011 & ticup (changed also in template startup file: doc/empty/index.js)
   this.dbpassword = (typeof config.dbpassword === "undefined") ? "ydoc" : config.dbpassword;
   this.dbhost = config.dbhost || "localhost";
+  this.dbport = config.dbport || 3306;
   this.db = config.db || "cody";
   this.smtp = config.smtp || "smtp.telenet.be";
   this.smtpoptions = config.smtpoptions; // see https://github.com/andris9/Nodemailer
@@ -393,7 +394,7 @@ Application.prototype.getConnection = function() {
     
     // https://github.com/felixge/node-mysql
     self.connection = mysql.createConnection({
-        host: self.dbhost,
+        host: self.dbhost, port: self.dbport,
         user: self.dbuser, password: self.dbpassword,
         database: self.db
     });
