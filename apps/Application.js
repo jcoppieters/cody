@@ -359,8 +359,8 @@ Application.prototype.renderView = function( context ) {
   context.res.render(viewfile, context);
 };
 
-// internal redirect
-Application.prototype.redirect = function(context, redirectTo) {
+// internal redirect = delegate
+Application.prototype.delegate = function(context, redirectTo) {
   var self = this;
 
   // either [language]/itemlink or itemlink
@@ -375,11 +375,11 @@ Application.prototype.logInFirst = function(context) {
   // copy minimal version of the context to our session
   context.req.session.pendingContext = context.getMini();
 
-  this.redirect(context, "login");
+  this.delegate(context, "login");
 };
 
 Application.prototype.notAllowed = function(context) {
-  this.redirect(context, "notallowed");
+  this.delegate(context, "notallowed");
 };
 
 

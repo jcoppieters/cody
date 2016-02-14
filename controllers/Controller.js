@@ -118,7 +118,7 @@ Controller.prototype.getId = function(defaultValue) {
 //
 Controller.prototype.delegate = function(link) {
   this.close();
-  this.app.redirect(this.context, link);
+  this.app.delegate(this.context, link);
 };
 
 //
