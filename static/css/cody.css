@@ -356,24 +356,24 @@ nav h1#logintitle { color: white }
 
 #data #record label { margin-top: 1px; }
 
-#data form { margin: 0px; border: solid 1px #c0c0c0; padding: 10px }
-#data form #action_buttons { border-top: solid 1px #c0c0c0; padding: 10px 0 0 156px; }
-#data form #action_buttons button { margin-right: 10px }
-#data form fieldset { border: none; padding: 0; margin: 0 }
-#data form fieldset > div { margin: 10px 0 15px 0 }
-#data form fieldset > div > label { display: inline-block; width: 160px; text-align: right; padding: 0 13px 0 0;
+#data form#formdata { margin: 0px; border: solid 1px #c0c0c0; padding: 10px }
+#data form#formdata #action_buttons { border-top: solid 1px #c0c0c0; padding: 10px 0 0 156px; }
+#data form#formdata #action_buttons button { margin-right: 10px }
+#data form#formdata fieldset { border: none; padding: 0; margin: 0 }
+#data form#formdata fieldset > div { margin: 10px 0 15px 0 }
+#data form#formdata fieldset > div > label { display: inline-block; width: 160px; text-align: right; padding: 0 13px 0 0;
                                     font-weight: bold; vertical-align: top; line-height: 24px }
-#data form fieldset > div > label.error { text-align: left; padding: 0 0 0 213px; color: red; display: block; width: inherit }
-#data form fieldset > div > input.error,
-#data form fieldset > div > textarea.error { border: 1px solid red }
-#data form fieldset > div > input[type=text],
-#data form fieldset > div > textarea { width: 400px }
-#data form fieldset > div > input[type=text].number { width: 70px }
-#data form fieldset > div > div { display: inline-block; }
-#data form fieldset > div > div > label { display: inline-block; margin: 0 20px 0 7px;
+#data form#formdata fieldset > div > label.error { text-align: left; padding: 0 0 0 213px; color: red; display: block; width: inherit }
+#data form#formdata fieldset > div > input.error,
+#data form#formdata fieldset > div > textarea.error { border: 1px solid red }
+#data form#formdata fieldset > div > input[type=text],
+#data form#formdata fieldset > div > textarea { width: 400px }
+#data form#formdata fieldset > div > input[type=text].number { width: 70px }
+#data form#formdata fieldset > div > div { display: inline-block; }
+#data form#formdata fieldset > div > div > label { display: inline-block; margin: 0 20px 0 7px;
                                           vertical-align: top; color: black; line-height: 24px }
-#data form fieldset > div > div > input { vertical-align: baseline; }
+#data form#formdata fieldset > div > div > input { vertical-align: baseline; }
 
-#data form fieldset strong { color: black }
-#data form fieldset div#info { margin-top: -10px }
-#data form fieldset div#info div { padding-top: 6px }
+#data form#formdata fieldset strong { color: black }
+#data form#formdata fieldset div#info { margin-top: -10px }
+#data form#formdata fieldset div#info div { padding-top: 6px }
