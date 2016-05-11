@@ -1,4 +1,7 @@
 # History
+## 3.4.5 - 11/05/2015 - TC
+* Added mysql 5.7+ support for population script
+* Fixed index.ejs, content.ejs and page.ejs for node 6+
 
 ## 3.4 - 25/08/2015 - TC
 * Merged the pull request (i18n) of linksgo into the master branch. Chinese is now supported for the Cody interface and more languages can be added.
