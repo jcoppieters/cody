@@ -1,6 +1,6 @@
 console.log("loading " + module.id);
 
-var cody = require("./index.js");
+var cody = require("cody");
 var express = require("express");
 var path = require("path");
 var fs = require("fs");
@@ -13,13 +13,13 @@ module.exports = function (pathname, sitename, done) {
   // setup the config.
   //  Order of importance:
   //  1. config.json >> 2. -c command line config >> 3. environment values >> 4. minimal requirements
-  
-  
+
+
   // 1a. load default config & and keep in cody object
   var config = require(path.join(pathname, sitename, "config.json"));
   cody.config = config;
 
-  
+
   // 1b. require controllers
   config.controllers = config.controllers || [];
   var cpath = path.join(pathname, sitename, "controllers");
@@ -29,8 +29,8 @@ module.exports = function (pathname, sitename, done) {
     console.log("Loaded controller: " + cname);
     config.controllers[cname] = require(path.join(cpath, cname));
   });
-  
-  
+
+
   // 2. if -c exists, overwrite customized config values
   if(process.argv.indexOf("-c") != -1){
       var extraConfigFilePath = process.argv[process.argv.indexOf("-c") + 1];
@@ -39,15 +39,15 @@ module.exports = function (pathname, sitename, done) {
         config[name] = (typeof obj[name] === "undefined") ? config[name] : obj[name];
       });
   }
-  
-  
+
+
   // 3. overwrite environment variable values
   Object.keys(config).forEach(function (name) {
     config[name] = (typeof process.env[name] === "undefined") ? config[name] : process.env[name];
   });
-  
 
-  
+
+
   // 4. minimal requirements
   if (typeof config.name === "undefined") {
       console.log("startWebApp - missing name from config options");
@@ -155,16 +155,15 @@ module.exports = function (pathname, sitename, done) {
 
 
     if (typeof done === "function") {
-        done({
-          host: config.hostnames.split(","),
-          app: siteServer,
-          http: config.http,
-          https: config.https,
-          certificate: config.certificate
-        });
+      done({
+        host: config.hostnames.split(","),
+        app: siteServer,
+        http: config.http,
+        https: config.https,
+        certificate: path.join(pathname, config.certificate)
+      });
     }
 
   });
 
 };
-
