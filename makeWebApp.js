@@ -32,7 +32,7 @@ module.exports = function (pathname, sitename, configfn, done) {
 
 
   // 1a. load default config & and keep in cody object
-  var config = require(path.join(pathname, sitename, configfn && "config.json"));
+  var config = require(path.join(pathname, sitename, configfn || "config.json"));
   cody.config = config;
 
 
