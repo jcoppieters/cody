@@ -5,6 +5,16 @@ var express = require("express");
 var path = require("path");
 var fs = require("fs");
 
+/* usage:
+  makeWebApp(pathname, sitedir, done);
+  // done = function(app) {}
+  //  app = {host: [names], app: express, http: integer, https: integer, certificate: pathto }
+  
+  // to test on localhost: app.app.listen(app.http);
+  
+  // for production see startServer.js
+
+ */
 
 module.exports = function (pathname, sitename, done) {
 

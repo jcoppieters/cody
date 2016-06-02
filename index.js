@@ -34,6 +34,7 @@ module.exports.Static = require("./apps/Static.js");
 module.exports.Dynamic = require("./apps/Dynamic.js");
 
 module.exports.startWebApp = require("./startWebApp.js");
+module.exports.makeWebApp = require("./makeWebApp.js");
 
 // module.exports.unitTests = require("./tests/");
 
