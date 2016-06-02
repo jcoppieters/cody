@@ -55,7 +55,7 @@ Cody development startup:
 
 var cody = require("cody");
 
-cody.makeWebApp(__dirname, "mysite", function(app) {
+cody.makeWebApp(__dirname, "mysite", "config-devel.json", function(app) {
   console.log("loaded mysite");
   app.app.listen(app.http, function() {
     console.log("mysite listening on " + this.address().port);

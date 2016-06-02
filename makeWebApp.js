@@ -7,6 +7,7 @@ var fs = require("fs");
 
 /* usage:
   makeWebApp(pathname, sitedir, done);
+  makeWebApp(pathname, sitedir, alternateConfigFile, done);
   // done = function(app) {}
   //  app = {host: [names], app: express, http: integer, https: integer, certificate: pathto }
   
@@ -16,7 +17,12 @@ var fs = require("fs");
 
  */
 
-module.exports = function (pathname, sitename, done) {
+module.exports = function (pathname, sitename, configfn, done) {
+  // make configfn optional
+  if ((done === undefined) && (typeof configfn === "function")) {
+    done = configfn;
+    configfn = undefined;
+  }
 
   var siteServer = express();
 
@@ -26,7 +32,7 @@ module.exports = function (pathname, sitename, done) {
 
 
   // 1a. load default config & and keep in cody object
-  var config = require(path.join(pathname, sitename, "config.json"));
+  var config = require(path.join(pathname, sitename, configfn && "config.json"));
   cody.config = config;
 
 
