@@ -5,6 +5,15 @@ var express = require("express");
 var vhost = require("vhost");
 
 function startWebApp(mainServer, config, done) {
+  console.log("=== deprecated ===");
+  console.log(" use: makeWebApp(pathname, sitedir, done);");
+  console.log(" done = function(app) {} ");
+  console.log(" app = {host: [names], app: express, http: integer, https: integer, certificate: pathto }");
+  console.log(" to test on localhost: app.app.listen(app.http);");
+  console.log(" for production see startServer.js");
+  console.log("=== deprecated ===");
+
+
   if (typeof config.name === "undefined") {
       console.log("startWebApp - missing name from config options");
       return false;

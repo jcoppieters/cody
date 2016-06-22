@@ -1,3 +1,5 @@
+SET sql_mode = 'STRICT_TRANS_TABLES';
+
 DROP TABLE IF EXISTS `atoms`;
 
 CREATE TABLE `atoms` (

@@ -37,6 +37,7 @@ function Application(config) {
   // allowing empty password, thanks linksgo2011 & ticup (changed also in template startup file: doc/empty/index.js)
   this.dbpassword = (typeof config.dbpassword === "undefined") ? "ydoc" : config.dbpassword;
   this.dbhost = config.dbhost || "localhost";
+  this.dbport = config.dbport || 3306;
   this.db = config.db || "cody";
   this.smtp = config.smtp || "smtp.telenet.be";
   this.smtpoptions = config.smtpoptions; // see https://github.com/andris9/Nodemailer
@@ -358,8 +359,8 @@ Application.prototype.renderView = function( context ) {
   context.res.render(viewfile, context);
 };
 
-// internal redirect
-Application.prototype.redirect = function(context, redirectTo) {
+// internal redirect = delegate
+Application.prototype.delegate = function(context, redirectTo) {
   var self = this;
 
   // either [language]/itemlink or itemlink
@@ -374,11 +375,11 @@ Application.prototype.logInFirst = function(context) {
   // copy minimal version of the context to our session
   context.req.session.pendingContext = context.getMini();
 
-  this.redirect(context, "login");
+  this.delegate(context, "login");
 };
 
 Application.prototype.notAllowed = function(context) {
-  this.redirect(context, "notallowed");
+  this.delegate(context, "notallowed");
 };
 
 
@@ -393,7 +394,7 @@ Application.prototype.getConnection = function() {
     
     // https://github.com/felixge/node-mysql
     self.connection = mysql.createConnection({
-        host: self.dbhost,
+        host: self.dbhost, port: self.dbport,
         user: self.dbuser, password: self.dbpassword,
         database: self.db
     });

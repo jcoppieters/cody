@@ -85,6 +85,18 @@ cody.startWebApp(cody.server, cody.config, function() {
   var portNr = cody.config.port || 3001;
   cody.server.listen(portNr);
   console.log("Listening on port " + portNr);
+
+
+  if (typeof cody.config.https != "undefined") {
+    const options = {
+      key: fs.readFileSync('ws.key').toString(),
+      cert: fs.readFileSync('ws.crt').toString()
+    };
+    var httpsServer = require('https');
+    httpsServer.createServer(options, cody.server).listen(cody.config.https, function () {
+      console.log("Listening https on port: " + cody.config.https);
+    });
+  }
 });
 
 

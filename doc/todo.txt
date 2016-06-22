@@ -12,15 +12,17 @@
 - github [ done ]
   - readme
   - contrib
-  - licence [ done ]
+  - licence
 
 - stop/start/restart Cody
   moet degelijk script worden om in /etc/init.d te zetten
   voorbeelden genoeg aldaar te vinden.
-
+  -> er staat er nu eentje op de linux machine van mvm, maar die doet het precies niet ??
 
 - redirect / to /nl or /en [ done ]
+
 - delete content from page fails ... ?? [ fixed on 23/06/2013, a > where it should have been a >= ]
+
 - new folder in "Images" -> "Choose file" ?? [ fixed 21/06/2013 ]
 
 - sending mails from javascript [ done ]
@@ -72,6 +74,6 @@ Yanic: [ done door Johan: 15/09/2013 ]
 - Projects todo
   - Grader / Grades (Howest)
   - Dr / Agenda Site omzetten van Java -> Cody
-  - BOK [ ±done: Dieter ]
-  - Verlanglijstje / mobile version
+  - BOK [ ±done: Dieter, nog probleem met items uit vorige maand die 1 dag fout getoond worden ]
+  - Verlanglijstje / mobile version -> Cody
   - Empty sites uitbreiden met templates van Jill

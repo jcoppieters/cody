@@ -308,6 +308,10 @@ Context.prototype.getParam = function(paramName, defaultValue) {
     x = (tmp % 1 === 0) ? parseInt(x) : tmp;
   };
 
+  if ((typeof defaultValue !== "undefined") && (defaultValue instanceof Date)) {
+    x = this.makeDate(x, defaultValue);
+  }
+
   return (typeof x === "undefined") ? defaultValue : x;
 };
 
