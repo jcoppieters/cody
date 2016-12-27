@@ -88,35 +88,38 @@ rl.question("\n1) Enter projectname: ", function (sitename) {
     rl.question("\n3) Enter site database user: ", function (dbuser) {
       
       rl.question("\n4) Enter site database password: ", function (dbpass) {
-        
-        rl.question("\n5) Enter hostname for site: ", function (hostname) {
+
+        rl.question("\n5) Enter dbhost for db: ", function (dbhost) {
+             
+          rl.question("\n6) Enter hostname for site: ", function (hostname) {
           var con = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: dbrootpw,
+            host: dbhost,
+            user: dbuser,
+            password: dbpass,
             multipleStatements: true
           });
 
-          rl.question("\n6) Enter a location for storing documents: ", function (datadir) {
+          rl.question("\n7) Enter a location for storing documents: ", function (datadir) {
           
-            console.log("");
+            console.log("dbhost is "+dbhost);
             con.connect();
             con.query("create database " + sitename + " default charset utf8", function (err) {
               if (err) console.log(err);
               con.query("grant all on " + sitename + ".* to '" + dbuser + "'@'%' identified by '" + dbpass + "'", function (err) {
                 if (err) console.log(err);
 
-                con.query("grant all on " + sitename + ".* to '" + dbuser + "'@'localhost' identified by '" + dbpass + "'", function (err) {
+                con.query("grant all on " + sitename + ".* to '" + dbuser +"'@'"+ dbhost + " identified by '" + dbpass + "'", function (err) {
                   if (err) console.log(err);
 
                   con.end();
                   con = mysql.createConnection({
-                    host: 'localhost',
+                    host: dbhost,
                     user: dbuser,
                     database: sitename,
                     password: dbpass,
                     multipleStatements: true
                   });
+                  console.log("dbhost is "+dbhost);
                   con.connect();
 
                   mkdir(path.join(rootwd, sitename));
@@ -137,7 +140,7 @@ rl.question("\n1) Enter projectname: ", function (sitename) {
                             db: sitename,
                             dbuser: dbuser,
                             dbpassword: dbpass,
-                            dbhost: "localhost",
+                            dbhost: dbhost,
                             smtp: "smtpmailer."+hostname,
                             version: "V0.1",
                             defaultlanguage: "en",
@@ -179,6 +182,7 @@ rl.question("\n1) Enter projectname: ", function (sitename) {
               });
             });
           });
+        });
         });
       });
     });
