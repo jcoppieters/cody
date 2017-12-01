@@ -18,7 +18,7 @@
   ],
   "dependencies": {
     "body-parser": "^1.6.7",
-    "ejs": "0.x",
+    "ejs": "^2.5.5",
     "express": "4.x",
     "express-session": "1.x",
     "i18n": "^0.5.0",
