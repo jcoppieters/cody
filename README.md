@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/bgenome/cody.svg?branch=master)](https://travis-ci.org/bgenome/cody)
+
 # Cody CMS
 
 A Javascript Content Management System running on Node.js
