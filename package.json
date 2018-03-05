@@ -32,7 +32,9 @@
     "node": "*"
   },
   "scripts": {
-    "preinstall_DISABLED": "npm list forever -g || npm install forever -g"
+    "preinstall_DISABLED": "npm list forever -g || npm install forever -g",
+    "migrate": "knex migrate:latest",
+    "rollback": "knex migrate:rollback"
   },
   "readme": "Cody CMS\n\nFor documentation see: \n- https://github.com/jcoppieters/cody and/or \n- http://www.cody-cms.org\n\nContact us at johan.coppieters@howest.be\n\nThe Cody team.\n",
   "readmeFilename": "README.md"
