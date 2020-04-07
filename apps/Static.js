@@ -14,7 +14,7 @@ var path = ".";
 
 var cache = {},
     nrCache = 0,
-    maxCache = 1, //1 is good for developement -> 30 seems to be reasonable for small websites.
+    maxCache = 1, //1 is good for development -> 30 seems to be reasonable for small websites.
     maxCacheAge = 86400;
 
 
