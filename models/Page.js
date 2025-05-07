@@ -23,6 +23,7 @@ function Page(basis, app) {
       app.err("Application.fetchPages", "did not find item for page " + this.itemId + " / " + this.title);
     }
   }
+  this.prefix = app.prefix;
 }
 module.exports = Page;
 
@@ -199,9 +200,9 @@ Page.prototype.getURL = function(language) {
   // if the language is different from this page its language,
   //   we actually return the url of another page (with the same item)
   if (typeof language !== "undefined") {
-    return language + "/" + this.getLink();
+    return this.prefix + "/" + language + "/" + this.getLink();
   } else {
-    return this.url;
+    return this.prefix + "/" + this.url;
   }
 };
 

@@ -14,14 +14,15 @@ var path = ".";
 
 var cache = {},
     nrCache = 0,
-    maxCache = 1, //1 is good for development -> 30 seems to be reasonable for small websites.
+    maxCache = 1, //1 is good for developement -> 30 seems to be reasonable for small websites.
     maxCacheAge = 86400;
 
 
-function Static(req, res, appFolder) {
+function Static(req, res, appFolder, prefix) {
   this.request = req;
   this.response = res;
   this.appFolder = appFolder;
+  this.prefix = prefix || "";
 
   //TODO: we need to have a cache per application
   // - the cody static cache should be high (100?)
@@ -93,6 +94,11 @@ Static.prototype.tryCache = function (filename) {
 Static.prototype.serve = function () {
   var self = this;
   var uri = url.parse(self.request.url).pathname;
+
+  // remove prefix
+  if (self.prefix && (uri.indexOf("/"+self.prefix) === 0)) {
+    uri = uri.substring(self.prefix.length+1);
+  }
 
   var ip = self.request.headers['x-forwarded-for'] ||
     self.request.connection.remoteAddress ||

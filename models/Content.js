@@ -20,6 +20,7 @@ function Content(basis, app) {
   this.kind = this.kind || "T";
   this.sortorder = this.sortorder || 10;
   this.atom = this.atom || 0;
+  this.prefix = app.prefix || "";
 
   this.getAtom(this.atom, app);
 }

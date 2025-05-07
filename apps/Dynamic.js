@@ -20,10 +20,11 @@ function generate404(resp) {
   resp.end();
 }
 
-function Dynamic(req, res, path) {
+function Dynamic(req, res, path, prefix) {
   this.request = req;
   this.response = res;
   this.path = path;
+  this.prefix = prefix || "";
 }
 
 module.exports = Dynamic;
@@ -32,6 +33,11 @@ module.exports = Dynamic;
 Dynamic.prototype.serve = function () {
   var self = this;
   var uri = url.parse(self.request.url).pathname;
+
+  // remove prefix
+  if (self.prefix && (uri.indexOf("/"+self.prefix) === 0)) {
+    uri = uri.substring(self.prefix.length+1);
+  }
 
   var ip = self.request.headers['x-forwarded-for'] ||
     self.request.connection.remoteAddress ||

@@ -32,7 +32,7 @@
          
       <% } else { %>  
         <h2 id="loginfirst"><%= __("Before you can access this requested page you first need to login.")%></h2>
-        <form action="/<%=page.language%>/login" name="logon" id="logon" method="post" class="clearfix">
+        <form action="<%= (page.prefix) ? "/"+page.prefix : ""%>/<%=page.language%>/login" name="logon" id="logon" method="post" class="clearfix">
           <input type="hidden" name="request" value="login" /> 
           <fieldset class="clearfix">
             <div id="logonuser">

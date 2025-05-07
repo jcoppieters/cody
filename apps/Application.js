@@ -3,8 +3,7 @@
 //
 //
 
-
-var mysql = require('mysql');
+var mysql = require('mysql2');
 // JM: assuming Application is always require()'d directly by cody/index.js since ../../index.js is ugly.
 // maybe replace in all other files as well.
 var cody = module.parent.exports;
@@ -30,6 +29,7 @@ function Application(config) {
 
   //TODO: don't we have to return errors if some of these are missing ?
   this.name = config.name || "cody";
+  this.prefix = config.prefix || "";
   this.version =  config.version || "v1.0";
   this.datapath =  config.datapath || "./data";
 
@@ -238,7 +238,8 @@ Application.doList = function(functionList, finished) {
 //////////////////
 Application.prototype.servePage = function(req, res) {
   var self = this;
-  var path = new cody.Path(req._parsedUrl.pathname, self.defaultlanguage);
+  var url = (self.prefix) ? req._parsedUrl.pathname.substring(self.prefix.length+1) : req._parsedUrl.pathname;
+  var path = new cody.Path(url, self.defaultlanguage);
 
   var ip = req.headers['x-forwarded-for'] ||
     req.connection.remoteAddress ||
@@ -828,4 +829,3 @@ Application.prototype.storeDomains = function(result) {
     self.domains.push(result[i].domain);
   }
 };
-

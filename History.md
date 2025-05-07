@@ -1,4 +1,17 @@
 # History
+## 4.0.0 - 06/05/2025 - JC
+* Changed mysql to mysql2 library for mysql 8.x
+* WARNING: if you use the mysql password function, change to password2 and add this function to your database:
+    ```
+  CREATE FUNCTION PASSWORD2(s VARCHAR(50))
+     RETURNS VARCHAR(50) DETERMINISTIC
+     RETURN CONCAT('*', UPPER(SHA1(UNHEX(SHA1(s)))));
+    ```
+* Upgrades of vulnerabilities:
+     * Updating ejs to 3.1.10, which is a SemVer major change. 
+     * Updating nodemailer to 7.0.2, which is a SemVer major change.
+     * Updating multer to 1.4.5-lts.2, which is a SemVer major change.
+
 ## 3.4.5 - 11/05/2015 - TC
 * Added mysql 5.7+ support for population script
 * Fixed index.ejs, content.ejs and page.ejs for node 6+
