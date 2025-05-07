@@ -39,7 +39,7 @@ module.exports.makeWebApp = require("./makeWebApp.js");
 // module.exports.unitTests = require("./tests/");
 
 module.exports.express = require("express");
-module.exports.mysql = require("mysql");
+module.exports.mysql = require("mysql2");
 module.exports.fs = require("fs");
 module.exports.ejs = require("ejs");
 module.exports.bodyParser = require("body-parser");
