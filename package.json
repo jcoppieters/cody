@@ -12,7 +12,7 @@
   },
   "scripts": {
     "pre-publish": "echo 'Update version in package.json & npm i -> package-lock.json; git commit / publish; git tag vx.y.z;'",
-    "publish": "npm publish; git push; git push --tags"
+    "do-publish": "npm publish; git push; git push --tags"
   },
   "main": "./index",
   "keywords": [
