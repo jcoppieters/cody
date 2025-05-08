@@ -31,7 +31,7 @@ module.exports = User;
 // Class stuff
 //
 
-User.sqlGetUserByPw = "select * from users where username = ? and password = password(?)";
+User.sqlGetUserByPw = "select * from users where username = ? and password = password2(?)";
 User.sqlGetUserById = "select * from users where id = ?";
 User.sqlDeleteUser = "delete from users where id = ?";
 User.sqlGetUserList = "select * from users where level <= ? order by name";
@@ -179,7 +179,7 @@ User.prototype.doUpdate = function(controller, finish) {
     values.push(self.password);
     controller.query("insert into users (username, name, domain, level, badlogins, maxbadlogins, " +
                      "active, email, note, nomail, sortorder, password) " +
-                     "values (?, ?, ?, ?,  ?, ?, ?, ?, ?, ?, ?, password(?))", values,
+                     "values (?, ?, ?, ?,  ?, ?, ?, ?, ?, ?, ?, password2(?))", values,
         function(err, result) {
           if (err) { 
             console.log(err); throw(new Error("User.doUpdate/insert failed with sql errors")); 
@@ -202,7 +202,7 @@ User.prototype.doUpdate = function(controller, finish) {
         } else {
           console.log("updated user: " + self.id);
           if (self.password != "") {
-            controller.query("update users set password = password(?) where id = ?", [self.password, self.id], function() {
+            controller.query("update users set password = password2(?) where id = ?", [self.password, self.id], function() {
               if (err) {
                 console.log(err); throw(new Error("User.doUpdate/update PW failed with sql errors"));
               }

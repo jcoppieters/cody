@@ -1,5 +1,9 @@
 SET sql_mode = 'STRICT_TRANS_TABLES';
 
+CREATE FUNCTION PASSWORD2(s VARCHAR(50))
+     RETURNS VARCHAR(50) DETERMINISTIC
+     RETURN CONCAT('*', UPPER(SHA1(UNHEX(SHA1(s)))));
+     
 DROP TABLE IF EXISTS `atoms`;
 
 CREATE TABLE `atoms` (
@@ -412,8 +416,8 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 INSERT INTO `users` VALUES 
-(1,'super','rWorks Super',password("empty"),'rWorks',99,0,99,'Y','info@mysite.com','','N',0),
-(2,'admin','rWorks Admin',password("empty"),'rWorks',50,0,99,'Y','info@mysite.com','','N',0),
-(3,'test','rWorks Test',password("empty"),'rWorks',2,0,99,'Y','info@mysite.com','','N',0),
-(11,'user','Mr. Owner User',password("empty"),'users', 50,0,99,'Y','info@mysite.com','','N',10);
+(1,'super','rWorks Super',password2("empty"),'rWorks',99,0,99,'Y','info@mysite.com','','N',0),
+(2,'admin','rWorks Admin',password2("empty"),'rWorks',50,0,99,'Y','info@mysite.com','','N',0),
+(3,'test','rWorks Test',password2("empty"),'rWorks',2,0,99,'Y','info@mysite.com','','N',0),
+(11,'user','Mr. Owner User',password2("empty"),'users', 50,0,99,'Y','info@mysite.com','','N',10);
 UNLOCK TABLES;
