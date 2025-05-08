@@ -75,7 +75,7 @@ function startWebApp(mainServer, config, done) {
       // mysite.com,www.mysite.com,mysite.be,...
       var hosts = config.hostnames.split(",");
       for (var iH in hosts) {
-        mainServer.use(vhost(hosts[iH], siteServer));
+        mainServer.use(vhost(hosts[iH].trim(), siteServer));
         console.log("======= started " + config.name + " on " + hosts[iH] + " =======\n");
       }
 

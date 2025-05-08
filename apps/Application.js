@@ -3,6 +3,7 @@
 //
 //
 
+
 var mysql = require('mysql2');
 // JM: assuming Application is always require()'d directly by cody/index.js since ../../index.js is ugly.
 // maybe replace in all other files as well.
@@ -354,7 +355,7 @@ Application.prototype.renderView = function( context ) {
   // the directory it is in.
   var viewfile = (i === 0) ?
       path.resolve(module.parent.filename, "..", "views", context.fn.substring(2)) :
-      path.resolve(module.parent.parent.filename, "..", self.name, "views", context.fn);
+      path.resolve(module.parent.parent.filename, (self.prefix) ? ".." : "", "..", self.name, "views", context.fn);
 
   self.log("Application.renderView", viewfile);
   context.res.render(viewfile, context);
@@ -829,3 +830,4 @@ Application.prototype.storeDomains = function(result) {
     self.domains.push(result[i].domain);
   }
 };
+

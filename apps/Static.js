@@ -114,7 +114,7 @@ Static.prototype.serve = function () {
   // module path with a directory, so we need extra .. to refer to
   // the directory it is in.
   if (self.appFolder != "") {
-    filename = libpath.resolve(module.parent.parent.filename, "..", self.appFolder, uri.substring(1));
+    filename = libpath.resolve(module.parent.parent.filename, (self.prefix) ? ".." : "", "..", self.appFolder, uri.substring(1));
   }
   else
   {
@@ -123,7 +123,7 @@ Static.prototype.serve = function () {
     //the current cody module's package's directory name).
     if(uri.indexOf("/" + libpath.basename(libpath.resolve(module.parent.filename, "..")) + "/") == 0)
     {
-	filename = libpath.resolve(module.parent.filename, '..', uri.substring(libpath.basename(libpath.resolve(module.parent.filename, "..")).length + 2));
+	filename = libpath.resolve(module.parent.filename, "..", uri.substring(libpath.basename(libpath.resolve(module.parent.filename, "..")).length + 2));
     }
     else
     {
