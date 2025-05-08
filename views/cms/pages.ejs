@@ -2,7 +2,7 @@
 
 <html lang="<%=page.language%>">
 
-<% include header.ejs %>
+<%- include("header.ejs") %>
 
 <body id="pages">
 	<script src="<%=cstatic%>/js/lib/jquery-1.9.1<%=min%>.js"></script>
@@ -41,8 +41,8 @@
 
   <section>
     <header>
-      <% include top.ejs %>
-      <% include navigation.ejs %>
+      <%- include("top.ejs") %>
+      <%- include("navigation.ejs") %>
     </header>
     
 		<div>
@@ -91,17 +91,17 @@
         <% if (opennode != 0) { %>
           <% var currPage = page; %>
           <% page = app.getPage(currPage.language, opennode); %>
-          <% include pages-ajax.ejs %>
+          <%- include("pages-ajax.ejs") %>
           <% page = currPage; %>
         <% } %>
 			</div>
        
 		</div>
 		
-		<% include footer.ejs %>
+		<%- include("footer.ejs") %>
   </section>
 
-  <% include content-type.ejs %>
+  <%- include("content-type.ejs") %>
 
   <div id="template_selector" title="<%= __('Add new page')%>">
     <h3><%= __('Show')%></h3>

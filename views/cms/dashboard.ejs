@@ -2,12 +2,12 @@
 
 <html lang="<%=page.language%>">
 
-<% include header.ejs %>
+<%- include("header.ejs") %>
 
 <body id="dashboard">
   <section>
 	  <header>
-	    <% include top.ejs %>
+	    <%- include("top.ejs") %>
 	  </header>
 
   <% if (login) { %>
@@ -34,7 +34,7 @@
 	  <h1>Login first</h1>
   <% } %>	
  
-  <% include footer.ejs %>
+  <%- include("footer.ejs") %>
  </section>
 </body>
 </html>

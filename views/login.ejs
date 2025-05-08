@@ -7,7 +7,7 @@
 <html class="no-js" lang="<%=page.language%>">
 <!--<![endif]-->
 
-<% include ./cms/header.ejs %>
+<%- include("./cms/header.ejs") %>
 
 <!-- TODO translation... where?
 <h2 id="loginfirst">Alvorens naar de gevraagde pagina te gaan, moet U zich eerst aanmelden.</h2>
@@ -20,8 +20,8 @@
 <body>
 <section>
   <header>
-    <% include ./cms/top.ejs %>
-    <% include ./cms/navigation.ejs %>
+    <%- include("./cms/top.ejs") %>
+    <%- include("./cms/navigation.ejs") %>
   </header>
 
   <div>

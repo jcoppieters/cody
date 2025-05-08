@@ -7,17 +7,17 @@
 <html class="no-js" lang="<%=page.language%>">
 <!--<![endif]-->
 
-<% include header.ejs %>
+<%- include("header.ejs") %>
 
 <body id="page<%= page.itemId %>">
   <div id="wrapper">
 
-    <% include menu-top.ejs %>
+    <%- include("menu-top.ejs") %>
 
 	  <div class="content">
 
         <% var theChildren = []; %>
-        <% include menu-left.ejs %>
+        <%- include("menu-left.ejs") %>
 
 		<div class="main <%= (theChildren.length == 0) ? 'noNav' : 'withNav' %>">
         <section>
@@ -28,7 +28,7 @@
 	  </div>
 	</div>
 
-    <% include footer.ejs %>
+    <%- include("footer.ejs") %>
   </div>
 
 </body>

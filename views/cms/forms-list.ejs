@@ -2,7 +2,7 @@
 
 <html lang="<%=page.language%>">
 
-<% include header.ejs %>
+<%- include("header.ejs") %>
 
 <body id="data">
 
@@ -76,8 +76,8 @@ $(document).ready(function(){
 
 <section>
   <header>
-    <% include top.ejs %>
-    <% include navigation.ejs %>
+    <%- include("top.ejs") %>
+    <%- include("navigation.ejs") %>
   </header>
 
   <div>
@@ -148,7 +148,7 @@ $(document).ready(function(){
 
   </div>
 
-  <% include footer.ejs %>
+  <%- include("footer.ejs") %>
 </section>
 </body>
 </html>
