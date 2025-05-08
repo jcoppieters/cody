@@ -31,10 +31,10 @@ i18n.configure({
 cody.server.use(i18n.init);
 
 // use the new 4.x middleware
-cody.server.use(bodyParser());
+cody.server.use(bodyParser.json());
 cody.server.use(expressSession({secret: 'a secret', cookie: { maxAge: 60*60*1000 }}));
 cody.server.use(bodyParser.urlencoded({ extended: true }));
-cody.server.use(multer());
+cody.server.use(multer().any);
 
 
 // startup a routing for all static content of cody (images, javascript, css)

@@ -119,7 +119,7 @@ module.exports = function (pathname, sitename, configfn, done) {
     siteServer.use(bodyParser.urlencoded({ extended: true }));
     siteServer.use(expressSession({secret: 'a secret', cookie: { maxAge: 60*60*1000 },
                                    resave: false, saveUninitialized: false}));
-    siteServer.use(multer());
+    siteServer.use(multer().any());
 
 
     // startup a routing for all static content of cody (images, javascript, css)
