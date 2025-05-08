@@ -394,11 +394,14 @@ Application.prototype.getConnection = function() {
   if (typeof self.connection === "undefined") {
     self.log("Application", "Make new Connection");
     
-    // https://github.com/felixge/node-mysql
     self.connection = mysql.createConnection({
         host: self.dbhost, port: self.dbport,
         user: self.dbuser, password: self.dbpassword,
-        database: self.db
+        database: self.db,
+        multipleStatements: true, supportBigNumbers: true,
+        ssl: undefined, connectTimeout: undefined,
+        connectionLimit: 16, waitForConnections: true,
+        queueLimit: 50, timeout: 3600, nrTransactionRetry: 5
     });
   } else {
     self.log("Application.getConnection", "Returning existing connection");
@@ -830,4 +833,3 @@ Application.prototype.storeDomains = function(result) {
     self.domains.push(result[i].domain);
   }
 };
-

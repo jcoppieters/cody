@@ -1,4 +1,12 @@
 # History
+## 4.0.1..8 - 08/05/2025 - JC
+* Use url prefix everywhere (also in the back-office !)
+* fix forgotten password2 use
+* don't use: xxx.url, use: xxx.getURL()
+* better pool connection parameters for mysql
+* change all the <% include xxx %> into <%- include("xxx") %>
+
+*
 ## 4.0.0 - 06/05/2025 - JC
 * Changed mysql to mysql2 library for mysql 8.x
 * WARNING: if you use the mysql password function, change to password2 and add this function to your database:
