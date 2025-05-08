@@ -8,7 +8,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "http://github.com/jcoppieters/cody.git"
+    "url": "git+ssh://git@github.com/jcoppieters/cody.git"
   },
   "scripts": {
     "pre-publish": "echo 'Update version in package.json & npm i -> package-lock.json; git commit / publish; git tag vx.y.z;'",
