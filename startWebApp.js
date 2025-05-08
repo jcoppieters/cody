@@ -37,37 +37,38 @@ function startWebApp(mainServer, config, done) {
     if ((config.hostnames !== undefined) && (config.hostnames !== "")) {
 
       var siteServer = express();
+      var prefix = config.prefix ? "/"+config.prefix : "";
 
       for (var iL in app.languages) {
         // mysite.com/en/page
-        siteServer.all("/" + app.prefix + "/" + app.languages[iL].id + "/*", function (req, res) {
+        siteServer.all(prefix + "/" + app.languages[iL].id + "/*", function (req, res) {
           app.servePage(req, res);
         });
 
         // mysite.com/nl
-        siteServer.all("/" + app.prefix + "/" + app.languages[iL].id, function (req, res) {
+        siteServer.all(prefix + "/" + app.languages[iL].id, function (req, res) {
           console.log("------------------------------------------------------------------- " + new Date() + "--");
           console.log("-- redirecting to " + app.prefix + "/" + app.languages[iL].id + "/");
-          res.redirect("/" + app.prefix + "/" + app.languages[iL].id + "/");
+          res.redirect(prefix + "/" + app.languages[iL].id + "/");
         });
       }
 
       // no language -> mysite.com
-      siteServer.all("/" + app.prefix + "/", function (req, res) {
+      siteServer.all(prefix + "/", function (req, res) {
         console.log("------------------------------------------------------------------- " + new Date() + "--");
         console.log("-- redirecting to " + app.prefix + "/" + app.defaultlanguage + "/");
-        res.redirect("/" + app.prefix + "/" + app.defaultlanguage + "/");
+        res.redirect(prefix + "/" + app.defaultlanguage + "/");
       });
 
 
       // mysite.com/static/file-path
-      siteServer.get("/" + app.prefix + "/static/*", function (req, res) {
+      siteServer.get(prefix + "/static/*", function (req, res) {
         var fileserver = new cody.Static(req, res, config.name, app.prefix);
         fileserver.serve();
       });
 
       // mysite.com/data/[category]file-id.extension (standard "files" and "images")
-      siteServer.get("/" + app.prefix + "/data/*", function (req, res) {
+      siteServer.get(prefix + "/data/*", function (req, res) {
         var fileserver = new cody.Dynamic(req, res, app.getDataPath(), app.prefix);
         fileserver.serve();
       });
@@ -89,7 +90,6 @@ function startWebApp(mainServer, config, done) {
     }
 
   });
-
 }
 
 module.exports = startWebApp;

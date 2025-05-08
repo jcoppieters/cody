@@ -197,12 +197,14 @@ Page.prototype.getLink = function() {
 };
 
 Page.prototype.getURL = function(language) {
+  var prefix = this.prefix ? "/" + this.prefix : "";
+
   // if the language is different from this page its language,
   //   we actually return the url of another page (with the same item)
   if (typeof language !== "undefined") {
-    return this.prefix + "/" + language + "/" + this.getLink();
+    return prefix + language + "/" + this.getLink();
   } else {
-    return this.prefix + "/" + this.url;
+    return prefix + this.url;
   }
 };
 

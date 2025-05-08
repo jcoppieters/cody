@@ -147,8 +147,8 @@ rl.question("\n1) Enter projectname: ", function (sitename) {
                             datapath: "/usr/local/data/"+sitename,
                             port: 3001
                           }));
-                        copy(path.join(rootwd, sitename, "index.js"), path.join(rootwd, sitename+".js"));
-                        fs.unlinkSync(path.join(rootwd, sitename, "index.js"));
+                        //copy(path.join(rootwd, sitename, "index.js"), path.join(rootwd, sitename+".js"));
+                        //fs.unlinkSync(path.join(rootwd, sitename, "index.js"));
 
 
                         mkdir(datadir);
@@ -174,6 +174,9 @@ rl.question("\n1) Enter projectname: ", function (sitename) {
                         console.log("surf to http://localhost:3001");
                         console.log("    or manage your site at");
                         console.log("http://localhost:3001/en/dashboard");
+                        console.log("    for mysql8 users:");
+                        console.log("CREATE FUNCTION PASSWORD2(s VARCHAR(50))\n RETURNS VARCHAR(50) DETERMINISTIC\n RETURN CONCAT('*', UPPER(SHA1(UNHEX(SHA1(s)))));");
+
                         con.end();
                         rl.close();
                       });
