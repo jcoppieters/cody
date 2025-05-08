@@ -2,7 +2,7 @@
 // Johan Coppieters - jan 2013 - jWorks
 //
 //
-var mysql = require('mysql');
+var mysql = require("mysql2");
 var cody = require('../index.js');
 
 console.log("loading " + module.id);

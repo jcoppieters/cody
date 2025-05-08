@@ -5,7 +5,7 @@
 
 var express = require('express');
 var fs = require('fs');
-var mysql = require('mysql');
+var mysql = require("mysql2");
 
 var ejs = require('ejs');
 var cody = require('./cody');

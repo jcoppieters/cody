@@ -7,7 +7,7 @@ var fs = require("fs");
 var path = require("path");
 var util = require("util");
 
-var mysql = require('mysql');
+var mysql = require("mysql2");
 
 module.exports = SystemController;
 
