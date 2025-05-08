@@ -43,7 +43,7 @@ function jAtomTree(theRoot, theInitialNode, theLanguage, theService, theImages) 
     if (id != self.rootId) {
       $.ajax({
         type: "GET",
-        url: "/" + theLanguage + "/"+theService,
+        url: gPrefix + "/" + theLanguage + "/"+theService,
         data: "request=getnode&node=" + id,
         success: function(msg){
           if (msg.substring(0,3) === "NOK") {
@@ -247,9 +247,9 @@ function jAtomTree(theRoot, theInitialNode, theLanguage, theService, theImages) 
             $.getJSON("./"+theService, {request: 'rename', name: data.args[1], node: self.pleaseOpen},
                 function(msg){
                   if (msg.status === "OK") {
-                   self.doEdit(self.pleaseOpen);
-                   self.pleaseOpen = undefined;
-                 }
+                    self.doEdit(self.pleaseOpen);
+                    self.pleaseOpen = undefined;
+                  }
             });
           }
       }
@@ -414,6 +414,4 @@ function jAtomTree(theRoot, theInitialNode, theLanguage, theService, theImages) 
     });
 
   };
-
-
 }

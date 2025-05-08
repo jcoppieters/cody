@@ -48,6 +48,7 @@ function Context(path, page, app, req, res) {
   this.static = (app.prefix) ? "/" + app.prefix + "/static" : "/static";
   this.dynamic = (app.prefix) ? "/" + app.prefix + "/data" : "/data";
   this.cstatic = "/cody/static";
+  this.gPrefix = (app.prefix) ? "/" + app.prefix : "";
 
   var stringPage = app.getPage(page.language, "strings");
   this.strings = [];
@@ -384,4 +385,3 @@ Context.prototype.makeNum = function(value, defaultValue, precision) {
   if (typeof precision !== "undefined") { value = value.toFixed(precision); }
   return value;
 }
-

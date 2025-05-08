@@ -30,7 +30,7 @@ $(document).ready(function() {
     width: "998",
     height: "450",
     plugins: "safari,table,advhr,advimage,advlink,emotions,media,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking",
-    content_css : "/static/css/front.css",
+    content_css : gStatic + "/css/front.css",
   
     // Theme options
     theme_advanced_buttons1 : "cut,copy,paste,pastetext,pasteword,|,bold,italic,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,formatselect,|,bullist,numlist,indent,outdent,|,forecolor,fontsizeselect",
@@ -78,7 +78,7 @@ function getPage(id) {
    
   $.ajax({
      type: "GET", 
-     url: "/" + gLanguage + "/pages",
+     url: gPrefix + "/" + gLanguage + "/pages",
      data: "request=getnode&node=" + id,
      success: function(msg){
        if (msg.substring(0,3) === "NOK") {
@@ -155,7 +155,7 @@ function initPage(id) {
 }
 
 function doView() {
-  window.open( "/" + $("#language").val() + "/" + $("#node").val(), "_blank");
+  window.open( gPrefix + "/" + $("#language").val() + "/" + $("#node").val(), "_blank");
   return false;
 }
 
@@ -243,7 +243,7 @@ function selectedContent() {
 function doAtomEditor(button, type, feedback) {
   $.ajax({
     type: "GET", 
-    url: "/" + gLanguage + "/" + type,
+    url: gPrefix + "/" + gLanguage + "/" + type,
     data: "request=menu",
     success: function(msg){
       if (msg.indexOf("<") < 0) {
@@ -402,5 +402,3 @@ function saveOrder() {
     }
   });
 }
-
-
