@@ -10,7 +10,7 @@
            var p = page.root.children[i]; 
            if (p.isVisible()) { %>
 				    <li class="<%= (p == page) ? 'active' : '' %>">
-					    <a href="/<%=p.url%>" class="<%= (p == page) ? 'active' : '' %>"><%= p.title %></a>
+					    <a href="/<%=p.getURL()%>" class="<%= (p == page) ? 'active' : '' %>"><%= p.title %></a>
 				    </li>
         <% } %>
       <% } %>

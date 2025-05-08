@@ -156,7 +156,7 @@
 
           <% for (var i=0; i < records.length; i++) { var u = records[i]; %>
             <tr <%- (u.active=='Y') ? '' : 'class="inactive"' %>>
-              <td class="edit"><a href="/<%=page.url%>/edit/<%= u.id %>"><%= (u.name==='') ? '--' : u.name %></a></td>
+              <td class="edit"><a href="/<%=page.getURL()%>/edit/<%= u.id %>"><%= (u.name==='') ? '--' : u.name %></a></td>
               <td><%= u.cie %></td>
               <td><%- (u.nomail=='N') ? '' : '(' %><%= u.email %><%- (u.nomail=='N') ? '' : ')' %></td>
               <td><%= u.phone %></td>

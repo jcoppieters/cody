@@ -4,7 +4,7 @@
         <% for (var i in page.parent.children) {
         var p = page.parent.children[i];
         if (p.isVisible()) { %>
-        <li><a href="/<%= p.url %>" class="<%= (p == page) ? 'active' : '' %>"><%= p.title %></a></li>
+        <li><a href="/<%= p.getURL() %>" class="<%= (p == page) ? 'active' : '' %>"><%= p.title %></a></li>
         <% } %>
         <% } %>
     </ul>

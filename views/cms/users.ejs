@@ -129,7 +129,7 @@
 				
 			  <% for (var i=0; i < users.length; i++) { var u = users[i]; %>			  
 					<tr>
-						<td class="edit"><a href="/<%=page.url%>/edit/<%= u.id %>"><%= (u.name==='') ? '--' : u.name %></a></td>
+						<td class="edit"><a href="/<%=page.getURL()%>/edit/<%= u.id %>"><%= (u.name==='') ? '--' : u.name %></a></td>
 						<td><%= u.username %></td>
 						<td><%= u.domain %></td> 
 						<td>
