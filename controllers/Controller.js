@@ -82,16 +82,19 @@ Controller.prototype.doCrudRequest = function( finish ) {
   return true;
 };
 
+
 Controller.prototype.isRequest = function(theString) {
-  return (this.context) && (this.context.request.toUpperCase() === theString.toUpperCase());
+  return (this.getRequest(true) === (theString || "").toUpperCase());
 };
 Controller.prototype.setRequest = function(theString) {
   if (this.context) {
     this.context.request = theString;
   }
 };
-Controller.prototype.getRequest = function() {
-  return (typeof this.context === "undefined") ? "" : this.context.request;
+Controller.prototype.getRequest = function(upper) {
+  var req = (this.context && this.context.request) || "";
+  if (Array.isArray(req)) req = req.at(-1) || "";
+  return (upper) ? req.toUpperCase() : req;
 };
 
 
