@@ -401,7 +401,7 @@ Application.prototype.getConnection = function() {
         multipleStatements: true, supportBigNumbers: true,
         ssl: undefined, connectTimeout: undefined,
         connectionLimit: 16, waitForConnections: true,
-        queueLimit: 50, timeout: 3600, nrTransactionRetry: 5
+        queueLimit: 50
     });
   } else {
     self.log("Application.getConnection", "Returning existing connection");
