@@ -28,12 +28,12 @@ function Context(path, page, app, req, res) {
   // copy query params and body params into this.params and .param
   this.params = {};
   for(var q in req.query) {
-    if (req.query.hasOwnProperty(q)) {
+    if (Object.prototype.hasOwnProperty.call(req.query, q)) {
       this.params[q] = req.query[q];
     }
   }
   for(var b in req.body) {
-    if (req.body.hasOwnProperty(b)) {
+    if (Object.prototype.hasOwnProperty.call(req.body, b)) {
       this.params[b] = req.body[b];
     }
   }
@@ -74,11 +74,11 @@ Context.prototype.getMini = function() {
 
   mini.params = {};
   for(var x in this.params) {
-    if (mini.params.hasOwnProperty(x)) {
+    if (Object.prototype.hasOwnProperty(this.params, x)) {
       mini.params[x] = this.params[x];
     }
   }
-  mini.params = this.params;
+  //mini.params = this.params;
 
   mini.path = this.path;
   mini.request = this.request;
@@ -93,7 +93,7 @@ Context.prototype.getMini = function() {
 Context.prototype.copyFromMini = function(mini) {
   this.params = {};
   for(var x in mini.params) {
-    if (mini.params.hasOwnProperty(x)) {
+    if (Object.prototype.hasOwnProperty(mini.params, x)) {
       this.params[x] = mini.params[x];
     }
   }
