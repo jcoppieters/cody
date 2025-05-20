@@ -4,7 +4,7 @@ A Javascript Content Management System running on Node.js
 
 We finally took upon the task, we are happy to announce the transition to Express 4 is now done! (dixit Slawo)
 
-See http://www.cody-cms.org for more info and examples on http://github.com/jcoppieters/cody-samples
+See http://www.cody-cms.com for more info and examples on http://github.com/jcoppieters/cody-samples
 
 You can now use npm to install Cody thanks to Jonas.
 
@@ -126,8 +126,8 @@ Have a look at the generated config.json file to see which configuration variabl
   
 ## License
 
-Copyright (c) 2012-2015 Johan Coppieters, Howest Brugge. See the LICENSE.md file for license rights and
+Copyright (c) 2012-2025 Johan Coppieters. See the LICENSE.md file for license rights and
 limitations. This project is licensed under the terms of the MIT license.
 
 
-Johan Coppieters, Jonas Maes, Howest Brugge - Tim Coppieters, VUB.
+Johan Coppieters, Jonas Maes - Tim Coppieters, VUB.
