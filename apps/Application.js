@@ -401,7 +401,8 @@ Application.prototype.getConnection = function() {
         multipleStatements: true, supportBigNumbers: true,
         ssl: undefined, connectTimeout: undefined,
         connectionLimit: 16, waitForConnections: true,
-        queueLimit: 50
+        queueLimit: 50,
+        keepAliveInitialDelay: 10000, enableKeepAlive: true
     });
   } else {
     self.log("Application.getConnection", "Returning existing connection");
