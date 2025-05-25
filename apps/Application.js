@@ -388,31 +388,84 @@ Application.prototype.notAllowed = function(context) {
 /////////////////
 // SQL support //
 /////////////////
+//
+// Shouldn't we use a connection pool instead of a single connection?
+//
+// const pool = mysql.createPool({
+//   host: 'localhost',
+//   user: 'root',
+//   database: 'test',
+//   waitForConnections: true,
+//   connectionLimit: 5,
+//   queueLimit: 0
+// })
+// const users = await pool.query('SELECT * FROM users');
+
+
+//
+// Advise from chatGPT:
+// •	Reconnects on dropped connections via .on('error')
+// •	Keeps the TCP socket alive with enableKeepAlive
+// •	Prevents idle disconnects via ping() every 30s
+// •	Avoids multiple setInterval() timers
+// •	Fails fast during startup if the DB is unreachable, letting PM2 restart
+//
+
 Application.prototype.getConnection = function() {
   var self = this;
 
-  if (typeof self.connection === "undefined") {
+  function connectToDatabase() {
+    return mysql.createConnection({
+      host: self.dbhost, port: self.dbport,
+      user: self.dbuser, password: self.dbpassword,
+      database: self.db,
+      multipleStatements: true, supportBigNumbers: true,
+      ssl: undefined, connectTimeout: undefined,
+
+      // connection pool settings
+      // connectionLimit: 16, waitForConnections: true, queueLimit: 50,
+
+      // this keeps the tcp socket alive
+      keepAliveInitialDelay: 10000, enableKeepAlive: true
+    });
+  }
+
+  if ((!self.connection) || (self.connection.state === 'disconnected')) {
     self.log("Application", "Make new Connection");
     
-    self.connection = mysql.createConnection({
-        host: self.dbhost, port: self.dbport,
-        user: self.dbuser, password: self.dbpassword,
-        database: self.db,
-        multipleStatements: true, supportBigNumbers: true,
-        ssl: undefined, connectTimeout: undefined,
-        connectionLimit: 16, waitForConnections: true,
-        queueLimit: 50,
-        keepAliveInitialDelay: 10000, enableKeepAlive: true
+    self.connection = connectToDatabase();
+
+    // reconnect on disconnect
+    self.connection.on('error', err => {
+      console.error('MySQL error', err);
+      if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+        console.log('Reconnecting after connection lost: ', err);
+        self.connection = connectToDatabase();
+      }
     });
+
+    // this keeps the connection alive (not the OS socket)
+    self._intervalTimer = self._intervalTimer || setInterval(() => {
+      self.connection.ping(err => {
+        if (err) {
+          console.error('Reconnecting after MySQL ping error: ', err);
+          self.connection = connectToDatabase();
+        }
+      });
+    }, 30000);
+
   } else {
     self.log("Application.getConnection", "Returning existing connection");
   }
   
-  if (typeof self.connection === "undefined") {
+  if (!self.connection) {
+    // PM2 will restart the app if this happens
     throw(new Error("Fatal error: No database connection"));
   }
+
   return self.connection;
 };
+
 
 Application.prototype.returnConnection = function( connection ) {
   // Do nothing: we only have 1 connection and we don't close it in between requests...
